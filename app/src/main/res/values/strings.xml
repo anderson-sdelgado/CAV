@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">CAV</string>
+    <string name="text_failure">FALHA INESPERADA NO APLICATIVO! POR FAVOR ENTRE EM CONTATO COM TI. %1$s</string>
+    <string name="text_title_initial_menu">MENU INICIAL - V %1$s</string>
+    <string name="text_item_note">APONTAMENTO</string>
+    <string name="text_item_config">CONFIGURAÇÃO</string>
+    <string name="text_item_out">SAIR</string>
+    <string name="text_status_started">Aparelho sem número</string>
+    <string name="text_status_send">Existe dados para serem enviado</string>
+    <string name="text_status_sending">Dados estão sendo enviados</string>
+    <string name="text_status_sent">Não existe dados para serens enviados</string>
+    <string name="text_blocked_access_app">ACESSO NEGADO! POR FAVOR, CONFIGURE O APLICATIVO ANTES DO USO DO MESMO!</string>
+    <string name="text_title_password">SENHA</string>
+    <string name="text_pattern_ok">OK</string>
+    <string name="text_pattern_cancel">CANCELAR</string>
+    <string name="text_password_invalid">SENHA INVÁLIDA!</string>
 </resources>

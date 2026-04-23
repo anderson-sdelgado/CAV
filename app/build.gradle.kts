@@ -10,11 +10,7 @@ plugins {
 
 android {
     namespace = "br.com.usinasantafe.cav"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "br.com.usinasantafe.cav"
@@ -23,7 +19,8 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "br.com.usinasantafe.cav.CustomTestRunner"
+//        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -61,6 +58,28 @@ android {
         schemaDirectory("$projectDir/schemas")
     }
 
+    productFlavors {
+        flavorDimensions += "version"
+        create("dev") {
+            dimension = "version"
+            applicationIdSuffix = ".dev"
+            manifestPlaceholders["appName"] = "CAV-DEV"
+            resValue("string", "base_url", "https://app.usinasantafe.com.br/cavdev/view/")
+        }
+        create("qa") {
+            dimension = "version"
+            applicationIdSuffix = ".qa"
+            manifestPlaceholders["appName"] = "CAV-QA"
+            resValue("string", "base_url", "https://app.usinasantafe.com.br/cavqa/view/")
+        }
+        create("prod") {
+            dimension = "version"
+            applicationIdSuffix = ".prod"
+            manifestPlaceholders["appName"] = "CAV"
+            resValue("string", "base_url", "https://app.usinasantafe.com.br/cavprod/versao_1_00/view/")
+        }
+    }
+
     sourceSets {
         getByName("androidTest") {
             java.srcDirs("src/androidTest/java")
@@ -86,7 +105,6 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
-
 
     implementation(libs.androidx.navigation.compose)
     androidTestImplementation(libs.androidx.navigation.testing)
@@ -131,4 +149,8 @@ dependencies {
     testImplementation(kotlin("test"))
     androidTestImplementation(kotlin("test"))
     androidTestImplementation(libs.mockito)
+}
+
+kapt {
+    correctErrorTypes = true
 }
