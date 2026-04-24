@@ -269,3 +269,19 @@ fun <T : UiStateWithStatus<T>> Result<*>.onFailureUpdate(
         }
     }
 }
+suspend inline fun <T : UiStateWithStatus<T>> Result<*>.onFailureEmit(
+    collector: FlowCollector<T>,
+    currentState: T,
+    classAndMethod: String,
+    errorType: Errors = Errors.TOKEN
+) {
+    this.onFailure { throwable ->
+        val newState = currentState.withFailure(
+            classAndMethod = classAndMethod,
+            throwable = throwable,
+            errors = errorType,
+            flagProgress = true
+        )
+        collector.emit(newState)
+    }
+}

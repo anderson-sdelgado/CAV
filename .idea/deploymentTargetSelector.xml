@@ -6,15 +6,23 @@
         <option name="selectionMode" value="DROPDOWN" />
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="check_return_true_if_not_have_data()">
+      <SelectionState runConfigName="check_return_failure_if_return_web_service_missing_fields()">
         <option name="selectionMode" value="DROPDOWN" />
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="check_return_true_if_password_is_correct()">
+      <SelectionState runConfigName="check_return_failure_if_response_is_404()">
         <option name="selectionMode" value="DROPDOWN" />
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="check_return_false_if_password_is_incorrect()">
+      <SelectionState runConfigName="check_return_failure_if_input_data_config_is_incorrect()">
+        <option name="selectionMode" value="DROPDOWN" />
+        <DialogSelection />
+      </SelectionState>
+      <SelectionState runConfigName="check_return_correct_if_process_execute_successfully()">
+        <option name="selectionMode" value="DROPDOWN" />
+        <DialogSelection />
+      </SelectionState>
+      <SelectionState runConfigName="check_return_failure_if_service_return_empty()">
         <option name="selectionMode" value="DROPDOWN" />
         <DialogSelection />
       </SelectionState>

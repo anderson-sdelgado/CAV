@@ -15,4 +15,20 @@ interface ConfigModule {
     @Singleton
     fun bindCheckPassword(usecase: ICheckPassword): CheckPassword
 
+    @Binds
+    @Singleton
+    fun bindGetConfig(usecase: IGetConfig): GetConfig
+
+    @Binds
+    @Singleton
+    fun bindSaveDataConfig(usecase: ISaveConfig): SaveConfig
+
+    @Binds
+    @Singleton
+    fun bindSendDataConfig(usecase: ISendConfig): SendConfig
+
+    @Binds
+    @Singleton
+    fun bindSetFinishUpdateAllTable(usecase: ISetFinishUpdateAllTable): SetFinishUpdateAllTable
+
 }

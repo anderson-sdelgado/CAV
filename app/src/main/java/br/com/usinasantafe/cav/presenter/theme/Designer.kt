@@ -13,11 +13,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.usinasantafe.cav.lib.errors
+import br.com.usinasantafe.cav.lib.msg
+import br.com.usinasantafe.cav.utils.UpdateStatusState
 
 @Composable
 fun ItemDefaultListDesign(
@@ -154,5 +159,45 @@ fun TextButtonDesign(text: String) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(12.dp)
+    )
+}
+
+@Composable
+fun TextFieldConfigDesign(
+    value: String,
+    onValueChange: (String) -> Unit,
+    tag: String = ""
+) {
+    return OutlinedTextField(
+        keyboardOptions = KeyboardOptions(
+            capitalization = KeyboardCapitalization.None,
+            autoCorrectEnabled = true,
+            keyboardType = KeyboardType.Number,
+            imeAction = ImeAction.Next
+        ),
+        textStyle = TextStyle(
+            textAlign = TextAlign.Right,
+            fontSize = 24.sp
+        ),
+        value = value,
+        onValueChange = onValueChange,
+        modifier = Modifier
+            .fillMaxWidth()
+            .testTag(tag)
+    )
+}
+
+@Composable
+fun MsgUpdate(status : UpdateStatusState, setCloseDialog: () -> Unit, value: String = ""){
+    val text =
+        if (status.flagFailure) {
+            errors(status.errors, status.failure, value)
+        } else {
+            msg(status.levelUpdate, status.failure, status.tableUpdate)
+        }
+
+    AlertDialogSimpleDesign(
+        text = text,
+        setCloseDialog = setCloseDialog,
     )
 }

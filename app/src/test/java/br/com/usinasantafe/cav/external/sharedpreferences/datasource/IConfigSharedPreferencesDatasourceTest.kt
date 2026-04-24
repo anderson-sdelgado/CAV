@@ -105,4 +105,81 @@ class IConfigSharedPreferencesDatasourceTest {
             )
         }
 
+    @Test
+    fun `get - Check return ConfigSharedPreferencesModel() if not have data`() =
+        runTest {
+            val result = datasource.get()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                ConfigSharedPreferencesModel()
+            )
+        }
+
+    @Test
+    fun `get - Check return failure if number is null`() =
+        runTest {
+            val data = ConfigSharedPreferencesModel()
+            datasource.save(data)
+            val result = datasource.get()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IConfigSharedPreferencesDatasource.get"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.NullPointerException: number is required"
+            )
+        }
+
+    @Test
+    fun `get - Check return failure if password is null`() =
+        runTest {
+            val data = ConfigSharedPreferencesModel(
+                number = 16997417840
+            )
+            datasource.save(data)
+            val result = datasource.get()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IConfigSharedPreferencesDatasource.get"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.NullPointerException: password is required"
+            )
+        }
+
+    @Test
+    fun `get - Check return correct if function execute successfully`() =
+        runTest {
+            val data = ConfigSharedPreferencesModel(
+                number = 16997417840,
+                password = "12345"
+            )
+            datasource.save(data)
+            val result = datasource.get()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                ConfigSharedPreferencesModel(
+                    number = 16997417840,
+                    password = "12345"
+                )
+            )
+        }
 }

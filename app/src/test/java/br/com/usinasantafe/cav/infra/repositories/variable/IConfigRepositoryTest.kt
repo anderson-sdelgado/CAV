@@ -1,6 +1,11 @@
 package br.com.usinasantafe.cav.infra.repositories.variable
 
-import br.com.usinasantafe.cav.infra.datasource.ConfigSharedPreferencesDatasource
+import br.com.usinasantafe.cav.domain.entities.variable.Config
+import br.com.usinasantafe.cav.infra.datasource.retrofit.variable.ConfigRetrofitDatasource
+import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.ConfigSharedPreferencesDatasource
+import br.com.usinasantafe.cav.infra.models.retrofit.variable.ConfigRetrofitModelInput
+import br.com.usinasantafe.cav.infra.models.retrofit.variable.ConfigRetrofitModelOutput
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.ConfigSharedPreferencesModel
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.test.runTest
 import org.mockito.Mockito.mock
@@ -11,8 +16,10 @@ import kotlin.test.assertEquals
 class IConfigRepositoryTest {
 
     private val configSharedPreferencesDatasource = mock<ConfigSharedPreferencesDatasource>()
+    private val configRetrofitDatasource = mock<ConfigRetrofitDatasource>()
     private val repository = IConfigRepository(
-        configSharedPreferencesDatasource = configSharedPreferencesDatasource
+        configSharedPreferencesDatasource = configSharedPreferencesDatasource,
+         configRetrofitDatasource = configRetrofitDatasource
     )
 
     @Test
@@ -104,6 +111,200 @@ class IConfigRepositoryTest {
             assertEquals(
                 result.getOrNull()!!,
                 "123456"
+            )
+        }
+
+    @Test
+    fun `get - Check return failure if have error in ConfigSharedPreferencesDatasource get`() =
+        runTest {
+            whenever(
+                configSharedPreferencesDatasource.get()
+            ).thenReturn(
+                resultFailure(
+                    "IConfigSharedPreferencesDatasource.get",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.get()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IConfigRepository.get -> IConfigSharedPreferencesDatasource.get"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `get - Check return failure if number is null`() =
+        runTest {
+            whenever(
+                configSharedPreferencesDatasource.get()
+            ).thenReturn(
+                Result.success(
+                    ConfigSharedPreferencesModel()
+                )
+            )
+            val result = repository.get()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IConfigRepository.get -> number is required"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "null"
+            )
+        }
+
+    @Test
+    fun `get - Check return failure if password is null`() =
+        runTest {
+            whenever(
+                configSharedPreferencesDatasource.get()
+            ).thenReturn(
+                Result.success(
+                    ConfigSharedPreferencesModel(
+                        number = 16997417840
+                    )
+                )
+            )
+            val result = repository.get()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IConfigRepository.get -> password is required"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "null"
+            )
+        }
+
+    @Test
+    fun `get - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                configSharedPreferencesDatasource.get()
+            ).thenReturn(
+                Result.success(
+                    ConfigSharedPreferencesModel(
+                        number = 16997417840,
+                        password = "12345"
+                    )
+                )
+            )
+            val result = repository.get()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                Config(
+                    number = 16997417840,
+                    password = "12345"
+                )
+            )
+        }
+
+    @Test
+    fun `send - Check return failure if Config is null`() =
+        runTest {
+            val result = repository.send(Config())
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IConfigRepository.send -> number is required"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "null"
+            )
+        }
+
+    @Test
+    fun `send - Check return failure if have error in ConfigRetrofitDatasource recoverToken`() =
+        runTest {
+            whenever(
+                configRetrofitDatasource.recoverToken(
+                    ConfigRetrofitModelOutput(
+                        number = 16997417840,
+                        version = "1.00"
+                    )
+                )
+            ).thenReturn(
+                resultFailure(
+                    "IConfigRetrofitDatasource.recoverToken",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.send(
+                Config(
+                    number = 16997417840,
+                    version = "1.00"
+                )
+            )
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IConfigRepository.send -> IConfigRetrofitDatasource.recoverToken"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `send - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                configRetrofitDatasource.recoverToken(
+                    ConfigRetrofitModelOutput(
+                        number = 16997417840,
+                        version = "1.00"
+                    )
+                )
+            ).thenReturn(
+                Result.success(
+                    ConfigRetrofitModelInput(
+                        idServ = 1
+                    )
+                )
+            )
+            val result = repository.send(
+                Config(
+                    number = 16997417840,
+                    version = "1.00"
+                )
+            )
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                Config(idServ = 1)
             )
         }
 

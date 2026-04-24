@@ -2,8 +2,9 @@ package br.com.usinasantafe.cav.external.sharedpreferences.datasource
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import br.com.usinasantafe.cav.infra.datasource.ConfigSharedPreferencesDatasource
+import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.ConfigSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.ConfigSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.sharedPreferencesModelToEntity
 import br.com.usinasantafe.cav.lib.BASE_SHARED_PREFERENCES_TABLE_CONFIG
 import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -26,17 +27,19 @@ class IConfigSharedPreferencesDatasource @Inject constructor(
             }
         }
 
-    suspend fun get(): Result<ConfigSharedPreferencesModel> =
+    override suspend fun get(): Result<ConfigSharedPreferencesModel> =
         result(getClassAndMethod()) {
             val config = sharedPreferences.getString(
                 BASE_SHARED_PREFERENCES_TABLE_CONFIG,
                 null
             )
             if(config.isNullOrEmpty()) return@result ConfigSharedPreferencesModel()
-            Gson().fromJson(
+            val model = Gson().fromJson(
                 config,
                 ConfigSharedPreferencesModel::class.java
             )
+            model.sharedPreferencesModelToEntity()
+            model
         }
 
     override suspend fun has(): Result<Boolean> =
