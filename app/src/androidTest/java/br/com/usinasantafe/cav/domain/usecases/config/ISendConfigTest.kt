@@ -21,6 +21,27 @@ class ISendConfigTest {
     lateinit var usecase: SendConfig
 
     @Test
+    fun check_return_failure_if_number_input_is_incorrect() =
+        runTest {
+
+            hiltRule.inject()
+
+            val result = usecase("dfas6fdsa7840", "12345", "1.00")
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "ISendConfig -> toLong"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.NumberFormatException: For input string: \"dfas6fdsa7840\""
+            )
+        }
+
+    @Test
     fun check_return_failure_if_not_have_data() =
         runTest {
 

@@ -6,7 +6,9 @@ import br.com.usinasantafe.cav.infra.datasource.retrofit.variable.ConfigRetrofit
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.ConfigSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.retrofit.variable.entityToRetrofitModel
 import br.com.usinasantafe.cav.infra.models.retrofit.variable.retrofitToEntity
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.entityToSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.sharedPreferencesModelToEntity
+import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import javax.inject.Inject
@@ -38,4 +40,11 @@ class IConfigRepository @Inject constructor(
             val configRetrofitModel = configRetrofitDatasource.recoverToken(model).getOrThrow()
             configRetrofitModel.retrofitToEntity()
         }
+
+    override suspend fun save(entity: Config): EmptyResult =
+        call(getClassAndMethod()) {
+            val sharedPreferencesModel = entity.entityToSharedPreferencesModel()
+            configSharedPreferencesDatasource.save(sharedPreferencesModel).getOrThrow()
+        }
+
 }

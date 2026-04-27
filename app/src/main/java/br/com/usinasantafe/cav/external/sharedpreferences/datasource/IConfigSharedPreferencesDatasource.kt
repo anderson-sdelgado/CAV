@@ -17,7 +17,7 @@ class IConfigSharedPreferencesDatasource @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ): ConfigSharedPreferencesDatasource {
 
-    suspend fun save(model: ConfigSharedPreferencesModel): EmptyResult =
+    override suspend fun save(model: ConfigSharedPreferencesModel): EmptyResult =
         result(getClassAndMethod()) {
             sharedPreferences.edit {
                 putString(

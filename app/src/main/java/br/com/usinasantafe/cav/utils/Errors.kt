@@ -46,7 +46,8 @@ class AppError(
 ) : Exception(removeRepeatedCalls("$context${if (message == null) "" else if (message == "-") "" else " -> $message"}"), cause)
 
 fun failure(classAndMethod: String, error: Throwable) : String {
-    return removeRepeatedCalls("$classAndMethod -> ${error.message} -> ${error.cause.toString()}")
+    val cause = if(error.cause == null) "" else  " -> ${error.cause.toString()}"
+    return removeRepeatedCalls("$classAndMethod -> ${error.message}$cause")
 }
 
 fun removeRepeatedCalls(path: String): String {

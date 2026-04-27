@@ -2,8 +2,11 @@ package br.com.usinasantafe.cav.di.provider
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.room.Room
 import androidx.work.WorkManager
 import br.com.usinasantafe.cav.R
+import br.com.usinasantafe.cav.external.room.dao.DatabaseRoom
+import br.com.usinasantafe.cav.lib.BASE_DB
 import br.com.usinasantafe.cav.lib.BASE_SHARED_PREFERENCES
 import dagger.Module
 import dagger.Provides
@@ -47,6 +50,19 @@ object PersistenceModule {
         .client(client)
         .build()
 
+
+    @Singleton
+    @Provides
+    fun provideRoom(@ApplicationContext appContext: Context): DatabaseRoom {
+        return Room.databaseBuilder(
+            appContext,
+            DatabaseRoom::class.java,
+            BASE_DB
+        )
+            .allowMainThreadQueries()
+            .fallbackToDestructiveMigration()
+            .build()
+    }
 
     @Singleton
     @Provides

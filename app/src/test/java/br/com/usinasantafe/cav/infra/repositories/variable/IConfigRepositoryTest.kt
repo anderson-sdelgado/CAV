@@ -9,6 +9,8 @@ import br.com.usinasantafe.cav.infra.models.sharedpreferences.ConfigSharedPrefer
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.test.runTest
 import org.mockito.Mockito.mock
+import org.mockito.kotlin.atLeastOnce
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -305,6 +307,90 @@ class IConfigRepositoryTest {
             assertEquals(
                 result.getOrNull()!!,
                 Config(idServ = 1)
+            )
+        }
+
+    @Test
+    fun `save - Check return failure if Config entity have input null`() =
+        runTest {
+            val result = repository.save(Config())
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IConfigRepository.save -> number is required"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "null"
+            )
+        }
+
+    @Test
+    fun `save - Check return failure if have error in ConfigSharedPreferencesDatasource save`() =
+        runTest {
+            whenever(
+                configSharedPreferencesDatasource.save(
+                    ConfigSharedPreferencesModel(
+                        number = 16997417840,
+                        password = "12345",
+                        version = "1.00",
+                        idServ = 1
+                    )
+                )
+            ).thenReturn(
+                resultFailure(
+                    "IConfigSharedPreferencesDatasource.save",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.save(
+                Config(
+                    number = 16997417840,
+                    password = "12345",
+                    version = "1.00",
+                    idServ = 1
+                )
+            )
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IConfigRepository.save -> IConfigSharedPreferencesDatasource.save"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `save - Check return correct if function execute successfully`() =
+        runTest {
+            val result = repository.save(
+                Config(
+                    number = 16997417840,
+                    password = "12345",
+                    version = "1.00",
+                    idServ = 1
+                )
+            )
+            verify(configSharedPreferencesDatasource, atLeastOnce()).save(
+                ConfigSharedPreferencesModel(
+                    number = 16997417840,
+                    password = "12345",
+                    version = "1.00",
+                    idServ = 1
+                )
+            )
+            assertEquals(
+                result.isSuccess,
+                true
             )
         }
 

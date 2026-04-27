@@ -1,0 +1,331 @@
+package br.com.usinasantafe.cav.domain.usecases.update
+
+import br.com.usinasantafe.cav.domain.entities.stable.Equip
+import br.com.usinasantafe.cav.domain.repositories.stable.EquipRepository
+import br.com.usinasantafe.cav.domain.usecases.common.GetToken
+import br.com.usinasantafe.cav.lib.Errors
+import br.com.usinasantafe.cav.lib.LevelUpdate
+import br.com.usinasantafe.cav.utils.UpdateStatusState
+import br.com.usinasantafe.cav.utils.resultFailure
+import br.com.usinasantafe.cav.utils.updatePercentage
+import kotlinx.coroutines.flow.count
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.test.runTest
+import org.junit.Test
+import org.mockito.Mockito.mock
+import org.mockito.kotlin.atLeastOnce
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
+import kotlin.test.assertEquals
+
+class IUpdateTableEquipTest {
+
+    private val getToken = mock<GetToken>()
+    private val equipRepository = mock<EquipRepository>()
+    private val usecase = IUpdateTableEquip(
+        getToken = getToken,
+        equipRepository = equipRepository
+    )
+
+    @Test
+    fun `Check return failure if have error in GetToken`() =
+        runTest {
+            whenever(
+                getToken()
+            ).thenReturn(
+                resultFailure(
+                    "GetToken",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = usecase(
+                sizeAll = 7f,
+                count = 1f
+            )
+            val list = result.toList()
+            assertEquals(
+                result.count(),
+                2
+            )
+            assertEquals(
+                list[0],
+                UpdateStatusState(
+                    flagProgress = true,
+                    levelUpdate = LevelUpdate.RECOVERY,
+                    tableUpdate = "tb_equip",
+                    currentProgress = updatePercentage(1f, 1f, 7f)
+                )
+            )
+            assertEquals(
+                list[1],
+                UpdateStatusState(
+                    errors = Errors.UPDATE,
+                    flagDialog = true,
+                    flagFailure = true,
+                    failure = "IUpdateTableEquip -> GetToken -> java.lang.Exception",
+                    currentProgress = 1f,
+                )
+            )
+        }
+
+    @Test
+    fun `Check return failure if have error in EquipRepository recoverAll`() =
+        runTest {
+            whenever(
+                getToken()
+            ).thenReturn(
+                Result.success("token")
+            )
+            whenever(
+                equipRepository.listAll("token")
+            ).thenReturn(
+                resultFailure(
+                    "IEquipRepository.recoverAll",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = usecase(
+                sizeAll = 7f,
+                count = 1f
+            )
+            val list = result.toList()
+            assertEquals(
+                result.count(),
+                2
+            )
+            assertEquals(
+                list[0],
+                UpdateStatusState(
+                    flagProgress = true,
+                    levelUpdate = LevelUpdate.RECOVERY,
+                    tableUpdate = "tb_equip",
+                    currentProgress = updatePercentage(1f, 1f, 7f)
+                )
+            )
+            assertEquals(
+                list[1],
+                UpdateStatusState(
+                    errors = Errors.UPDATE,
+                    flagDialog = true,
+                    flagFailure = true,
+                    failure = "IUpdateTableEquip -> IEquipRepository.recoverAll -> java.lang.Exception",
+                    currentProgress = 1f,
+                )
+            )
+        }
+
+    @Test
+    fun `Check return failure if have error in EquipRepository deleteAll`() =
+        runTest {
+            val list = listOf(
+                Equip(
+                    id = 1,
+                    nro = 20,
+                    desc = "TRATOR"
+                )
+            )
+            whenever(
+                getToken()
+            ).thenReturn(
+                Result.success("token")
+            )
+            whenever(
+                equipRepository.listAll("token")
+            ).thenReturn(
+                Result.success(
+                    list
+                )
+            )
+            whenever(
+                equipRepository.deleteAll()
+            ).thenReturn(
+                resultFailure(
+                    "IEquipRepository.deleteAll",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = usecase(
+                sizeAll = 7f,
+                count = 1f
+            )
+            val resultList = result.toList()
+            assertEquals(
+                result.count(),
+                3
+            )
+            assertEquals(
+                resultList[0],
+                UpdateStatusState(
+                    flagProgress = true,
+                    levelUpdate = LevelUpdate.RECOVERY,
+                    tableUpdate = "tb_equip",
+                    currentProgress = updatePercentage(1f, 1f, 7f)
+                )
+            )
+            assertEquals(
+                resultList[1],
+                UpdateStatusState(
+                    flagProgress = true,
+                    levelUpdate = LevelUpdate.CLEAN,
+                    tableUpdate = "tb_equip",
+                    currentProgress = updatePercentage(2f, 1f, 7f)
+                )
+            )
+            assertEquals(
+                resultList[2],
+                UpdateStatusState(
+                    errors = Errors.UPDATE,
+                    flagDialog = true,
+                    flagFailure = true,
+                    failure = "IUpdateTableEquip -> IEquipRepository.deleteAll -> java.lang.Exception",
+                    currentProgress = 1f,
+                )
+            )
+        }
+
+    @Test
+    fun `Check return failure if have error in EquipRepository addAll`() =
+        runTest {
+            val list = listOf(
+                Equip(
+                    id = 1,
+                    nro = 20,
+                    desc = "TRATOR"
+                )
+            )
+            whenever(
+                getToken()
+            ).thenReturn(
+                Result.success("token")
+            )
+            whenever(
+                equipRepository.listAll("token")
+            ).thenReturn(
+                Result.success(
+                    list
+                )
+            )
+            whenever(
+                equipRepository.addAll(list)
+            ).thenReturn(
+                resultFailure(
+                    "IEquipRepository.addAll",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = usecase(
+                sizeAll = 7f,
+                count = 1f
+            )
+            val resultList = result.toList()
+            verify(equipRepository, atLeastOnce()).deleteAll()
+            assertEquals(
+                result.count(),
+                4
+            )
+            assertEquals(
+                resultList[0],
+                UpdateStatusState(
+                    flagProgress = true,
+                    levelUpdate = LevelUpdate.RECOVERY,
+                    tableUpdate = "tb_equip",
+                    currentProgress = updatePercentage(1f, 1f, 7f)
+                )
+            )
+            assertEquals(
+                resultList[1],
+                UpdateStatusState(
+                    flagProgress = true,
+                    levelUpdate = LevelUpdate.CLEAN,
+                    tableUpdate = "tb_equip",
+                    currentProgress = updatePercentage(2f, 1f, 7f)
+                )
+            )
+            assertEquals(
+                resultList[2],
+                UpdateStatusState(
+                    flagProgress = true,
+                    levelUpdate = LevelUpdate.SAVE,
+                    tableUpdate = "tb_equip",
+                    currentProgress = updatePercentage(3f, 1f, 7f)
+                )
+            )
+            assertEquals(
+                resultList[3],
+                UpdateStatusState(
+                    errors = Errors.UPDATE,
+                    flagDialog = true,
+                    flagFailure = true,
+                    failure = "IUpdateTableEquip -> IEquipRepository.addAll -> java.lang.Exception",
+                    currentProgress = 1f,
+                )
+            )
+        }
+
+    @Test
+    fun `Check return correct if function execute successfully`() =
+        runTest {
+            val list = listOf(
+                Equip(
+                    id = 1,
+                    nro = 20,
+                    desc = "TRATOR"
+                )
+            )
+            whenever(
+                getToken()
+            ).thenReturn(
+                Result.success("token")
+            )
+            whenever(
+                equipRepository.listAll("token")
+            ).thenReturn(
+                Result.success(
+                    list
+                )
+            )
+            val result = usecase(
+                sizeAll = 7f,
+                count = 1f
+            )
+            val resultList = result.toList()
+            verify(equipRepository, atLeastOnce()).deleteAll()
+            verify(equipRepository, atLeastOnce()).addAll(list)
+            assertEquals(
+                result.count(),
+                3
+            )
+            assertEquals(
+                resultList[0],
+                UpdateStatusState(
+                    flagProgress = true,
+                    levelUpdate = LevelUpdate.RECOVERY,
+                    tableUpdate = "tb_equip",
+                    currentProgress = updatePercentage(1f, 1f, 7f)
+                )
+            )
+            assertEquals(
+                resultList[1],
+                UpdateStatusState(
+                    flagProgress = true,
+                    levelUpdate = LevelUpdate.CLEAN,
+                    tableUpdate = "tb_equip",
+                    currentProgress = updatePercentage(2f, 1f, 7f)
+                )
+            )
+            assertEquals(
+                resultList[2],
+                UpdateStatusState(
+                    flagProgress = true,
+                    levelUpdate = LevelUpdate.SAVE,
+                    tableUpdate = "tb_equip",
+                    currentProgress = updatePercentage(3f, 1f, 7f)
+                )
+            )
+        }
+
+}

@@ -3,7 +3,9 @@ package br.com.usinasantafe.cav.di.provider
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.room.Room
 import androidx.work.WorkManager
+import br.com.usinasantafe.cav.external.room.dao.DatabaseRoom
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -49,6 +51,13 @@ object PersistenceModuleTest {
         .addConverterFactory(GsonConverterFactory.create())
         .client(client)
         .build()
+
+    @Singleton
+    @Provides
+    fun provideRoom(@ApplicationContext appContext: Context): DatabaseRoom {
+        return Room.inMemoryDatabaseBuilder(
+            appContext, DatabaseRoom::class.java).allowMainThreadQueries().build()
+    }
 
     @Singleton
     @Provides

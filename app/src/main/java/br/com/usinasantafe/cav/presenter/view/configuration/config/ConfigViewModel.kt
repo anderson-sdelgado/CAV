@@ -6,16 +6,20 @@ import br.com.usinasantafe.cav.domain.usecases.config.GetConfig
 import br.com.usinasantafe.cav.domain.usecases.config.SaveConfig
 import br.com.usinasantafe.cav.domain.usecases.config.SendConfig
 import br.com.usinasantafe.cav.domain.usecases.config.SetFinishUpdateAllTable
+import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableColab
+import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableEquip
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.LevelUpdate
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
 import br.com.usinasantafe.cav.utils.UpdateStatusState
+import br.com.usinasantafe.cav.utils.executeUpdateSteps
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import br.com.usinasantafe.cav.utils.onFailureEmit
 import br.com.usinasantafe.cav.utils.onFailureHandled
 import br.com.usinasantafe.cav.utils.onFailureUpdate
 import br.com.usinasantafe.cav.utils.percentage
 import br.com.usinasantafe.cav.utils.required
+import br.com.usinasantafe.cav.utils.sizeUpdate
 import br.com.usinasantafe.cav.utils.withFailure
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -42,9 +46,11 @@ data class ConfigState(
 @HiltViewModel
 class ConfigViewModel @Inject constructor(
     private val getConfig: GetConfig,
-    private val saveConfig: SaveConfig,
     private val sendConfig: SendConfig,
-    private val setFinishUpdateAllTable: SetFinishUpdateAllTable
+    private val saveConfig: SaveConfig,
+    private val setFinishUpdateAllTable: SetFinishUpdateAllTable,
+    private val updateTableColab: UpdateTableColab,
+    private val updateTableEquip: UpdateTableEquip
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ConfigState())
@@ -159,5 +165,22 @@ class ConfigViewModel @Inject constructor(
                 .onFailureEmit(this, state, getClassAndMethod(), Errors.TOKEN)
     }
 
-    suspend fun updateAllDatabase(): Flow<ConfigState> = flow {}
+    suspend fun updateAllDatabase(): Flow<ConfigState> =
+        executeUpdateSteps(
+            steps = listUpdate(),
+            getState = { _uiState.value },
+            getStatus = { it.status },
+            copyStateWithStatus = { state, status -> state.copy(status = status) },
+            classAndMethod = getClassAndMethod(),
+            flagUpdateFinish = false
+        )
+
+    suspend fun listUpdate() : List<Flow<UpdateStatusState>> {
+        val sizeAll = sizeUpdate(2f)
+        val list = mutableListOf<Flow<UpdateStatusState>>()
+        var count = 0f
+        list.add(updateTableColab(sizeAll, ++count))
+        list.add(updateTableEquip(sizeAll, ++count))
+        return list
+    }
 }
