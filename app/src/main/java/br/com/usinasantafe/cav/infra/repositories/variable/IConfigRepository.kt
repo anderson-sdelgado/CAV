@@ -8,6 +8,8 @@ import br.com.usinasantafe.cav.infra.models.retrofit.variable.entityToRetrofitMo
 import br.com.usinasantafe.cav.infra.models.retrofit.variable.retrofitToEntity
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.entityToSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.sharedPreferencesModelToEntity
+import br.com.usinasantafe.cav.lib.FlagUpdate
+import br.com.usinasantafe.cav.lib.StatusSend
 import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -45,6 +47,21 @@ class IConfigRepository @Inject constructor(
         call(getClassAndMethod()) {
             val sharedPreferencesModel = entity.entityToSharedPreferencesModel()
             configSharedPreferencesDatasource.save(sharedPreferencesModel).getOrThrow()
+        }
+
+    override suspend fun getFlagUpdate(): Result<Boolean> =
+        call(getClassAndMethod()) {
+            configSharedPreferencesDatasource.getFlagUpdate().getOrThrow()
+        }
+
+    override suspend fun setFlagUpdate(): EmptyResult =
+        call(getClassAndMethod()) {
+            configSharedPreferencesDatasource.setFlagUpdate().getOrThrow()
+        }
+
+    override suspend fun getStatusSend(): Result<StatusSend> =
+        call(getClassAndMethod()) {
+            configSharedPreferencesDatasource.getStatusSend().getOrThrow()
         }
 
 }

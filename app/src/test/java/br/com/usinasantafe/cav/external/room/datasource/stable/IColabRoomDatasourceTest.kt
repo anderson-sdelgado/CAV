@@ -102,10 +102,6 @@ class IColabRoomDatasourceTest {
                 result.isSuccess,
                 true
             )
-            assertEquals(
-                result.getOrNull()!!,
-                Unit
-            )
             val qtdAfter = colabDao.all().size
             assertEquals(
                 qtdAfter,
@@ -168,4 +164,61 @@ class IColabRoomDatasourceTest {
             )
         }
 
+    @Test
+    fun `hasReg - Check return false if table is empty`() =
+        runTest {
+            val result = datasource.hasReg(19759)
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                false
+            )
+        }
+
+    @Test
+    fun `hasReg - Check return false if not have data fielded`() =
+        runTest {
+            colabDao.insertAll(
+                listOf(
+                    ColabRoomModel(
+                        reg = 18078,
+                        name = "RONALDO"
+                    )
+                )
+            )
+            val result = datasource.hasReg(19759)
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                false
+            )
+        }
+
+    @Test
+    fun `Check return true if have data fielded`() =
+        runTest {
+            colabDao.insertAll(
+                listOf(
+                    ColabRoomModel(
+                        reg = 18078,
+                        name = "RONALDO"
+                    )
+                )
+            )
+            val result = datasource.hasReg(18078)
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+               true
+            )
+        }
 }

@@ -63,7 +63,8 @@ class ConfigViewModel @Inject constructor(
     }
 
     fun setCloseDialog() = updateState {
-        copy(status = status.copy(flagDialog = false, flagFailure = false))
+        val flag = (status.levelUpdate == LevelUpdate.FINISH_UPDATE_COMPLETED)
+        copy(status = status.copy(flagDialog = false, flagFailure = false), flagAccess = flag)
     }
 
     fun onNumberChanged(v: String) = updateState { copy(number = v) }

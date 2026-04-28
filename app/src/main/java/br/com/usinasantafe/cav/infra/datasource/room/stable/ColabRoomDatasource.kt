@@ -6,4 +6,5 @@ import br.com.usinasantafe.cav.utils.EmptyResult
 interface ColabRoomDatasource {
     suspend fun addAll(list: List<ColabRoomModel>): EmptyResult
     suspend fun deleteAll(): EmptyResult
+    suspend fun hasReg(reg: Long): Result<Boolean>
 }

@@ -9,5 +9,5 @@ data class Config(
     var idServ: Int? = null,
     var version: String? = null,
     var statusSend: StatusSend = StatusSend.STARTED,
-    val flagUpdate: FlagUpdate = FlagUpdate.OUTDATED,
+    val flagUpdate: Boolean = false,
 )

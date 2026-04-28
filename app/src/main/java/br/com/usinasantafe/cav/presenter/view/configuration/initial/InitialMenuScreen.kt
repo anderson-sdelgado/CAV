@@ -146,6 +146,14 @@ fun InitialMenuContent(
             )
         }
     }
+
+
+    LaunchedEffect(flagAccess) {
+        if(flagAccess) {
+//            onNavOperator()
+        }
+    }
+
 }
 
 @Composable

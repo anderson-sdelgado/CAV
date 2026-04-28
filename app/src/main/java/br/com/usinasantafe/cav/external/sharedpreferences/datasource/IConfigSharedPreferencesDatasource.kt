@@ -6,6 +6,7 @@ import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.ConfigSharedPr
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.ConfigSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.sharedPreferencesModelToEntity
 import br.com.usinasantafe.cav.lib.BASE_SHARED_PREFERENCES_TABLE_CONFIG
+import br.com.usinasantafe.cav.lib.StatusSend
 import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import br.com.usinasantafe.cav.utils.required
@@ -54,6 +55,24 @@ class IConfigSharedPreferencesDatasource @Inject constructor(
     override suspend fun getPassword(): Result<String> =
         result(getClassAndMethod()) {
             get().getOrThrow()::password.required()
+        }
+
+    override suspend fun setFlagUpdate(): EmptyResult =
+        result(getClassAndMethod()) {
+            val model = get().getOrThrow()
+            model.flagUpdate = true
+            model.statusSend = StatusSend.SENT
+            save(model).getOrThrow()
+        }
+
+    override suspend fun getFlagUpdate(): Result<Boolean> =
+        result(getClassAndMethod()) {
+            get().getOrThrow().flagUpdate
+        }
+
+    override suspend fun getStatusSend(): Result<StatusSend> =
+        result(getClassAndMethod()) {
+            get().getOrThrow().statusSend
         }
 
 }

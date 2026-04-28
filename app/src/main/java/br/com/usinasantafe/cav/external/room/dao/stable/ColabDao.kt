@@ -18,4 +18,7 @@ interface ColabDao {
     @Query("SELECT * FROM $TB_COLAB")
     suspend fun all(): List<ColabRoomModel>
 
+    @Query("SELECT EXISTS(SELECT 1 FROM $TB_COLAB WHERE reg = :reg)")
+    suspend fun hasReg(reg: Long): Boolean
+
 }

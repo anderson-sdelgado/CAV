@@ -4,6 +4,7 @@ import androidx.navigation.NavHostController
 import br.com.usinasantafe.cav.presenter.Screens.CONFIG_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.INITIAL_MENU_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.PASSWORD_SCREEN
+import br.com.usinasantafe.cav.presenter.Screens.REG_ATTENDANT_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.SPLASH_SCREEN
 
 object Screens {
@@ -11,6 +12,7 @@ object Screens {
     const val INITIAL_MENU_SCREEN = "initialMenuScreen"
     const val PASSWORD_SCREEN = "passwordScreen"
     const val CONFIG_SCREEN = "configScreen"
+    const val REG_ATTENDANT_SCREEN = "regAttendantScreen"
 }
 
 object Routes {
@@ -18,6 +20,7 @@ object Routes {
     const val INITIAL_MENU_ROUTE = INITIAL_MENU_SCREEN
     const val PASSWORD_ROUTE = PASSWORD_SCREEN
     const val CONFIG_ROUTE = CONFIG_SCREEN
+    const val REG_ATTENDANT_ROUTE = REG_ATTENDANT_SCREEN
 }
 
 class NavigationActions(private val navController: NavHostController) {

@@ -11,7 +11,7 @@ data class ConfigSharedPreferencesModel(
     var idServ: Int? = null,
     var version: String? = null,
     var statusSend: StatusSend = StatusSend.STARTED,
-    val flagUpdate: FlagUpdate = FlagUpdate.OUTDATED,
+    var flagUpdate: Boolean = false,
 )
 
 fun ConfigSharedPreferencesModel.sharedPreferencesModelToEntity(): Config {

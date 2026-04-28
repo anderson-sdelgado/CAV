@@ -22,4 +22,9 @@ class IColabRoomDatasource @Inject constructor(
             colabDao.deleteAll()
         }
 
+    override suspend fun hasReg(reg: Long): Result<Boolean> =
+        result(getClassAndMethod()) {
+            colabDao.hasReg(reg)
+        }
+
 }

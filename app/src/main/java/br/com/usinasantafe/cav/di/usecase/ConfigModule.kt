@@ -31,4 +31,8 @@ interface ConfigModule {
     @Singleton
     fun bindSetFinishUpdateAllTable(usecase: ISetFinishUpdateAllTable): SetFinishUpdateAllTable
 
+    @Binds
+    @Singleton
+    fun bindCheckAccessInitial(usecase: ICheckAccessInitial): CheckAccessInitial
+
 }

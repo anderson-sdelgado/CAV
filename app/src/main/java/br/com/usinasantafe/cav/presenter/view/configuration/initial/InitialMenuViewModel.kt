@@ -2,7 +2,11 @@ package br.com.usinasantafe.cav.presenter.view.configuration.initial
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.usinasantafe.cav.domain.usecases.common.GetStatusSend
+import br.com.usinasantafe.cav.domain.usecases.config.CheckAccessInitial
 import br.com.usinasantafe.cav.lib.StatusSend
+import br.com.usinasantafe.cav.utils.getClassAndMethod
+import br.com.usinasantafe.cav.utils.onFailureHandled
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,6 +24,8 @@ data class InitialMenuState(
 
 @HiltViewModel
 class InitialMenuViewModel @Inject constructor(
+    private val getStatusSend: GetStatusSend,
+    private val checkAccessInitial: CheckAccessInitial
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(InitialMenuState())
@@ -34,11 +40,19 @@ class InitialMenuViewModel @Inject constructor(
     fun setCloseDialog() = updateState { copy(flagDialog = false) }
 
     fun recoverStatusSend() = viewModelScope.launch {
-
+        runCatching {
+            getStatusSend().getOrThrow()
+        }
+            .onSuccess { updateState { copy(statusSend = it) } }
+            .onFailureHandled(getClassAndMethod(), ::onError)
     }
 
     fun checkAccess() = viewModelScope.launch {
-
+        runCatching {
+            checkAccessInitial().getOrThrow()
+        }
+            .onSuccess { updateState { copy(flagDialog = !it, flagAccess = it) } }
+            .onFailureHandled(getClassAndMethod(), ::onError)
     }
 
     private fun onError(failure: String) = updateState { copy(flagDialog = true, failure = failure, flagFailure = true) }

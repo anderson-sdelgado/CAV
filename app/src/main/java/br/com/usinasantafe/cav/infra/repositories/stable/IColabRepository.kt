@@ -34,4 +34,9 @@ class IColabRepository @Inject constructor(
             modelList.map { it.retrofitModelToEntity() }
         }
 
+    override suspend fun hasReg(reg: Long): Result<Boolean> =
+        call(getClassAndMethod()) {
+            colabRoomDatasource.hasReg(reg).getOrThrow()
+        }
+
 }

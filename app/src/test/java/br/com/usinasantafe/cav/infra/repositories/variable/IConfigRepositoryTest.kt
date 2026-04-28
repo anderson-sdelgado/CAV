@@ -6,6 +6,7 @@ import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.ConfigSharedPr
 import br.com.usinasantafe.cav.infra.models.retrofit.variable.ConfigRetrofitModelInput
 import br.com.usinasantafe.cav.infra.models.retrofit.variable.ConfigRetrofitModelOutput
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.ConfigSharedPreferencesModel
+import br.com.usinasantafe.cav.lib.StatusSend
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.test.runTest
 import org.mockito.Mockito.mock
@@ -391,6 +392,136 @@ class IConfigRepositoryTest {
             assertEquals(
                 result.isSuccess,
                 true
+            )
+        }
+
+    @Test
+    fun `getFlagUpdate - Check return failure if have error in ConfigSharedPreferencesDatasource getFlagUpdate`() =
+        runTest {
+            whenever(
+                configSharedPreferencesDatasource.getFlagUpdate()
+            ).thenReturn(
+                resultFailure(
+                    "IConfigSharedPreferencesDatasource.getFlagUpdate",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.getFlagUpdate()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IConfigRepository.getFlagUpdate -> IConfigSharedPreferencesDatasource.getFlagUpdate"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `getFlagUpdate - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                configSharedPreferencesDatasource.getFlagUpdate()
+            ).thenReturn(
+                Result.success(false)
+            )
+            val result = repository.getFlagUpdate()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                false
+            )
+        }
+
+    @Test
+    fun `setFlagUpdate - Check return failure if have error in ConfigSharedPreferencesDatasource setFlagUpdate`() =
+        runTest {
+            whenever(
+                configSharedPreferencesDatasource.setFlagUpdate()
+            ).thenReturn(
+                resultFailure(
+                    "IConfigSharedPreferencesDatasource.setFlagUpdate",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.setFlagUpdate()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IConfigRepository.setFlagUpdate -> IConfigSharedPreferencesDatasource.setFlagUpdate"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `setFlagUpdate - Check return correct if function execute successfully`() =
+        runTest {
+            val result = repository.setFlagUpdate()
+            verify(configSharedPreferencesDatasource, atLeastOnce()).setFlagUpdate()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+        }
+
+    @Test
+    fun `getStatusSend - Check return failure if have error in ConfigSharedPreferencesDatasource getStatusSend`() =
+        runTest {
+            whenever(
+                configSharedPreferencesDatasource.getStatusSend()
+            ).thenReturn(
+                resultFailure(
+                    "IConfigSharedPreferencesDatasource.getStatusSend",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.getStatusSend()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IConfigRepository.getStatusSend -> IConfigSharedPreferencesDatasource.getStatusSend"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `getStatusSend - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                configSharedPreferencesDatasource.getStatusSend()
+            ).thenReturn(
+                Result.success(StatusSend.STARTED)
+            )
+            val result = repository.getStatusSend()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                StatusSend.STARTED
             )
         }
 

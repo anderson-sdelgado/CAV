@@ -205,4 +205,49 @@ class IColabRepositoryTest {
             )
         }
 
+    @Test
+    fun `hasReg - Check return failure if have error in ColabRoomDatasource hasReg`() =
+        runTest {
+            whenever(
+                colabRoomDatasource.hasReg(19759)
+            ).thenReturn(
+                resultFailure(
+                    "IColabRoomDatasource.hasReg",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.hasReg(19759)
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IColabRepository.hasReg -> IColabRoomDatasource.hasReg"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `hasReg - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                colabRoomDatasource.hasReg(19759)
+            ).thenReturn(
+                Result.success(false)
+            )
+            val result = repository.hasReg(19759)
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                false
+            )
+        }
 }
