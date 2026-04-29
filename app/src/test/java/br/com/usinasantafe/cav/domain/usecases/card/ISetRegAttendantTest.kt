@@ -1,18 +1,20 @@
-package br.com.usinasantafe.cav.domain.usecases.common
+package br.com.usinasantafe.cav.domain.usecases.card
 
-import br.com.usinasantafe.cav.domain.repositories.stable.ColabRepository
+import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.test.runTest
 import org.mockito.Mockito.mock
+import org.mockito.kotlin.atLeastOnce
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class IHasRegColabTest {
+class ISetRegAttendantTest {
 
-    private val colabRepository = mock<ColabRepository>()
-    private val usecase = IHasRegColab(
-        colabRepository = colabRepository
+    private val cardRepository = mock<CardRepository>()
+    private val usecase = ISetRegAttendant(
+        cardRepository = cardRepository
     )
 
     @Test
@@ -25,7 +27,7 @@ class IHasRegColabTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IHasRegColab -> toLong"
+                "ISetRegAttendant -> toLong"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -34,13 +36,13 @@ class IHasRegColabTest {
         }
 
     @Test
-    fun `Check return failure if have error in ColabRepository hasReg`() =
+    fun `Check return failure if have error in CardRepository setRegAttendant`() =
         runTest {
             whenever(
-                colabRepository.hasReg(19759)
+                cardRepository.setRegAttendant(19759)
             ).thenReturn(
                 resultFailure(
-                    "IColabRepository.hasReg",
+                    "ICardRepository.setRegAttendant",
                     "-",
                     Exception()
                 )
@@ -52,7 +54,7 @@ class IHasRegColabTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IHasRegColab -> IColabRepository.hasReg"
+                "ISetRegAttendant -> ICardRepository.setRegAttendant"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -63,19 +65,11 @@ class IHasRegColabTest {
     @Test
     fun `Check return correct if function execute successfully`() =
         runTest {
-            whenever(
-                colabRepository.hasReg(19759)
-            ).thenReturn(
-                Result.success(false)
-            )
             val result = usecase("19759")
+            verify(cardRepository, atLeastOnce()).setRegAttendant(19759)
             assertEquals(
                 result.isSuccess,
                 true
-            )
-            assertEquals(
-                result.getOrNull()!!,
-                false
             )
         }
 

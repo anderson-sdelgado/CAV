@@ -213,4 +213,96 @@ class IEquipRepositoryTest {
             )
         }
 
+    @Test
+    fun `hasNro - Check return failure if have error in EquipRoomDatasource hasNro`() =
+        runTest {
+            whenever(
+                equipRoomDatasource.hasNro(2200)
+            ).thenReturn(
+                resultFailure(
+                    "IEquipRoomDatasource.hasNro",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.hasNro(2200)
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IEquipRepository.hasNro -> IEquipRoomDatasource.hasNro"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `hasNro - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                equipRoomDatasource.hasNro(200)
+            ).thenReturn(
+                Result.success(false)
+            )
+            val result = repository.hasNro(200)
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                false
+            )
+        }
+
+    @Test
+    fun `getIdByNro - Check return failure if have error in EquipRoomDatasource getIdByNro`() =
+        runTest {
+            whenever(
+                equipRoomDatasource.getIdByNro(1)
+            ).thenReturn(
+                resultFailure(
+                    "IEquipRoomDatasource.getIdByNro",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.getIdByNro(1)
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IEquipRepository.getIdByNro -> IEquipRoomDatasource.getIdByNro"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `getIdByNro - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                equipRoomDatasource.getIdByNro(200)
+            ).thenReturn(
+                Result.success(1)
+            )
+            val result = repository.getIdByNro(200)
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                1
+            )
+        }
+
 }

@@ -7,4 +7,6 @@ interface EquipRepository {
     suspend fun addAll(list: List<Equip>): EmptyResult
     suspend fun deleteAll(): EmptyResult
     suspend fun listAll(token: String): Result<List<Equip>>
+    suspend fun hasNro(nro: Long): Result<Boolean>
+    suspend fun getIdByNro(nro: Long): Result<Int>
 }

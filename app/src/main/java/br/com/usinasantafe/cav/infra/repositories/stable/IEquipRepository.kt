@@ -34,4 +34,14 @@ class IEquipRepository @Inject constructor(
             modelList.map { it.retrofitModelToEntity() }
         }
 
+    override suspend fun hasNro(nro: Long): Result<Boolean> =
+        call(getClassAndMethod()) {
+            equipRoomDatasource.hasNro(nro).getOrThrow()
+        }
+
+    override suspend fun getIdByNro(nro: Long): Result<Int> =
+        call(getClassAndMethod()) {
+            equipRoomDatasource.getIdByNro(nro).getOrThrow()
+        }
+
 }

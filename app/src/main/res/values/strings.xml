@@ -42,4 +42,6 @@
     <string name="text_comma">,</string>
     <string name="text_pattern_clean">APAGAR</string>
     <string name="text_pattern_update">ATUALIZAR DADOS</string>
+    <string name="text_title_car">NRO VIATURA</string>
+    <string name="text_title_card">FICHA</string>
 </resources>

@@ -1,4 +1,4 @@
-package br.com.usinasantafe.cav.presenter.view.note.attendant
+package br.com.usinasantafe.cav.presenter.view.card.car
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -28,22 +27,20 @@ import br.com.usinasantafe.cav.presenter.theme.TextFieldDesign
 import br.com.usinasantafe.cav.utils.UpdateStatusState
 
 @Composable
-fun AttendantScreen(
-    viewModel: AttendantViewModel = hiltViewModel(),
-    onNavInitialMenu: () -> Unit,
-    onNavEquip: () -> Unit
+fun CarScreen(
+    viewModel: CarViewModel = hiltViewModel(),
+    onNavAttendant: () -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-            AttendantContent(
-                regColab = uiState.regColab,
+            CarContent(
+                nroEquip = uiState.nroEquip,
                 setTextField = viewModel::setTextField,
                 flagAccess = uiState.flagAccess,
                 setCloseDialog = viewModel::setCloseDialog,
                 status = uiState.status,
-                onNavInitialMenu = onNavInitialMenu,
-                onNavEquip = onNavEquip,
+                onNavAttendant = onNavAttendant,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -51,14 +48,13 @@ fun AttendantScreen(
 }
 
 @Composable
-fun AttendantContent(
-    regColab: String,
+fun CarContent(
+    nroEquip: String,
     setTextField: (String, TypeButton) -> Unit,
     flagAccess: Boolean,
     setCloseDialog: () -> Unit,
     status: UpdateStatusState,
-    onNavInitialMenu: () -> Unit,
-    onNavEquip: () -> Unit,
+    onNavAttendant: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -67,43 +63,37 @@ fun AttendantContent(
     ) {
         TitleDesign(
             text = stringResource(
-                id = R.string.text_title_attendant
+                id = R.string.text_title_car
             )
         )
         TextFieldDesign(
-            value = regColab
+            value = nroEquip
         )
         Spacer(modifier = Modifier.padding(vertical = 8.dp))
         ButtonsGenericNumeric(
             setActionButton = setTextField
         )
         BackHandler {
-            onNavInitialMenu()
+            onNavAttendant()
         }
 
         if (status.flagDialog) {
-            MsgUpdate(status = status, setCloseDialog = setCloseDialog, value = stringResource(id = R.string.text_title_attendant))
+            MsgUpdate(status = status, setCloseDialog = setCloseDialog, value = stringResource(id = R.string.text_title_car))
         }
 
         if (status.flagProgress) {
             Progress(status)
         }
     }
-
-    LaunchedEffect(flagAccess) {
-        if(flagAccess) {
-            onNavEquip()
-        }
-    }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun AttendantPagePreview() {
+fun CarPagePreview() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            AttendantContent(
-                regColab = "",
+            CarContent(
+                nroEquip = "",
                 setTextField = { _, _ -> },
                 flagAccess = false,
                 setCloseDialog = {},
@@ -117,8 +107,7 @@ fun AttendantPagePreview() {
                     tableUpdate = "",
                     currentProgress = 0f,
                 ),
-                onNavInitialMenu = {},
-                onNavEquip = {},
+                onNavAttendant = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -127,11 +116,11 @@ fun AttendantPagePreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun AttendantPagePreviewWithData() {
+fun CarPagePreviewWithData() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            AttendantContent(
-                regColab = "19759",
+            CarContent(
+                nroEquip = "2200",
                 setTextField = { _, _ -> },
                 flagAccess = false,
                 setCloseDialog = {},
@@ -145,8 +134,7 @@ fun AttendantPagePreviewWithData() {
                     tableUpdate = "",
                     currentProgress = 0f,
                 ),
-                onNavInitialMenu = {},
-                onNavEquip = {},
+                onNavAttendant = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -155,11 +143,11 @@ fun AttendantPagePreviewWithData() {
 
 @Preview(showBackground = true)
 @Composable
-fun AttendantPagePreviewWithMsgEmpty() {
+fun CarPagePreviewWithMsgEmpty() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            AttendantContent(
-                regColab = "",
+            CarContent(
+                nroEquip = "2200",
                 setTextField = { _, _ -> },
                 flagAccess = false,
                 setCloseDialog = {},
@@ -173,8 +161,7 @@ fun AttendantPagePreviewWithMsgEmpty() {
                     tableUpdate = "",
                     currentProgress = 0f,
                 ),
-                onNavInitialMenu = {},
-                onNavEquip = {},
+                onNavAttendant = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -183,11 +170,11 @@ fun AttendantPagePreviewWithMsgEmpty() {
 
 @Preview(showBackground = true)
 @Composable
-fun AttendantPagePreviewUpdate() {
+fun CarPagePreviewUpdate() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            AttendantContent(
-                regColab = "",
+            CarContent(
+                nroEquip = "2200",
                 setTextField = { _, _ -> },
                 flagAccess = false,
                 setCloseDialog = {},
@@ -197,12 +184,11 @@ fun AttendantPagePreviewUpdate() {
                     flagFailure = false,
                     errors = Errors.FIELD_EMPTY,
                     levelUpdate = LevelUpdate.RECOVERY,
-                    tableUpdate = "tb_colab",
+                    tableUpdate = "tb_equip",
                     flagProgress = true,
                     currentProgress = 0.3333334f,
                 ),
-                onNavInitialMenu = {},
-                onNavEquip = {},
+                onNavAttendant = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

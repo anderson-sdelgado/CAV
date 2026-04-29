@@ -22,4 +22,14 @@ class IEquipRoomDatasource @Inject constructor(
             equipDao.deleteAll()
         }
 
+    override suspend fun hasNro(nro: Long): Result<Boolean> =
+        result(getClassAndMethod()) {
+            equipDao.hasNro(nro)
+        }
+
+    override suspend fun getIdByNro(nro: Long): Result<Int> =
+        result(getClassAndMethod()) {
+            equipDao.getIdByNro(nro).takeIf { it != 0 } ?: throw NoSuchElementException("nro $nro not found")
+        }
+
 }

@@ -1,9 +1,9 @@
-package br.com.usinasantafe.cav.presenter.view.note.attendant
+package br.com.usinasantafe.cav.presenter.view.card.attendant
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.usinasantafe.cav.domain.usecases.common.HasRegColab
-import br.com.usinasantafe.cav.domain.usecases.note.SetRegAttendant
+import br.com.usinasantafe.cav.domain.usecases.card.SetRegAttendant
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableColab
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.TypeButton
@@ -71,8 +71,8 @@ class AttendantViewModel @Inject constructor(
                 updateState { withFailure(getClassAndMethod(), Errors.FIELD_EMPTY) }
                 return@launch
             }
-            val check = hasRegColab(uiState.value.regColab).getOrThrow()
-            if (check) setRegAttendant(uiState.value.regColab).getOrThrow()
+            val check = hasRegColab(state.regColab).getOrThrow()
+            if (check) setRegAttendant(state.regColab).getOrThrow()
             check
         }
             .onSuccess {

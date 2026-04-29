@@ -182,4 +182,105 @@ class IEquipRoomDatasourceTest {
             )
         }
 
+    @Test
+    fun `hasNro - Check return false if table is empty`() =
+        runTest {
+            val result = datasource.hasNro(200)
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                false
+            )
+        }
+
+    @Test
+    fun `hasNro - Check return false if not have data fielded`() =
+        runTest {
+            equipDao.insertAll(
+                listOf(
+                    EquipRoomModel(
+                        id = 1,
+                        nro = 100,
+                        desc = "TRATOR"
+                    )
+                )
+            )
+            val result = datasource.hasNro(200)
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                false
+            )
+        }
+
+    @Test
+    fun `hasNro - Check return true if have data fielded`() =
+        runTest {
+            equipDao.insertAll(
+                listOf(
+                    EquipRoomModel(
+                        id = 2,
+                        nro = 200,
+                        desc = "TRATOR"
+                    )
+                )
+            )
+            val result = datasource.hasNro(200)
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                true
+            )
+        }
+
+    @Test
+    fun `getIdByNro - Check return failure if not have data fielded`() =
+        runTest {
+            val result = datasource.getIdByNro(200)
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IEquipRoomDatasource.getIdByNro"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.util.NoSuchElementException: nro 200 not found"
+            )
+        }
+
+    @Test
+    fun `getIdByNro - Check return correct if have data fielded`() =
+        runTest {
+            equipDao.insertAll(
+                listOf(
+                    EquipRoomModel(
+                        id = 2,
+                        nro = 200,
+                        desc = "TRATOR"
+                    )
+                )
+            )
+            val result = datasource.getIdByNro(200)
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                2
+            )
+        }
+
 }

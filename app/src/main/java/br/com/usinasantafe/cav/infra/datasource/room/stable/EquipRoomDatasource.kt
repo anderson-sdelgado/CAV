@@ -6,4 +6,6 @@ import br.com.usinasantafe.cav.utils.EmptyResult
 interface EquipRoomDatasource {
     suspend fun addAll(list: List<EquipRoomModel>): EmptyResult
     suspend fun deleteAll(): EmptyResult
+    suspend fun hasNro(nro: Long): Result<Boolean>
+    suspend fun getIdByNro(nro: Long): Result<Int>
 }

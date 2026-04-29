@@ -1,12 +1,13 @@
-package br.com.usinasantafe.cav.presenter.view.note.attendant
+package br.com.usinasantafe.cav.presenter.view.card.car
 
 import br.com.usinasantafe.cav.MainCoroutineRule
-import br.com.usinasantafe.cav.domain.usecases.common.HasRegColab
-import br.com.usinasantafe.cav.domain.usecases.note.SetRegAttendant
-import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableColab
+import br.com.usinasantafe.cav.domain.usecases.card.SetIdCar
+import br.com.usinasantafe.cav.domain.usecases.common.HasNroEquip
+import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableEquip
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.LevelUpdate
 import br.com.usinasantafe.cav.lib.TypeButton
+import br.com.usinasantafe.cav.presenter.view.card.attendant.AttendantState
 import br.com.usinasantafe.cav.utils.UpdateStatusState
 import br.com.usinasantafe.cav.utils.percentage
 import br.com.usinasantafe.cav.utils.resultFailure
@@ -21,19 +22,19 @@ import org.mockito.kotlin.whenever
 import kotlin.test.assertEquals
 
 @ExperimentalCoroutinesApi
-class AttendantViewModelTest {
+class CarViewModelTest {
 
     @ExperimentalCoroutinesApi
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
-    private val updateTableColab = mock<UpdateTableColab>()
-    private val hasRegColab = mock<HasRegColab>()
-    private val setRegAttendant = mock<SetRegAttendant>()
-    private val viewModel = AttendantViewModel(
-        updateTableColab = updateTableColab,
-        hasRegColab = hasRegColab,
-        setRegAttendant = setRegAttendant
+    private val updateTableEquip = mock<UpdateTableEquip>()
+    private val hasNroEquip = mock<HasNroEquip>()
+    private val setIdCar = mock<SetIdCar>()
+    private val viewModel = CarViewModel(
+        updateTableEquip = updateTableEquip,
+        hasNroEquip = hasNroEquip,
+        setIdCar = setIdCar
     )
 
     @Test
@@ -44,7 +45,7 @@ class AttendantViewModelTest {
         )
         assertEquals(
             "1",
-            viewModel.uiState.value.regColab
+            viewModel.uiState.value.nroEquip
         )
     }
 
@@ -71,7 +72,7 @@ class AttendantViewModelTest {
             TypeButton.NUMERIC
         )
         assertEquals(
-            viewModel.uiState.value.regColab,
+            viewModel.uiState.value.nroEquip,
             "191"
         )
     }
@@ -93,10 +94,10 @@ class AttendantViewModelTest {
     }
 
     @Test
-    fun `setTextField - Check return failure usecase if have error in usecase CleanColab`() =
+    fun `setTextField - Check return failure usecase if have error in usecase CleanEquip`() =
         runTest {
             whenever(
-                updateTableColab(
+                updateTableEquip(
                     count = 1f,
                     sizeAll = 4f
                 )
@@ -105,14 +106,14 @@ class AttendantViewModelTest {
                     UpdateStatusState(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
-                        tableUpdate = "tb_colab",
+                        tableUpdate = "tb_equip",
                         currentProgress = percentage(1f, 4f)
                     ),
                     UpdateStatusState(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
-                        failure = "CleanColab -> java.lang.NullPointerException",
+                        failure = "CleanEquip -> java.lang.NullPointerException",
                         currentProgress = 1f,
                     )
                 )
@@ -121,23 +122,23 @@ class AttendantViewModelTest {
             assertEquals(result.count(), 2)
             assertEquals(
                 result[0],
-                AttendantState(
+                CarState(
                     status = UpdateStatusState(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
-                        tableUpdate = "tb_colab",
+                        tableUpdate = "tb_equip",
                         currentProgress = percentage(1f, 4f)
                     )
                 )
             )
             assertEquals(
                 result[1],
-                AttendantState(
+                CarState(
                     status = UpdateStatusState(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
-                        failure = "AttendantViewModel.updateAllDatabase -> CleanColab -> java.lang.NullPointerException",
+                        failure = "CarViewModel.updateAllDatabase -> CleanEquip -> java.lang.NullPointerException",
                         currentProgress = 1f,
                     )
                 )
@@ -152,7 +153,7 @@ class AttendantViewModelTest {
             )
             assertEquals(
                 viewModel.uiState.value.status.failure,
-                "AttendantViewModel.setTextField -> AttendantViewModel.updateAllDatabase -> CleanColab -> java.lang.NullPointerException"
+                "CarViewModel.setTextField -> CarViewModel.updateAllDatabase -> CleanEquip -> java.lang.NullPointerException"
             )
         }
 
@@ -160,7 +161,7 @@ class AttendantViewModelTest {
     fun `setTextField - Check return success in updateAllDatabase`() =
         runTest {
             whenever(
-                updateTableColab(
+                updateTableEquip(
                     count = 1f,
                     sizeAll = 4f
                 )
@@ -169,19 +170,19 @@ class AttendantViewModelTest {
                     UpdateStatusState(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
-                        tableUpdate = "tb_colab",
+                        tableUpdate = "tb_equip",
                         currentProgress = percentage(1f, 4f)
                     ),
                     UpdateStatusState(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.CLEAN,
-                        tableUpdate = "tb_colab",
+                        tableUpdate = "tb_equip",
                         currentProgress = percentage(2f, 4f)
                     ),
                     UpdateStatusState(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.SAVE,
-                        tableUpdate = "tb_colab",
+                        tableUpdate = "tb_equip",
                         currentProgress = percentage(3f, 4f)
                     ),
                 )
@@ -190,40 +191,40 @@ class AttendantViewModelTest {
             assertEquals(result.count(), 4)
             assertEquals(
                 result[0],
-                AttendantState(
+                CarState(
                     status = UpdateStatusState(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
-                        tableUpdate = "tb_colab",
+                        tableUpdate = "tb_equip",
                         currentProgress = percentage(1f, 4f)
                     )
                 )
             )
             assertEquals(
                 result[1],
-                AttendantState(
+                CarState(
                     status = UpdateStatusState(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.CLEAN,
-                        tableUpdate = "tb_colab",
+                        tableUpdate = "tb_equip",
                         currentProgress = percentage(2f, 4f),
                     )
                 )
             )
             assertEquals(
                 result[2],
-                AttendantState(
+                CarState(
                     status = UpdateStatusState(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.SAVE,
-                        tableUpdate = "tb_colab",
+                        tableUpdate = "tb_equip",
                         currentProgress = percentage(3f, 4f),
                     )
                 )
             )
             assertEquals(
                 result[3],
-                AttendantState(
+                CarState(
                     status = UpdateStatusState(
                         flagDialog = true,
                         flagProgress = false,
@@ -264,7 +265,7 @@ class AttendantViewModelTest {
             )
             assertEquals(
                 viewModel.uiState.value.status.failure,
-                "AttendantViewModel.setTextField -> AttendantViewModel.updateState -> AttendantViewModel.set -> FIELD_EMPTY"
+                "CarViewModel.setTextField -> CarViewModel.updateState -> CarViewModel.set -> FIELD_EMPTY"
             )
             assertEquals(
                 viewModel.uiState.value.status.flagProgress,
@@ -277,19 +278,19 @@ class AttendantViewModelTest {
         }
 
     @Test
-    fun `setTextField - Check return failure if have error in usecase HasRegColab`() =
+    fun `setTextField - Check return failure if have error in usecase HasNroEquip`() =
         runTest {
             whenever(
-                hasRegColab("19759")
+                hasNroEquip("200")
             ).thenReturn(
                 resultFailure(
-                    context = "IHasRegColab",
+                    context = "IHasNroEquip",
                     message = "-",
                     cause = Exception()
                 )
             )
             viewModel.setTextField(
-                "19759",
+                "200",
                 TypeButton.NUMERIC
             )
             viewModel.setTextField(
@@ -310,7 +311,7 @@ class AttendantViewModelTest {
             )
             assertEquals(
                 viewModel.uiState.value.status.failure,
-                "AttendantViewModel.setTextField -> AttendantViewModel.set -> IHasRegColab -> java.lang.Exception"
+                "CarViewModel.setTextField -> CarViewModel.set -> IHasNroEquip -> java.lang.Exception"
             )
             assertEquals(
                 viewModel.uiState.value.status.flagProgress,
@@ -323,15 +324,15 @@ class AttendantViewModelTest {
         }
 
     @Test
-    fun `setTextField - Check return false if not have reg in table`() =
+    fun `setTextField - Check return false if not have nro in table`() =
         runTest {
             whenever(
-                hasRegColab("19759")
+                hasNroEquip("200")
             ).thenReturn(
                 Result.success(false)
             )
             viewModel.setTextField(
-                "19759",
+                "200",
                 TypeButton.NUMERIC
             )
             viewModel.setTextField(
@@ -357,24 +358,24 @@ class AttendantViewModelTest {
         }
 
     @Test
-    fun `setTextField - Check return failure if have error in usecase SetRegAttendant`() =
+    fun `setTextField - Check return failure if have error in usecase SetIdCar`() =
         runTest {
             whenever(
-                hasRegColab("19759")
+                hasNroEquip("200")
             ).thenReturn(
                 Result.success(true)
             )
             whenever(
-                setRegAttendant("19759")
+                setIdCar("200")
             ).thenReturn(
                 resultFailure(
-                    context = "ISetRegAttendant",
+                    context = "ISetIdCar",
                     message = "-",
                     cause = Exception()
                 )
             )
             viewModel.setTextField(
-                "19759",
+                "200",
                 TypeButton.NUMERIC
             )
             viewModel.setTextField(
@@ -395,7 +396,7 @@ class AttendantViewModelTest {
             )
             assertEquals(
                 viewModel.uiState.value.status.failure,
-                "AttendantViewModel.setTextField -> AttendantViewModel.set -> ISetRegAttendant -> java.lang.Exception"
+                "CarViewModel.setTextField -> CarViewModel.set -> ISetIdCar -> java.lang.Exception"
             )
             assertEquals(
                 viewModel.uiState.value.status.flagProgress,
@@ -411,14 +412,9 @@ class AttendantViewModelTest {
     fun `setTextField - Check access release if executed successfully`() =
         runTest {
             whenever(
-                hasRegColab("19759")
+                hasNroEquip("200")
             ).thenReturn(
                 Result.success(true)
-            )
-            whenever(
-                setRegAttendant("19759")
-            ).thenReturn(
-                Result.success(Unit)
             )
             viewModel.setTextField(
                 "19759",

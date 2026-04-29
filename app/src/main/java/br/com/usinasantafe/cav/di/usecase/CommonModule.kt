@@ -18,5 +18,13 @@ interface CommonModule {
     @Binds
     @Singleton
     fun bindGetStatusSend(usecase: IGetStatusSend): GetStatusSend
-    
+
+    @Binds
+    @Singleton
+    fun bindHasRegColab(usecase: IHasRegColab): HasRegColab
+
+    @Binds
+    @Singleton
+    fun bindHasNroEquip(usecase: IHasNroEquip): HasNroEquip
+
 }

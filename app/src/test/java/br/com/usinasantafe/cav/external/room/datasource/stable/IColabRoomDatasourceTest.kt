@@ -201,7 +201,7 @@ class IColabRoomDatasourceTest {
         }
 
     @Test
-    fun `Check return true if have data fielded`() =
+    fun `hasReg - Check return true if have data fielded`() =
         runTest {
             colabDao.insertAll(
                 listOf(
