@@ -12,7 +12,7 @@ data class UpdateStatusState(
     val flagFailure: Boolean = false,
     val errors: Errors = Errors.FIELD_EMPTY,
     val failure: String = "",
-    val flagProgress: Boolean = true,
+    val flagProgress: Boolean = false,
     val currentProgress: Float = 0.0f,
     val levelUpdate: LevelUpdate? = null,
     val tableUpdate: String = "",

@@ -13,6 +13,7 @@
     <string name="text_title_password">SENHA</string>
     <string name="text_pattern_ok">OK</string>
     <string name="text_pattern_cancel">CANCELAR</string>
+    <string name="text_pattern_return">RETORNAR</string>
     <string name="text_password_invalid">SENHA INVÁLIDA!</string>
     <string name="text_title_number">NRO APARELHO</string>
     <string name="text_pattern_save">SALVAR</string>
@@ -44,4 +45,10 @@
     <string name="text_pattern_update">ATUALIZAR DADOS</string>
     <string name="text_title_car">NRO VIATURA</string>
     <string name="text_title_card">FICHA</string>
+    <string name="text_local">O LOCAL DO ACIDENTE SERIA ESSE:\n\n ENDEREÇO: \"%1$s\"\n\nLATITUDE: \"%1$s\"\nLONGITUDE: \"%1$s\"?</string>
+    <string name="text_local_selection">Localização Selecionada</string>
+    <string name="text_input_address">Digite o endereço</string>
+    <string name="text_field">Pesquisar</string>
+    <string name="text_capture_local">CAPTURAR LOCALIZAÇÃO</string>
+    <string name="text_local_now">LOCALIZAÇÃO ATUAL</string>
 </resources>

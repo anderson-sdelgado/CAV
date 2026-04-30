@@ -149,6 +149,8 @@ dependencies {
     testImplementation(kotlin("test"))
     androidTestImplementation(kotlin("test"))
     androidTestImplementation(libs.mockito)
+    implementation(libs.google.play.services.location)
+    implementation(libs.google.maps.compose)
 }
 
 kapt {

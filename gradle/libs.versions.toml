@@ -29,6 +29,8 @@ hiltExt = "1.2.0"
 androidxHiltNavigationCompose = "1.2.0"
 core = "1.47.0"
 timber = "5.0.1"
+playServicesLocation = "21.3.0"
+mapsCompose = "6.1.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -75,7 +77,8 @@ androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navig
 hilt-ext-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hiltExt" }
 hilt-ext-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "hiltExt" }
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
-
+google-play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
+google-maps-compose = { group = "com.google.maps.android", name = "maps-compose", version.ref = "mapsCompose" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

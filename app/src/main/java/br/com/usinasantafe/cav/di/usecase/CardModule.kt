@@ -19,4 +19,7 @@ interface CardModule {
     @Singleton
     fun bindSetIdCar(usecase: ISetIdCar): SetIdCar
 
+    @Binds
+    @Singleton
+    fun bindSetLocal(usecase: ISetLocal): SetLocal
 }

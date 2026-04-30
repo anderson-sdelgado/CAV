@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -30,6 +31,7 @@ import br.com.usinasantafe.cav.utils.UpdateStatusState
 fun CarScreen(
     viewModel: CarViewModel = hiltViewModel(),
     onNavAttendant: () -> Unit,
+    onNavCard: () -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -41,6 +43,7 @@ fun CarScreen(
                 setCloseDialog = viewModel::setCloseDialog,
                 status = uiState.status,
                 onNavAttendant = onNavAttendant,
+                onNavCard = onNavCard,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -55,6 +58,7 @@ fun CarContent(
     setCloseDialog: () -> Unit,
     status: UpdateStatusState,
     onNavAttendant: () -> Unit,
+    onNavCard: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -85,6 +89,12 @@ fun CarContent(
             Progress(status)
         }
     }
+
+    LaunchedEffect(flagAccess) {
+        if(flagAccess) {
+            onNavCard()
+        }
+    }
 }
 
 @Preview(showBackground = true)
@@ -108,6 +118,7 @@ fun CarPagePreview() {
                     currentProgress = 0f,
                 ),
                 onNavAttendant = {},
+                onNavCard = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -135,6 +146,7 @@ fun CarPagePreviewWithData() {
                     currentProgress = 0f,
                 ),
                 onNavAttendant = {},
+                onNavCard = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -162,6 +174,7 @@ fun CarPagePreviewWithMsgEmpty() {
                     currentProgress = 0f,
                 ),
                 onNavAttendant = {},
+                onNavCard = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -189,6 +202,7 @@ fun CarPagePreviewUpdate() {
                     currentProgress = 0.3333334f,
                 ),
                 onNavAttendant = {},
+                onNavCard = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

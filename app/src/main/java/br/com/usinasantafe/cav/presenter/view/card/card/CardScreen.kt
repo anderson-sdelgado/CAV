@@ -1,6 +1,7 @@
 package br.com.usinasantafe.cav.presenter.view.card.card
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -51,295 +53,88 @@ fun CardContent(
                 id = R.string.text_title_card
             )
         )
-        Row(
-            modifier = Modifier
-                .clip(RoundedCornerShape(12.dp))
-                .background(Color.LightGray.copy(alpha = 0.2f))
-                .padding(12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-            ) {
-                Text(
-                    "ATENDENTE",
-                    fontWeight = FontWeight.Bold
-                )
-                Text("19759 - ANDERSON DA SILVA DELGADO")
+        LazyColumn(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            item {
+                Row(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(Color.LightGray.copy(alpha = 0.2f))
+                        .padding(12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                    ) {
+                        Text(
+                            "ATENDENTE",
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text("19759 - ANDERSON DA SILVA DELGADO")
+                    }
+                    Button(
+                        onClick = {},
+                    ) {
+                        Text("EDITAR")
+                    }
+                }
             }
-            Button(
-                onClick = {},
-            ) {
-                Text("EDITAR")
+            item {
+                Row(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(Color.LightGray.copy(alpha = 0.2f))
+                        .padding(12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                    ) {
+                        Text(
+                            "Viatura",
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text("200 - AMBULANCIA")
+                    }
+                    Button(
+                        onClick = {},
+                    ) {
+                        Text("EDITAR")
+                    }
+                }
+            }
+            item {
+                Row(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(Color.LightGray.copy(alpha = 0.2f))
+                        .padding(12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                    ) {
+                        Text(
+                            "Local",
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text("")
+                    }
+                    Button(
+                        onClick = {},
+                    ) {
+                        Text("EDITAR")
+                    }
+                }
             }
         }
-        Spacer(modifier = Modifier.padding(vertical = 4.dp))
-        Row(
-            modifier = Modifier
-                .clip(RoundedCornerShape(12.dp))
-                .background(Color.LightGray.copy(alpha = 0.2f))
-                .padding(12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-            ) {
-                Text(
-                    "Viatura",
-                    fontWeight = FontWeight.Bold
-                )
-                Text("200 - AMBULANCIA")
-            }
-            Button(
-                onClick = {},
-            ) {
-                Text("EDITAR")
-            }
-        }
-        Spacer(modifier = Modifier.padding(vertical = 4.dp))
 
-        Row(
-            modifier = Modifier
-                .clip(RoundedCornerShape(12.dp))
-                .background(Color.LightGray.copy(alpha = 0.2f))
-                .padding(12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-            ) {
-                Text(
-                    "Viatura",
-                    fontWeight = FontWeight.Bold
-                )
-                Text("200 - AMBULANCIA")
-            }
-            Button(
-                onClick = {},
-            ) {
-                Text("EDITAR")
-            }
-        }
-        Spacer(modifier = Modifier.padding(vertical = 4.dp))
-        Row(
-            modifier = Modifier
-                .clip(RoundedCornerShape(12.dp))
-                .background(Color.LightGray.copy(alpha = 0.2f))
-                .padding(12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-            ) {
-                Text(
-                    "Viatura",
-                    fontWeight = FontWeight.Bold
-                )
-                Text("200 - AMBULANCIA")
-            }
-            Button(
-                onClick = {},
-            ) {
-                Text("EDITAR")
-            }
-        }
-        Spacer(modifier = Modifier.padding(vertical = 4.dp))
-        Row(
-            modifier = Modifier
-                .clip(RoundedCornerShape(12.dp))
-                .background(Color.LightGray.copy(alpha = 0.2f))
-                .padding(12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-            ) {
-                Text(
-                    "Viatura",
-                    fontWeight = FontWeight.Bold
-                )
-                Text("200 - AMBULANCIA")
-            }
-            Button(
-                onClick = {},
-            ) {
-                Text("EDITAR")
-            }
-        }
-        Spacer(modifier = Modifier.padding(vertical = 4.dp))
-        Row(
-            modifier = Modifier
-                .clip(RoundedCornerShape(12.dp))
-                .background(Color.LightGray.copy(alpha = 0.2f))
-                .padding(12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-            ) {
-                Text(
-                    "Viatura",
-                    fontWeight = FontWeight.Bold
-                )
-                Text("200 - AMBULANCIA")
-            }
-            Button(
-                onClick = {},
-            ) {
-                Text("EDITAR")
-            }
-        }
-        Spacer(modifier = Modifier.padding(vertical = 4.dp))
-        Row(
-            modifier = Modifier
-                .clip(RoundedCornerShape(12.dp))
-                .background(Color.LightGray.copy(alpha = 0.2f))
-                .padding(12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-            ) {
-                Text(
-                    "Viatura",
-                    fontWeight = FontWeight.Bold
-                )
-                Text("200 - AMBULANCIA")
-            }
-            Button(
-                onClick = {},
-            ) {
-                Text("EDITAR")
-            }
-        }
-        Spacer(modifier = Modifier.padding(vertical = 4.dp))
-        Row(
-            modifier = Modifier
-                .clip(RoundedCornerShape(12.dp))
-                .background(Color.LightGray.copy(alpha = 0.2f))
-                .padding(12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-            ) {
-                Text(
-                    "Viatura",
-                    fontWeight = FontWeight.Bold
-                )
-                Text("200 - AMBULANCIA")
-            }
-            Button(
-                onClick = {},
-            ) {
-                Text("EDITAR")
-            }
-        }
-        Spacer(modifier = Modifier.padding(vertical = 4.dp))
-        Row(
-            modifier = Modifier
-                .clip(RoundedCornerShape(12.dp))
-                .background(Color.LightGray.copy(alpha = 0.2f))
-                .padding(12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-            ) {
-                Text(
-                    "Viatura",
-                    fontWeight = FontWeight.Bold
-                )
-                Text("200 - AMBULANCIA")
-            }
-            Button(
-                onClick = {},
-            ) {
-                Text("EDITAR")
-            }
-        }
-        Spacer(modifier = Modifier.padding(vertical = 4.dp))
-        Row(
-            modifier = Modifier
-                .clip(RoundedCornerShape(12.dp))
-                .background(Color.LightGray.copy(alpha = 0.2f))
-                .padding(12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-            ) {
-                Text(
-                    "Viatura",
-                    fontWeight = FontWeight.Bold
-                )
-                Text("200 - AMBULANCIA")
-            }
-            Button(
-                onClick = {},
-            ) {
-                Text("EDITAR")
-            }
-        }
-        Spacer(modifier = Modifier.padding(vertical = 4.dp))
-        Row(
-            modifier = Modifier
-                .clip(RoundedCornerShape(12.dp))
-                .background(Color.LightGray.copy(alpha = 0.2f))
-                .padding(12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-            ) {
-                Text(
-                    "Viatura",
-                    fontWeight = FontWeight.Bold
-                )
-                Text("200 - AMBULANCIA")
-            }
-            Button(
-                onClick = {},
-            ) {
-                Text("EDITAR")
-            }
-        }
-        Spacer(modifier = Modifier.padding(vertical = 4.dp))
-        Row(
-            modifier = Modifier
-                .clip(RoundedCornerShape(12.dp))
-                .background(Color.LightGray.copy(alpha = 0.2f))
-                .padding(12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-            ) {
-                Text(
-                    "Viatura",
-                    fontWeight = FontWeight.Bold
-                )
-                Text("200 - AMBULANCIA")
-            }
-            Button(
-                onClick = {},
-            ) {
-                Text("EDITAR")
-            }
-        }
-        Spacer(modifier = Modifier.padding(vertical = 4.dp))
+
     }
 }
 

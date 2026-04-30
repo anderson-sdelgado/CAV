@@ -31,7 +31,7 @@ import br.com.usinasantafe.cav.utils.UpdateStatusState
 fun AttendantScreen(
     viewModel: AttendantViewModel = hiltViewModel(),
     onNavInitialMenu: () -> Unit,
-    onNavEquip: () -> Unit
+    onNavCar: () -> Unit
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -43,7 +43,7 @@ fun AttendantScreen(
                 setCloseDialog = viewModel::setCloseDialog,
                 status = uiState.status,
                 onNavInitialMenu = onNavInitialMenu,
-                onNavEquip = onNavEquip,
+                onNavCar = onNavCar,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -58,7 +58,7 @@ fun AttendantContent(
     setCloseDialog: () -> Unit,
     status: UpdateStatusState,
     onNavInitialMenu: () -> Unit,
-    onNavEquip: () -> Unit,
+    onNavCar: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -92,7 +92,7 @@ fun AttendantContent(
 
     LaunchedEffect(flagAccess) {
         if(flagAccess) {
-            onNavEquip()
+            onNavCar()
         }
     }
 }
@@ -118,7 +118,7 @@ fun AttendantPagePreview() {
                     currentProgress = 0f,
                 ),
                 onNavInitialMenu = {},
-                onNavEquip = {},
+                onNavCar = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -146,7 +146,7 @@ fun AttendantPagePreviewWithData() {
                     currentProgress = 0f,
                 ),
                 onNavInitialMenu = {},
-                onNavEquip = {},
+                onNavCar = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -174,7 +174,7 @@ fun AttendantPagePreviewWithMsgEmpty() {
                     currentProgress = 0f,
                 ),
                 onNavInitialMenu = {},
-                onNavEquip = {},
+                onNavCar = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -202,7 +202,7 @@ fun AttendantPagePreviewUpdate() {
                     currentProgress = 0.3333334f,
                 ),
                 onNavInitialMenu = {},
-                onNavEquip = {},
+                onNavCar = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

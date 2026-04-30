@@ -35,6 +35,7 @@ import br.com.usinasantafe.cav.presenter.theme.ItemDefaultListDesign
 fun InitialMenuScreen(
     viewModel: InitialMenuViewModel = hiltViewModel(),
     onNavPassword: () -> Unit,
+    onNavAttendant: () -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -53,6 +54,7 @@ fun InitialMenuScreen(
                 failure = uiState.failure,
                 flagAccess = uiState.flagAccess,
                 onNavPassword = onNavPassword,
+                onNavAttendant = onNavAttendant,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -70,6 +72,7 @@ fun InitialMenuContent(
     failure: String,
     flagAccess: Boolean,
     onNavPassword: () -> Unit,
+    onNavAttendant: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val activity = (LocalContext.current as? Activity)
@@ -150,7 +153,7 @@ fun InitialMenuContent(
 
     LaunchedEffect(flagAccess) {
         if(flagAccess) {
-//            onNavOperator()
+            onNavAttendant()
         }
     }
 
@@ -196,6 +199,7 @@ fun InitialMenuPagePreview() {
                 flagAccess = false,
                 failure = "",
                 onNavPassword = {},
+                onNavAttendant = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -216,6 +220,7 @@ fun InitialMenuPagePreviewSend() {
                 flagAccess = false,
                 failure = "",
                 onNavPassword = {},
+                onNavAttendant = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -236,6 +241,7 @@ fun InitialMenuPagePreviewException() {
                 flagAccess = false,
                 failure = "Failure",
                 onNavPassword = {},
+                onNavAttendant = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -256,6 +262,7 @@ fun InitialMenuPagePreviewBlocked() {
                 flagAccess = false,
                 failure = "",
                 onNavPassword = {},
+                onNavAttendant = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

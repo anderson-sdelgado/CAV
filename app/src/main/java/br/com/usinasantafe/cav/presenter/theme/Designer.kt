@@ -345,3 +345,42 @@ fun TextButtonCleanDesign(
     )
 }
 
+@Composable
+fun AlertDialogCheckDesign(
+    text: String,
+    setCloseDialog: () -> Unit,
+    setActionButtonYes: () -> Unit
+) {
+    return AlertDialog(
+        title = {
+            Text(
+                text = "ATENÇÃO",
+                textAlign = TextAlign.Center
+            )
+        },
+        text = {
+            Text(
+                text = text,
+                modifier = Modifier.testTag("text_alert_dialog_check")
+            )
+        },
+        onDismissRequest = setCloseDialog,
+        confirmButton = {
+            Button(
+                onClick = setActionButtonYes,
+                modifier = Modifier.testTag(TAG_BUTTON_YES_ALERT_DIALOG_CHECK)
+            ) {
+                Text("SIM")
+            }
+        },
+        dismissButton = {
+            Button(
+                onClick = setCloseDialog,
+                modifier = Modifier.testTag(TAG_BUTTON_NO_ALERT_DIALOG_CHECK)
+            ) {
+                Text("NÃO")
+            }
+        }
+    )
+}
+
