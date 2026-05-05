@@ -53,4 +53,5 @@
     <string name="text_local_now">LOCALIZAÇÃO ATUAL</string>
     <string name="text_type_local">DIGITAR LOCAL</string>
     <string name="text_title_type_local">LOCAL</string>
+    <string name="text_title_nature">NATUREZA DE ATENDIMENTO</string>
 </resources>

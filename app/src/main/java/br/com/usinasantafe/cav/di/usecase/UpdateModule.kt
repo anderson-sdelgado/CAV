@@ -19,4 +19,28 @@ interface UpdateModule {
     @Singleton
     fun bindUpdateTableEquip(usecase: IUpdateTableEquip): UpdateTableEquip
 
+    @Binds
+    @Singleton
+    fun bindUpdateTableItemDataLocal(usecase: IUpdateTableItemDataLocal): UpdateTableItemDataLocal
+
+    @Binds
+    @Singleton
+    fun bindUpdateTableNature(usecase: IUpdateTableNature): UpdateTableNature
+
+    @Binds
+    @Singleton
+    fun bindUpdateTableOptionDataLocal(usecase: IUpdateTableOptionDataLocal): UpdateTableOptionDataLocal
+
+    @Binds
+    @Singleton
+    fun bindUpdateTableROptionItemDataLocal(usecase: IUpdateTableROptionItemDataLocal): UpdateTableROptionItemDataLocal
+
+    @Binds
+    @Singleton
+    fun bindUpdateTableSupportTeams(usecase: IUpdateTableSupportTeams): UpdateTableSupportTeams
+
+    @Binds
+    @Singleton
+    fun bindUpdateTableTypeAccident(usecase: IUpdateTableTypeAccident): UpdateTableTypeAccident
+
 }

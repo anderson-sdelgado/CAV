@@ -9,6 +9,12 @@ const val BASE_SHARED_PREFERENCES_TABLE_CARD = "card"
 
 const val TB_COLAB = "tb_colab"
 const val TB_EQUIP = "tb_equip"
+const val TB_ITEM_DATA_LOCAL = "tb_item_data_local"
+const val TB_NATURE = "tb_nature"
+const val TB_OPTION_DATA_LOCAL = "tb_option_data_local"
+const val TB_R_OPTION_ITEM_DATA_LOCAL = "tb_r_option_item_data_local"
+const val TB_SUPPORT_TEAMS = "tb_support_teams"
+const val TB_TYPE_ACCIDENT = "tb_type_accident"
 
 const val WEB_ALL_COLAB = "colab.php"
 const val WEB_ALL_EQUIP = "equip.php"

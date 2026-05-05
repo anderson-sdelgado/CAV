@@ -20,4 +20,20 @@ interface StableRepositoryModule {
     @Singleton
     fun bindEquipRepository(repository: IEquipRepository): EquipRepository
 
+    @Binds
+    @Singleton
+    fun bindDataLocalRepository(repository: IDataLocalRepository): DataLocalRepository
+
+    @Binds
+    @Singleton
+    fun bindNatureRepository(repository: INatureRepository): NatureRepository
+
+    @Binds
+    @Singleton
+    fun bindSupportTeamsRepository(repository: ISupportTeamsRepository): SupportTeamsRepository
+
+    @Binds
+    @Singleton
+    fun bindTypeAccidentRepository(repository: ITypeAccidentRepository): TypeAccidentRepository
+
 }

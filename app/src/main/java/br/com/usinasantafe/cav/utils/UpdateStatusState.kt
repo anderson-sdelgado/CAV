@@ -55,7 +55,7 @@ fun UpdateStatusState.toUiStatus(
         flagFailure = flagFailure,
         errors = errors,
         failure = failMsg,
-        flagProgress = flagProgress,
+        flagProgress = false,
         currentProgress = currentProgress,
         levelUpdate = levelUpdate,
         tableUpdate = tableUpdate
@@ -115,52 +115,12 @@ suspend fun FlowCollector<UpdateStatusState>.emitProgress(
     )
 }
 
-suspend fun FlowCollector<UpdateStatusState>.emitProgressOS(
-    level: LevelUpdate,
-    table: String,
-    flagProgress: Boolean = true
-) {
-    val step = when(level){
-        LevelUpdate.CHECK_CONNECTION -> 1f
-        LevelUpdate.RECOVERY -> 2f
-        LevelUpdate.CLEAN -> 3f
-        LevelUpdate.SAVE -> 4f
-        else -> 0f
-    }
-    emit(
-        UpdateStatusState(
-            flagProgress = flagProgress,
-            currentProgress = updatePercentage(step, 1f, 5f),
-            tableUpdate = table,
-            levelUpdate = level,
-        )
-    )
-}
-
-suspend fun FlowCollector<UpdateStatusState>.emitProgressOSError(
-    errors: Errors,
-    checkDialog: Boolean = true,
-) {
-    emit(
-        UpdateStatusState(
-            flagProgress = checkDialog,
-            errors = errors,
-            flagDialog = checkDialog,
-            flagFailure = true,
-            failure = "",
-            currentProgress = 1f,
-            levelUpdate = null
-        )
-    )
-}
-
-
 suspend fun FlowCollector<UpdateStatusState>.emitFailure(
     failure: String,
 ) {
     emit(
         UpdateStatusState(
-            flagProgress = true,
+            flagProgress = false,
             errors = Errors.UPDATE,
             flagDialog = true,
             flagFailure = true,
