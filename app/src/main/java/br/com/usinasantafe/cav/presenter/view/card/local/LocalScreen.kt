@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.presenter.view.card.local
 
+import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -31,13 +32,11 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Address
 import android.location.Geocoder
-import android.os.Build
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.*
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -60,6 +59,7 @@ import kotlin.collections.isNotEmpty
 fun LocalScreen(
     viewModel: LocalViewModel = hiltViewModel(),
     onNavCard: () -> Unit,
+    onNavTypeLocal:  () -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -68,6 +68,7 @@ fun LocalScreen(
                 address = uiState.address,
                 latitude = uiState.latitude,
                 longitude = uiState.longitude,
+                set = viewModel::set,
                 onLocalChanged = viewModel::onLocalChanged,
                 setCloseDialog = viewModel::setCloseDialog,
                 flagAccess = uiState.flagAccess,
@@ -76,7 +77,8 @@ fun LocalScreen(
                 errors = uiState.errors,
                 flagDialogCheck = uiState.flagDialogCheck,
                 onDialogCheck = viewModel::onDialogCheck,
-                onNavCard = onNavCard
+                onNavCard = onNavCard,
+                onNavTypeLocal = onNavTypeLocal,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -86,8 +88,9 @@ fun LocalScreen(
 @Composable
 fun LocalScreenContent(
     address: String,
-    latitude: Double,
-    longitude: Double,
+    latitude: Double?,
+    longitude: Double?,
+    set: () -> Unit,
     onLocalChanged: (String, Double, Double) -> Unit,
     setCloseDialog: () -> Unit,
     flagAccess: Boolean,
@@ -97,12 +100,12 @@ fun LocalScreenContent(
     flagDialogCheck: Boolean,
     onDialogCheck: (Boolean) -> Unit,
     onNavCard: () -> Unit,
+    onNavTypeLocal: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
 
-    var showDialog by remember { mutableStateOf(false) }
     var searchQuery by remember { mutableStateOf("") }
     var deviceLatLng by remember { mutableStateOf<LatLng?>(null) }
 
@@ -118,8 +121,9 @@ fun LocalScreenContent(
                 val pos = LatLng(lat, long)
                 deviceLatLng = pos
                 cameraPositionState.move(CameraUpdateFactory.newLatLngZoom(pos, 16f))
-                val address = getAddressFromLocation(context, lat, long)
-                onLocalChanged(address, lat, long)
+                getAddressFromLocation(context, lat, long) { address ->
+                    onLocalChanged(address, pos.latitude, pos.longitude)
+                }
             }
         }
     }
@@ -157,8 +161,9 @@ fun LocalScreenContent(
                         searchLocation(context, searchQuery) { pos ->
                             deviceLatLng = pos
                             cameraPositionState.move(CameraUpdateFactory.newLatLngZoom(pos, 16f))
-                            val address = getAddressFromLocation(context, pos.latitude, pos.longitude)
-                            onLocalChanged(address, pos.latitude, pos.longitude)
+                            getAddressFromLocation(context, pos.latitude, pos.longitude) { address ->
+                                onLocalChanged(address, pos.latitude, pos.longitude)
+                            }
                         }
                     }) {
                         Icon(Icons.Default.Search, contentDescription = stringResource(id = R.string.text_field))
@@ -168,8 +173,20 @@ fun LocalScreenContent(
             )
         }
 
-
-
+        Button(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 155.dp),
+            onClick = {
+                if (deviceLatLng != null) {
+                    onDialogCheck(true)
+                } else {
+                    permissionLauncher.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION))
+                }
+            }
+        ) {
+            Text(stringResource(id = R.string.text_capture_local))
+        }
         Button(
             onClick = {
                 permissionLauncher.launch(
@@ -187,22 +204,16 @@ fun LocalScreenContent(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 55.dp),
-            onClick = {
-                if (deviceLatLng != null) {
-                    onDialogCheck(true)
-                } else {
-                    permissionLauncher.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION))
-                }
-            }
+            onClick = onNavTypeLocal
         ) {
-            Text(stringResource(id = R.string.text_capture_local))
+            Text(stringResource(id = R.string.text_type_local))
         }
 
         Button(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 5.dp),
-            onClick = {}
+            onClick = onNavCard
         ) {
             Text(stringResource(id = R.string.text_pattern_return))
         }
@@ -211,10 +222,10 @@ fun LocalScreenContent(
             AlertDialogCheckDesign(
                 text = stringResource(
                     id = R.string.text_local,
-                    address, latitude, longitude
+                    address, latitude?: 0.0, longitude?: 0.0
                 ),
                 setCloseDialog = { onDialogCheck(false) },
-                setActionButtonYes = {}
+                setActionButtonYes = set
             )
         }
 
@@ -225,46 +236,74 @@ fun LocalScreenContent(
         }
 
     }
+
+    LaunchedEffect(flagAccess) {
+        if(flagAccess) {
+            onNavCard()
+        }
+    }
+
 }
 
-fun getAddressFromLocation(context: Context, lat: Double, lng: Double): String {
+fun getAddressFromLocation(
+    context: Context,
+    lat: Double,
+    lng: Double,
+    onResult: (String) -> Unit
+) {
     val geocoder = Geocoder(context)
-    return try {
-        val addresses = geocoder.getFromLocation(lat, lng, 1)
-        if (!addresses.isNullOrEmpty()) {
-            val addr = addresses[0]
 
+    val formatAddress: (Address?) -> String = { addr ->
+        if (addr != null) {
             val logradouro = addr.thoroughfare ?: addr.featureName ?: "Local não identificado"
             val numero = addr.subThoroughfare ?: "S/N"
             val bairro = addr.subLocality ?: addr.locality ?: ""
-            val cidade = addr.adminArea ?: ""
-
+            val cidade = addr.subAdminArea ?: addr.adminArea ?: ""
             "$logradouro, $numero - $bairro, $cidade"
         } else {
-            "Coordenadas obtidas, mas endereço não encontrado."
+            "Endereço não encontrado."
         }
-    } catch (e: Exception) {
-        "Erro na conexão com o serviço de mapas."
+    }
+    if (Build.VERSION_CODES.TIRAMISU <= Build.VERSION.SDK_INT) {
+        geocoder.getFromLocation(lat, lng, 1, object : Geocoder.GeocodeListener {
+            override fun onGeocode(addresses: MutableList<Address>) {
+                val addressText =
+                    if (addresses.isNotEmpty()) formatAddress(addresses[0]) else "Endereço não encontrado."
+                onResult(addressText)
+            }
+
+            override fun onError(errorMessage: String?) {
+                onResult("Erro no serviço de geolocalização.")
+            }
+        })
+    } else {
+        @Suppress("DEPRECATION")
+        val addresses = geocoder.getFromLocation(lat, lng, 1)
+        val addressText = if (!addresses.isNullOrEmpty()) formatAddress(addresses[0]) else "Endereço não encontrado."
+        onResult(addressText)
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 fun searchLocation(context: Context, query: String, onLocationFound: (LatLng) -> Unit) {
     if (query.isBlank()) return
     val geocoder = Geocoder(context)
-    geocoder.getFromLocationName(query, 1) { addresses ->
-        if (addresses.isNotEmpty()) {
-            val addr = addresses[0]
-            onLocationFound(LatLng(addr.latitude, addr.longitude))
+    if (Build.VERSION_CODES.TIRAMISU <= Build.VERSION.SDK_INT) {
+        geocoder.getFromLocationName(query, 1) { addresses ->
+            if (addresses.isNotEmpty()) {
+                val addr = addresses[0]
+                onLocationFound(LatLng(addr.latitude, addr.longitude))
+            }
         }
+    } else {
+        try {
+            @Suppress("DEPRECATION")
+            val addresses = geocoder.getFromLocationName(query, 1)
+            if (!addresses.isNullOrEmpty()) {
+                val addr = addresses[0]
+                onLocationFound(LatLng(addr.latitude, addr.longitude))
+            }
+        } catch (e: Exception) { e.printStackTrace() }
     }
-//    try {
-//        val addresses = geocoder.getFromLocationName(query, 1)
-//        if (!addresses.isNullOrEmpty()) {
-//            val addr = addresses[0]
-//            onLocationFound(LatLng(addr.latitude, addr.longitude))
-//        }
-//    } catch (e: Exception) { e.printStackTrace() }
 }
 
 @SuppressLint("MissingPermission")
@@ -283,6 +322,7 @@ fun LocalScreenPagePreview() {
                 address = "",
                 latitude = 0.0,
                 longitude = 0.0,
+                set = {},
                 onLocalChanged = { _, _, _ -> },
                 setCloseDialog = {},
                 flagAccess = false,
@@ -291,6 +331,8 @@ fun LocalScreenPagePreview() {
                 errors = Errors.FIELD_EMPTY,
                 flagDialogCheck = false,
                 onDialogCheck = {},
+                onNavCard = {},
+                onNavTypeLocal = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

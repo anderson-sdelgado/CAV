@@ -1,6 +1,8 @@
 package br.com.usinasantafe.cav.infra.repositories.variable
 
+import br.com.usinasantafe.cav.domain.entities.variable.Local
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.LocalSharedPreferencesModel
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.test.runTest
 import org.mockito.Mockito.mock
@@ -87,6 +89,68 @@ class ICardRepositoryTest {
         runTest {
             val result = repository.setIdCar(200)
             verify(cardSharedPreferencesDatasource, atLeastOnce()).setIdCar(200)
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+        }
+
+    @Test
+    fun `setLocal - Check return failure if have error in CardSharedPreferencesDatasource setLocal`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.setLocal(
+                    LocalSharedPreferencesModel(
+                        address = "Test",
+                        latitude = 0.0,
+                        longitude = 0.0
+                    )
+                )
+            ).thenReturn(
+                resultFailure(
+                    "ICardSharedPreferencesDatasource.setLocal",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.setLocal(
+                Local(
+                    address = "Test",
+                    latitude = 0.0,
+                    longitude = 0.0
+                )
+            )
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "ICardRepository.setLocal -> ICardSharedPreferencesDatasource.setLocal"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `setLocal - Check return correct if function execute successfully`() =
+        runTest {
+            val result = repository.setLocal(
+                Local(
+                    address = "Test",
+                    latitude = 0.0,
+                    longitude = 0.0
+                )
+            )
+            verify(cardSharedPreferencesDatasource, atLeastOnce()).setLocal(
+                LocalSharedPreferencesModel(
+                    address = "Test",
+                    latitude = 0.0,
+                    longitude = 0.0
+                )
+            )
             assertEquals(
                 result.isSuccess,
                 true

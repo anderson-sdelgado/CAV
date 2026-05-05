@@ -32,7 +32,10 @@ class LocalScreenTest {
 
     private fun setContent(){
         composeTestRule.setContent {
-            LocalScreen()
+            LocalScreen(
+                onNavCard = {},
+                onNavTypeLocal = {}
+            )
         }
     }
 }

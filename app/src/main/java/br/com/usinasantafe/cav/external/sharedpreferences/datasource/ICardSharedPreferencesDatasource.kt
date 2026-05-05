@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.LocalSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.sharedPreferencesModelToEntity
 import br.com.usinasantafe.cav.lib.BASE_SHARED_PREFERENCES_TABLE_CARD
 import br.com.usinasantafe.cav.utils.EmptyResult
@@ -43,16 +44,23 @@ class ICardSharedPreferencesDatasource @Inject constructor(
 
     override suspend fun setRegAttendant(regColab: Long): EmptyResult =
         result(getClassAndMethod()) {
-            val model = get().getOrThrow()
-            model.regAttendant = regColab
-            save(model).getOrThrow()
+            val mainModel = get().getOrThrow()
+            mainModel.regAttendant = regColab
+            save(mainModel).getOrThrow()
         }
 
     override suspend fun setIdCar(idEquip: Int): EmptyResult =
         result(getClassAndMethod()) {
-            val model = get().getOrThrow()
-            model.idCar = idEquip
-            save(model).getOrThrow()
+            val mainModel = get().getOrThrow()
+            mainModel.idCar = idEquip
+            save(mainModel).getOrThrow()
+        }
+
+    override suspend fun setLocal(model: LocalSharedPreferencesModel): EmptyResult =
+        result(getClassAndMethod()) {
+            val mainModel = get().getOrThrow()
+            mainModel.local = model
+            save(mainModel).getOrThrow()
         }
 
 }

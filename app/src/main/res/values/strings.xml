@@ -45,10 +45,12 @@
     <string name="text_pattern_update">ATUALIZAR DADOS</string>
     <string name="text_title_car">NRO VIATURA</string>
     <string name="text_title_card">FICHA</string>
-    <string name="text_local">O LOCAL DO ACIDENTE SERIA ESSE:\n\n ENDEREÇO: \"%1$s\"\n\nLATITUDE: \"%1$s\"\nLONGITUDE: \"%1$s\"?</string>
+    <string name="text_local">O LOCAL DO ACIDENTE SERIA ESSE:\n\n ENDEREÇO: %1$s\n\nLATITUDE: %2$s\nLONGITUDE: %3$s?</string>
     <string name="text_local_selection">Localização Selecionada</string>
     <string name="text_input_address">Digite o endereço</string>
     <string name="text_field">Pesquisar</string>
     <string name="text_capture_local">CAPTURAR LOCALIZAÇÃO</string>
     <string name="text_local_now">LOCALIZAÇÃO ATUAL</string>
+    <string name="text_type_local">DIGITAR LOCAL</string>
+    <string name="text_title_type_local">LOCAL</string>
 </resources>
