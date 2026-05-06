@@ -8,6 +8,12 @@ import br.com.usinasantafe.cav.domain.usecases.config.SendConfig
 import br.com.usinasantafe.cav.domain.usecases.config.SetFinishUpdateAllTable
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableColab
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableEquip
+import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableItemDataLocal
+import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableNature
+import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableOptionDataLocal
+import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableROptionItemDataLocal
+import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableSupportTeams
+import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableTypeAccident
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.LevelUpdate
 import br.com.usinasantafe.cav.presenter.model.ConfigModel
@@ -42,14 +48,28 @@ class ConfigViewModelTest {
     private val setFinishUpdateAllTable = mock<SetFinishUpdateAllTable>()
     private val updateTableColab = mock<UpdateTableColab>()
     private val updateTableEquip = mock<UpdateTableEquip>()
+    private val updateTableItemDataLocal = mock<UpdateTableItemDataLocal>()
+    private val updateTableNature = mock<UpdateTableNature>()
+    private val updateTableOptionDataLocal = mock<UpdateTableOptionDataLocal>()
+    private val updateTableROptionItemDataLocal = mock<UpdateTableROptionItemDataLocal>()
+    private val updateTableSupportTeams = mock<UpdateTableSupportTeams>()
+    private val updateTableTypeAccess = mock<UpdateTableTypeAccident>()
     private var tableList = mutableListOf<String>()
+    private val qtdTable = 8f
+
     private val viewModel = ConfigViewModel(
         getConfig = getConfig,
         saveConfig = saveConfig,
         sendConfig = sendConfig,
         setFinishUpdateAllTable = setFinishUpdateAllTable,
         updateTableColab = updateTableColab,
-        updateTableEquip = updateTableEquip
+        updateTableEquip = updateTableEquip,
+        updateTableItemDataLocal = updateTableItemDataLocal,
+        updateTableNature = updateTableNature,
+        updateTableOptionDataLocal = updateTableOptionDataLocal,
+        updateTableROptionItemDataLocal = updateTableROptionItemDataLocal,
+        updateTableSupportTeams = updateTableSupportTeams,
+        updateTableTypeAccess = updateTableTypeAccess
     )
 
     @Test
@@ -428,7 +448,7 @@ class ConfigViewModelTest {
             val qtdBefore = 0f
             whenever(
                 updateTableColab(
-                    sizeAll = sizeUpdate(2f),
+                    sizeAll = sizeUpdate(qtdTable),
                     count = (qtdBefore + 1)
                 )
             ).thenReturn(
@@ -437,7 +457,7 @@ class ConfigViewModelTest {
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_colab",
-                        currentProgress = percentage(((qtdBefore * 3) + 1), 2f)
+                        currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
                     ),
                     UpdateStatusState(
                         errors = Errors.UPDATE,
@@ -450,7 +470,7 @@ class ConfigViewModelTest {
             val result = viewModel.updateAllDatabase().toList()
             assertEquals(
                 result.count(),
-                ((qtdBefore * 3) + 2).toInt()
+                ((qtdBefore * 3) + qtdTable).toInt()
             )
             assertEquals(
                 result[(qtdBefore * 3).toInt()],
@@ -459,7 +479,7 @@ class ConfigViewModelTest {
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_colab",
-                        currentProgress = percentage(((qtdBefore * 3) + 1), 2f)
+                        currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
                     )
                 )
             )
@@ -484,7 +504,7 @@ class ConfigViewModelTest {
             wheneverSuccess(qtdBefore)
             whenever(
                 updateTableEquip(
-                    sizeAll = sizeUpdate(2f),
+                    sizeAll = sizeUpdate(qtdTable),
                     count = (qtdBefore + 1)
                 )
             ).thenReturn(
@@ -493,7 +513,7 @@ class ConfigViewModelTest {
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_equip",
-                        currentProgress = percentage(((qtdBefore * 3) + 1), 2f)
+                        currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
                     ),
                     UpdateStatusState(
                         errors = Errors.UPDATE,
@@ -506,7 +526,7 @@ class ConfigViewModelTest {
             val result = viewModel.updateAllDatabase().toList()
             assertEquals(
                 result.count(),
-                ((qtdBefore * 3) + 2).toInt()
+                ((qtdBefore * 3) + qtdTable).toInt()
             )
             checkResultUpdate(qtdBefore, result)
             assertEquals(
@@ -516,7 +536,64 @@ class ConfigViewModelTest {
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_equip",
-                        currentProgress = percentage(((qtdBefore * 3) + 1), 2f)
+                        currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
+                    )
+                )
+            )
+            assertEquals(
+                result[((qtdBefore * 3) + 1).toInt()],
+                ConfigState(
+                    status = UpdateStatusState(
+                        flagProgress = true,
+                        errors = Errors.UPDATE,
+                        flagDialog = true,
+                        flagFailure = true,
+                        failure = "ConfigViewModel.updateAllDatabase -> CleanEquip -> java.lang.NullPointerException",
+                    )
+                )
+            )
+        }
+
+    @Test
+    fun `update - Check return failure if have error in UpdateTableItemDataLocal`() =
+        runTest {
+            val qtdBefore = 1f
+            wheneverSuccess(qtdBefore)
+            whenever(
+                updateTableItemDataLocal(
+                    sizeAll = sizeUpdate(qtdTable),
+                    count = (qtdBefore + 1)
+                )
+            ).thenReturn(
+                flowOf(
+                    UpdateStatusState(
+                        flagProgress = true,
+                        levelUpdate = LevelUpdate.RECOVERY,
+                        tableUpdate = "tb_equip",
+                        currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
+                    ),
+                    UpdateStatusState(
+                        errors = Errors.UPDATE,
+                        flagDialog = true,
+                        flagFailure = true,
+                        failure = "CleanEquip -> java.lang.NullPointerException",
+                    )
+                )
+            )
+            val result = viewModel.updateAllDatabase().toList()
+            assertEquals(
+                result.count(),
+                ((qtdBefore * 3) + qtdTable).toInt()
+            )
+            checkResultUpdate(qtdBefore, result)
+            assertEquals(
+                result[(qtdBefore * 3).toInt()],
+                ConfigState(
+                    status = UpdateStatusState(
+                        flagProgress = true,
+                        levelUpdate = LevelUpdate.RECOVERY,
+                        tableUpdate = "tb_equip",
+                        currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
                     )
                 )
             )
@@ -676,9 +753,11 @@ class ConfigViewModelTest {
             var contUpdate = 0f
             var contWhenever = 0f
 
-            val sizeAll = sizeUpdate(2f)
+            val sizeAll = sizeUpdate(8f)
             tableList = mutableListOf(
-                "tb_colab", "tb_equip"
+                "tb_colab", "tb_equip", "tb_item_data_local", "tb_nature",
+                "tb_option_data_local", "tb_r_option_item_data_local",
+                "tb_support_teams", "tb_type_accident"
             )
 
             val updateFunctions = mutableListOf<
@@ -686,6 +765,12 @@ class ConfigViewModelTest {
                     >(
                 { sizeAll, count -> updateTableColab(sizeAll, count) },
                 { sizeAll, count -> updateTableEquip(sizeAll, count) },
+                { sizeAll, count -> updateTableItemDataLocal(sizeAll, count) },
+                { sizeAll, count -> updateTableNature(sizeAll, count) },
+                { sizeAll, count -> updateTableOptionDataLocal(sizeAll, count) },
+                { sizeAll, count -> updateTableROptionItemDataLocal(sizeAll, count) },
+                { sizeAll, count -> updateTableSupportTeams(sizeAll, count) },
+                { sizeAll, count -> updateTableTypeAccess(sizeAll, count) },
             )
 
             for(func in updateFunctions) {

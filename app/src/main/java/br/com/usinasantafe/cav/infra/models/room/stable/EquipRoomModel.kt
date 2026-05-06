@@ -16,9 +16,9 @@ data class EquipRoomModel(
 fun EquipRoomModel.roomModelToEntity(): Equip {
     return with(this){
         Equip(
-            id = this.id,
-            nro = this.nro,
-            desc = this.desc
+            id = id,
+            nro = nro,
+            desc = desc
         )
     }
 }
@@ -26,9 +26,9 @@ fun EquipRoomModel.roomModelToEntity(): Equip {
 fun Equip.entityToRoomModel(): EquipRoomModel {
     return with(this){
         EquipRoomModel(
-            id = this.id,
-            nro = this.nro,
-            desc = this.desc
+            id = id,
+            nro = nro,
+            desc = desc
         )
     }
 }

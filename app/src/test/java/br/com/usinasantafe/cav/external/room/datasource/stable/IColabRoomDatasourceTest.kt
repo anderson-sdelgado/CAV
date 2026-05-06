@@ -36,6 +36,7 @@ class IColabRoomDatasourceTest {
 
     @After
     fun tearDown() {
+        db.clearAllTables()
         db.close()
     }
 
@@ -51,11 +52,11 @@ class IColabRoomDatasourceTest {
                 listOf(
                     ColabRoomModel(
                         reg = 1,
-                        name = "TESTE",
+                        name = "TEST",
                     ),
                     ColabRoomModel(
                         reg = 1,
-                        name = "TESTE",
+                        name = "TEST",
                     ),
                 )
             )
@@ -90,11 +91,11 @@ class IColabRoomDatasourceTest {
                 listOf(
                     ColabRoomModel(
                         reg = 1,
-                        name = "TESTE",
+                        name = "TEST",
                     ),
                     ColabRoomModel(
                         reg = 2,
-                        name = "TESTE2",
+                        name = "TEST2",
                     ),
                 )
             )

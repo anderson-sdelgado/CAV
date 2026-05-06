@@ -8,8 +8,10 @@ data class ColabRetrofitModel(
 )
 
 fun ColabRetrofitModel.retrofitModelToEntity(): Colab {
-    return Colab(
-        reg = this.reg,
-        name = this.name
-    )
+    return with(this) {
+        Colab(
+            reg = reg,
+            name = name
+        )
+    }
 }

@@ -61,7 +61,6 @@ class IUpdateTableEquipTest {
             assertEquals(
                 list[1],
                 UpdateStatusState(
-                    flagProgress = true,
                     errors = Errors.UPDATE,
                     flagDialog = true,
                     flagFailure = true,
@@ -101,7 +100,6 @@ class IUpdateTableEquipTest {
             assertEquals(
                 list[1],
                 UpdateStatusState(
-                    flagProgress = true,
                     errors = Errors.UPDATE,
                     flagDialog = true,
                     flagFailure = true,
@@ -148,7 +146,6 @@ class IUpdateTableEquipTest {
             assertEquals(
                 list[1],
                 UpdateStatusState(
-                    flagProgress = true,
                     errors = Errors.UPDATE,
                     flagDialog = true,
                     flagFailure = true,
@@ -195,7 +192,6 @@ class IUpdateTableEquipTest {
             assertEquals(
                 list[1],
                 UpdateStatusState(
-                    flagProgress = true,
                     errors = Errors.UPDATE,
                     flagDialog = true,
                     flagFailure = true,
@@ -265,7 +261,6 @@ class IUpdateTableEquipTest {
             assertEquals(
                 list[3],
                 UpdateStatusState(
-                    flagProgress = true,
                     errors = Errors.UPDATE,
                     flagDialog = true,
                     flagFailure = true,

@@ -9,9 +9,11 @@ data class EquipRetrofitModel(
 )
 
 fun EquipRetrofitModel.retrofitModelToEntity(): Equip {
-    return Equip(
-        id = this.id,
-        nro = this.nro,
-        desc = this.desc
-    )
+    return with(this) {
+        Equip(
+            id = id,
+            nro = nro,
+            desc = desc
+        )
+    }
 }

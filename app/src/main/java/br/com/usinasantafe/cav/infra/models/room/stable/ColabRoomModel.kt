@@ -15,8 +15,8 @@ data class ColabRoomModel (
 fun ColabRoomModel.roomModelToEntity(): Colab {
     return with(this){
         Colab(
-            reg = this.reg,
-            name = this.name,
+            reg = reg,
+            name = name,
         )
     }
 }
@@ -24,8 +24,8 @@ fun ColabRoomModel.roomModelToEntity(): Colab {
 fun Colab.entityToRoomModel(): ColabRoomModel {
     return with(this){
         ColabRoomModel(
-            reg = this.reg,
-            name = this.name,
+            reg = reg,
+            name = name,
         )
     }
 }

@@ -3,7 +3,7 @@ package br.com.usinasantafe.cav.domain.usecases.update
 import br.com.usinasantafe.cav.domain.repositories.stable.TypeAccidentRepository
 import br.com.usinasantafe.cav.domain.usecases.common.GetToken
 import br.com.usinasantafe.cav.lib.LevelUpdate
-import br.com.usinasantafe.cav.lib.TB_SUPPORT_TEAMS
+import br.com.usinasantafe.cav.lib.TB_TYPE_ACCIDENT
 import br.com.usinasantafe.cav.utils.UpdateStatusState
 import br.com.usinasantafe.cav.utils.emitProgress
 import br.com.usinasantafe.cav.utils.flowCall
@@ -30,14 +30,14 @@ class IUpdateTableTypeAccident @Inject constructor(
     ): Flow<UpdateStatusState> = flow {
         flowCall(getClassAndMethod()) {
 
-            emitProgress(count, sizeAll, LevelUpdate.RECOVERY, TB_SUPPORT_TEAMS)
+            emitProgress(count, sizeAll, LevelUpdate.RECOVERY, TB_TYPE_ACCIDENT)
             val token = getToken().getOrThrow()
             val entityList = typeAccidentRepository.listAll(token).getOrThrow()
 
-            emitProgress(count, sizeAll, LevelUpdate.CLEAN, TB_SUPPORT_TEAMS)
+            emitProgress(count, sizeAll, LevelUpdate.CLEAN, TB_TYPE_ACCIDENT)
             typeAccidentRepository.deleteAll().getOrThrow()
 
-            emitProgress(count, sizeAll, LevelUpdate.SAVE, TB_SUPPORT_TEAMS)
+            emitProgress(count, sizeAll, LevelUpdate.SAVE, TB_TYPE_ACCIDENT)
             typeAccidentRepository.addAll(entityList).getOrThrow()
 
         }

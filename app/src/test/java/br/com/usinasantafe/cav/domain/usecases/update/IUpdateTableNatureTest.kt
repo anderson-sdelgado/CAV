@@ -324,4 +324,5 @@ class IUpdateTableNatureTest {
                 )
             )
         }
+
 }

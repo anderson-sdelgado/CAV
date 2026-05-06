@@ -18,5 +18,11 @@ const val TB_TYPE_ACCIDENT = "tb_type_accident"
 
 const val WEB_ALL_COLAB = "colab.php"
 const val WEB_ALL_EQUIP = "equip.php"
+const val WEB_ALL_ITEM_DATA_LOCAL = "item-data-local.php"
+const val WEB_ALL_NATURE = "nature.php"
+const val WEB_ALL_OPTION_DATA_LOCAL = "option-data-local.php"
+const val WEB_ALL_R_OPTION_ITEM_DATA_LOCAL = "r-option-item-data-local.php"
+const val WEB_ALL_SUPPORT_TEAMS = "support-teams.php"
+const val WEB_ALL_TYPE_ACCIDENT = "type-accident.php"
 
 const val WEB_SAVE_TOKEN = "find-token.php"

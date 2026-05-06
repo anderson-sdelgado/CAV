@@ -8,6 +8,12 @@ import br.com.usinasantafe.cav.domain.usecases.config.SendConfig
 import br.com.usinasantafe.cav.domain.usecases.config.SetFinishUpdateAllTable
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableColab
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableEquip
+import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableItemDataLocal
+import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableNature
+import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableOptionDataLocal
+import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableROptionItemDataLocal
+import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableSupportTeams
+import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableTypeAccident
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.LevelUpdate
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
@@ -15,7 +21,6 @@ import br.com.usinasantafe.cav.utils.UpdateStatusState
 import br.com.usinasantafe.cav.utils.executeUpdateSteps
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import br.com.usinasantafe.cav.utils.onFailureEmit
-import br.com.usinasantafe.cav.utils.onFailureHandled
 import br.com.usinasantafe.cav.utils.onFailureUpdate
 import br.com.usinasantafe.cav.utils.percentage
 import br.com.usinasantafe.cav.utils.required
@@ -50,7 +55,13 @@ class ConfigViewModel @Inject constructor(
     private val saveConfig: SaveConfig,
     private val setFinishUpdateAllTable: SetFinishUpdateAllTable,
     private val updateTableColab: UpdateTableColab,
-    private val updateTableEquip: UpdateTableEquip
+    private val updateTableEquip: UpdateTableEquip,
+    private val updateTableItemDataLocal: UpdateTableItemDataLocal,
+    private val updateTableNature: UpdateTableNature,
+    private val updateTableOptionDataLocal: UpdateTableOptionDataLocal,
+    private val updateTableROptionItemDataLocal: UpdateTableROptionItemDataLocal,
+    private val updateTableSupportTeams: UpdateTableSupportTeams,
+    private val updateTableTypeAccess: UpdateTableTypeAccident
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ConfigState())
@@ -177,11 +188,17 @@ class ConfigViewModel @Inject constructor(
         )
 
     suspend fun listUpdate() : List<Flow<UpdateStatusState>> {
-        val sizeAll = sizeUpdate(2f)
+        val sizeAll = sizeUpdate(8f)
         val list = mutableListOf<Flow<UpdateStatusState>>()
         var count = 0f
         list.add(updateTableColab(sizeAll, ++count))
         list.add(updateTableEquip(sizeAll, ++count))
+        list.add(updateTableItemDataLocal(sizeAll, ++count))
+        list.add(updateTableNature(sizeAll, ++count))
+        list.add(updateTableOptionDataLocal(sizeAll, ++count))
+        list.add(updateTableROptionItemDataLocal(sizeAll, ++count))
+        list.add(updateTableSupportTeams(sizeAll, ++count))
+        list.add(updateTableTypeAccess(sizeAll, ++count))
         return list
     }
 }

@@ -53,7 +53,7 @@ class IUpdateTableROptionItemDataLocalTest {
                 UpdateStatusState(
                     flagProgress = true,
                     levelUpdate = LevelUpdate.RECOVERY,
-                    tableUpdate = "tb_option_data_local",
+                    tableUpdate = "tb_r_option_item_data_local",
                     currentProgress = updatePercentage(1f, 1f, 7f)
                 )
             )
@@ -100,7 +100,7 @@ class IUpdateTableROptionItemDataLocalTest {
                 UpdateStatusState(
                     flagProgress = true,
                     levelUpdate = LevelUpdate.RECOVERY,
-                    tableUpdate = "tb_option_data_local",
+                    tableUpdate = "tb_r_option_item_data_local",
                     currentProgress = updatePercentage(1f, 1f, 7f)
                 )
             )
@@ -161,7 +161,7 @@ class IUpdateTableROptionItemDataLocalTest {
                 UpdateStatusState(
                     flagProgress = true,
                     levelUpdate = LevelUpdate.RECOVERY,
-                    tableUpdate = "tb_option_data_local",
+                    tableUpdate = "tb_r_option_item_data_local",
                     currentProgress = updatePercentage(1f, 1f, 7f)
                 )
             )
@@ -170,7 +170,7 @@ class IUpdateTableROptionItemDataLocalTest {
                 UpdateStatusState(
                     flagProgress = true,
                     levelUpdate = LevelUpdate.CLEAN,
-                    tableUpdate = "tb_option_data_local",
+                    tableUpdate = "tb_r_option_item_data_local",
                     currentProgress = updatePercentage(2f, 1f, 7f)
                 )
             )
@@ -232,7 +232,7 @@ class IUpdateTableROptionItemDataLocalTest {
                 UpdateStatusState(
                     flagProgress = true,
                     levelUpdate = LevelUpdate.RECOVERY,
-                    tableUpdate = "tb_option_data_local",
+                    tableUpdate = "tb_r_option_item_data_local",
                     currentProgress = updatePercentage(1f, 1f, 7f)
                 )
             )
@@ -241,7 +241,7 @@ class IUpdateTableROptionItemDataLocalTest {
                 UpdateStatusState(
                     flagProgress = true,
                     levelUpdate = LevelUpdate.CLEAN,
-                    tableUpdate = "tb_option_data_local",
+                    tableUpdate = "tb_r_option_item_data_local",
                     currentProgress = updatePercentage(2f, 1f, 7f)
                 )
             )
@@ -250,7 +250,7 @@ class IUpdateTableROptionItemDataLocalTest {
                 UpdateStatusState(
                     flagProgress = true,
                     levelUpdate = LevelUpdate.SAVE,
-                    tableUpdate = "tb_option_data_local",
+                    tableUpdate = "tb_r_option_item_data_local",
                     currentProgress = updatePercentage(3f, 1f, 7f)
                 )
             )
@@ -304,7 +304,7 @@ class IUpdateTableROptionItemDataLocalTest {
                 UpdateStatusState(
                     flagProgress = true,
                     levelUpdate = LevelUpdate.RECOVERY,
-                    tableUpdate = "tb_option_data_local",
+                    tableUpdate = "tb_r_option_item_data_local",
                     currentProgress = updatePercentage(1f, 1f, 7f)
                 )
             )
@@ -313,7 +313,7 @@ class IUpdateTableROptionItemDataLocalTest {
                 UpdateStatusState(
                     flagProgress = true,
                     levelUpdate = LevelUpdate.CLEAN,
-                    tableUpdate = "tb_option_data_local",
+                    tableUpdate = "tb_r_option_item_data_local",
                     currentProgress = updatePercentage(2f, 1f, 7f)
                 )
             )
@@ -322,7 +322,7 @@ class IUpdateTableROptionItemDataLocalTest {
                 UpdateStatusState(
                     flagProgress = true,
                     levelUpdate = LevelUpdate.SAVE,
-                    tableUpdate = "tb_option_data_local",
+                    tableUpdate = "tb_r_option_item_data_local",
                     currentProgress = updatePercentage(3f, 1f, 7f)
                 )
             )
