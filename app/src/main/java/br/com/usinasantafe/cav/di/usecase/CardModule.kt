@@ -22,4 +22,12 @@ interface CardModule {
     @Binds
     @Singleton
     fun bindSetLocal(usecase: ISetLocal): SetLocal
+
+    @Binds
+    @Singleton
+    fun bindListNature(usecase: IListNature): ListNature
+
+    @Binds
+    @Singleton
+    fun bindSetListNature(usecase: ISetListNature): SetListNature
 }

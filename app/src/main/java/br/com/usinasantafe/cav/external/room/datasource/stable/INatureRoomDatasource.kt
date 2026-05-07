@@ -22,4 +22,9 @@ class INatureRoomDatasource @Inject constructor(
             natureDao.deleteAll()
         }
 
+    override suspend fun listAll(): Result<List<NatureRoomModel>> =
+        result(getClassAndMethod()) {
+            natureDao.all()
+        }
+
 }

@@ -7,9 +7,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Rule
-import org.junit.Test
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.whenever
+import kotlin.test.Test
 
 @ExperimentalCoroutinesApi
 class PasswordViewModelTest {

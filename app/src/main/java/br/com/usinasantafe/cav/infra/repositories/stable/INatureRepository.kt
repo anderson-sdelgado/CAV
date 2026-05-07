@@ -6,6 +6,7 @@ import br.com.usinasantafe.cav.infra.datasource.retrofit.stable.NatureRetrofitDa
 import br.com.usinasantafe.cav.infra.datasource.room.stable.NatureRoomDatasource
 import br.com.usinasantafe.cav.infra.models.retrofit.stable.retrofitModelToEntity
 import br.com.usinasantafe.cav.infra.models.room.stable.entityToRoomModel
+import br.com.usinasantafe.cav.infra.models.room.stable.roomModelToEntity
 import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -31,6 +32,12 @@ class INatureRepository @Inject constructor(
         call(getClassAndMethod()) {
             val modelList = natureRetrofitDatasource.listAll(token).getOrThrow()
             modelList.map { it.retrofitModelToEntity() }
+        }
+
+    override suspend fun listAll(): Result<List<Nature>> =
+        call(getClassAndMethod()) {
+            val modeList = natureRoomDatasource.listAll().getOrThrow()
+            modeList.map { it.roomModelToEntity() }
         }
 
 }

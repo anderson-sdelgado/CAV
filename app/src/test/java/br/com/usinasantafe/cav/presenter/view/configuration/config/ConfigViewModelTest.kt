@@ -33,7 +33,6 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.text.toInt
 
 @ExperimentalCoroutinesApi
 class ConfigViewModelTest {
@@ -470,7 +469,7 @@ class ConfigViewModelTest {
             val result = viewModel.updateAllDatabase().toList()
             assertEquals(
                 result.count(),
-                ((qtdBefore * 3) + qtdTable).toInt()
+                ((qtdBefore * 3) + 2).toInt()
             )
             assertEquals(
                 result[(qtdBefore * 3).toInt()],
@@ -487,7 +486,6 @@ class ConfigViewModelTest {
                 result[((qtdBefore * 3) + 1).toInt()],
                 ConfigState(
                     status = UpdateStatusState(
-                        flagProgress = true,
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -526,7 +524,7 @@ class ConfigViewModelTest {
             val result = viewModel.updateAllDatabase().toList()
             assertEquals(
                 result.count(),
-                ((qtdBefore * 3) + qtdTable).toInt()
+                ((qtdBefore * 3) + 2).toInt()
             )
             checkResultUpdate(qtdBefore, result)
             assertEquals(
@@ -544,7 +542,6 @@ class ConfigViewModelTest {
                 result[((qtdBefore * 3) + 1).toInt()],
                 ConfigState(
                     status = UpdateStatusState(
-                        flagProgress = true,
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -557,7 +554,7 @@ class ConfigViewModelTest {
     @Test
     fun `update - Check return failure if have error in UpdateTableItemDataLocal`() =
         runTest {
-            val qtdBefore = 1f
+            val qtdBefore = 2f
             wheneverSuccess(qtdBefore)
             whenever(
                 updateTableItemDataLocal(
@@ -569,21 +566,21 @@ class ConfigViewModelTest {
                     UpdateStatusState(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
-                        tableUpdate = "tb_equip",
+                        tableUpdate = "tb_item_data_local",
                         currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
                     ),
                     UpdateStatusState(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
-                        failure = "CleanEquip -> java.lang.NullPointerException",
+                        failure = "CleanItemDataLocal -> java.lang.NullPointerException",
                     )
                 )
             )
             val result = viewModel.updateAllDatabase().toList()
             assertEquals(
                 result.count(),
-                ((qtdBefore * 3) + qtdTable).toInt()
+                ((qtdBefore * 3) + 2).toInt()
             )
             checkResultUpdate(qtdBefore, result)
             assertEquals(
@@ -592,7 +589,7 @@ class ConfigViewModelTest {
                     status = UpdateStatusState(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
-                        tableUpdate = "tb_equip",
+                        tableUpdate = "tb_item_data_local",
                         currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
                     )
                 )
@@ -601,11 +598,290 @@ class ConfigViewModelTest {
                 result[((qtdBefore * 3) + 1).toInt()],
                 ConfigState(
                     status = UpdateStatusState(
-                        flagProgress = true,
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
-                        failure = "ConfigViewModel.updateAllDatabase -> CleanEquip -> java.lang.NullPointerException",
+                        failure = "ConfigViewModel.updateAllDatabase -> CleanItemDataLocal -> java.lang.NullPointerException",
+                    )
+                )
+            )
+        }
+
+    @Test
+    fun `update - Check return failure if have error in UpdateTableNature`() =
+        runTest {
+            val qtdBefore = 3f
+            wheneverSuccess(qtdBefore)
+            whenever(
+                updateTableNature(
+                    sizeAll = sizeUpdate(qtdTable),
+                    count = (qtdBefore + 1)
+                )
+            ).thenReturn(
+                flowOf(
+                    UpdateStatusState(
+                        flagProgress = true,
+                        levelUpdate = LevelUpdate.RECOVERY,
+                        tableUpdate = "tb_nature",
+                        currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
+                    ),
+                    UpdateStatusState(
+                        errors = Errors.UPDATE,
+                        flagDialog = true,
+                        flagFailure = true,
+                        failure = "CleanNature -> java.lang.NullPointerException",
+                    )
+                )
+            )
+            val result = viewModel.updateAllDatabase().toList()
+            assertEquals(
+                result.count(),
+                ((qtdBefore * 3) + 2).toInt()
+            )
+            checkResultUpdate(qtdBefore, result)
+            assertEquals(
+                result[(qtdBefore * 3).toInt()],
+                ConfigState(
+                    status = UpdateStatusState(
+                        flagProgress = true,
+                        levelUpdate = LevelUpdate.RECOVERY,
+                        tableUpdate = "tb_nature",
+                        currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
+                    )
+                )
+            )
+            assertEquals(
+                result[((qtdBefore * 3) + 1).toInt()],
+                ConfigState(
+                    status = UpdateStatusState(
+                        errors = Errors.UPDATE,
+                        flagDialog = true,
+                        flagFailure = true,
+                        failure = "ConfigViewModel.updateAllDatabase -> CleanNature -> java.lang.NullPointerException",
+                    )
+                )
+            )
+        }
+
+    @Test
+    fun `update - Check return failure if have error in UpdateTableOptionDataLocal`() =
+        runTest {
+            val qtdBefore = 4f
+            wheneverSuccess(qtdBefore)
+            whenever(
+                updateTableOptionDataLocal(
+                    sizeAll = sizeUpdate(qtdTable),
+                    count = (qtdBefore + 1)
+                )
+            ).thenReturn(
+                flowOf(
+                    UpdateStatusState(
+                        flagProgress = true,
+                        levelUpdate = LevelUpdate.RECOVERY,
+                        tableUpdate = "tb_option_data_local",
+                        currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
+                    ),
+                    UpdateStatusState(
+                        errors = Errors.UPDATE,
+                        flagDialog = true,
+                        flagFailure = true,
+                        failure = "CleanOptionDataLocal -> java.lang.NullPointerException",
+                    )
+                )
+            )
+            val result = viewModel.updateAllDatabase().toList()
+            assertEquals(
+                result.count(),
+                ((qtdBefore * 3) + 2).toInt()
+            )
+            checkResultUpdate(qtdBefore, result)
+            assertEquals(
+                result[(qtdBefore * 3).toInt()],
+                ConfigState(
+                    status = UpdateStatusState(
+                        flagProgress = true,
+                        levelUpdate = LevelUpdate.RECOVERY,
+                        tableUpdate = "tb_option_data_local",
+                        currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
+                    )
+                )
+            )
+            assertEquals(
+                result[((qtdBefore * 3) + 1).toInt()],
+                ConfigState(
+                    status = UpdateStatusState(
+                        errors = Errors.UPDATE,
+                        flagDialog = true,
+                        flagFailure = true,
+                        failure = "ConfigViewModel.updateAllDatabase -> CleanOptionDataLocal -> java.lang.NullPointerException",
+                    )
+                )
+            )
+        }
+
+    @Test
+    fun `update - Check return failure if have error in UpdateTableROptionItemDataLocal`() =
+        runTest {
+            val qtdBefore = 5f
+            wheneverSuccess(qtdBefore)
+            whenever(
+                updateTableROptionItemDataLocal(
+                    sizeAll = sizeUpdate(qtdTable),
+                    count = (qtdBefore + 1)
+                )
+            ).thenReturn(
+                flowOf(
+                    UpdateStatusState(
+                        flagProgress = true,
+                        levelUpdate = LevelUpdate.RECOVERY,
+                        tableUpdate = "tb_r_option_item_data_local",
+                        currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
+                    ),
+                    UpdateStatusState(
+                        errors = Errors.UPDATE,
+                        flagDialog = true,
+                        flagFailure = true,
+                        failure = "CleanROptionItemDataLocal -> java.lang.NullPointerException",
+                    )
+                )
+            )
+            val result = viewModel.updateAllDatabase().toList()
+            assertEquals(
+                result.count(),
+                ((qtdBefore * 3) + 2).toInt()
+            )
+            checkResultUpdate(qtdBefore, result)
+            assertEquals(
+                result[(qtdBefore * 3).toInt()],
+                ConfigState(
+                    status = UpdateStatusState(
+                        flagProgress = true,
+                        levelUpdate = LevelUpdate.RECOVERY,
+                        tableUpdate = "tb_r_option_item_data_local",
+                        currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
+                    )
+                )
+            )
+            assertEquals(
+                result[((qtdBefore * 3) + 1).toInt()],
+                ConfigState(
+                    status = UpdateStatusState(
+                        errors = Errors.UPDATE,
+                        flagDialog = true,
+                        flagFailure = true,
+                        failure = "ConfigViewModel.updateAllDatabase -> CleanROptionItemDataLocal -> java.lang.NullPointerException",
+                    )
+                )
+            )
+        }
+
+    @Test
+    fun `update - Check return failure if have error in UpdateTableSupportTeams`() =
+        runTest {
+            val qtdBefore = 6f
+            wheneverSuccess(qtdBefore)
+            whenever(
+                updateTableSupportTeams(
+                    sizeAll = sizeUpdate(qtdTable),
+                    count = (qtdBefore + 1)
+                )
+            ).thenReturn(
+                flowOf(
+                    UpdateStatusState(
+                        flagProgress = true,
+                        levelUpdate = LevelUpdate.RECOVERY,
+                        tableUpdate = "tb_support_teams",
+                        currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
+                    ),
+                    UpdateStatusState(
+                        errors = Errors.UPDATE,
+                        flagDialog = true,
+                        flagFailure = true,
+                        failure = "CleanSupportTeams -> java.lang.NullPointerException",
+                    )
+                )
+            )
+            val result = viewModel.updateAllDatabase().toList()
+            assertEquals(
+                result.count(),
+                ((qtdBefore * 3) + 2).toInt()
+            )
+            checkResultUpdate(qtdBefore, result)
+            assertEquals(
+                result[(qtdBefore * 3).toInt()],
+                ConfigState(
+                    status = UpdateStatusState(
+                        flagProgress = true,
+                        levelUpdate = LevelUpdate.RECOVERY,
+                        tableUpdate = "tb_support_teams",
+                        currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
+                    )
+                )
+            )
+            assertEquals(
+                result[((qtdBefore * 3) + 1).toInt()],
+                ConfigState(
+                    status = UpdateStatusState(
+                        errors = Errors.UPDATE,
+                        flagDialog = true,
+                        flagFailure = true,
+                        failure = "ConfigViewModel.updateAllDatabase -> CleanSupportTeams -> java.lang.NullPointerException",
+                    )
+                )
+            )
+        }
+
+    @Test
+    fun `update - Check return failure if have error in UpdateTableTypeAccess`() =
+        runTest {
+            val qtdBefore = 7f
+            wheneverSuccess(qtdBefore)
+            whenever(
+                updateTableTypeAccess(
+                    sizeAll = sizeUpdate(qtdTable),
+                    count = (qtdBefore + 1)
+                )
+            ).thenReturn(
+                flowOf(
+                    UpdateStatusState(
+                        flagProgress = true,
+                        levelUpdate = LevelUpdate.RECOVERY,
+                        tableUpdate = "tb_type_access",
+                        currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
+                    ),
+                    UpdateStatusState(
+                        errors = Errors.UPDATE,
+                        flagDialog = true,
+                        flagFailure = true,
+                        failure = "CleanTypeAccess -> java.lang.NullPointerException",
+                    )
+                )
+            )
+            val result = viewModel.updateAllDatabase().toList()
+            assertEquals(
+                result.count(),
+                ((qtdBefore * 3) + 2).toInt()
+            )
+            checkResultUpdate(qtdBefore, result)
+            assertEquals(
+                result[(qtdBefore * 3).toInt()],
+                ConfigState(
+                    status = UpdateStatusState(
+                        flagProgress = true,
+                        levelUpdate = LevelUpdate.RECOVERY,
+                        tableUpdate = "tb_type_access",
+                        currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
+                    )
+                )
+            )
+            assertEquals(
+                result[((qtdBefore * 3) + 1).toInt()],
+                ConfigState(
+                    status = UpdateStatusState(
+                        errors = Errors.UPDATE,
+                        flagDialog = true,
+                        flagFailure = true,
+                        failure = "ConfigViewModel.updateAllDatabase -> CleanTypeAccess -> java.lang.NullPointerException",
                     )
                 )
             )
@@ -614,7 +890,7 @@ class ConfigViewModelTest {
     @Test
     fun `update - Check updateAllDatabase execute correctly`() =
         runTest {
-            val qtdBefore = 2f
+            val qtdBefore = 8f
             wheneverSuccess(qtdBefore)
             val result = viewModel.updateAllDatabase().toList()
             val qtd = sizeUpdate(qtdBefore) - 1f
@@ -655,11 +931,11 @@ class ConfigViewModelTest {
             viewModel.setConfigMain(
                 version = "1.00",
             )
-            wheneverSuccess(3f)
+            wheneverSuccess(qtdTable + 1f)
             val result = viewModel.updateAllDatabase().toList()
             assertEquals(
                 result.count(),
-                ((2f * 3)).toInt()
+                ((qtdTable * 3)).toInt()
             )
             checkResultUpdateAll(result)
             viewModel.onSaveAndUpdate()
@@ -720,11 +996,11 @@ class ConfigViewModelTest {
             viewModel.setConfigMain(
                 version = "1.00"
             )
-            wheneverSuccess(3f)
+            wheneverSuccess(qtdTable + 1f)
             val result = viewModel.updateAllDatabase().toList()
             assertEquals(
                 result.count(),
-                ((2f * 3)).toInt()
+                ((qtdTable * 3)).toInt()
             )
             checkResultUpdateAll(result)
             viewModel.onSaveAndUpdate()
@@ -753,7 +1029,7 @@ class ConfigViewModelTest {
             var contUpdate = 0f
             var contWhenever = 0f
 
-            val sizeAll = sizeUpdate(8f)
+            val sizeAll = sizeUpdate(qtdTable)
             tableList = mutableListOf(
                 "tb_colab", "tb_equip", "tb_item_data_local", "tb_nature",
                 "tb_option_data_local", "tb_r_option_item_data_local",
@@ -807,7 +1083,7 @@ class ConfigViewModelTest {
 
     private fun checkResultUpdate(posTable: Float, result: List<ConfigState>) =
         runTest {
-            val sizeAll = sizeUpdate(2f)
+            val sizeAll = sizeUpdate(qtdTable)
             var contUpdate = 0f
             var cont = 0
             for(table in tableList) {
@@ -851,8 +1127,7 @@ class ConfigViewModelTest {
 
     private fun checkResultUpdateAll(result: List<ConfigState>) =
         runTest {
-            val qtd = 2f
-            val sizeAll = sizeUpdate(qtd)
+            val sizeAll = sizeUpdate(qtdTable)
             var contUpdate = 0f
             var cont = 0
             for(table in tableList) {

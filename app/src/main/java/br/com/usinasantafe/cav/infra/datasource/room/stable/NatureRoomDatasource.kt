@@ -6,4 +6,5 @@ import br.com.usinasantafe.cav.utils.EmptyResult
 interface NatureRoomDatasource {
     suspend fun addAll(list: List<NatureRoomModel>): EmptyResult
     suspend fun deleteAll(): EmptyResult
+    suspend fun listAll(): Result<List<NatureRoomModel>>
 }

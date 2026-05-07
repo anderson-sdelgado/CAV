@@ -7,4 +7,5 @@ interface NatureRepository {
     suspend fun addAll(list: List<Nature>): EmptyResult
     suspend fun deleteAll(): EmptyResult
     suspend fun listAll(token: String): Result<List<Nature>>
+    suspend fun listAll(): Result<List<Nature>>
 }

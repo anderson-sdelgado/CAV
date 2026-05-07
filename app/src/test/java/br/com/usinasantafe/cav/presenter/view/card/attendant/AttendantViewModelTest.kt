@@ -15,9 +15,9 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
-import org.junit.Test
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.whenever
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @ExperimentalCoroutinesApi

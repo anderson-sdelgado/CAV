@@ -7,7 +7,6 @@ import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableEquip
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.LevelUpdate
 import br.com.usinasantafe.cav.lib.TypeButton
-import br.com.usinasantafe.cav.presenter.view.card.attendant.AttendantState
 import br.com.usinasantafe.cav.utils.UpdateStatusState
 import br.com.usinasantafe.cav.utils.percentage
 import br.com.usinasantafe.cav.utils.resultFailure
@@ -16,9 +15,9 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
-import org.junit.Test
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.whenever
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @ExperimentalCoroutinesApi

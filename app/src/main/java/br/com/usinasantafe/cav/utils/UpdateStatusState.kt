@@ -48,14 +48,18 @@ fun UpdateStatusState.toUiStatus(
         ?.let { "$classAndMethod -> $it" }
         ?: ""
 
-    if (failMsg.isNotEmpty()) Timber.e(failMsg)
+    var flag = true
+    if (failMsg.isNotEmpty()) {
+        Timber.e(failMsg)
+        flag = false
+    }
 
     return current.copy(
         flagDialog = flagDialog,
         flagFailure = flagFailure,
         errors = errors,
         failure = failMsg,
-        flagProgress = false,
+        flagProgress = flag,
         currentProgress = currentProgress,
         levelUpdate = levelUpdate,
         tableUpdate = tableUpdate
@@ -240,7 +244,7 @@ suspend inline fun <T : UiStateWithStatus<T>> Result<*>.onFailureEmit(
             classAndMethod = classAndMethod,
             throwable = throwable,
             errors = errorType,
-            flagProgress = true
+            flagProgress = false
         )
         collector.emit(newState)
     }

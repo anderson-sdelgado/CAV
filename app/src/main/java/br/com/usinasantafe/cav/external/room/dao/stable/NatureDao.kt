@@ -15,7 +15,7 @@ interface NatureDao {
     @Query("DELETE FROM $TB_NATURE")
     suspend fun deleteAll()
 
-    @Query("SELECT * FROM $TB_NATURE")
+    @Query("SELECT * FROM $TB_NATURE ORDER BY 1")
     suspend fun all(): List<NatureRoomModel>
 
 }

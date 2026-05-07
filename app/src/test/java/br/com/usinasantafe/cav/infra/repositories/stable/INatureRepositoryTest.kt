@@ -197,4 +197,62 @@ class INatureRepositoryTest {
             )
         }
 
+    @Test
+    fun `listAll - Check return failure if have error in NatureRoomDatasource listAll`() =
+        runTest {
+            whenever(
+                natureRoomDatasource.listAll()
+            ).thenReturn(
+                resultFailure(
+                    "INatureRoomDatasource.listAll",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.listAll()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "INatureRepository.listAll -> INatureRoomDatasource.listAll"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `listAll - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                natureRoomDatasource.listAll()
+            ).thenReturn(
+                Result.success(
+                    listOf(
+                        NatureRoomModel(
+                            id = 1,
+                            desc = "Test"
+                        )
+                    )
+                )
+            )
+            val result = repository.listAll()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                listOf(
+                    Nature(
+                        id = 1,
+                        desc = "Test"
+                    )
+                )
+            )
+        }
+
 }

@@ -160,4 +160,31 @@ class INatureRoomDatasourceTest {
             )
         }
 
+    @Test
+    fun `listAll - Check execution correct`() =
+        runTest {
+            natureDao.insertAll(
+                listOf(
+                    NatureRoomModel(
+                        id = 1,
+                        desc = "TEST"
+                    )
+                )
+            )
+            val result = datasource.listAll()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            val list = result.getOrNull()!!
+            assertEquals(
+                list,
+                listOf(
+                    NatureRoomModel(
+                        id = 1,
+                        desc = "TEST"
+                    )
+                )
+            )
+        }
 }
