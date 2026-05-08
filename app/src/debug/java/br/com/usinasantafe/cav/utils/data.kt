@@ -29,67 +29,67 @@ const val typeAccidentList = """
     [
         {
             "id": 1,
-            "desc": "01 - ATROP. PEDESTRE"
+            "desc": "ATROP. PEDESTRE"
         },
         {
             "id": 2,
-            "desc": "02 - ATROP. ANIMAL"
+            "desc": "ATROP. ANIMAL"
         },
         {
             "id": 3,
-            "desc": "03 - ATROP. CICLISTA"
+            "desc": "ATROP. CICLISTA"
         },
         {
             "id": 4,
-            "desc": "04 - COLISÃO TRASEIRA"
+            "desc": "COLISÃO TRASEIRA"
         },
         {
             "id": 5,
-            "desc": "05 - COLISÃO LATERAL"
+            "desc": "COLISÃO LATERAL"
         },
         {
             "id": 6,
-            "desc": "06 - CHOQUE C/ BARRANCO"
+            "desc": "CHOQUE C/ BARRANCO"
         },
         {
             "id": 7,
-            "desc": "07 - CHOQUE C/ DEFENSA"
+            "desc": "CHOQUE C/ DEFENSA"
         },
         {
             "id": 8,
-            "desc": "08 - CHOQUE C/ ÁRVORE"
+            "desc": "CHOQUE C/ ÁRVORE"
         },
         {
             "id": 9,
-            "desc": "09 - TOMBAMENTO"
+            "desc": "TOMBAMENTO"
         },
         {
             "id": 10,
-            "desc": "10 - CAPOTAMENTO"
+            "desc": "CAPOTAMENTO"
         },
         {
             "id": 11,
-            "desc": "11 - ABALROAMENTO"
+            "desc": "ABALROAMENTO"
         },
         {
             "id": 12,
-            "desc": "12 - ENGAVETAMENTO"
+            "desc": "ENGAVETAMENTO"
         },
         {
             "id": 13,
-            "desc": "13 - INCÊNDIO"
+            "desc": "INCÊNDIO"
         },
         {
             "id": 14,
-            "desc": "14 - QUEDA MOTOCICLISTA"
+            "desc": "QUEDA MOTOCICLISTA"
         },
         {
             "id": 15,
-            "desc": "15 - PRECIPITAÇÃO"
+            "desc": "PRECIPITAÇÃO"
         },
         {
             "id": 16,
-            "desc": "16 - DANOS MATERIAIS"
+            "desc": "DANOS MATERIAIS"
         }
     ]
 """
@@ -697,31 +697,31 @@ const val supportTeamsList = """
     [
         {
             "id": 1,
-            "desc": "1 - GUINCHOS"
+            "desc": "GUINCHOS"
         },
         {
             "id": 2,
-            "desc": "2 - SOS - AMBULÂNCIA"
+            "desc": "SOS - AMBULÂNCIA"
         },
         {
             "id": 3,
-            "desc": "3 - SOS - RESGATE"
+            "desc": "SOS - RESGATE"
         },
         {
             "id": 4,
-            "desc": "4 - BOMBEIROS"
+            "desc": "BOMBEIROS"
         },
         {
             "id": 5,
-            "desc": "5 - APOIO AMBIENTAL"
+            "desc": "APOIO AMBIENTAL"
         },
         {
             "id": 6,
-            "desc": "6 - PMRVEST"
+            "desc": "PMRVEST"
         },
         {
             "id": 7,
-            "desc": "7 - OUTROS"
+            "desc": "OUTROS"
         }
     ]
 """

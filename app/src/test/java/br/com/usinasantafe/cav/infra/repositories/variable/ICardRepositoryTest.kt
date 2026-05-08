@@ -157,4 +157,90 @@ class ICardRepositoryTest {
             )
         }
 
+    @Test
+    fun `listIdNature - Check return failure if have error in CardSharedPreferencesDatasource listIdNature`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.listIdNature()
+            ).thenReturn(
+                resultFailure(
+                    "ICardSharedPreferencesDatasource.listIdNature",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.listIdNature()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "ICardRepository.listIdNature -> ICardSharedPreferencesDatasource.listIdNature"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `listIdNature - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.listIdNature()
+            ).thenReturn(
+                Result.success(
+                    listOf(1, 2)
+                )
+            )
+            val result = repository.listIdNature()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                listOf(1, 2)
+            )
+        }
+
+    @Test
+    fun `setIdNatureList - Check return failure if have error in CardSharedPreferencesDatasource setIdNatureList`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.setIdNatureList(listOf(1, 2))
+            ).thenReturn(
+                resultFailure(
+                    "ICardSharedPreferencesDatasource.setIdNatureList",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.setIdNatureList(listOf(1, 2))
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "ICardRepository.setIdNatureList -> ICardSharedPreferencesDatasource.setIdNatureList"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `setIdNatureList - Check return correct if function execute successfully`() =
+        runTest {
+            val result = repository.setIdNatureList(listOf(1, 2))
+            verify(cardSharedPreferencesDatasource, atLeastOnce()).setIdNatureList(listOf(1, 2))
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+        }
+
 }

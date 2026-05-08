@@ -1,4 +1,4 @@
-package br.com.usinasantafe.cav.presenter.view.card.card
+package br.com.usinasantafe.cav.presenter.view.card.menuDataInitial
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import br.com.usinasantafe.cav.HiltTestActivity
@@ -32,7 +32,7 @@ class CardScreenTest {
 
     private fun setContent(){
         composeTestRule.setContent {
-            CardScreen()
+            MenuDataInitialScreen()
         }
     }
 }

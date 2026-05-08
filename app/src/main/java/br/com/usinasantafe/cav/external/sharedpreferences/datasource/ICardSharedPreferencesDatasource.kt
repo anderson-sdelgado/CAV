@@ -63,4 +63,16 @@ class ICardSharedPreferencesDatasource @Inject constructor(
             save(mainModel).getOrThrow()
         }
 
+    override suspend fun listIdNature(): Result<List<Int>> =
+        result(getClassAndMethod()) {
+            get().getOrThrow().idNatureList
+        }
+
+    override suspend fun setIdNatureList(idNatureList: List<Int>): EmptyResult =
+        result(getClassAndMethod()) {
+            val mainModel = get().getOrThrow()
+            mainModel.idNatureList = idNatureList
+            save(mainModel).getOrThrow()
+        }
+
 }

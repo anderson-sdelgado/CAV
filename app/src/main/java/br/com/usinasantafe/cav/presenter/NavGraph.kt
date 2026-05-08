@@ -15,7 +15,7 @@ import br.com.usinasantafe.cav.presenter.Routes.PASSWORD_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.SPLASH_ROUTE
 import br.com.usinasantafe.cav.presenter.view.card.attendant.AttendantScreen
 import br.com.usinasantafe.cav.presenter.view.card.car.CarScreen
-import br.com.usinasantafe.cav.presenter.view.card.card.CardScreen
+import br.com.usinasantafe.cav.presenter.view.card.menuDataInitial.MenuDataInitialScreen
 import br.com.usinasantafe.cav.presenter.view.configuration.config.ConfigScreen
 import br.com.usinasantafe.cav.presenter.view.configuration.initial.InitialMenuScreen
 import br.com.usinasantafe.cav.presenter.view.configuration.password.PasswordScreen
@@ -107,7 +107,7 @@ fun NavigationGraph(
         }
 
         composable(CARD_ROUTE) {
-            CardScreen()
+            MenuDataInitialScreen()
         }
 
         //////////////////////////////////////////////////////////////////////

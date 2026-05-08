@@ -14,9 +14,11 @@
     <string name="text_pattern_ok">OK</string>
     <string name="text_pattern_cancel">CANCELAR</string>
     <string name="text_pattern_return">RETORNAR</string>
+    <string name="text_pattern_next">AVANÇAR</string>
     <string name="text_password_invalid">SENHA INVÁLIDA!</string>
     <string name="text_title_number">NRO APARELHO</string>
     <string name="text_pattern_save">SALVAR</string>
+    <string name="text_pattern_edit">EDITAR</string>
     <string name="text_msg_recovery">RECUPERANDO DADOS DA TABELA \"%1$s\" DO WEB SERVICE.</string>
     <string name="text_msg_clean">LIMPANDO A TABELA \"%1$s\".</string>
     <string name="text_msg_save">SALVANDO DADOS NA TABELA \"%1$s\".</string>
@@ -52,6 +54,13 @@
     <string name="text_capture_local">CAPTURAR LOCALIZAÇÃO</string>
     <string name="text_local_now">LOCALIZAÇÃO ATUAL</string>
     <string name="text_type_local">DIGITAR LOCAL</string>
-    <string name="text_title_type_local">LOCAL</string>
+    <string name="text_title_local">LOCAL</string>
     <string name="text_title_nature">NATUREZA DE ATENDIMENTO</string>
+    <string name="text_item_attendant">ATENDENTE</string>
+    <string name="text_item_car">VIATURA</string>
+    <string name="text_item_local">LOCAL</string>
+    <string name="text_title_type_accident">TIPO DE ACIDENTE</string>
+    <string name="text_title_data_local">DADOS DO LOCAL</string>
+    <string name="text_title_support_teams">EQUIPES DE APOIO</string>
+    <string name="text_title_data_initial">DADOS INICIAIS</string>
 </resources>

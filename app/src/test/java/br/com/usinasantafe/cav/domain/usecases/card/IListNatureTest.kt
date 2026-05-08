@@ -2,6 +2,7 @@ package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.domain.entities.stable.Nature
 import br.com.usinasantafe.cav.domain.repositories.stable.NatureRepository
+import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxModel
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.test.runTest
@@ -13,8 +14,10 @@ import kotlin.test.assertEquals
 class IListNatureTest {
 
     private val natureRepository = mock<NatureRepository>()
+    private val cardRepository = mock<CardRepository>()
     private val usecase = IListNature(
-        natureRepository = natureRepository
+        natureRepository = natureRepository,
+        cardRepository = cardRepository
     )
 
     @Test
@@ -45,7 +48,7 @@ class IListNatureTest {
         }
 
     @Test
-    fun `Check return correct if function execute successfully`() =
+    fun `Check return failure if have error in CardRepository listIdNature`() =
         runTest {
             whenever(
                 natureRepository.listAll()
@@ -59,6 +62,56 @@ class IListNatureTest {
                     )
                 )
             )
+            whenever(
+                cardRepository.listIdNature()
+            ).thenReturn(
+                resultFailure(
+                    "ICardRepository.listIdNature",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = usecase()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IListNature -> ICardRepository.listIdNature"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                natureRepository.listAll()
+            ).thenReturn(
+                Result.success(
+                    listOf(
+                        Nature(
+                            id = 1,
+                            desc = "Test"
+                        ),
+                        Nature(
+                            id = 2,
+                            desc = "Test2"
+                        )
+                    )
+                )
+            )
+            whenever(
+                cardRepository.listIdNature()
+            ).thenReturn(
+                Result.success(
+                    listOf(1)
+                )
+            )
             val result = usecase()
             assertEquals(
                 result.isSuccess,
@@ -70,6 +123,11 @@ class IListNatureTest {
                     ItemCheckBoxModel(
                         id = 1,
                         desc = "Test",
+                        flag = true
+                    ),
+                    ItemCheckBoxModel(
+                        id = 2,
+                        desc = "Test2",
                         flag = false
                     )
                 )

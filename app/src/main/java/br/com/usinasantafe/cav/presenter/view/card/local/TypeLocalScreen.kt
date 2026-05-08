@@ -74,7 +74,7 @@ fun TypeLocalContent(
     ) {
         TitleDesign(
             text = stringResource(
-                id = R.string.text_title_type_local
+                id = R.string.text_title_local
             )
         )
         Spacer(modifier = Modifier.padding(vertical = 4.dp))

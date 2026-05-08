@@ -30,7 +30,7 @@ class ICardSharedPreferencesDatasourceTest {
     }
 
     @Test
-    fun `setRegAttendant - Check alter data correct the Config SharedPreferences internal`() =
+    fun `setRegAttendant - Check alter data correct in sharedPreferences internal`() =
         runTest {
             val data = CardSharedPreferencesModel(
                 regAttendant = 18017
@@ -64,7 +64,7 @@ class ICardSharedPreferencesDatasourceTest {
         }
 
     @Test
-    fun `setIdCar - Check alter data correct the Config SharedPreferences internal`() =
+    fun `setIdCar - Check alter data correct in sharedPreferences internal`() =
         runTest {
             val data = CardSharedPreferencesModel(
                 idCar = 2
@@ -98,7 +98,7 @@ class ICardSharedPreferencesDatasourceTest {
         }
 
     @Test
-    fun `setLocal - Check alter data correct the Config SharedPreferences internal`() =
+    fun `setLocal - Check alter data correct in sharedPreferences internal`() =
         runTest {
             val data = CardSharedPreferencesModel(
                 local = LocalSharedPreferencesModel(
@@ -156,4 +156,76 @@ class ICardSharedPreferencesDatasourceTest {
                 1.0
             )
         }
+
+    @Test
+    fun `listIdNature - Check return data and sharePreferences is empty`() =
+        runTest {
+            val result = datasource.listIdNature()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            val list = result.getOrNull()!!
+            assertEquals(
+                list,
+                emptyList()
+            )
+        }
+
+    @Test
+    fun `listIdNature - Check return data and sharePreferences with data`() =
+        runTest {
+            val data = CardSharedPreferencesModel(
+                idNatureList = listOf(1, 2)
+            )
+            datasource.save(data)
+            val result = datasource.listIdNature()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            val list = result.getOrNull()!!
+            assertEquals(
+                list,
+                listOf(1, 2)
+            )
+        }
+
+    @Test
+    fun `setIdNatureList - Check alter data correct in SharedPreferences internal`() =
+        runTest {
+            val data = CardSharedPreferencesModel(
+                idNatureList = listOf(1, 2)
+            )
+            datasource.save(data)
+            val resultGetBefore = datasource.get()
+            assertEquals(
+                resultGetBefore.isSuccess,
+                true
+            )
+            val modelBefore = resultGetBefore.getOrNull()!!
+            val listBefore = modelBefore.idNatureList
+            assertEquals(
+                listBefore,
+                listOf(1, 2)
+            )
+            val result = datasource.setIdNatureList(listOf(3, 4))
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            val resultGetAfter = datasource.get()
+            assertEquals(
+                resultGetAfter.isSuccess,
+                true
+            )
+            val modelAfter= resultGetAfter.getOrNull()!!
+            val listAfter= modelAfter.idNatureList
+            assertEquals(
+                listAfter,
+                listOf(3, 4)
+            )
+        }
+
+
 }

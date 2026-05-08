@@ -28,4 +28,14 @@ class ICardRepository @Inject constructor(
             cardSharedPreferencesDatasource.setLocal(entity.entityToSharedPreferencesModel()).getOrThrow()
         }
 
+    override suspend fun listIdNature(): Result<List<Int>> =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.listIdNature().getOrThrow()
+        }
+
+    override suspend fun setIdNatureList(idNatureList: List<Int>): EmptyResult =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.setIdNatureList(idNatureList).getOrThrow()
+        }
+
 }

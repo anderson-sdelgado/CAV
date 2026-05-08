@@ -6,7 +6,8 @@ import br.com.usinasantafe.cav.domain.entities.variable.Local
 data class CardSharedPreferencesModel(
     var regAttendant: Long? = null,
     var idCar: Int? = null,
-    var local: LocalSharedPreferencesModel? = null
+    var local: LocalSharedPreferencesModel? = null,
+    var idNatureList: List<Int> = emptyList()
 )
 
 data class LocalSharedPreferencesModel(

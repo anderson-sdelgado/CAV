@@ -7,4 +7,6 @@ interface CardSharedPreferencesDatasource {
     suspend fun setRegAttendant(regColab: Long): EmptyResult
     suspend fun setIdCar(idEquip: Int): EmptyResult
     suspend fun setLocal(model: LocalSharedPreferencesModel): EmptyResult
+    suspend fun listIdNature(): Result<List<Int>>
+    suspend fun setIdNatureList(idNatureList: List<Int>): EmptyResult
 }
