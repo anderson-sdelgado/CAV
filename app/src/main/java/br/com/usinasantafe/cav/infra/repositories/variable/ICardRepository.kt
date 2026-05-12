@@ -38,4 +38,12 @@ class ICardRepository @Inject constructor(
             cardSharedPreferencesDatasource.setIdNatureList(idNatureList).getOrThrow()
         }
 
+    override suspend fun getRegAttendant(): Result<Long> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getIdCar(): Result<Int> {
+        TODO("Not yet implemented")
+    }
+
 }

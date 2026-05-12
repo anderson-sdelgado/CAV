@@ -1,4 +1,4 @@
-package br.com.usinasantafe.cav.presenter.view.card.menuLocalSupport
+package br.com.usinasantafe.cav.presenter.view.card.menu
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -13,6 +13,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,16 +31,32 @@ import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
 
 @Composable
-fun MenuLocalSupportScreen(
-    viewModel: MenuLocalSupportViewModel = hiltViewModel()
+fun DataInitialScreen(
+    viewModel: DataInitialViewModel = hiltViewModel(),
+    onNavSplash: () -> Unit,
+    onNavAttendant: () -> Unit,
+    onNavCar: () -> Unit,
+    onNavNature: () -> Unit,
+    onNavTypeAccident: () -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-            MenuLocalSupportContent(
-                local = uiState.local,
-                dataLocal = uiState.dataLocal,
-                supportTeams = uiState.supportTeams,
+
+            LaunchedEffect(Unit) {
+                viewModel.recoverData()
+            }
+
+            DataInitialContent(
+                attendant = uiState.attendant,
+                car = uiState.car,
+                nature = uiState.nature,
+                typeAccident = uiState.typeAccident,
+                onNavSplash = onNavSplash,
+                onNavAttendant = onNavAttendant,
+                onNavCar = onNavCar,
+                onNavNature = onNavNature,
+                onNavTypeAccident = onNavTypeAccident,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -47,10 +64,16 @@ fun MenuLocalSupportScreen(
 }
 
 @Composable
-fun MenuLocalSupportContent(
-    local: String,
-    dataLocal: String,
-    supportTeams: String,
+fun DataInitialContent(
+    attendant: String,
+    car: String,
+    nature: String,
+    typeAccident: String,
+    onNavSplash: () -> Unit,
+    onNavAttendant: () -> Unit,
+    onNavCar: () -> Unit,
+    onNavNature: () -> Unit,
+    onNavTypeAccident: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -80,11 +103,11 @@ fun MenuLocalSupportContent(
                     ) {
                         Text(
                             text = stringResource(
-                                id = R.string.text_item_local
+                                id = R.string.text_item_attendant
                             ),
                             fontWeight = FontWeight.Bold
                         )
-                        Text(local)
+                        Text(text = attendant)
                     }
                     Button(
                         onClick = {},
@@ -111,11 +134,11 @@ fun MenuLocalSupportContent(
                     ) {
                         Text(
                             text = stringResource(
-                                id = R.string.text_title_data_local
+                                id = R.string.text_item_car
                             ),
                             fontWeight = FontWeight.Bold
                         )
-                        Text(dataLocal)
+                        Text(car)
                     }
                     Button(
                         onClick = {},
@@ -142,11 +165,42 @@ fun MenuLocalSupportContent(
                     ) {
                         Text(
                             text = stringResource(
-                                id = R.string.text_title_support_teams
+                                id = R.string.text_nature
                             ),
                             fontWeight = FontWeight.Bold
                         )
-                        Text(supportTeams)
+                        Text(nature)
+                    }
+                    Button(
+                        onClick = {},
+                    ) {
+                        Text(
+                            text = stringResource(
+                                id = R.string.text_pattern_edit
+                            ),
+                        )
+                    }
+                }
+            }
+            item {
+                Row(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(Color.LightGray.copy(alpha = 0.2f))
+                        .padding(12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                    ) {
+                        Text(
+                            text = stringResource(
+                                id = R.string.text_type_accident
+                            ),
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(typeAccident)
                     }
                     Button(
                         onClick = {},
@@ -184,13 +238,19 @@ fun MenuLocalSupportContent(
 
 @Preview(showBackground = true)
 @Composable
-fun MenuLocalSupportPagePreview() {
+fun DataInitialPagePreview() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            MenuLocalSupportContent(
-                local = "RUA ANTONIA NABA DE ALMEIDA, 75 - TABATINGA - SP",
-                dataLocal = "TRAÇADO: RETA\nPERFIL: ACENTUADO",
-                supportTeams = "GUINCHOS - BOMBEIROS",
+            DataInitialContent(
+                attendant = "19759 - ANDERSON DA SILVA DELGADO",
+                car = "100 - AMBULANCIA",
+                nature = "ACIDENTE - ANIMAIS",
+                typeAccident = "ATROP. ANIMAL - COLISÃO LATERAL - INCÊNDIO",
+                onNavSplash = {},
+                onNavAttendant = {},
+                onNavCar = {},
+                onNavNature = {},
+                onNavTypeAccident = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

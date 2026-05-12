@@ -2,6 +2,7 @@ package br.com.usinasantafe.cav.presenter.view.card.menuDataInitial
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import br.com.usinasantafe.cav.HiltTestActivity
+import br.com.usinasantafe.cav.presenter.view.card.menu.DataInitialScreen
 import br.com.usinasantafe.cav.utils.waitUntilTimeout
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -10,7 +11,7 @@ import org.junit.Rule
 import kotlin.test.Test
 
 @HiltAndroidTest
-class CardScreenTest {
+class DataInitialScreenTest {
 
     @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)
@@ -32,7 +33,13 @@ class CardScreenTest {
 
     private fun setContent(){
         composeTestRule.setContent {
-            MenuDataInitialScreen()
+            DataInitialScreen(
+                onNavSplash = {},
+                onNavAttendant = {},
+                onNavCar = {},
+                onNavNature = {},
+                onNavTypeAccident = {},
+            )
         }
     }
 }

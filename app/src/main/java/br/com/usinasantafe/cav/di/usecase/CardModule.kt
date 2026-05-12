@@ -30,4 +30,20 @@ interface CardModule {
     @Binds
     @Singleton
     fun bindSetListNature(usecase: ISetListNature): SetListNature
+
+    @Binds
+    @Singleton
+    fun bindGetAttendant(usecase: IGetAttendant): GetAttendant
+
+    @Binds
+    @Singleton
+    fun bindGetCar(usecase: IGetCar): GetCar
+
+    @Binds
+    @Singleton
+    fun bindGetNature(usecase: IGetNature): GetNature
+
+    @Binds
+    @Singleton
+    fun bindGetTypeAccident(usecase: IGetTypeAccident): GetTypeAccident
 }

@@ -39,4 +39,8 @@ class IColabRepository @Inject constructor(
             colabRoomDatasource.hasReg(reg).getOrThrow()
         }
 
+    override suspend fun getNameByReg(reg: Long): Result<String> {
+        TODO("Not yet implemented")
+    }
+
 }

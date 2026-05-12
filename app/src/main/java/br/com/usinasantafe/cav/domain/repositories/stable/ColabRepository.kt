@@ -8,4 +8,5 @@ interface ColabRepository {
     suspend fun deleteAll(): EmptyResult
     suspend fun listAll(token: String): Result<List<Colab>>
     suspend fun hasReg(reg: Long): Result<Boolean>
+    suspend fun getNameByReg(reg: Long): Result<String>
 }

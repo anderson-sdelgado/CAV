@@ -44,4 +44,8 @@ class IEquipRepository @Inject constructor(
             equipRoomDatasource.getIdByNro(nro).getOrThrow()
         }
 
+    override suspend fun getById(id: Int): Result<Equip> {
+        TODO("Not yet implemented")
+    }
+
 }

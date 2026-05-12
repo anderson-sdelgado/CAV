@@ -18,6 +18,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.LevelUpdate
+import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.TypeButton
 import br.com.usinasantafe.cav.presenter.theme.ButtonsGenericNumeric
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
@@ -31,19 +32,20 @@ import br.com.usinasantafe.cav.utils.UpdateStatusState
 fun CarScreen(
     viewModel: CarViewModel = hiltViewModel(),
     onNavAttendant: () -> Unit,
-    onNavCard: () -> Unit,
+    onNavMenu: () -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             CarContent(
+                option = uiState.option,
                 nroEquip = uiState.nroEquip,
                 setTextField = viewModel::setTextField,
                 flagAccess = uiState.flagAccess,
                 setCloseDialog = viewModel::setCloseDialog,
                 status = uiState.status,
                 onNavAttendant = onNavAttendant,
-                onNavCard = onNavCard,
+                onNavMenu = onNavMenu,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -52,13 +54,14 @@ fun CarScreen(
 
 @Composable
 fun CarContent(
+    option: Option,
     nroEquip: String,
     setTextField: (String, TypeButton) -> Unit,
     flagAccess: Boolean,
     setCloseDialog: () -> Unit,
     status: UpdateStatusState,
     onNavAttendant: () -> Unit,
-    onNavCard: () -> Unit,
+    onNavMenu: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -78,7 +81,10 @@ fun CarContent(
             setActionButton = setTextField
         )
         BackHandler {
-            onNavAttendant()
+            when(option) {
+                Option.INSERT -> onNavAttendant()
+                Option.EDIT -> onNavMenu()
+            }
         }
 
         if (status.flagDialog) {
@@ -92,7 +98,7 @@ fun CarContent(
 
     LaunchedEffect(flagAccess) {
         if(flagAccess) {
-            onNavCard()
+            onNavMenu()
         }
     }
 }
@@ -103,6 +109,7 @@ fun CarPagePreview() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             CarContent(
+                option = Option.INSERT,
                 nroEquip = "",
                 setTextField = { _, _ -> },
                 flagAccess = false,
@@ -118,7 +125,7 @@ fun CarPagePreview() {
                     currentProgress = 0f,
                 ),
                 onNavAttendant = {},
-                onNavCard = {},
+                onNavMenu = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -131,6 +138,7 @@ fun CarPagePreviewWithData() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             CarContent(
+                option = Option.INSERT,
                 nroEquip = "2200",
                 setTextField = { _, _ -> },
                 flagAccess = false,
@@ -146,7 +154,7 @@ fun CarPagePreviewWithData() {
                     currentProgress = 0f,
                 ),
                 onNavAttendant = {},
-                onNavCard = {},
+                onNavMenu = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -159,6 +167,7 @@ fun CarPagePreviewWithMsgEmpty() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             CarContent(
+                option = Option.INSERT,
                 nroEquip = "2200",
                 setTextField = { _, _ -> },
                 flagAccess = false,
@@ -174,7 +183,7 @@ fun CarPagePreviewWithMsgEmpty() {
                     currentProgress = 0f,
                 ),
                 onNavAttendant = {},
-                onNavCard = {},
+                onNavMenu = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -187,6 +196,7 @@ fun CarPagePreviewUpdate() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             CarContent(
+                option = Option.INSERT,
                 nroEquip = "2200",
                 setTextField = { _, _ -> },
                 flagAccess = false,
@@ -202,7 +212,7 @@ fun CarPagePreviewUpdate() {
                     currentProgress = 0.3333334f,
                 ),
                 onNavAttendant = {},
-                onNavCard = {},
+                onNavMenu = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

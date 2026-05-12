@@ -19,6 +19,8 @@
     <string name="text_title_number">NRO APARELHO</string>
     <string name="text_pattern_save">SALVAR</string>
     <string name="text_pattern_edit">EDITAR</string>
+    <string name="text_pattern_insert">INSERIR</string>
+    <string name="text_pattern_delete">EXCLUIR</string>
     <string name="text_msg_recovery">RECUPERANDO DADOS DA TABELA \"%1$s\" DO WEB SERVICE.</string>
     <string name="text_msg_clean">LIMPANDO A TABELA \"%1$s\".</string>
     <string name="text_msg_save">SALVANDO DADOS NA TABELA \"%1$s\".</string>
@@ -46,6 +48,7 @@
     <string name="text_pattern_clean">APAGAR</string>
     <string name="text_pattern_update">ATUALIZAR DADOS</string>
     <string name="text_title_car">NRO VIATURA</string>
+    <string name="text_item_car">VIATURA</string>
     <string name="text_title_card">FICHA</string>
     <string name="text_local">O LOCAL DO ACIDENTE SERIA ESSE:\n\n ENDEREÇO: %1$s\n\nLATITUDE: %2$s\nLONGITUDE: %3$s?</string>
     <string name="text_local_selection">Localização Selecionada</string>
@@ -55,12 +58,20 @@
     <string name="text_local_now">LOCALIZAÇÃO ATUAL</string>
     <string name="text_type_local">DIGITAR LOCAL</string>
     <string name="text_title_local">LOCAL</string>
-    <string name="text_title_nature">NATUREZA DE ATENDIMENTO</string>
+    <string name="text_nature">NATUREZA DE ATENDIMENTO</string>
     <string name="text_item_attendant">ATENDENTE</string>
-    <string name="text_item_car">VIATURA</string>
     <string name="text_item_local">LOCAL</string>
-    <string name="text_title_type_accident">TIPO DE ACIDENTE</string>
+    <string name="text_type_accident">TIPO DE ACIDENTE</string>
     <string name="text_title_data_local">DADOS DO LOCAL</string>
-    <string name="text_title_support_teams">EQUIPES DE APOIO</string>
-    <string name="text_title_data_initial">DADOS INICIAIS</string>
+    <string name="text_support_teams">EQUIPES DE APOIO</string>
+    <string name="text_equip_own">EQUIPAMENTO PRÓPRIO</string>
+    <string name="text_equip">EQUIPAMENTO</string>
+    <string name="text_driver">MOTORISTA</string>
+    <string name="text_vehicle_third">VEÍCULO DE TERCEIROS</string>
+    <string name="text_vehicle">VEÍCULO</string>
+    <string name="text_title_involved">ENVOLVIDOS EXTERNOS</string>
+    <string name="text_involved">ENVOLVIDO</string>
+    <string name="text_treatment">TRATAMENTO</string>
+    <string name="text_title_witness">TESTEMUNHA(S)</string>
+    <string name="text_witness">TESTEMUNHA</string>
 </resources>

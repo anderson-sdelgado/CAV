@@ -9,4 +9,5 @@ interface EquipRepository {
     suspend fun listAll(token: String): Result<List<Equip>>
     suspend fun hasNro(nro: Long): Result<Boolean>
     suspend fun getIdByNro(nro: Long): Result<Int>
+    suspend fun getById(id: Int): Result<Equip>
 }

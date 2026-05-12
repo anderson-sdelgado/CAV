@@ -3,19 +3,27 @@ package br.com.usinasantafe.cav.presenter
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import br.com.usinasantafe.cav.lib.Option
+import br.com.usinasantafe.cav.presenter.Args.OPTION_ARG
 import br.com.usinasantafe.cav.presenter.Routes.ATTENDANT_ROUTE
-import br.com.usinasantafe.cav.presenter.Routes.CARD_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.CAR_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.CONFIG_ROUTE
+import br.com.usinasantafe.cav.presenter.Routes.DATA_INITIAL_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.INITIAL_MENU_ROUTE
+import br.com.usinasantafe.cav.presenter.Routes.NATURE_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.PASSWORD_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.SPLASH_ROUTE
+import br.com.usinasantafe.cav.presenter.Routes.TYPE_ACCIDENT_ROUTE
 import br.com.usinasantafe.cav.presenter.view.card.attendant.AttendantScreen
 import br.com.usinasantafe.cav.presenter.view.card.car.CarScreen
-import br.com.usinasantafe.cav.presenter.view.card.menuDataInitial.MenuDataInitialScreen
+import br.com.usinasantafe.cav.presenter.view.card.menu.DataInitialScreen
+import br.com.usinasantafe.cav.presenter.view.card.nature.NatureScreen
+import br.com.usinasantafe.cav.presenter.view.card.typeAccident.TypeAccidentScreen
 import br.com.usinasantafe.cav.presenter.view.configuration.config.ConfigScreen
 import br.com.usinasantafe.cav.presenter.view.configuration.initial.InitialMenuScreen
 import br.com.usinasantafe.cav.presenter.view.configuration.password.PasswordScreen
@@ -56,7 +64,9 @@ fun NavigationGraph(
                     navActions.navigateToPassword()
                 },
                 onNavAttendant = {
-                    navActions.navigateToAttendant()
+                    navActions.navigateToAttendant(
+                        option = Option.INSERT.ordinal
+                    )
                 }
             )
         }
@@ -84,33 +94,84 @@ fun NavigationGraph(
 
         ////////////////////////////// Card //////////////////////////////////
 
-        composable(ATTENDANT_ROUTE) {
+        composable(
+            ATTENDANT_ROUTE,
+            arguments = listOf(
+                navArgument(OPTION_ARG) { type = NavType.IntType }
+            )
+        ) { entry ->
             AttendantScreen(
                 onNavCar = {
-                    navActions.navigateToCar()
+                    navActions.navigateToCar(
+                        option = entry.arguments?.getInt(OPTION_ARG)!!,
+                    )
                 },
                 onNavInitialMenu = {
                     navActions.navigateToInitialMenu()
+                },
+                onNavMenu = {
+                    navActions.navigateToDataInitial()
                 }
             )
         }
 
-        composable(CAR_ROUTE) {
+        composable(
+            CAR_ROUTE,
+            arguments = listOf(
+                navArgument(OPTION_ARG) { type = NavType.IntType }
+            )
+        ) { entry ->
             CarScreen(
                 onNavAttendant = {
-                    navActions.navigateToAttendant()
+                    navActions.navigateToAttendant(
+                        option = entry.arguments?.getInt(OPTION_ARG)!!,
+                    )
                 },
-                onNavCard = {
-                    navActions.navigateToCard()
+                onNavMenu = {
+                    navActions.navigateToDataInitial()
                 }
             )
         }
 
-        composable(CARD_ROUTE) {
-            MenuDataInitialScreen()
+        composable(NATURE_ROUTE) {
+            NatureScreen(
+                onNavMenu = {
+                    navActions.navigateToDataInitial()
+                }
+            )
+        }
+
+        composable(TYPE_ACCIDENT_ROUTE) {
+            TypeAccidentScreen(
+
+            )
         }
 
         //////////////////////////////////////////////////////////////////////
+
+        ///////////////////////////// Menu Card //////////////////////////////
+
+        composable(DATA_INITIAL_ROUTE) {
+            DataInitialScreen(
+                onNavSplash = {
+                    navActions.navigateToSplash()
+                },
+                onNavAttendant = {
+                    navActions.navigateToAttendant(Option.EDIT.ordinal)
+                },
+                onNavCar = {
+                    navActions.navigateToCar(Option.EDIT.ordinal)
+                },
+                onNavNature = {
+                    navActions.navigateToNature()
+                },
+                onNavTypeAccident = {
+                    navActions.navigateToTypeAccident()
+                },
+            )
+        }
+        //////////////////////////////////////////////////////////////////////
+
 
     }
 }

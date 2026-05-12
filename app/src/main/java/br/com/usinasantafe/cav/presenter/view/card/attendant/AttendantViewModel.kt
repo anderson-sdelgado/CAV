@@ -1,12 +1,15 @@
 package br.com.usinasantafe.cav.presenter.view.card.attendant
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.usinasantafe.cav.domain.usecases.common.HasRegColab
 import br.com.usinasantafe.cav.domain.usecases.card.SetRegAttendant
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableColab
 import br.com.usinasantafe.cav.lib.Errors
+import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.TypeButton
+import br.com.usinasantafe.cav.presenter.Args.OPTION_ARG
 import br.com.usinasantafe.cav.presenter.theme.addTextField
 import br.com.usinasantafe.cav.presenter.theme.clearTextField
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
@@ -23,8 +26,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.collections.get
 
 data class AttendantState(
+    val option: Option = Option.INSERT,
     val regColab: String = "",
     val flagAccess: Boolean = false,
     override val status: UpdateStatusState = UpdateStatusState()
@@ -35,13 +40,15 @@ data class AttendantState(
 
 }
 
-
 @HiltViewModel
 class AttendantViewModel @Inject constructor(
+    saveStateHandle: SavedStateHandle,
     private val updateTableColab: UpdateTableColab,
     private val hasRegColab: HasRegColab,
     private val setRegAttendant: SetRegAttendant
 ) : ViewModel() {
+
+    private val option: Int = saveStateHandle[OPTION_ARG]!!
 
     private val _uiState = MutableStateFlow(AttendantState())
     val uiState = _uiState.asStateFlow()
@@ -53,6 +60,8 @@ class AttendantViewModel @Inject constructor(
     }
 
     fun setCloseDialog() = updateState { copy(status = status.copy(flagDialog = false, flagFailure = false)) }
+
+    init { updateState { copy(option = Option.entries[this@AttendantViewModel.option]) } }
 
     fun setTextField(text: String, typeButton: TypeButton) {
         when (typeButton) {

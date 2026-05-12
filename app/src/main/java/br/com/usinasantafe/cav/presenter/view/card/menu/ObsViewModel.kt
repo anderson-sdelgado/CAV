@@ -1,17 +1,16 @@
-package br.com.usinasantafe.cav.presenter.view.card.menuLocalSupport
+package br.com.usinasantafe.cav.presenter.view.card.menu
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import br.com.usinasantafe.cav.lib.Errors
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class MenuLocalSupportState(
-    val local: String = "",
-    val dataLocal: String = "",
-    val supportTeams: String = "",
+data class ObsState(
     val flagAccess: Boolean = false,
     val flagDialog: Boolean = false,
     val flagFailure: Boolean = false,
@@ -20,15 +19,15 @@ data class MenuLocalSupportState(
 )
 
 @HiltViewModel
-class MenuLocalSupportViewModel @Inject constructor(
+class ObsViewModel @Inject constructor(
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(MenuLocalSupportState())
+    private val _uiState = MutableStateFlow(ObsState())
     val uiState = _uiState.asStateFlow()
 
     private val state get() = uiState.value
 
-    private fun updateState(block: MenuLocalSupportState.() -> MenuLocalSupportState) {
+    private fun updateState(block: ObsState.() -> ObsState) {
         _uiState.update(block)
     }
     

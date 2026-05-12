@@ -1,4 +1,4 @@
-package br.com.usinasantafe.cav.presenter.view.card.menuDataInitial
+package br.com.usinasantafe.cav.presenter.view.card.menu
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -30,17 +30,16 @@ import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
 
 @Composable
-fun MenuDataInitialScreen(
-    viewModel: MenuDataInitialViewModel = hiltViewModel(),
+fun LocalSupportScreen(
+    viewModel: LocalSupportViewModel = hiltViewModel()
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-            MenuDataInitialContent(
-                attendant = uiState.attendant,
-                car = uiState.car,
-                nature = uiState.nature,
-                typeAccident = uiState.typeAccident,
+            LocalSupportContent(
+                local = uiState.local,
+                dataLocal = uiState.dataLocal,
+                supportTeams = uiState.supportTeams,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -48,11 +47,10 @@ fun MenuDataInitialScreen(
 }
 
 @Composable
-fun MenuDataInitialContent(
-    attendant: String,
-    car: String,
-    nature: String,
-    typeAccident: String,
+fun LocalSupportContent(
+    local: String,
+    dataLocal: String,
+    supportTeams: String,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -82,11 +80,11 @@ fun MenuDataInitialContent(
                     ) {
                         Text(
                             text = stringResource(
-                                id = R.string.text_item_attendant
+                                id = R.string.text_item_local
                             ),
                             fontWeight = FontWeight.Bold
                         )
-                        Text(text = attendant)
+                        Text(local)
                     }
                     Button(
                         onClick = {},
@@ -113,11 +111,11 @@ fun MenuDataInitialContent(
                     ) {
                         Text(
                             text = stringResource(
-                                id = R.string.text_item_car
+                                id = R.string.text_title_data_local
                             ),
                             fontWeight = FontWeight.Bold
                         )
-                        Text(car)
+                        Text(dataLocal)
                     }
                     Button(
                         onClick = {},
@@ -144,42 +142,11 @@ fun MenuDataInitialContent(
                     ) {
                         Text(
                             text = stringResource(
-                                id = R.string.text_title_nature
+                                id = R.string.text_support_teams
                             ),
                             fontWeight = FontWeight.Bold
                         )
-                        Text(nature)
-                    }
-                    Button(
-                        onClick = {},
-                    ) {
-                        Text(
-                            text = stringResource(
-                                id = R.string.text_pattern_edit
-                            ),
-                        )
-                    }
-                }
-            }
-            item {
-                Row(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(Color.LightGray.copy(alpha = 0.2f))
-                        .padding(12.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ){
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                    ) {
-                        Text(
-                            text = stringResource(
-                                id = R.string.text_title_type_accident
-                            ),
-                            fontWeight = FontWeight.Bold
-                        )
-                        Text(typeAccident)
+                        Text(supportTeams)
                     }
                     Button(
                         onClick = {},
@@ -203,7 +170,7 @@ fun MenuDataInitialContent(
                 onClick = {},
                 modifier = Modifier.weight(1f)
             ) {
-                TextButtonDesign(text = stringResource(id = R.string.text_pattern_cancel))
+                TextButtonDesign(text = stringResource(id = R.string.text_pattern_return))
             }
             Button(
                 onClick = {},
@@ -212,21 +179,18 @@ fun MenuDataInitialContent(
                 TextButtonDesign(text = stringResource(id = R.string.text_pattern_next))
             }
         }
-
-
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun MenuDataInitialPagePreview() {
+fun LocalSupportPagePreview() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            MenuDataInitialContent(
-                attendant = "19759 - ANDERSON DA SILVA DELGADO",
-                car = "100 - AMBULANCIA",
-                nature = "ACIDENTE - ANIMAIS",
-                typeAccident = "ATROP. ANIMAL - COLISÃO LATERAL - INCÊNDIO",
+            LocalSupportContent(
+                local = "RUA ANTONIA NABA DE ALMEIDA, 75 - TABATINGA - SP",
+                dataLocal = "TRAÇADO: RETA\nPERFIL: ACENTUADO",
+                supportTeams = "GUINCHOS - BOMBEIROS",
                 modifier = Modifier.padding(innerPadding)
             )
         }

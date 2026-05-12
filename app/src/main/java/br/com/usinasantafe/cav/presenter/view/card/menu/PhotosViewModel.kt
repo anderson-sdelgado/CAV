@@ -1,19 +1,16 @@
-package br.com.usinasantafe.cav.presenter.view.card.menuDataInitial
+package br.com.usinasantafe.cav.presenter.view.card.menu
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import br.com.usinasantafe.cav.lib.Errors
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class MenuDataInitialState(
-    val attendant: String = "",
-    val car: String = "",
-    val local: String = "",
-    val nature: String = "",
-    val typeAccident: String = "",
+data class PhotosState(
     val flagAccess: Boolean = false,
     val flagDialog: Boolean = false,
     val flagFailure: Boolean = false,
@@ -22,19 +19,20 @@ data class MenuDataInitialState(
 )
 
 @HiltViewModel
-class MenuDataInitialViewModel @Inject constructor(
+class PhotosViewModel @Inject constructor(
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(MenuDataInitialState())
+    private val _uiState = MutableStateFlow(PhotosState())
     val uiState = _uiState.asStateFlow()
 
     private val state get() = uiState.value
 
-    private fun updateState(block: MenuDataInitialState.() -> MenuDataInitialState) {
+    private fun updateState(block: PhotosState.() -> PhotosState) {
         _uiState.update(block)
     }
-    
+
     fun setCloseDialog() = updateState { copy(flagDialog = false) }
+
 
 
 }

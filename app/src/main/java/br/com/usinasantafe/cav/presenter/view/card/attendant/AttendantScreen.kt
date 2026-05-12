@@ -18,6 +18,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.LevelUpdate
+import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.TypeButton
 import br.com.usinasantafe.cav.presenter.theme.ButtonsGenericNumeric
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
@@ -31,12 +32,14 @@ import br.com.usinasantafe.cav.utils.UpdateStatusState
 fun AttendantScreen(
     viewModel: AttendantViewModel = hiltViewModel(),
     onNavInitialMenu: () -> Unit,
-    onNavCar: () -> Unit
+    onNavCar: () -> Unit,
+    onNavMenu: () -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             AttendantContent(
+                option = uiState.option,
                 regColab = uiState.regColab,
                 setTextField = viewModel::setTextField,
                 flagAccess = uiState.flagAccess,
@@ -44,6 +47,7 @@ fun AttendantScreen(
                 status = uiState.status,
                 onNavInitialMenu = onNavInitialMenu,
                 onNavCar = onNavCar,
+                onNavMenu = onNavMenu,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -52,6 +56,7 @@ fun AttendantScreen(
 
 @Composable
 fun AttendantContent(
+    option: Option,
     regColab: String,
     setTextField: (String, TypeButton) -> Unit,
     flagAccess: Boolean,
@@ -59,6 +64,7 @@ fun AttendantContent(
     status: UpdateStatusState,
     onNavInitialMenu: () -> Unit,
     onNavCar: () -> Unit,
+    onNavMenu: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -92,7 +98,10 @@ fun AttendantContent(
 
     LaunchedEffect(flagAccess) {
         if(flagAccess) {
-            onNavCar()
+            when(option){
+                Option.INSERT -> onNavCar()
+                Option.EDIT -> onNavMenu()
+            }
         }
     }
 }
@@ -103,6 +112,7 @@ fun AttendantPagePreview() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             AttendantContent(
+                option = Option.INSERT,
                 regColab = "",
                 setTextField = { _, _ -> },
                 flagAccess = false,
@@ -119,6 +129,7 @@ fun AttendantPagePreview() {
                 ),
                 onNavInitialMenu = {},
                 onNavCar = {},
+                onNavMenu = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -131,6 +142,7 @@ fun AttendantPagePreviewWithData() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             AttendantContent(
+                option = Option.INSERT,
                 regColab = "19759",
                 setTextField = { _, _ -> },
                 flagAccess = false,
@@ -147,6 +159,7 @@ fun AttendantPagePreviewWithData() {
                 ),
                 onNavInitialMenu = {},
                 onNavCar = {},
+                onNavMenu = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -159,6 +172,7 @@ fun AttendantPagePreviewWithMsgEmpty() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             AttendantContent(
+                option = Option.INSERT,
                 regColab = "",
                 setTextField = { _, _ -> },
                 flagAccess = false,
@@ -175,6 +189,7 @@ fun AttendantPagePreviewWithMsgEmpty() {
                 ),
                 onNavInitialMenu = {},
                 onNavCar = {},
+                onNavMenu = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -187,6 +202,7 @@ fun AttendantPagePreviewUpdate() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             AttendantContent(
+                option = Option.INSERT,
                 regColab = "",
                 setTextField = { _, _ -> },
                 flagAccess = false,
@@ -203,6 +219,7 @@ fun AttendantPagePreviewUpdate() {
                 ),
                 onNavInitialMenu = {},
                 onNavCar = {},
+                onNavMenu = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
