@@ -40,4 +40,10 @@ class INatureRepository @Inject constructor(
             modeList.map { it.roomModelToEntity() }
         }
 
+    override suspend fun listByIdList(idList: List<Int>): Result<List<Nature>> =
+        call(getClassAndMethod()) {
+            val modeList = natureRoomDatasource.listByIdList(idList).getOrThrow()
+            modeList.map { it.roomModelToEntity() }
+        }
+
 }

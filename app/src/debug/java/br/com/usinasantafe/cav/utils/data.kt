@@ -4,23 +4,23 @@ const val natureList = """
     [
         {
             "id": 1,
-            "desc": "ACIDENTE"
+            "description": "ACIDENTE"
         },
         {
             "id": 2,
-            "desc": "PANE"
+            "description": "PANE"
         },
         {
             "id": 3,
-            "desc": "AUX. SINAL."
+            "description": "AUX. SINAL."
         },
         {
             "id": 4,
-            "desc": "AUX. OBRAS"
+            "description": "AUX. OBRAS"
         },
         {
             "id": 5,
-            "desc": "ANIMAIS"
+            "description": "ANIMAIS"
         }
     ]
 """
@@ -29,67 +29,67 @@ const val typeAccidentList = """
     [
         {
             "id": 1,
-            "desc": "ATROP. PEDESTRE"
+            "description": "ATROP. PEDESTRE"
         },
         {
             "id": 2,
-            "desc": "ATROP. ANIMAL"
+            "description": "ATROP. ANIMAL"
         },
         {
             "id": 3,
-            "desc": "ATROP. CICLISTA"
+            "description": "ATROP. CICLISTA"
         },
         {
             "id": 4,
-            "desc": "COLISÃO TRASEIRA"
+            "description": "COLISÃO TRASEIRA"
         },
         {
             "id": 5,
-            "desc": "COLISÃO LATERAL"
+            "description": "COLISÃO LATERAL"
         },
         {
             "id": 6,
-            "desc": "CHOQUE C/ BARRANCO"
+            "description": "CHOQUE C/ BARRANCO"
         },
         {
             "id": 7,
-            "desc": "CHOQUE C/ DEFENSA"
+            "description": "CHOQUE C/ DEFENSA"
         },
         {
             "id": 8,
-            "desc": "CHOQUE C/ ÁRVORE"
+            "description": "CHOQUE C/ ÁRVORE"
         },
         {
             "id": 9,
-            "desc": "TOMBAMENTO"
+            "description": "TOMBAMENTO"
         },
         {
             "id": 10,
-            "desc": "CAPOTAMENTO"
+            "description": "CAPOTAMENTO"
         },
         {
             "id": 11,
-            "desc": "ABALROAMENTO"
+            "description": "ABALROAMENTO"
         },
         {
             "id": 12,
-            "desc": "ENGAVETAMENTO"
+            "description": "ENGAVETAMENTO"
         },
         {
             "id": 13,
-            "desc": "INCÊNDIO"
+            "description": "INCÊNDIO"
         },
         {
             "id": 14,
-            "desc": "QUEDA MOTOCICLISTA"
+            "description": "QUEDA MOTOCICLISTA"
         },
         {
             "id": 15,
-            "desc": "PRECIPITAÇÃO"
+            "description": "PRECIPITAÇÃO"
         },
         {
             "id": 16,
-            "desc": "DANOS MATERIAIS"
+            "description": "DANOS MATERIAIS"
         }
     ]
 """
@@ -98,67 +98,67 @@ const val optionDataLocalList = """
     [
         {
             "id": 1,
-            "desc": "TRAÇADO"
+            "description": "TRAÇADO"
         },
         {
             "id": 2,
-            "desc": "PERFIL"
+            "description": "PERFIL"
         },
         {
             "id": 3,
-            "desc": "LOMBADA"
+            "description": "LOMBADA"
         },
         {
             "id": 4,
-            "desc": "CONSERVAÇÃO"
+            "description": "CONSERVAÇÃO"
         },
         {
             "id": 5,
-            "desc": "SUPERFÍCIE"
+            "description": "SUPERFÍCIE"
         },
         {
             "id": 6,
-            "desc": "AMBIENTE"
+            "description": "AMBIENTE"
         },
         {
             "id": 7,
-            "desc": "CANTEIRO CENTRAL"
+            "description": "CANTEIRO CENTRAL"
         },
         {
             "id": 8,
-            "desc": "ACOSTAMENTO"
+            "description": "ACOSTAMENTO"
         },
         {
             "id": 9,
-            "desc": "OBRAS NA PISTA"
+            "description": "OBRAS NA PISTA"
         },
         {
             "id": 10,
-            "desc": "OBRAS NO ACOSTAMENTO"
+            "description": "OBRAS NO ACOSTAMENTO"
         },
         {
             "id": 11,
-            "desc": "SINALIZAÇÃO VERTICAL"
+            "description": "SINALIZAÇÃO VERTICAL"
         },
         {
             "id": 12,
-            "desc": "SINALIZAÇÃO HORIZONTAL"
+            "description": "SINALIZAÇÃO HORIZONTAL"
         },
         {
             "id": 13,
-            "desc": "CONDIÇÕES DO TEMPO"
+            "description": "CONDIÇÕES DO TEMPO"
         },
         {
             "id": 14,
-            "desc": "PNEUS DO VEÍCULO"
+            "description": "PNEUS DO VEÍCULO"
         },
         {
             "id": 15,
-            "desc": "CONGESTIONAMENTO"
+            "description": "CONGESTIONAMENTO"
         },
         {
             "id": 16,
-            "desc": "INTERDIÇÃO DO TRÁFEGO"
+            "description": "INTERDIÇÃO DO TRÁFEGO"
         }
     ]
 """
@@ -167,183 +167,183 @@ const val itemDataLocalList = """
     [
         {
             "id": 1,
-            "desc": "RETA"
+            "description": "RETA"
         },
         {
             "id": 2,
-            "desc": "CURVA ACENTUADA"
+            "description": "CURVA ACENTUADA"
         },
         {
             "id": 3,
-            "desc": "CURVA SUAVE"
+            "description": "CURVA SUAVE"
         },
         {
             "id": 4,
-            "desc": "À ESQUERDA"
+            "description": "À ESQUERDA"
         },
         {
             "id": 5,
-            "desc": "À DIREITA"
+            "description": "À DIREITA"
         },
         {
             "id": 6,
-            "desc": "EM NÍVEL"
+            "description": "EM NÍVEL"
         },
         {
             "id": 7,
-            "desc": "ACLIVE"
+            "description": "ACLIVE"
         },
         {
             "id": 8,
-            "desc": "DECLIVE"
+            "description": "DECLIVE"
         },
         {
             "id": 9,
-            "desc": "ACENTUADO"
+            "description": "ACENTUADO"
         },
         {
             "id": 10,
-            "desc": "SUAVE"
+            "description": "SUAVE"
         },
         {
             "id": 11,
-            "desc": "SIM"
+            "description": "SIM"
         },
         {
             "id": 12,
-            "desc": "NÃO"
+            "description": "NÃO"
         },
         {
             "id": 13,
-            "desc": "BOM"
+            "description": "BOM"
         },
         {
             "id": 14,
-            "desc": "REGULAR"
+            "description": "REGULAR"
         },
         {
             "id": 15,
-            "desc": "RUIM"
+            "description": "RUIM"
         },
         {
             "id": 16,
-            "desc": "SECA"
+            "description": "SECA"
         },
         {
             "id": 17,
-            "desc": "ÚMIDA"
+            "description": "ÚMIDA"
         },
         {
             "id": 18,
-            "desc": "MOLHADA"
+            "description": "MOLHADA"
         },
         {
             "id": 19,
-            "desc": "POÇA ÁGUA"
+            "description": "POÇA ÁGUA"
         },
         {
             "id": 20,
-            "desc": "ÓLEO"
+            "description": "ÓLEO"
         },
         {
             "id": 21,
-            "desc": "FUMAÇA"
+            "description": "FUMAÇA"
         },
         {
             "id": 22,
-            "desc": "POEIRA"
+            "description": "POEIRA"
         },
         {
             "id": 23,
-            "desc": "LAMA"
+            "description": "LAMA"
         },
         {
             "id": 24,
-            "desc": "SUJEIRA"
+            "description": "SUJEIRA"
         },
         {
             "id": 25,
-            "desc": "OBSTÁCULO"
+            "description": "OBSTÁCULO"
         },
         {
             "id": 26,
-            "desc": "BARREIRA"
+            "description": "BARREIRA"
         },
         {
             "id": 27,
-            "desc": "DEFENSA"
+            "description": "DEFENSA"
         },
         {
             "id": 28,
-            "desc": "MEIO-FIO"
+            "description": "MEIO-FIO"
         },
         {
             "id": 29,
-            "desc": "CANALETA"
+            "description": "CANALETA"
         },
         {
             "id": 30,
-            "desc": "NÃO EXISTE"
+            "description": "NÃO EXISTE"
         },
         {
             "id": 31,
-            "desc": "MAL SINALIZADA"
+            "description": "MAL SINALIZADA"
         },
         {
             "id": 32,
-            "desc": "BEM SINALIZADA"
+            "description": "BEM SINALIZADA"
         },
         {
             "id": 33,
-            "desc": "PROTEÇÃO"
+            "description": "PROTEÇÃO"
         },
         {
             "id": 34,
-            "desc": "EXISTE"
+            "description": "EXISTE"
         },
         {
             "id": 35,
-            "desc": "MAL CONSERVADA"
+            "description": "MAL CONSERVADA"
         },
         {
             "id": 36,
-            "desc": "NORMAL"
+            "description": "NORMAL"
         },
         {
             "id": 37,
-            "desc": "CHUVA"
+            "description": "CHUVA"
         },
         {
             "id": 38,
-            "desc": "GAROA"
+            "description": "GAROA"
         },
         {
             "id": 39,
-            "desc": "NEBLINA"
+            "description": "NEBLINA"
         },
         {
             "id": 40,
-            "desc": "OUTRAS"
+            "description": "OUTRAS"
         },
         {
             "id": 41,
-            "desc": "QUAL VEÍCULO"
+            "description": "QUAL VEÍCULO"
         },
         {
             "id": 42,
-            "desc": "MENOS DE 2 KM"
+            "description": "MENOS DE 2 KM"
         },
         {
             "id": 43,
-            "desc": "MAIS DE 2 KM"
+            "description": "MAIS DE 2 KM"
         },
         {
             "id": 44,
-            "desc": "PARCIAL"
+            "description": "PARCIAL"
         },
         {
             "id": 45,
-            "desc": "TOTAL"
+            "description": "TOTAL"
         }
     ]
 """
@@ -697,31 +697,31 @@ const val supportTeamsList = """
     [
         {
             "id": 1,
-            "desc": "GUINCHOS"
+            "description": "GUINCHOS"
         },
         {
             "id": 2,
-            "desc": "SOS - AMBULÂNCIA"
+            "description": "SOS - AMBULÂNCIA"
         },
         {
             "id": 3,
-            "desc": "SOS - RESGATE"
+            "description": "SOS - RESGATE"
         },
         {
             "id": 4,
-            "desc": "BOMBEIROS"
+            "description": "BOMBEIROS"
         },
         {
             "id": 5,
-            "desc": "APOIO AMBIENTAL"
+            "description": "APOIO AMBIENTAL"
         },
         {
             "id": 6,
-            "desc": "PMRVEST"
+            "description": "PMRVEST"
         },
         {
             "id": 7,
-            "desc": "OUTROS"
+            "description": "OUTROS"
         }
     ]
 """

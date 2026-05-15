@@ -52,11 +52,11 @@ class INatureRoomDatasourceTest {
                 listOf(
                     NatureRoomModel(
                         id = 1,
-                        desc = "TEST"
+                        description = "TEST"
                     ),
                     NatureRoomModel(
                         id = 1,
-                        desc = "TEST"
+                        description = "TEST"
                     )
                 )
             )
@@ -91,11 +91,11 @@ class INatureRoomDatasourceTest {
                 listOf(
                     NatureRoomModel(
                         id = 1,
-                        desc = "TEST"
+                        description = "TEST"
                     ),
                     NatureRoomModel(
                         id = 2,
-                        desc = "TEST2"
+                        description = "TEST2"
                     ),
                 )
             )
@@ -118,7 +118,7 @@ class INatureRoomDatasourceTest {
                 1
             )
             assertEquals(
-                model1.desc,
+                model1.description,
                 "TEST"
             )
             val model2 = listAfter[1]
@@ -127,7 +127,7 @@ class INatureRoomDatasourceTest {
                 2
             )
             assertEquals(
-                model2.desc,
+                model2.description,
                 "TEST2"
             )
         }
@@ -139,7 +139,7 @@ class INatureRoomDatasourceTest {
                 listOf(
                     NatureRoomModel(
                         id = 1,
-                        desc = "TEST"
+                        description = "TEST"
                     )
                 )
             )
@@ -161,13 +161,13 @@ class INatureRoomDatasourceTest {
         }
 
     @Test
-    fun `listAll - Check execution correct`() =
+    fun `listAll - Check return list if have data`() =
         runTest {
             natureDao.insertAll(
                 listOf(
                     NatureRoomModel(
                         id = 1,
-                        desc = "TEST"
+                        description = "TEST"
                     )
                 )
             )
@@ -182,8 +182,65 @@ class INatureRoomDatasourceTest {
                 listOf(
                     NatureRoomModel(
                         id = 1,
-                        desc = "TEST"
+                        description = "TEST"
                     )
+                )
+            )
+        }
+
+    @Test
+    fun `listByIdList - Check return emptyList if not have data`() =
+        runTest {
+            val result = datasource.listByIdList(listOf(1, 2))
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                emptyList()
+            )
+        }
+
+    @Test
+    fun `listByIdList - Check return list if have data fielded`() =
+        runTest {
+            natureDao.insertAll(
+                listOf(
+                    NatureRoomModel(
+                        id = 1,
+                        description = "Item 1"
+                    ),
+                    NatureRoomModel(
+                        id = 2,
+                        description = "Item 2"
+                    ),
+                    NatureRoomModel(
+                        id = 3,
+                        description = "Item 3"
+                    ),
+                    NatureRoomModel(
+                        id = 4,
+                        description = "Item 4"
+                    )
+                )
+            )
+            val result = datasource.listByIdList(listOf(2, 3))
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                listOf(
+                    NatureRoomModel(
+                        id = 2,
+                        description = "Item 2"
+                    ),
+                    NatureRoomModel(
+                        id = 3,
+                        description = "Item 3"
+                    ),
                 )
             )
         }

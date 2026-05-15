@@ -13,13 +13,13 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @HiltAndroidTest
-class ISetListNatureTest {
+class ISetTypeAccidentListTest {
 
     @get:Rule
     val hiltRule = HiltAndroidRule(this)
 
     @Inject
-    lateinit var usecase: SetListNature
+    lateinit var usecase: SetTypeAccidentList
 
     @Inject
     lateinit var cardSharedPreferencesDatasource: ICardSharedPreferencesDatasource
@@ -30,10 +30,10 @@ class ISetListNatureTest {
     }
 
     @Test
-    fun check_alter_data_correct_in_sharedPreferences_internal() =
+    fun check_alter_data_correct_in_shared_preferences() =
         runTest {
             val data = CardSharedPreferencesModel(
-                idNatureList = listOf(1, 2)
+                idTypeAccidentList = listOf(1, 2)
             )
             cardSharedPreferencesDatasource.save(data)
             val resultGetBefore = cardSharedPreferencesDatasource.get()
@@ -42,7 +42,7 @@ class ISetListNatureTest {
                 true
             )
             val modelBefore = resultGetBefore.getOrNull()!!
-            val listBefore = modelBefore.idNatureList
+            val listBefore = modelBefore.idTypeAccidentList
             assertEquals(
                 listBefore,
                 listOf(1, 2)
@@ -76,7 +76,7 @@ class ISetListNatureTest {
                 true
             )
             val modelAfter= resultGetAfter.getOrNull()!!
-            val listAfter= modelAfter.idNatureList
+            val listAfter= modelAfter.idTypeAccidentList
             assertEquals(
                 listAfter,
                 listOf(3, 5)

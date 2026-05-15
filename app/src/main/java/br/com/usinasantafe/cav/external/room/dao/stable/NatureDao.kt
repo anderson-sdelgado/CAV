@@ -18,4 +18,7 @@ interface NatureDao {
     @Query("SELECT * FROM $TB_NATURE ORDER BY 1")
     suspend fun all(): List<NatureRoomModel>
 
+    @Query("SELECT * FROM $TB_NATURE WHERE id in (:idList) ORDER BY 1")
+    suspend fun listByIdList(idList: List<Int>): List<NatureRoomModel>
+
 }

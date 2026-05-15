@@ -6,6 +6,7 @@ import androidx.test.core.app.ApplicationProvider
 import br.com.usinasantafe.cav.external.room.dao.DatabaseRoom
 import br.com.usinasantafe.cav.external.room.dao.stable.ItemDataLocalDao
 import br.com.usinasantafe.cav.infra.models.room.stable.ItemDataLocalRoomModel
+import br.com.usinasantafe.cav.infra.models.room.stable.OptionDataLocalRoomModel
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -52,11 +53,11 @@ class IItemDataLocalRoomDatasourceTest {
                 listOf(
                     ItemDataLocalRoomModel(
                         id = 1,
-                        desc = "TEST"
+                        description = "TEST"
                     ),
                     ItemDataLocalRoomModel(
                         id = 1,
-                        desc = "TEST"
+                        description = "TEST"
                     )
                 )
             )
@@ -91,11 +92,11 @@ class IItemDataLocalRoomDatasourceTest {
                 listOf(
                     ItemDataLocalRoomModel(
                         id = 1,
-                        desc = "TEST"
+                        description = "TEST"
                     ),
                     ItemDataLocalRoomModel(
                         id = 2,
-                        desc = "TEST2"
+                        description = "TEST2"
                     ),
                 )
             )
@@ -118,7 +119,7 @@ class IItemDataLocalRoomDatasourceTest {
                 1
             )
             assertEquals(
-                model1.desc,
+                model1.description,
                 "TEST"
             )
             val model2 = listAfter[1]
@@ -127,7 +128,7 @@ class IItemDataLocalRoomDatasourceTest {
                 2
             )
             assertEquals(
-                model2.desc,
+                model2.description,
                 "TEST2"
             )
         }
@@ -139,7 +140,7 @@ class IItemDataLocalRoomDatasourceTest {
                 listOf(
                     ItemDataLocalRoomModel(
                         id = 1,
-                        desc = "TEST"
+                        description = "TEST"
                     )
                 )
             )
@@ -160,4 +161,43 @@ class IItemDataLocalRoomDatasourceTest {
             )
         }
 
+    @Test
+    fun `getDescById - Check return failure if not have data fielded`() =
+        runTest {
+            val result = datasource.getDescById(1)
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IItemDataLocalRoomDatasource.getDescById"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.NullPointerException: desc is required"
+            )
+        }
+
+    @Test
+    fun `getDescById - Check return correct if have data fielded`() =
+        runTest {
+            itemDataLocalDao.insertAll(
+                listOf(
+                    ItemDataLocalRoomModel(
+                        id = 1,
+                        description = "Item 1"
+                    )
+                )
+            )
+            val result = datasource.getDescById(1)
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                "Item 1"
+            )
+        }
 }

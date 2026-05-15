@@ -122,7 +122,7 @@ class IUpdateTableOptionDataLocalTest {
             val list = listOf(
                 OptionDataLocal(
                     id = 1,
-                    desc = "Item"
+                    description = "Item"
                 )
             )
             whenever(
@@ -191,7 +191,7 @@ class IUpdateTableOptionDataLocalTest {
             val list = listOf(
                 OptionDataLocal(
                     id = 1,
-                    desc = "Option"
+                    description = "Option"
                 )
             )
             whenever(
@@ -270,7 +270,7 @@ class IUpdateTableOptionDataLocalTest {
             val list = listOf(
                 OptionDataLocal(
                     id = 1,
-                    desc = "Option"
+                    description = "Option"
                 )
             )
             whenever(

@@ -173,4 +173,48 @@ class IROptionItemDataLocalRoomDatasourceTest {
             )
         }
 
+    @Test
+    fun `getById - Check return failure if not have data fielded`() =
+        runTest {
+            val result = datasource.getById(1)
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IROptionItemDataLocalRoomDatasource.getById"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.NullPointerException: model is required"
+            )
+        }
+
+    @Test
+    fun `getById - Check return correct if have data fielded`() =
+        runTest {
+            rOptionItemDataLocalDao.insertAll(
+                listOf(
+                    ROptionItemDataLocalRoomModel(
+                        id = 1,
+                        idOption = 1,
+                        idItem = 1
+                    )
+                )
+            )
+            val result = datasource.getById(1)
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                ROptionItemDataLocalRoomModel(
+                    id = 1,
+                    idOption = 1,
+                    idItem = 1
+                )
+            )
+        }
 }

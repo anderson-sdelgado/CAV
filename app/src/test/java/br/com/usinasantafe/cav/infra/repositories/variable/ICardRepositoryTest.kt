@@ -243,4 +243,320 @@ class ICardRepositoryTest {
             )
         }
 
+    @Test
+    fun `getRegAttendant - Check return failure if have error in CardSharedPreferencesDatasource getRegAttendant`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.getRegAttendant()
+            ).thenReturn(
+                resultFailure(
+                    "ICardSharedPreferencesDatasource.getRegAttendant",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.getRegAttendant()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "ICardRepository.getRegAttendant -> ICardSharedPreferencesDatasource.getRegAttendant"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `getRegAttendant - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.getRegAttendant()
+            ).thenReturn(
+                Result.success(19759)
+            )
+            val result = repository.getRegAttendant()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                19759
+            )
+        }
+
+    @Test
+    fun `getIdCar - Check return failure if have error in CardSharedPreferencesDatasourceDatasource getIdCar`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.getIdCar()
+            ).thenReturn(
+                resultFailure(
+                    "ICardSharedPreferencesDatasourceDatasource.getIdCar",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.getIdCar()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "ICardRepository.getIdCar -> ICardSharedPreferencesDatasourceDatasource.getIdCar"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `getIdCar - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.getIdCar()
+            ).thenReturn(
+                Result.success(1)
+            )
+            val result = repository.getIdCar()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                1
+            )
+        }
+
+    @Test
+    fun `listIdTypeAccident - Check return failure if have error in CardSharedPreferencesDatasourceDatasource listIdTypeAccident`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.listIdTypeAccident()
+            ).thenReturn(
+                resultFailure(
+                    "ICardSharedPreferencesDatasourceDatasource.listIdTypeAccident",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.listIdTypeAccident()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "ICardRepository.listIdTypeAccident -> ICardSharedPreferencesDatasourceDatasource.listIdTypeAccident"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `listIdTypeAccident - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.listIdTypeAccident()
+            ).thenReturn(
+                Result.success(listOf(1,2))
+            )
+            val result = repository.listIdTypeAccident()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                listOf(1, 2)
+            )
+        }
+
+    @Test
+    fun `setIdTypeAccidentList - Check return failure if have error in CardSharedPreferencesDatasource setIdTypeAccidentList`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.setIdTypeAccidentList(listOf(1, 2))
+            ).thenReturn(
+                resultFailure(
+                    "ICardSharedPreferencesDatasource.setIdTypeAccidentList",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.setIdTypeAccidentList(listOf(1, 2))
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "ICardRepository.setIdTypeAccidentList -> ICardSharedPreferencesDatasource.setIdTypeAccidentList"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `setIdTypeAccidentList - Check return correct if function execute successfully`() =
+        runTest {
+            val result = repository.setIdTypeAccidentList(listOf(1, 2))
+            verify(cardSharedPreferencesDatasource, atLeastOnce()).setIdTypeAccidentList(listOf(1, 2))
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+        }
+
+    @Test
+    fun `clean - Check return failure if have error in CardSharedPreferencesDatasource clean`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.clean()
+            ).thenReturn(
+                resultFailure(
+                    "ICardSharedPreferencesDatasource.clean",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.clean()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "ICardRepository.clean -> ICardSharedPreferencesDatasource.clean"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `clean - Check return correct if function execute successfully`() =
+        runTest {
+            val result = repository.clean()
+            verify(cardSharedPreferencesDatasource, atLeastOnce()).clean()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+        }
+
+    @Test
+    fun `getLocal - Check return failure if have error in CardSharedPreferencesDatasource getLocal`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.getLocal()
+            ).thenReturn(
+                resultFailure(
+                    "ICardSharedPreferencesDatasource.getLocal",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.getLocal()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "ICardRepository.getLocal -> ICardSharedPreferencesDatasource.getLocal"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `getLocal - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.getLocal()
+            ).thenReturn(
+                Result.success(
+                    LocalSharedPreferencesModel(
+                        address = "Test",
+                        latitude = 25.0,
+                        longitude = 26.36
+                    )
+                )
+            )
+            val result = repository.getLocal()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                Local(
+                    address = "Test",
+                    latitude = 25.0,
+                    longitude = 26.36
+                )
+            )
+        }
+
+    @Test
+    fun `listIdDataLocal - Check return failure if have error in CardSharedPreferencesDatasource listIdDataLocal`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.listIdDataLocal()
+            ).thenReturn(
+                resultFailure(
+                    "ICardSharedPreferencesDatasource.listIdDataLocal",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.listIdDataLocal()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "ICardRepository.listIdDataLocal -> ICardSharedPreferencesDatasource.listIdDataLocal"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `listIdDataLocal - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.listIdDataLocal()
+            ).thenReturn(
+                Result.success(listOf(1))
+            )
+            val result = repository.listIdDataLocal()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                listOf(1)
+            )
+        }
+
 }

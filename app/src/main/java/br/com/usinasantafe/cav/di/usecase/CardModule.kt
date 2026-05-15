@@ -29,7 +29,7 @@ interface CardModule {
 
     @Binds
     @Singleton
-    fun bindSetListNature(usecase: ISetListNature): SetListNature
+    fun bindSetListNature(usecase: ISetNatureList): SetNatureList
 
     @Binds
     @Singleton
@@ -46,4 +46,21 @@ interface CardModule {
     @Binds
     @Singleton
     fun bindGetTypeAccident(usecase: IGetTypeAccident): GetTypeAccident
+
+    @Binds
+    @Singleton
+    fun bindListTypeAccident(usecase: IListTypeAccident): ListTypeAccident
+
+    @Binds
+    @Singleton
+    fun bindSetTypeAccidentList(usecase: ISetTypeAccidentList): SetTypeAccidentList
+
+    @Binds
+    @Singleton
+    fun bindCancelCard(usecase: ICancelCard): CancelCard
+
+    @Binds
+    @Singleton
+    fun bindGetLocal(usecase: IGetLocal): GetLocal
+
 }

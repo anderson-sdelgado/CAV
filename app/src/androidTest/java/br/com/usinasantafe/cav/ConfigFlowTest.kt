@@ -32,7 +32,6 @@ import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
 import javax.inject.Inject
-import kotlin.collections.get
 import kotlin.test.assertEquals
 import kotlin.time.Duration.Companion.minutes
 
@@ -291,7 +290,7 @@ class ConfigFlowTest {
             100
         )
         assertEquals(
-            equipRoomModel1.desc,
+            equipRoomModel1.description,
             "Class1"
         )
         val equipRoomModel2 = equipRoomModelList[1]
@@ -304,7 +303,7 @@ class ConfigFlowTest {
             200
         )
         assertEquals(
-            equipRoomModel2.desc,
+            equipRoomModel2.description,
             "Class2"
         )
 

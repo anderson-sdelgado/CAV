@@ -47,13 +47,13 @@ class IDataLocalRepositoryTest {
             val modelList = listOf(
                 ItemDataLocalRoomModel(
                     id = 1,
-                    desc = "Test"
+                    description = "Test"
                 )
             )
             val entityList = listOf(
                 ItemDataLocal(
                     id = 1,
-                    desc = "Test"
+                    description = "Test"
                 )
             )
             whenever(
@@ -86,13 +86,13 @@ class IDataLocalRepositoryTest {
             val modelList = listOf(
                 ItemDataLocalRoomModel(
                     id = 1,
-                    desc = "Test"
+                    description = "Test"
                 )
             )
             val entityList = listOf(
                 ItemDataLocal(
                     id = 1,
-                    desc = "Test"
+                    description = "Test"
                 )
             )
             val result = repository.addAllItem(entityList)
@@ -109,13 +109,13 @@ class IDataLocalRepositoryTest {
             val modelList = listOf(
                 OptionDataLocalRoomModel(
                     id = 1,
-                    desc = "Test"
+                    description = "Test"
                 )
             )
             val entityList = listOf(
                 OptionDataLocal(
                     id = 1,
-                    desc = "Test"
+                    description = "Test"
                 )
             )
             whenever(
@@ -148,13 +148,13 @@ class IDataLocalRepositoryTest {
             val modelList = listOf(
                 OptionDataLocalRoomModel(
                     id = 1,
-                    desc = "Test"
+                    description = "Test"
                 )
             )
             val entityList = listOf(
                 OptionDataLocal(
                     id = 1,
-                    desc = "Test"
+                    description = "Test"
                 )
             )
             val result = repository.addAllOption(entityList)
@@ -396,7 +396,7 @@ class IDataLocalRepositoryTest {
             val entityList = listOf(
                 ItemDataLocal(
                     id = 1,
-                    desc = "Test"
+                    description = "Test"
                 )
             )
             whenever(
@@ -454,7 +454,7 @@ class IDataLocalRepositoryTest {
             val entityList = listOf(
                 OptionDataLocal(
                     id = 1,
-                    desc = "Test"
+                    description = "Test"
                 )
             )
             whenever(
@@ -530,6 +530,154 @@ class IDataLocalRepositoryTest {
             assertEquals(
                 result.getOrNull()!!,
                 entityList
+            )
+        }
+
+    @Test
+    fun `getROptionItemById - Check return failure if have error in ROptionItemDataLocalRoomDatasource getById`() =
+        runTest {
+            whenever(
+                rOptionItemDataLocalRoomDatasource.getById(1)
+            ).thenReturn(
+                resultFailure(
+                    "IROptionItemDataLocalRoomDatasource.getById",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.getROptionItemById(1)
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IDataLocalRepository.getROptionItemById -> IROptionItemDataLocalRoomDatasource.getById"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `getROptionItemById - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                rOptionItemDataLocalRoomDatasource.getById(1)
+            ).thenReturn(
+                Result.success(
+                    ROptionItemDataLocalRoomModel(
+                        id = 1,
+                        idOption = 1,
+                        idItem = 1
+                    )
+                )
+            )
+            val result = repository.getROptionItemById(1)
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                ROptionItemDataLocal(
+                    id = 1,
+                    idOption = 1,
+                    idItem = 1
+                )
+            )
+        }
+
+    @Test
+    fun `getDescItemById - Check return failure if have error in ItemDataLocalRoomDatasource getDescById`() =
+        runTest {
+            whenever(
+                itemDataLocalRoomDatasource.getDescById(1)
+            ).thenReturn(
+                resultFailure(
+                    "IItemDataLocalRoomDatasource.getDescById",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.getDescItemById(1)
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IDataLocalRepository.getDescItemById -> IItemDataLocalRoomDatasource.getDescById"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `getDescItemById - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                itemDataLocalRoomDatasource.getDescById(1)
+            ).thenReturn(
+                Result.success("Item 1")
+            )
+            val result = repository.getDescItemById(1)
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                "Item 1"
+            )
+        }
+
+    @Test
+    fun `getDescOptionById - Check return failure if have error in OptionDataLocalRoomDatasource getDescById`() =
+        runTest {
+            whenever(
+                optionDataLocalRoomDatasource.getDescById(1)
+            ).thenReturn(
+                resultFailure(
+                    "IOptionDataLocalRoomDatasource.getDescById",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.getDescOptionById(1)
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IDataLocalRepository.getDescOptionById -> IOptionDataLocalRoomDatasource.getDescById"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `getDescOptionById - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                optionDataLocalRoomDatasource.getDescById(1)
+            ).thenReturn(
+                Result.success("Option 1")
+            )
+            val result = repository.getDescOptionById(1)
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                "Option 1"
             )
         }
 

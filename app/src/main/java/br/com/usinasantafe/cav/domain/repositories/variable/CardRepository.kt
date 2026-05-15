@@ -8,7 +8,12 @@ interface CardRepository {
     suspend fun setIdCar(idEquip: Int): EmptyResult
     suspend fun setLocal(entity: Local): EmptyResult
     suspend fun listIdNature(): Result<List<Int>>
-    suspend fun setIdNatureList(idNatureList: List<Int>): EmptyResult
+    suspend fun setIdNatureList(idList: List<Int>): EmptyResult
     suspend fun getRegAttendant(): Result<Long>
     suspend fun getIdCar(): Result<Int>
+    suspend fun listIdTypeAccident(): Result<List<Int>>
+    suspend fun setIdTypeAccidentList(idList: List<Int>): EmptyResult
+    suspend fun clean(): EmptyResult
+    suspend fun getLocal(): Result<Local>
+    suspend fun listIdDataLocal(): Result<List<Int>>
 }

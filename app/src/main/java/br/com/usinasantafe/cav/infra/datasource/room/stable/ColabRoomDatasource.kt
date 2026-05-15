@@ -7,4 +7,5 @@ interface ColabRoomDatasource {
     suspend fun addAll(list: List<ColabRoomModel>): EmptyResult
     suspend fun deleteAll(): EmptyResult
     suspend fun hasReg(reg: Long): Result<Boolean>
+    suspend fun getNameByReg(reg: Long): Result<String>
 }

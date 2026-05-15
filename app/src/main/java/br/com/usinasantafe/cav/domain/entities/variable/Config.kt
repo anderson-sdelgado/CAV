@@ -1,6 +1,5 @@
 package br.com.usinasantafe.cav.domain.entities.variable
 
-import br.com.usinasantafe.cav.lib.FlagUpdate
 import br.com.usinasantafe.cav.lib.StatusSend
 
 data class Config(

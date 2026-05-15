@@ -77,7 +77,7 @@ class ISetIdCarTest {
                     EquipRoomModel(
                         id = 10,
                         nro = 200,
-                        desc = "TRATOR"
+                        description = "TRATOR"
                     )
                 )
             )

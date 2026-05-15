@@ -13,6 +13,7 @@ import br.com.usinasantafe.cav.infra.datasource.room.stable.ROptionItemDataLocal
 import br.com.usinasantafe.cav.infra.models.retrofit.stable.retrofitModelToEntity
 import br.com.usinasantafe.cav.infra.models.room.stable.ROptionItemDataLocalRoomModel
 import br.com.usinasantafe.cav.infra.models.room.stable.entityToRoomModel
+import br.com.usinasantafe.cav.infra.models.room.stable.roomModelToEntity
 import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -77,6 +78,21 @@ class IDataLocalRepository @Inject constructor(
         call(getClassAndMethod()) {
             val modelList = rOptionItemDataLocalRetrofitDatasource.listAll(token).getOrThrow()
             modelList.map { it.retrofitModelToEntity() }
+        }
+
+    override suspend fun getROptionItemById(id: Int): Result<ROptionItemDataLocal> =
+        call(getClassAndMethod()) {
+            rOptionItemDataLocalRoomDatasource.getById(id).getOrThrow().roomModelToEntity()
+        }
+
+    override suspend fun getDescItemById(id: Int): Result<String> =
+        call(getClassAndMethod()) {
+            itemDataLocalRoomDatasource.getDescById(id).getOrThrow()
+        }
+
+    override suspend fun getDescOptionById(id: Int): Result<String> =
+        call(getClassAndMethod()) {
+            optionDataLocalRoomDatasource.getDescById(id).getOrThrow()
         }
 
 }

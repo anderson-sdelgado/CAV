@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import br.com.usinasantafe.cav.domain.usecases.card.SetLocal
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.utils.getClassAndMethod
-import br.com.usinasantafe.cav.utils.onFailureEmit
 import br.com.usinasantafe.cav.utils.onFailureHandled
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -40,7 +39,7 @@ class LocalViewModel @Inject constructor(
         _uiState.update(block)
     }
 
-    fun setCloseDialog() = updateState { copy(flagDialog = false) }
+    fun onCloseDialog() = updateState { copy(flagDialog = false) }
 
     fun onDialogCheck(flag: Boolean) = updateState { copy(flagDialogCheck = flag) }
 

@@ -19,7 +19,7 @@ class IGetCar @Inject constructor(
         call(getClassAndMethod()) {
             val id = cardRepository.getIdCar().getOrThrow()
             val entity = equipRepository.getById(id).getOrThrow()
-            "${entity.nro} - ${entity.desc}"
+            "${entity.nro} - ${entity.description}"
         }
 
 }

@@ -345,7 +345,7 @@ class IUpdateTableEquipTest {
                 10
             )
             assertEquals(
-                model1.desc,
+                model1.description,
                 "TRATOR"
             )
             val model2 = modelList[1]
@@ -358,7 +358,7 @@ class IUpdateTableEquipTest {
                 20
             )
             assertEquals(
-                model2.desc,
+                model2.description,
                 "CAMINHAO"
             )
         }

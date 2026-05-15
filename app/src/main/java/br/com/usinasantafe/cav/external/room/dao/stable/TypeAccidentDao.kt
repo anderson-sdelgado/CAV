@@ -15,7 +15,10 @@ interface TypeAccidentDao {
     @Query("DELETE FROM $TB_TYPE_ACCIDENT")
     suspend fun deleteAll()
 
-    @Query("SELECT * FROM $TB_TYPE_ACCIDENT")
+    @Query("SELECT * FROM $TB_TYPE_ACCIDENT ORDER BY 1")
     suspend fun all(): List<TypeAccidentRoomModel>
+
+    @Query("SELECT * FROM $TB_TYPE_ACCIDENT WHERE id in (:idList) ORDER BY 1")
+    suspend fun listByIdList(idList: List<Int>): List<TypeAccidentRoomModel>
 
 }

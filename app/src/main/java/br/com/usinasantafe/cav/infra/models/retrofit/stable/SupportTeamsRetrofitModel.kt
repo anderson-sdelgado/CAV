@@ -11,7 +11,7 @@ fun SupportTeamsRetrofitModel.retrofitModelToEntity(): SupportTeams {
     return with(this) {
         SupportTeams(
             id = id,
-            desc = desc
+            description = desc
         )
     }
 }

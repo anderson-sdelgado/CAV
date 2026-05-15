@@ -11,7 +11,7 @@ fun ItemDataLocalRetrofitModel.retrofitModelToEntity(): ItemDataLocal {
     return with(this) {
         ItemDataLocal(
             id = id,
-            desc = desc
+            description = desc
         )
     }
 }

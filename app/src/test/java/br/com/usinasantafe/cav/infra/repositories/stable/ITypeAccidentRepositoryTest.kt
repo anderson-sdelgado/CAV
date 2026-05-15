@@ -27,13 +27,13 @@ class ITypeAccidentRepositoryTest {
             val roomModelList = listOf(
                 TypeAccidentRoomModel(
                     id = 1,
-                    desc = "TEST"
+                    description = "TEST"
                 )
             )
             val entityList = listOf(
                 TypeAccident(
                     id = 1,
-                    desc = "TEST"
+                    description = "TEST"
                 )
             )
             whenever(
@@ -66,13 +66,13 @@ class ITypeAccidentRepositoryTest {
             val roomModelList = listOf(
                 TypeAccidentRoomModel(
                     id = 1,
-                    desc = "TEST"
+                    description = "TEST"
                 )
             )
             val entityList = listOf(
                 TypeAccident(
                     id = 1,
-                    desc = "TEST"
+                    description = "TEST"
                 )
             )
             whenever(
@@ -176,7 +176,7 @@ class ITypeAccidentRepositoryTest {
             val entityList = listOf(
                 TypeAccident(
                     id = 1,
-                    desc = "TEST"
+                    description = "TEST"
                 ),
             )
             whenever(
@@ -194,6 +194,122 @@ class ITypeAccidentRepositoryTest {
             assertEquals(
                 result.getOrNull()!!,
                 entityList
+            )
+        }
+
+    @Test
+    fun `listAll - Check return failure if have error in TypeAccidentRoomDatasource listAll`() =
+        runTest {
+            whenever(
+                typeAccidentRoomDatasource.listAll()
+            ).thenReturn(
+                resultFailure(
+                    "ITypeAccidentRoomDatasource.listAll",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.listAll()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "ITypeAccidentRepository.listAll -> ITypeAccidentRoomDatasource.listAll"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `listAll - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                typeAccidentRoomDatasource.listAll()
+            ).thenReturn(
+                Result.success(
+                    listOf(
+                        TypeAccidentRoomModel(
+                            id = 1,
+                            description = "Item 1"
+                        )
+                    )
+                )
+            )
+            val result = repository.listAll()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                listOf(
+                    TypeAccident(
+                        id = 1,
+                        description = "Item 1"
+                    )
+                )
+            )
+        }
+
+    @Test
+    fun `listByIdList - Check return failure if have error in TypeAccidentRoomDatasource listByIdList`() =
+        runTest {
+            whenever(
+                typeAccidentRoomDatasource.listByIdList(listOf(1, 2))
+            ).thenReturn(
+                resultFailure(
+                    "ITypeAccidentRoomDatasource.listByIdList",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.listByIdList(listOf(1, 2))
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "ITypeAccidentRepository.listByIdList -> ITypeAccidentRoomDatasource.listByIdList"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `listByIdList - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                typeAccidentRoomDatasource.listByIdList(listOf(1, 2))
+            ).thenReturn(
+                Result.success(
+                    listOf(
+                        TypeAccidentRoomModel(
+                            id = 1,
+                            description = "Item 1"
+                        )
+                    )
+                )
+            )
+            val result = repository.listByIdList(listOf(1, 2))
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                listOf(
+                    TypeAccident(
+                        id = 1,
+                        description = "Item 1"
+                    )
+                )
             )
         }
 

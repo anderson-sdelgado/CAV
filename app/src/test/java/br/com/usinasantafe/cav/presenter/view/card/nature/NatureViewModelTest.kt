@@ -2,7 +2,7 @@ package br.com.usinasantafe.cav.presenter.view.card.nature
 
 import br.com.usinasantafe.cav.MainCoroutineRule
 import br.com.usinasantafe.cav.domain.usecases.card.ListNature
-import br.com.usinasantafe.cav.domain.usecases.card.SetListNature
+import br.com.usinasantafe.cav.domain.usecases.card.SetNatureList
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableNature
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.LevelUpdate
@@ -29,11 +29,11 @@ class NatureViewModelTest {
 
     private val listNature = mock<ListNature>()
     private val updateTableNature = mock<UpdateTableNature>()
-    private val setListNature = mock<SetListNature>()
+    private val setNatureList = mock<SetNatureList>()
     private val viewModel = NatureViewModel(
         listNature = listNature,
         updateTableNature = updateTableNature,
-        setListNature = setListNature
+        setNatureList = setNatureList
     )
 
     @Test
@@ -297,7 +297,7 @@ class NatureViewModelTest {
             )
             viewModel.list.addAll(list)
             whenever(
-                setListNature(list)
+                setNatureList(list)
             ).thenReturn(
                 resultFailure(
                     context = "SetListNature",

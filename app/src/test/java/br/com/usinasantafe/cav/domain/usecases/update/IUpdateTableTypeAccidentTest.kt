@@ -122,7 +122,7 @@ class IUpdateTableTypeAccidentTest {
             val list = listOf(
                 TypeAccident(
                     id = 1,
-                    desc = "Item"
+                    description = "Item"
                 )
             )
             whenever(
@@ -191,7 +191,7 @@ class IUpdateTableTypeAccidentTest {
             val list = listOf(
                 TypeAccident(
                     id = 1,
-                    desc = "Item"
+                    description = "Item"
                 )
             )
             whenever(
@@ -270,7 +270,7 @@ class IUpdateTableTypeAccidentTest {
             val list = listOf(
                 TypeAccident(
                     id = 1,
-                    desc = "Item"
+                    description = "Item"
                 )
             )
             whenever(

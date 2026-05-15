@@ -9,14 +9,14 @@ import br.com.usinasantafe.cav.lib.TB_TYPE_ACCIDENT
 data class TypeAccidentRoomModel(
     @PrimaryKey
     val id: Int,
-    val desc: String
+    val description: String
 )
 
 fun TypeAccidentRoomModel.roomModelToEntity(): TypeAccident {
     return with(this){
         TypeAccident(
             id = id,
-            desc = desc
+            description = description
         )
     }
 }
@@ -25,7 +25,7 @@ fun TypeAccident.entityToRoomModel(): TypeAccidentRoomModel {
     return with(this){
         TypeAccidentRoomModel(
             id = id,
-            desc = desc
+            description = description
         )
     }
 }

@@ -34,14 +34,14 @@ import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
 const val TAG_LOCAL_TEXT_FIELD = "tag_local_text_field"
 
 @Composable
-fun TypeLocalScreen(
-    viewModel: TypeLocalViewModel = hiltViewModel(),
+fun InputLocalScreen(
+    viewModel: InputLocalViewModel = hiltViewModel(),
     onNavCard: () -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-            TypeLocalContent(
+            InputLocalContent(
                 address = uiState.address,
                 onAddressChanged = viewModel::onAddressChanged,
                 setCloseDialog = viewModel::setCloseDialog,
@@ -57,7 +57,7 @@ fun TypeLocalScreen(
 }
 
 @Composable
-fun TypeLocalContent(
+fun InputLocalContent(
     address: String,
     onAddressChanged: (String) -> Unit,
     setCloseDialog: () -> Unit,
@@ -128,10 +128,10 @@ fun TypeLocalContent(
 
 @Preview(showBackground = true)
 @Composable
-fun TypeLocalPagePreview() {
+fun InputLocalPagePreview() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            TypeLocalContent(
+            InputLocalContent(
                 address = "Local",
                 onAddressChanged = {},
                 onNavCard = {},

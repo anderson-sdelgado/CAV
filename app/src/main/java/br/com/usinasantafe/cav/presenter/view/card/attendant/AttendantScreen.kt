@@ -84,7 +84,10 @@ fun AttendantContent(
             setActionButton = setTextField
         )
         BackHandler {
-            onNavInitialMenu()
+            when(option){
+                Option.INSERT -> onNavInitialMenu()
+                Option.EDIT -> onNavMenu()
+            }
         }
 
         if (status.flagDialog) {

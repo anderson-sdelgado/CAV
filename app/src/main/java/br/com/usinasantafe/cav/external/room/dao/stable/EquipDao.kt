@@ -22,5 +22,8 @@ interface EquipDao {
     suspend fun hasNro(nro: Long): Boolean
 
     @Query("SELECT id FROM $TB_EQUIP WHERE nro = :nro")
-    suspend fun getIdByNro(nro: Long): Int
+    suspend fun getIdByNro(nro: Long): Int?
+
+    @Query("SELECT * FROM $TB_EQUIP WHERE id = :id")
+    suspend fun getById(id: Int): EquipRoomModel?
 }

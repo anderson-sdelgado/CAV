@@ -6,6 +6,7 @@ import br.com.usinasantafe.cav.infra.datasource.retrofit.stable.EquipRetrofitDat
 import br.com.usinasantafe.cav.infra.datasource.room.stable.EquipRoomDatasource
 import br.com.usinasantafe.cav.infra.models.retrofit.stable.retrofitModelToEntity
 import br.com.usinasantafe.cav.infra.models.room.stable.entityToRoomModel
+import br.com.usinasantafe.cav.infra.models.room.stable.roomModelToEntity
 import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -44,8 +45,9 @@ class IEquipRepository @Inject constructor(
             equipRoomDatasource.getIdByNro(nro).getOrThrow()
         }
 
-    override suspend fun getById(id: Int): Result<Equip> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getById(id: Int): Result<Equip> =
+        call(getClassAndMethod()) {
+            equipRoomDatasource.getById(id).getOrThrow().roomModelToEntity()
+        }
 
 }

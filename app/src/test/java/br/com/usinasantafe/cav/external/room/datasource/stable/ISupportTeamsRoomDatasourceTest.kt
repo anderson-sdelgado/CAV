@@ -52,11 +52,11 @@ class ISupportTeamsRoomDatasourceTest {
                 listOf(
                     SupportTeamsRoomModel(
                         id = 1,
-                        desc = "TEST"
+                        description = "TEST"
                     ),
                     SupportTeamsRoomModel(
                         id = 1,
-                        desc = "TEST"
+                        description = "TEST"
                     )
                 )
             )
@@ -91,11 +91,11 @@ class ISupportTeamsRoomDatasourceTest {
                 listOf(
                     SupportTeamsRoomModel(
                         id = 1,
-                        desc = "TEST"
+                        description = "TEST"
                     ),
                     SupportTeamsRoomModel(
                         id = 2,
-                        desc = "TEST2"
+                        description = "TEST2"
                     ),
                 )
             )
@@ -118,7 +118,7 @@ class ISupportTeamsRoomDatasourceTest {
                 1
             )
             assertEquals(
-                model1.desc,
+                model1.description,
                 "TEST"
             )
             val model2 = listAfter[1]
@@ -127,7 +127,7 @@ class ISupportTeamsRoomDatasourceTest {
                 2
             )
             assertEquals(
-                model2.desc,
+                model2.description,
                 "TEST2"
             )
         }
@@ -139,7 +139,7 @@ class ISupportTeamsRoomDatasourceTest {
                 listOf(
                     SupportTeamsRoomModel(
                         id = 1,
-                        desc = "TEST"
+                        description = "TEST"
                     )
                 )
             )

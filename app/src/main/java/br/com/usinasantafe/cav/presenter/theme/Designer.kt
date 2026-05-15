@@ -33,6 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.errors
 import br.com.usinasantafe.cav.lib.msg
 import br.com.usinasantafe.cav.utils.UpdateStatusState
@@ -164,15 +165,19 @@ fun TextFieldPasswordDesign(
 }
 
 @Composable
-fun TextButtonDesign(text: String) {
+fun TextButtonDesign(
+    text: String,
+    font: Int = 20,
+    padding: Int = 12
+) {
     return Text(
         textAlign = TextAlign.Center,
         text = text,
         fontWeight = FontWeight.Bold,
-        fontSize = 20.sp,
+        fontSize = font.sp,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp)
+            .padding(padding.dp)
     )
 }
 
@@ -309,6 +314,8 @@ fun ButtonNumericDesign(
 @Composable
 fun ButtonMaxWidth(
     id: Int,
+    font: Int = 20,
+    padding: Int = 12,
     set: () -> Unit
 ) {
     return Button(
@@ -316,7 +323,9 @@ fun ButtonMaxWidth(
         modifier = Modifier.fillMaxWidth(),
     ) {
         TextButtonDesign(
-            text = stringResource(id = id)
+            text = stringResource(id = id),
+            font = font,
+            padding = padding
         )
     }
 }
@@ -390,6 +399,7 @@ fun AlertDialogCheckDesign(
 
 @Composable
 fun CheckboxDefault(
+    id: Int,
     text: String,
     font: Int = 22,
     checked: Boolean,
@@ -397,14 +407,29 @@ fun CheckboxDefault(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .clickable { onChecked(!checked) }
+            .padding(10.dp)
+            .testTag("item_check_box_$id")
     ) {
         Checkbox(
             checked = checked,
-            onCheckedChange = onChecked
+            onCheckedChange = null,
+            modifier = Modifier
+                .padding(end = 10.dp)
         )
         Text(
             text = text,
             fontSize = font.sp,
         )
     }
+}
+
+@Composable
+fun MsgErrors(errors: Errors, setCloseDialog: () -> Unit, failure: String){
+    val text = errors(errors, failure)
+    AlertDialogSimpleDesign(
+        text = text,
+        setCloseDialog = setCloseDialog,
+    )
 }

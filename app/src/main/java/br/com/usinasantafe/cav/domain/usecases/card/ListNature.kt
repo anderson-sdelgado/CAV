@@ -25,7 +25,7 @@ class IListNature @Inject constructor(
             entityList.map { entity ->
                 ItemCheckBoxModel(
                     id = entity.id,
-                    desc = entity.desc,
+                    desc = entity.description,
                     flag = idSet.contains(entity.id)
                 )
             }

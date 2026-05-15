@@ -227,5 +227,249 @@ class ICardSharedPreferencesDatasourceTest {
             )
         }
 
+    @Test
+    fun `getRegAttendant - Check return failure if field is null`() =
+        runTest {
+            val result = datasource.getRegAttendant()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "ICardSharedPreferencesDatasource.getRegAttendant"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.NullPointerException: regAttendant is required"
+            )
+        }
+
+    @Test
+    fun `getRegAttendant - Check return correct if function execute successfully`() =
+        runTest {
+            val model = CardSharedPreferencesModel(
+                regAttendant = 19759
+            )
+            datasource.save(model)
+            val result = datasource.getRegAttendant()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                19759
+            )
+        }
+
+    @Test
+    fun `getIdCar - Check return failure if field is null`() =
+        runTest {
+            val result = datasource.getIdCar()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "ICardSharedPreferencesDatasource.getIdCar"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.NullPointerException: idCar is required"
+            )
+        }
+
+    @Test
+    fun `getIdCar - Check return correct if function execute successfully`() =
+        runTest {
+            val model = CardSharedPreferencesModel(
+                idCar = 1
+            )
+            datasource.save(model)
+            val result = datasource.getIdCar()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                1
+            )
+        }
+
+    @Test
+    fun `listIdTypeAccident - Check return data and sharePreferences is empty`() =
+        runTest {
+            val result = datasource.listIdTypeAccident()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            val list = result.getOrNull()!!
+            assertEquals(
+                list,
+                emptyList()
+            )
+        }
+
+    @Test
+    fun `listIdTypeAccident - Check return data and sharePreferences with data`() =
+        runTest {
+            val data = CardSharedPreferencesModel(
+                idTypeAccidentList = listOf(1, 2)
+            )
+            datasource.save(data)
+            val result = datasource.listIdTypeAccident()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            val list = result.getOrNull()!!
+            assertEquals(
+                list,
+                listOf(1, 2)
+            )
+        }
+
+    @Test
+    fun `setIdTypeAccidentList - Check alter data correct in SharedPreferences internal`() =
+        runTest {
+            val data = CardSharedPreferencesModel(
+                idTypeAccidentList = listOf(1, 2)
+            )
+            datasource.save(data)
+            val resultGetBefore = datasource.get()
+            assertEquals(
+                resultGetBefore.isSuccess,
+                true
+            )
+            val modelBefore = resultGetBefore.getOrNull()!!
+            val listBefore = modelBefore.idTypeAccidentList
+            assertEquals(
+                listBefore,
+                listOf(1, 2)
+            )
+            val result = datasource.setIdTypeAccidentList(listOf(3, 4))
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            val resultGetAfter = datasource.get()
+            assertEquals(
+                resultGetAfter.isSuccess,
+                true
+            )
+            val modelAfter= resultGetAfter.getOrNull()!!
+            val listAfter= modelAfter.idTypeAccidentList
+            assertEquals(
+                listAfter,
+                listOf(3, 4)
+            )
+        }
+
+    @Test
+    fun `clean - Check alter data`() =
+        runTest {
+            val data = CardSharedPreferencesModel(
+                regAttendant = 19759
+            )
+            datasource.save(data)
+            val resultHasBefore = datasource.has()
+            assertEquals(
+                resultHasBefore.isSuccess,
+                true
+            )
+            assertEquals(
+                resultHasBefore.getOrNull()!!,
+                true
+            )
+            datasource.clean()
+            val resultHasAfter = datasource.has()
+            assertEquals(
+                resultHasAfter.isSuccess,
+                true
+            )
+            assertEquals(
+                resultHasAfter.getOrNull()!!,
+                false
+            )
+        }
+
+    @Test
+    fun `getLocal- Check return failure if model is empty`() =
+        runTest {
+            val result = datasource.getLocal()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                LocalSharedPreferencesModel()
+            )
+        }
+
+    @Test
+    fun `getLocal - Check return correct if function execute successfully`() =
+        runTest {
+            datasource.save(
+                CardSharedPreferencesModel(
+                    local = LocalSharedPreferencesModel(
+                        address = "Test",
+                        latitude = 25.356,
+                        longitude = 27.96352
+                    )
+                )
+            )
+            val result = datasource.getLocal()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                LocalSharedPreferencesModel(
+                    address = "Test",
+                    latitude = 25.356,
+                    longitude = 27.96352
+                )
+            )
+        }
+
+    @Test
+    fun `listIdDataLocal - Check return data and sharePreferences is empty`() =
+        runTest {
+            val result = datasource.listIdDataLocal()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            val list = result.getOrNull()!!
+            assertEquals(
+                list,
+                emptyList()
+            )
+        }
+
+    @Test
+    fun `listIdDataLocal - Check return data and sharePreferences with data`() =
+        runTest {
+            val data = CardSharedPreferencesModel(
+                idDataLocalList = listOf(1, 2)
+            )
+            datasource.save(data)
+            val result = datasource.listIdDataLocal()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            val list = result.getOrNull()!!
+            assertEquals(
+                list,
+                listOf(1, 2)
+            )
+        }
 
 }

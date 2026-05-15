@@ -9,14 +9,14 @@ import br.com.usinasantafe.cav.lib.TB_OPTION_DATA_LOCAL
 data class OptionDataLocalRoomModel(
     @PrimaryKey
     val id: Int,
-    val desc: String
+    val description: String
 )
 
 fun OptionDataLocalRoomModel.roomModelToEntity(): OptionDataLocal {
     return with(this){
         OptionDataLocal(
             id = id,
-            desc = desc
+            description = description
         )
     }
 }
@@ -25,7 +25,7 @@ fun OptionDataLocal.entityToRoomModel(): OptionDataLocalRoomModel {
     return with(this){
         OptionDataLocalRoomModel(
             id = id,
-            desc = desc
+            description = description
         )
     }
 }

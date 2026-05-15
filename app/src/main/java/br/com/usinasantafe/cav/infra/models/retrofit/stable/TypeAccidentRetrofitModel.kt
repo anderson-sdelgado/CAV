@@ -11,7 +11,7 @@ fun TypeAccidentRetrofitModel.retrofitModelToEntity(): TypeAccident {
     return with(this) {
         TypeAccident(
             id = id,
-            desc = desc
+            description = desc
         )
     }
 }

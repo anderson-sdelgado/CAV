@@ -11,7 +11,7 @@ fun OptionDataLocalRetrofitModel.retrofitModelToEntity(): OptionDataLocal {
     return with(this) {
         OptionDataLocal(
             id = id,
-            desc = desc
+            description = desc
         )
     }
 }

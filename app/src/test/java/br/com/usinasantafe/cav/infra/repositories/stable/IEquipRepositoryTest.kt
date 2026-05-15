@@ -28,14 +28,14 @@ class IEquipRepositoryTest {
                 EquipRoomModel(
                     id = 1,
                     nro = 10,
-                    desc = "Teste",
+                    description = "Teste",
                 )
             )
             val entityList = listOf(
                 Equip(
                     id = 1,
                     nro = 10,
-                    desc = "Teste",
+                    description = "Teste",
                 )
             )
             whenever(
@@ -69,14 +69,14 @@ class IEquipRepositoryTest {
                 EquipRoomModel(
                     id = 1,
                     nro = 10,
-                    desc = "Teste",
+                    description = "Teste",
                 )
             )
             val entityList = listOf(
                 Equip(
                     id = 1,
                     nro = 10,
-                    desc = "Teste",
+                    description = "Teste",
                 )
             )
             whenever(
@@ -187,12 +187,12 @@ class IEquipRepositoryTest {
                 Equip(
                     id = 1,
                     nro = 10,
-                    desc = "Teste",
+                    description = "Teste",
                 ),
                 Equip(
                     id = 2,
                     nro = 20,
-                    desc = "Teste2",
+                    description = "Teste2",
                 )
             )
             whenever(
@@ -302,6 +302,62 @@ class IEquipRepositoryTest {
             assertEquals(
                 result.getOrNull()!!,
                 1
+            )
+        }
+
+    @Test
+    fun `getById - Check return failure if have error in EquipRoomDatasource getById`() =
+        runTest {
+            whenever(
+                equipRoomDatasource.getById(1)
+            ).thenReturn(
+                resultFailure(
+                    "IEquipRoomDatasource.getById",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.getById(1)
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IEquipRepository.getById -> IEquipRoomDatasource.getById"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `getById - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                equipRoomDatasource.getById(1)
+            ).thenReturn(
+                Result.success(
+                    EquipRoomModel(
+                        id = 1,
+                        nro = 200,
+                        description = "CAMINHAO"
+                    )
+                )
+            )
+            val result = repository.getById(1)
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                Equip(
+                    id = 1,
+                    nro = 200,
+                    description = "CAMINHAO"
+                )
             )
         }
 

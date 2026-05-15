@@ -18,4 +18,7 @@ interface ROptionItemDataLocalDao {
     @Query("SELECT * FROM $TB_R_OPTION_ITEM_DATA_LOCAL")
     suspend fun all(): List<ROptionItemDataLocalRoomModel>
 
+    @Query("SELECT * FROM $TB_R_OPTION_ITEM_DATA_LOCAL WHERE id = :id")
+    suspend fun getById(id: Int): ROptionItemDataLocalRoomModel?
+
 }

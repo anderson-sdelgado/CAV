@@ -5,6 +5,7 @@ import br.com.usinasantafe.cav.infra.datasource.room.stable.EquipRoomDatasource
 import br.com.usinasantafe.cav.infra.models.room.stable.EquipRoomModel
 import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.getClassAndMethod
+import br.com.usinasantafe.cav.utils.required
 import br.com.usinasantafe.cav.utils.result
 import javax.inject.Inject
 
@@ -29,7 +30,12 @@ class IEquipRoomDatasource @Inject constructor(
 
     override suspend fun getIdByNro(nro: Long): Result<Int> =
         result(getClassAndMethod()) {
-            equipDao.getIdByNro(nro).takeIf { it != 0 } ?: throw NoSuchElementException("nro $nro not found")
+            equipDao.getIdByNro(nro).required("id")
+        }
+
+    override suspend fun getById(id: Int): Result<EquipRoomModel> =
+        result(getClassAndMethod()) {
+            equipDao.getById(id).required("model")
         }
 
 }

@@ -11,7 +11,7 @@ fun NatureRetrofitModel.retrofitModelToEntity(): Nature {
     return with(this) {
         Nature(
             id = id,
-            desc = desc
+            description = desc
         )
     }
 }

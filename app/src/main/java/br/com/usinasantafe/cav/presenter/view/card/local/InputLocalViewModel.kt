@@ -7,7 +7,6 @@ import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import br.com.usinasantafe.cav.utils.handleFailure
 import br.com.usinasantafe.cav.utils.onFailureHandled
-import br.com.usinasantafe.cav.utils.withFailure
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +14,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class TypeLocalState(
+data class InputLocalState(
     val address: String = "",
     val flagAccess: Boolean = false,
     val flagDialog: Boolean = false,
@@ -25,16 +24,16 @@ data class TypeLocalState(
 )
 
 @HiltViewModel
-class TypeLocalViewModel @Inject constructor(
+class InputLocalViewModel @Inject constructor(
     private val setLocal: SetLocal
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(TypeLocalState())
+    private val _uiState = MutableStateFlow(InputLocalState())
     val uiState = _uiState.asStateFlow()
 
     private val state get() = uiState.value
 
-    private fun updateState(block: TypeLocalState.() -> TypeLocalState) {
+    private fun updateState(block: InputLocalState.() -> InputLocalState) {
         _uiState.update(block)
     }
 

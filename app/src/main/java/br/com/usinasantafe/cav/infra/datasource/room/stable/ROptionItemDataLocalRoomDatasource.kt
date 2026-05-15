@@ -6,4 +6,5 @@ import br.com.usinasantafe.cav.utils.EmptyResult
 interface ROptionItemDataLocalRoomDatasource {
     suspend fun addAll(list: List<ROptionItemDataLocalRoomModel>): EmptyResult
     suspend fun deleteAll(): EmptyResult
+    suspend fun getById(id: Int): Result<ROptionItemDataLocalRoomModel>
 }

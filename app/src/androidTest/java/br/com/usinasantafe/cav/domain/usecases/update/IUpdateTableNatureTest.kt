@@ -341,7 +341,7 @@ class IUpdateTableNatureTest {
                 1
             )
             assertEquals(
-                model1.desc,
+                model1.description,
                 "TEST1"
             )
             val model2 = modelList[1]
@@ -350,7 +350,7 @@ class IUpdateTableNatureTest {
                 2
             )
             assertEquals(
-                model2.desc,
+                model2.description,
                 "TEST2"
             )
         }

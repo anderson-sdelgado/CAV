@@ -52,11 +52,11 @@ class IOptionDataLocalRoomDatasourceTest {
                 listOf(
                     OptionDataLocalRoomModel(
                         id = 1,
-                        desc = "TEST"
+                        description = "TEST"
                     ),
                     OptionDataLocalRoomModel(
                         id = 1,
-                        desc = "TEST"
+                        description = "TEST"
                     )
                 )
             )
@@ -91,11 +91,11 @@ class IOptionDataLocalRoomDatasourceTest {
                 listOf(
                     OptionDataLocalRoomModel(
                         id = 1,
-                        desc = "TEST"
+                        description = "TEST"
                     ),
                     OptionDataLocalRoomModel(
                         id = 2,
-                        desc = "TEST2"
+                        description = "TEST2"
                     ),
                 )
             )
@@ -118,7 +118,7 @@ class IOptionDataLocalRoomDatasourceTest {
                 1
             )
             assertEquals(
-                model1.desc,
+                model1.description,
                 "TEST"
             )
             val model2 = listAfter[1]
@@ -127,7 +127,7 @@ class IOptionDataLocalRoomDatasourceTest {
                 2
             )
             assertEquals(
-                model2.desc,
+                model2.description,
                 "TEST2"
             )
         }
@@ -139,7 +139,7 @@ class IOptionDataLocalRoomDatasourceTest {
                 listOf(
                     OptionDataLocalRoomModel(
                         id = 1,
-                        desc = "TEST"
+                        description = "TEST"
                     )
                 )
             )
@@ -160,4 +160,43 @@ class IOptionDataLocalRoomDatasourceTest {
             )
         }
 
+    @Test
+    fun `getDescById - Check return failure if not have data fielded`() =
+        runTest {
+            val result = datasource.getDescById(1)
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IOptionDataLocalRoomDatasource.getDescById"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.NullPointerException: desc is required"
+            )
+        }
+
+    @Test
+    fun `getDescById - Check return correct if have data fielded`() =
+        runTest {
+            optionDataLocalDao.insertAll(
+                listOf(
+                    OptionDataLocalRoomModel(
+                        id = 1,
+                        description = "Option 1"
+                    )
+                )
+            )
+            val result = datasource.getDescById(1)
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                "Option 1"
+            )
+        }
 }

@@ -1,7 +1,7 @@
 package br.com.usinasantafe.cav.lib
 
 enum class StatusSend { STARTED, SEND, SENT }
-enum class Errors { FIELD_EMPTY, TOKEN, UPDATE, EXCEPTION, INVALID, }
+enum class Errors { FIELD_EMPTY, TOKEN, UPDATE, EXCEPTION, INVALID, LIST_EMPTY }
 enum class TypeButton { NUMERIC, CLEAN, OK, UPDATE }
 enum class FlagUpdate { OUTDATED, UPDATED }
 enum class Status { OPEN, CLOSE, FINISH }

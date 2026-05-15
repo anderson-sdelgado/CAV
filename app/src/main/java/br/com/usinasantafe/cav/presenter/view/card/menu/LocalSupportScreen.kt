@@ -18,10 +18,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
@@ -29,17 +34,31 @@ import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
 
+const val TAG_LOCAL_EDIT_BUTTON = "tag_local_edit_button"
+const val TAG_DATA_LOCAL_EDIT_BUTTON = "tag_data_local_edit_button"
+const val TAG_SUPPORT_EDIT_BUTTON = "tag_support_edit_button"
+
 @Composable
 fun LocalSupportScreen(
-    viewModel: LocalSupportViewModel = hiltViewModel()
+    viewModel: LocalSupportViewModel = hiltViewModel(),
+    onNavDataInitial: () -> Unit,
+    onNavLocal: () -> Unit,
+    onNavDataLocal: () -> Unit,
+    onNavSupport: () -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             LocalSupportContent(
-                local = uiState.local,
-                dataLocal = uiState.dataLocal,
+                address = uiState.address,
+                latitude = uiState.latitude,
+                longitude = uiState.longitude,
+                dataLocalList = uiState.dataLocalList,
                 supportTeams = uiState.supportTeams,
+                onNavDataInitial = onNavDataInitial,
+                onNavLocal = onNavLocal,
+                onNavDataLocal = onNavDataLocal,
+                onNavSupport = onNavSupport,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -48,9 +67,15 @@ fun LocalSupportScreen(
 
 @Composable
 fun LocalSupportContent(
-    local: String,
-    dataLocal: String,
+    address: String,
+    latitude: String,
+    longitude: String,
+    dataLocalList: List<Pair<String, String>>,
     supportTeams: String,
+    onNavDataInitial: () -> Unit,
+    onNavLocal: () -> Unit,
+    onNavDataLocal: () -> Unit,
+    onNavSupport: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -82,12 +107,55 @@ fun LocalSupportContent(
                             text = stringResource(
                                 id = R.string.text_item_local
                             ),
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 20.sp
                         )
-                        Text(local)
+                        if(address.isEmpty() && latitude.isEmpty() && longitude.isEmpty()){
+                            Text("-")
+                        } else {
+                            Text(
+                                text = buildAnnotatedString {
+                                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                                        append(
+                                            stringResource(
+                                                id = R.string.text_address
+                                            )
+                                        )
+                                    }
+                                    append(address.ifEmpty { " -" })
+                                }
+                            )
+                            Text(
+                                text = buildAnnotatedString {
+                                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                                        append(
+                                            stringResource(
+                                                id = R.string.text_longitude
+                                            )
+                                        )
+                                    }
+                                    append(longitude.ifEmpty { " -" })
+                                }
+                            )
+                            Text(
+                                text = buildAnnotatedString {
+                                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                                        append(
+                                            stringResource(
+                                                id = R.string.text_latitude
+                                            )
+                                        )
+                                    }
+                                    append(latitude.ifEmpty { " -" })
+                                }
+                            )
+
+                        }
                     }
                     Button(
-                        onClick = {},
+                        onClick = onNavLocal,
+                        Modifier
+                            .testTag(TAG_LOCAL_EDIT_BUTTON)
                     ) {
                         Text(
                             text = stringResource(
@@ -113,12 +181,28 @@ fun LocalSupportContent(
                             text = stringResource(
                                 id = R.string.text_title_data_local
                             ),
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 20.sp
                         )
-                        Text(dataLocal)
+                        if(dataLocalList.isEmpty()){
+                            Text("")
+                        } else {
+                            dataLocalList.forEach {
+                                Text(buildAnnotatedString {
+                                        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                                            append("${it.first}: ")
+                                        }
+                                        append(it.second)
+                                    }
+                                )
+                            }
+                        }
+
                     }
                     Button(
-                        onClick = {},
+                        onClick = onNavDataLocal,
+                        Modifier
+                            .testTag(TAG_DATA_LOCAL_EDIT_BUTTON)
                     ) {
                         Text(
                             text = stringResource(
@@ -149,7 +233,9 @@ fun LocalSupportContent(
                         Text(supportTeams)
                     }
                     Button(
-                        onClick = {},
+                        onClick = onNavSupport,
+                        Modifier
+                            .testTag(TAG_SUPPORT_EDIT_BUTTON)
                     ) {
                         Text(
                             text = stringResource(
@@ -167,7 +253,7 @@ fun LocalSupportContent(
             horizontalArrangement = Arrangement.Center,
         ) {
             Button(
-                onClick = {},
+                onClick = onNavDataInitial,
                 modifier = Modifier.weight(1f)
             ) {
                 TextButtonDesign(text = stringResource(id = R.string.text_pattern_return))
@@ -184,13 +270,61 @@ fun LocalSupportContent(
 
 @Preview(showBackground = true)
 @Composable
+fun LocalSupportPagePreviewIsNull() {
+    CAVTheme {
+        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+            LocalSupportContent(
+                address = "",
+                latitude = "",
+                longitude = "",
+                dataLocalList = emptyList(),
+                supportTeams = "-",
+                onNavDataInitial = {},
+                onNavLocal = {},
+                onNavDataLocal = {},
+                onNavSupport = {},
+                modifier = Modifier.padding(innerPadding)
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
 fun LocalSupportPagePreview() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             LocalSupportContent(
-                local = "RUA ANTONIA NABA DE ALMEIDA, 75 - TABATINGA - SP",
-                dataLocal = "TRAÇADO: RETA\nPERFIL: ACENTUADO",
+                address = "RUA ANTONIA NABA DE ALMEIDA, 75 - TABATINGA - SP",
+                latitude = "-25,35625",
+                longitude = "-26,35665",
+                dataLocalList = listOf("TRAÇADO" to "RETA", "PERFIL" to "ACENTUADO"),
                 supportTeams = "GUINCHOS - BOMBEIROS",
+                onNavDataInitial = {},
+                onNavLocal = {},
+                onNavDataLocal = {},
+                onNavSupport = {},
+                modifier = Modifier.padding(innerPadding)
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun LocalSupportPagePreviewIsPartNull() {
+    CAVTheme {
+        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+            LocalSupportContent(
+                address = "",
+                latitude = "",
+                longitude = "-27.15368",
+                dataLocalList = emptyList(),
+                supportTeams = "-",
+                onNavDataInitial = {},
+                onNavLocal = {},
+                onNavDataLocal = {},
+                onNavSupport = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

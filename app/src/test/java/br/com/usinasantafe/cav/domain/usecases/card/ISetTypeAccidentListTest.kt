@@ -11,21 +11,21 @@ import org.mockito.kotlin.whenever
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class ISetListNatureTest {
+class ISetTypeAccidentListTest {
 
     private val cardRepository = mock<CardRepository>()
-    private val usecase = ISetListNature(
+    private val usecase = ISetTypeAccidentList(
         cardRepository = cardRepository
     )
 
     @Test
-    fun `Check return failure if have error in CardRepository setIdNatureList`() =
+    fun `Check return failure if have error in CardRepository setIdTypeAccidentList`() =
         runTest {
             whenever(
-                cardRepository.setIdNatureList(listOf(1, 3))
+                cardRepository.setIdTypeAccidentList(listOf(1, 3))
             ).thenReturn(
                 resultFailure(
-                    "ICardRepository.setIdNatureList",
+                    "ICardRepository.setIdTypeAccidentList",
                     "-",
                     Exception()
                 )
@@ -55,7 +55,7 @@ class ISetListNatureTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "ISetListNature -> ICardRepository.setIdNatureList"
+                "ISetTypeAccidentList -> ICardRepository.setIdTypeAccidentList"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -85,12 +85,11 @@ class ISetListNatureTest {
                     )
                 )
             )
-            verify(cardRepository, atLeastOnce()).setIdNatureList(listOf(1, 3))
+            verify(cardRepository, atLeastOnce()).setIdTypeAccidentList(listOf(1, 3))
             assertEquals(
                 result.isSuccess,
                 true
             )
         }
-
 
 }

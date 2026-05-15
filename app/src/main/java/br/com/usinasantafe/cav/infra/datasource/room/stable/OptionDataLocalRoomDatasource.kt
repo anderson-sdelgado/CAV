@@ -6,4 +6,5 @@ import br.com.usinasantafe.cav.utils.EmptyResult
 interface OptionDataLocalRoomDatasource {
     suspend fun addAll(list: List<OptionDataLocalRoomModel>): EmptyResult
     suspend fun deleteAll(): EmptyResult
+    suspend fun getDescById(id: Int): Result<String>
 }

@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.presenter.view.card.car
 
+import androidx.lifecycle.SavedStateHandle
 import br.com.usinasantafe.cav.MainCoroutineRule
 import br.com.usinasantafe.cav.domain.usecases.card.SetIdCar
 import br.com.usinasantafe.cav.domain.usecases.common.HasNroEquip
@@ -31,6 +32,7 @@ class CarViewModelTest {
     private val hasNroEquip = mock<HasNroEquip>()
     private val setIdCar = mock<SetIdCar>()
     private val viewModel = CarViewModel(
+        saveStateHandle = SavedStateHandle(),
         updateTableEquip = updateTableEquip,
         hasNroEquip = hasNroEquip,
         setIdCar = setIdCar

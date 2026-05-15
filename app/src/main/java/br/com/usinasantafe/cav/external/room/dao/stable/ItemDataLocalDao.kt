@@ -18,4 +18,6 @@ interface ItemDataLocalDao {
     @Query("SELECT * FROM $TB_ITEM_DATA_LOCAL")
     suspend fun all(): List<ItemDataLocalRoomModel>
 
+    @Query("SELECT description FROM $TB_ITEM_DATA_LOCAL WHERE id = :id")
+    suspend fun getDescById(id: Int): String?
 }

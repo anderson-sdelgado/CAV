@@ -27,4 +27,9 @@ class INatureRoomDatasource @Inject constructor(
             natureDao.all()
         }
 
+    override suspend fun listByIdList(idList: List<Int>): Result<List<NatureRoomModel>> =
+        result(getClassAndMethod()) {
+            natureDao.listByIdList(idList)
+        }
+
 }

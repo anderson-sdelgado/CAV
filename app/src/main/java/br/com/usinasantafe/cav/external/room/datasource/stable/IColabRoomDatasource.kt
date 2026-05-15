@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.external.room.datasource.stable
 
+import br.com.usinasantafe.cav.utils.required
 import br.com.usinasantafe.cav.external.room.dao.stable.ColabDao
 import br.com.usinasantafe.cav.infra.datasource.room.stable.ColabRoomDatasource
 import br.com.usinasantafe.cav.infra.models.room.stable.ColabRoomModel
@@ -25,6 +26,11 @@ class IColabRoomDatasource @Inject constructor(
     override suspend fun hasReg(reg: Long): Result<Boolean> =
         result(getClassAndMethod()) {
             colabDao.hasReg(reg)
+        }
+
+    override suspend fun getNameByReg(reg: Long): Result<String> =
+        result(getClassAndMethod()) {
+            colabDao.getNameByReg(reg).required("name")
         }
 
 }

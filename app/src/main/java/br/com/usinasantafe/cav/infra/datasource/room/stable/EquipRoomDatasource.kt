@@ -8,4 +8,5 @@ interface EquipRoomDatasource {
     suspend fun deleteAll(): EmptyResult
     suspend fun hasNro(nro: Long): Result<Boolean>
     suspend fun getIdByNro(nro: Long): Result<Int>
+    suspend fun getById(id: Int): Result<EquipRoomModel>
 }

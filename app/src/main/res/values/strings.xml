@@ -74,4 +74,9 @@
     <string name="text_treatment">TRATAMENTO</string>
     <string name="text_title_witness">TESTEMUNHA(S)</string>
     <string name="text_witness">TESTEMUNHA</string>
+    <string name="text_close_card">DESEJA REALMENTE CANCELAR A FICHA? ISSO APAGARÁ DOS DADOS JÁ INSERIDO NA FICHA.</string>
+    <string name="text_list_empty">POR FAVOR, SELECIONE PELO MENOS UMA OPÇÃO PARA QUE POSSA SER SALVO .</string>
+    <string name="text_address">ENDEREÇO: </string>
+    <string name="text_latitude">LATITUDE: </string>
+    <string name="text_longitude">LATITUDE: </string>
 </resources>

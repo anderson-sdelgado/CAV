@@ -21,4 +21,7 @@ interface ColabDao {
     @Query("SELECT EXISTS(SELECT 1 FROM $TB_COLAB WHERE reg = :reg)")
     suspend fun hasReg(reg: Long): Boolean
 
+    @Query("SELECT name FROM $TB_COLAB WHERE reg = :reg")
+    suspend fun getNameByReg(reg: Long): String?
+
 }

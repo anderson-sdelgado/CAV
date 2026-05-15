@@ -9,14 +9,14 @@ import br.com.usinasantafe.cav.lib.TB_NATURE
 data class NatureRoomModel(
     @PrimaryKey
     val id: Int,
-    val desc: String
+    val description: String
 )
 
 fun NatureRoomModel.roomModelToEntity(): Nature {
     return with(this){
         Nature(
             id = id,
-            desc = desc
+            description = description
         )
     }
 }
@@ -25,7 +25,7 @@ fun Nature.entityToRoomModel(): NatureRoomModel {
     return with(this){
         NatureRoomModel(
             id = id,
-            desc = desc
+            description = description
         )
     }
 }

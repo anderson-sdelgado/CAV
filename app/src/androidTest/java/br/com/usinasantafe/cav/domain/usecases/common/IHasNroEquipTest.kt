@@ -68,7 +68,7 @@ class IHasNroEquipTest {
                     EquipRoomModel(
                         id = 2,
                         nro = 200,
-                        desc = "TRATOR"
+                        description = "TRATOR"
                     )
                 )
             )

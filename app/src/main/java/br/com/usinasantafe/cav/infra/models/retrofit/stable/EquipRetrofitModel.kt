@@ -13,7 +13,7 @@ fun EquipRetrofitModel.retrofitModelToEntity(): Equip {
         Equip(
             id = id,
             nro = nro,
-            desc = desc
+            description = desc
         )
     }
 }

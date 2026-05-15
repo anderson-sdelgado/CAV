@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.presenter.view.card.attendant
 
+import androidx.lifecycle.SavedStateHandle
 import br.com.usinasantafe.cav.MainCoroutineRule
 import br.com.usinasantafe.cav.domain.usecases.common.HasRegColab
 import br.com.usinasantafe.cav.domain.usecases.card.SetRegAttendant
@@ -31,6 +32,7 @@ class AttendantViewModelTest {
     private val hasRegColab = mock<HasRegColab>()
     private val setRegAttendant = mock<SetRegAttendant>()
     private val viewModel = AttendantViewModel(
+        saveStateHandle = SavedStateHandle(),
         updateTableColab = updateTableColab,
         hasRegColab = hasRegColab,
         setRegAttendant = setRegAttendant

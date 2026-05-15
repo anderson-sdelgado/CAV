@@ -13,14 +13,14 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @ExperimentalCoroutinesApi
-class TypeLocalViewModelTest {
+class InputLocalViewModelTest {
 
     @ExperimentalCoroutinesApi
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
     private val setLocal = mock<SetLocal>()
-    private val viewModel = TypeLocalViewModel(
+    private val viewModel = InputLocalViewModel(
         setLocal = setLocal
     )
 

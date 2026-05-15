@@ -15,13 +15,17 @@ import br.com.usinasantafe.cav.presenter.Routes.CAR_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.CONFIG_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.DATA_INITIAL_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.INITIAL_MENU_ROUTE
+import br.com.usinasantafe.cav.presenter.Routes.LOCAL_ROUTE
+import br.com.usinasantafe.cav.presenter.Routes.LOCAL_SUPPORT_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.NATURE_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.PASSWORD_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.SPLASH_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.TYPE_ACCIDENT_ROUTE
 import br.com.usinasantafe.cav.presenter.view.card.attendant.AttendantScreen
 import br.com.usinasantafe.cav.presenter.view.card.car.CarScreen
+import br.com.usinasantafe.cav.presenter.view.card.local.LocalScreen
 import br.com.usinasantafe.cav.presenter.view.card.menu.DataInitialScreen
+import br.com.usinasantafe.cav.presenter.view.card.menu.LocalSupportScreen
 import br.com.usinasantafe.cav.presenter.view.card.nature.NatureScreen
 import br.com.usinasantafe.cav.presenter.view.card.typeAccident.TypeAccidentScreen
 import br.com.usinasantafe.cav.presenter.view.configuration.config.ConfigScreen
@@ -143,7 +147,18 @@ fun NavigationGraph(
 
         composable(TYPE_ACCIDENT_ROUTE) {
             TypeAccidentScreen(
+                onNavMenu = {
+                    navActions.navigateToDataInitial()
+                }
+            )
+        }
 
+        composable(LOCAL_ROUTE) {
+            LocalScreen(
+                onNavMenu = {
+                    navActions.navigateToLocalSupport()
+                },
+                onNavInputLocal = {}
             )
         }
 
@@ -157,10 +172,14 @@ fun NavigationGraph(
                     navActions.navigateToSplash()
                 },
                 onNavAttendant = {
-                    navActions.navigateToAttendant(Option.EDIT.ordinal)
+                    navActions.navigateToAttendant(
+                        option = Option.EDIT.ordinal
+                    )
                 },
                 onNavCar = {
-                    navActions.navigateToCar(Option.EDIT.ordinal)
+                    navActions.navigateToCar(
+                        option = Option.EDIT.ordinal
+                    )
                 },
                 onNavNature = {
                     navActions.navigateToNature()
@@ -168,8 +187,30 @@ fun NavigationGraph(
                 onNavTypeAccident = {
                     navActions.navigateToTypeAccident()
                 },
+                onNavLocalSupport = {
+                    navActions.navigateToLocalSupport()
+                }
             )
         }
+
+        composable(LOCAL_SUPPORT_ROUTE) {
+            LocalSupportScreen(
+                onNavDataInitial = {
+                    navActions.navigateToDataInitial()
+                },
+                onNavLocal = {
+                    navActions.navigateToLocal()
+                },
+                onNavDataLocal = {
+
+                },
+                onNavSupport = {
+
+                }
+            )
+        }
+
+
         //////////////////////////////////////////////////////////////////////
 
 

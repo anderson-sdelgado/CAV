@@ -1,6 +1,7 @@
 package br.com.usinasantafe.cav.presenter.view.card.menu
 
 import androidx.lifecycle.ViewModel
+import br.com.usinasantafe.cav.domain.usecases.card.GetLocal
 import br.com.usinasantafe.cav.lib.Errors
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -9,8 +10,10 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 data class LocalSupportState(
-    val local: String = "",
-    val dataLocal: String = "",
+    val address: String = "",
+    val latitude: String = "",
+    val longitude: String = "",
+    val dataLocalList: List<Pair<String, String>> = emptyList(),
     val supportTeams: String = "",
     val flagAccess: Boolean = false,
     val flagDialog: Boolean = false,
@@ -21,6 +24,7 @@ data class LocalSupportState(
 
 @HiltViewModel
 class LocalSupportViewModel @Inject constructor(
+    private val getLocal: GetLocal,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LocalSupportState())

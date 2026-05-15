@@ -98,6 +98,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.rules)
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
@@ -151,6 +152,7 @@ dependencies {
     androidTestImplementation(libs.mockito)
     implementation(libs.google.play.services.location)
     implementation(libs.google.maps.compose)
+    androidTestImplementation(libs.androidx.rules)
 }
 
 kapt {

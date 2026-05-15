@@ -1,6 +1,7 @@
 package br.com.usinasantafe.cav.presenter.view.card.menu
 
 import br.com.usinasantafe.cav.MainCoroutineRule
+import br.com.usinasantafe.cav.domain.usecases.card.CancelCard
 import br.com.usinasantafe.cav.domain.usecases.card.GetAttendant
 import br.com.usinasantafe.cav.domain.usecases.card.GetCar
 import br.com.usinasantafe.cav.domain.usecases.card.GetNature
@@ -26,11 +27,13 @@ class DataInitialViewModelTest {
     private val getCar = mock<GetCar>()
     private val getNature = mock<GetNature>()
     private val getTypeAccident = mock<GetTypeAccident>()
+    private val cancelCard = mock<CancelCard>()
     private val viewModel = DataInitialViewModel(
         getAttendant = getAttendant,
         getCar = getCar,
         getNature = getNature,
-        getTypeAccident = getTypeAccident
+        getTypeAccident = getTypeAccident,
+        cancelCard = cancelCard
     )
 
     @Test
@@ -303,6 +306,60 @@ class DataInitialViewModelTest {
             assertEquals(
                 viewModel.uiState.value.typeAccident,
                 "-"
+            )
+        }
+
+    @Test
+    fun `cancel - Check return failure if have error in CancelCard`() =
+        runTest {
+            whenever(
+                cancelCard()
+            ).thenReturn(
+                resultFailure(
+                    context = "CancelCard",
+                    message = "-",
+                    cause = Exception()
+                )
+            )
+            viewModel.onDialogCheck(true)
+            assertEquals(
+                viewModel.uiState.value.flagDialogCheck,
+                true
+            )
+            viewModel.cancel()
+            assertEquals(
+                viewModel.uiState.value.flagDialog,
+                true
+            )
+            assertEquals(
+                viewModel.uiState.value.failure,
+                "DataInitialViewModel.cancel -> CancelCard -> java.lang.Exception"
+            )
+            assertEquals(
+                viewModel.uiState.value.errors,
+                Errors.EXCEPTION
+            )
+            assertEquals(
+                viewModel.uiState.value.flagFailure,
+                true
+            )
+            assertEquals(
+                viewModel.uiState.value.flagDialogCheck,
+                false
+            )
+        }
+
+    @Test
+    fun `cancel - Check return true if process execute successfully`() =
+        runTest {
+            assertEquals(
+                viewModel.uiState.value.flagCancel,
+                false
+            )
+            viewModel.cancel()
+            assertEquals(
+                viewModel.uiState.value.flagCancel,
+                true
             )
         }
 

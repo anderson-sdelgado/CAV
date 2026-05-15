@@ -5,6 +5,7 @@ import br.com.usinasantafe.cav.infra.datasource.room.stable.ItemDataLocalRoomDat
 import br.com.usinasantafe.cav.infra.models.room.stable.ItemDataLocalRoomModel
 import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.getClassAndMethod
+import br.com.usinasantafe.cav.utils.required
 import br.com.usinasantafe.cav.utils.result
 import javax.inject.Inject
 
@@ -20,6 +21,11 @@ class IItemDataLocalRoomDatasource @Inject constructor(
     override suspend fun deleteAll(): EmptyResult =
         result(getClassAndMethod()) {
             itemDataLocalDao.deleteAll()
+        }
+
+    override suspend fun getDescById(id: Int): Result<String> =
+        result(getClassAndMethod()) {
+            itemDataLocalDao.getDescById(id).required("desc")
         }
 
 }

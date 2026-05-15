@@ -222,4 +222,45 @@ class IColabRoomDatasourceTest {
                true
             )
         }
+
+    @Test
+    fun `getNameByReg - Check return data and sharePreferences is empty`() =
+        runTest {
+            val result = datasource.getNameByReg(19759)
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IColabRoomDatasource.getNameByReg"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.NullPointerException: name is required"
+            )
+        }
+
+
+    @Test
+    fun `getNameByReg - Check return correct if function execute successfully`() =
+        runTest {
+            colabDao.insertAll(
+                listOf(
+                    ColabRoomModel(
+                        reg = 19759,
+                        name = "ANDERSON DA SILVA DELGADO"
+                    )
+                )
+            )
+            val result = datasource.getNameByReg(19759)
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                "ANDERSON DA SILVA DELGADO"
+            )
+        }
 }

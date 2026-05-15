@@ -7,18 +7,18 @@ import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import javax.inject.Inject
 
-interface SetListNature {
+interface SetNatureList {
     suspend operator fun invoke(list: List<ItemCheckBoxModel>): EmptyResult
 }
 
-class ISetListNature @Inject constructor(
+class ISetNatureList @Inject constructor(
     private val cardRepository: CardRepository
-): SetListNature {
+): SetNatureList {
 
     override suspend fun invoke(list: List<ItemCheckBoxModel>): EmptyResult =
         call(getClassAndMethod()) {
-            val idNatureList = list.filter { it.flag }.map { it.id }
-            cardRepository.setIdNatureList(idNatureList).getOrThrow()
+            val idList = list.filter { it.flag }.map { it.id }
+            cardRepository.setIdNatureList(idList).getOrThrow()
         }
 
 }

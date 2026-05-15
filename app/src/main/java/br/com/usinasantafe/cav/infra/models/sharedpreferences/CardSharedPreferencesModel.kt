@@ -6,8 +6,10 @@ import br.com.usinasantafe.cav.domain.entities.variable.Local
 data class CardSharedPreferencesModel(
     var regAttendant: Long? = null,
     var idCar: Int? = null,
-    var local: LocalSharedPreferencesModel? = null,
-    var idNatureList: List<Int> = emptyList()
+    var local: LocalSharedPreferencesModel = LocalSharedPreferencesModel(),
+    var idNatureList: List<Int> = emptyList(),
+    var idTypeAccidentList: List<Int> = emptyList(),
+    var idDataLocalList: List<Int> = emptyList()
 )
 
 data class LocalSharedPreferencesModel(
@@ -21,7 +23,7 @@ fun CardSharedPreferencesModel.sharedPreferencesModelToEntity(): Card {
         Card(
             regAttendant = regAttendant,
             idCar = idCar,
-            local = local?.sharedPreferencesModelToEntity()
+            local = local.sharedPreferencesModelToEntity()
         )
     }
 }
@@ -30,7 +32,7 @@ fun Card.entityToSharedPreferencesModel(): CardSharedPreferencesModel {
         CardSharedPreferencesModel(
             regAttendant = regAttendant,
             idCar = idCar,
-            local = local?.entityToSharedPreferencesModel()
+            local = local.entityToSharedPreferencesModel()
         )
     }
 }

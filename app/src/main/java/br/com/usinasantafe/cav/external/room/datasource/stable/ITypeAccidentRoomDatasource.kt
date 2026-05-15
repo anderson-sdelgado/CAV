@@ -22,4 +22,14 @@ class ITypeAccidentRoomDatasource @Inject constructor(
             typeAccidentDao.deleteAll()
         }
 
+    override suspend fun listAll(): Result<List<TypeAccidentRoomModel>> =
+        result(getClassAndMethod()) {
+            typeAccidentDao.all()
+        }
+
+    override suspend fun listByIdList(idList: List<Int>): Result<List<TypeAccidentRoomModel>> =
+        result(getClassAndMethod()) {
+            typeAccidentDao.listByIdList(idList)
+        }
+
 }

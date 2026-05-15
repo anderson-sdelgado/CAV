@@ -27,13 +27,13 @@ class INatureRepositoryTest {
             val roomModelList = listOf(
                 NatureRoomModel(
                     id = 1,
-                    desc = "TEST"
+                    description = "TEST"
                 )
             )
             val entityList = listOf(
                 Nature(
                     id = 1,
-                    desc = "TEST"
+                    description = "TEST"
                 )
             )
             whenever(
@@ -66,13 +66,13 @@ class INatureRepositoryTest {
             val roomModelList = listOf(
                 NatureRoomModel(
                     id = 1,
-                    desc = "TEST"
+                    description = "TEST"
                 )
             )
             val entityList = listOf(
                 Nature(
                     id = 1,
-                    desc = "TEST"
+                    description = "TEST"
                 )
             )
             whenever(
@@ -176,7 +176,7 @@ class INatureRepositoryTest {
             val entityList = listOf(
                 Nature(
                     id = 1,
-                    desc = "TEST"
+                    description = "TEST"
                 ),
             )
             whenever(
@@ -234,7 +234,7 @@ class INatureRepositoryTest {
                     listOf(
                         NatureRoomModel(
                             id = 1,
-                            desc = "Test"
+                            description = "Test"
                         )
                     )
                 )
@@ -249,7 +249,65 @@ class INatureRepositoryTest {
                 listOf(
                     Nature(
                         id = 1,
-                        desc = "Test"
+                        description = "Test"
+                    )
+                )
+            )
+        }
+
+    @Test
+    fun `listByIdList - Check return failure if have error in NatureRoomDatasource listByIdList`() =
+        runTest {
+            whenever(
+                natureRoomDatasource.listByIdList(listOf(1, 2))
+            ).thenReturn(
+                resultFailure(
+                    "INatureRoomDatasource.listByIdList",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.listByIdList(listOf(1, 2))
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "INatureRepository.listByIdList -> INatureRoomDatasource.listByIdList"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `listByIdList - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                natureRoomDatasource.listByIdList(listOf(1, 2))
+            ).thenReturn(
+                Result.success(
+                    listOf(
+                        NatureRoomModel(
+                            id = 1,
+                            description = "Item 1"
+                        )
+                    )
+                )
+            )
+            val result = repository.listByIdList(listOf(1, 2))
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                listOf(
+                    Nature(
+                        id = 1,
+                        description = "Item 1"
                     )
                 )
             )

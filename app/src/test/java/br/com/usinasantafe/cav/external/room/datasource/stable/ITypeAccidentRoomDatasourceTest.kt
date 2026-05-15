@@ -52,11 +52,11 @@ class ITypeAccidentRoomDatasourceTest {
                 listOf(
                     TypeAccidentRoomModel(
                         id = 1,
-                        desc = "TEST"
+                        description = "TEST"
                     ),
                     TypeAccidentRoomModel(
                         id = 1,
-                        desc = "TEST"
+                        description = "TEST"
                     )
                 )
             )
@@ -91,11 +91,11 @@ class ITypeAccidentRoomDatasourceTest {
                 listOf(
                     TypeAccidentRoomModel(
                         id = 1,
-                        desc = "TEST"
+                        description = "TEST"
                     ),
                     TypeAccidentRoomModel(
                         id = 2,
-                        desc = "TEST2"
+                        description = "TEST2"
                     ),
                 )
             )
@@ -118,7 +118,7 @@ class ITypeAccidentRoomDatasourceTest {
                 1
             )
             assertEquals(
-                model1.desc,
+                model1.description,
                 "TEST"
             )
             val model2 = listAfter[1]
@@ -127,7 +127,7 @@ class ITypeAccidentRoomDatasourceTest {
                 2
             )
             assertEquals(
-                model2.desc,
+                model2.description,
                 "TEST2"
             )
         }
@@ -139,7 +139,7 @@ class ITypeAccidentRoomDatasourceTest {
                 listOf(
                     TypeAccidentRoomModel(
                         id = 1,
-                        desc = "TEST"
+                        description = "TEST"
                     )
                 )
             )
@@ -160,4 +160,88 @@ class ITypeAccidentRoomDatasourceTest {
             )
         }
 
+    @Test
+    fun `listAll - Check return list if have data`() =
+        runTest {
+            typeAccidentDao.insertAll(
+                listOf(
+                    TypeAccidentRoomModel(
+                        id = 1,
+                        description = "TEST"
+                    )
+                )
+            )
+            val result = datasource.listAll()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            val list = result.getOrNull()!!
+            assertEquals(
+                list,
+                listOf(
+                    TypeAccidentRoomModel(
+                        id = 1,
+                        description = "TEST"
+                    )
+                )
+            )
+        }
+
+    @Test
+    fun `listByIdList - Check return emptyList if not have data`() =
+        runTest {
+            val result = datasource.listByIdList(listOf(1, 2))
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                emptyList()
+            )
+        }
+
+    @Test
+    fun `listByIdList - Check return list if have data fielded`() =
+        runTest {
+            typeAccidentDao.insertAll(
+                listOf(
+                    TypeAccidentRoomModel(
+                        id = 1,
+                        description = "Item 1"
+                    ),
+                    TypeAccidentRoomModel(
+                        id = 2,
+                        description = "Item 2"
+                    ),
+                    TypeAccidentRoomModel(
+                        id = 3,
+                        description = "Item 3"
+                    ),
+                    TypeAccidentRoomModel(
+                        id = 4,
+                        description = "Item 4"
+                    )
+                )
+            )
+            val result = datasource.listByIdList(listOf(2, 3))
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                listOf(
+                    TypeAccidentRoomModel(
+                        id = 2,
+                        description = "Item 2"
+                    ),
+                    TypeAccidentRoomModel(
+                        id = 3,
+                        description = "Item 3"
+                    ),
+                )
+            )
+        }
 }

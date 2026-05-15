@@ -4,7 +4,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.usinasantafe.cav.domain.usecases.card.ListNature
-import br.com.usinasantafe.cav.domain.usecases.card.SetListNature
+import br.com.usinasantafe.cav.domain.usecases.card.SetNatureList
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableNature
 import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxModel
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
@@ -35,15 +35,13 @@ data class NatureState(
 class NatureViewModel @Inject constructor(
     private val listNature: ListNature,
     private val updateTableNature: UpdateTableNature,
-    private val setListNature: SetListNature
+    private val setNatureList: SetNatureList
 ) : ViewModel() {
 
     val list = mutableStateListOf<ItemCheckBoxModel>()
 
     private val _uiState = MutableStateFlow(NatureState())
     val uiState = _uiState.asStateFlow()
-
-    private val state get() = uiState.value
 
     private fun updateState(block: NatureState.() -> NatureState) {
         _uiState.update(block)
@@ -71,7 +69,7 @@ class NatureViewModel @Inject constructor(
 
     fun save() = viewModelScope.launch {
         runCatching {
-            setListNature(list.toList()).getOrThrow()
+            setNatureList(list.toList()).getOrThrow()
         }
             .onSuccess { updateState { copy(flagAccess = true) } }
             .onFailureUpdate(getClassAndMethod(), ::updateState)

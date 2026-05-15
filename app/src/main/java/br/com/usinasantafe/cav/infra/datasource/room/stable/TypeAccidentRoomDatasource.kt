@@ -6,4 +6,6 @@ import br.com.usinasantafe.cav.utils.EmptyResult
 interface TypeAccidentRoomDatasource {
     suspend fun addAll(list: List<TypeAccidentRoomModel>): EmptyResult
     suspend fun deleteAll(): EmptyResult
+    suspend fun listAll(): Result<List<TypeAccidentRoomModel>>
+    suspend fun listByIdList(idList: List<Int>): Result<List<TypeAccidentRoomModel>>
 }

@@ -27,13 +27,13 @@ class ISupportTeamsRepositoryTest {
             val roomModelList = listOf(
                 SupportTeamsRoomModel(
                     id = 1,
-                    desc = "TEST"
+                    description = "TEST"
                 )
             )
             val entityList = listOf(
                 SupportTeams(
                     id = 1,
-                    desc = "TEST"
+                    description = "TEST"
                 )
             )
             whenever(
@@ -66,13 +66,13 @@ class ISupportTeamsRepositoryTest {
             val roomModelList = listOf(
                 SupportTeamsRoomModel(
                     id = 1,
-                    desc = "TEST"
+                    description = "TEST"
                 )
             )
             val entityList = listOf(
                 SupportTeams(
                     id = 1,
-                    desc = "TEST"
+                    description = "TEST"
                 )
             )
             whenever(
@@ -176,7 +176,7 @@ class ISupportTeamsRepositoryTest {
             val entityList = listOf(
                 SupportTeams(
                     id = 1,
-                    desc = "TEST"
+                    description = "TEST"
                 ),
             )
             whenever(

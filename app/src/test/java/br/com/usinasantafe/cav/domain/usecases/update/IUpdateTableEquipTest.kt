@@ -123,7 +123,7 @@ class IUpdateTableEquipTest {
                 Equip(
                     id = 1,
                     nro = 20,
-                    desc = "TRATOR"
+                    description = "TRATOR"
                 )
             )
             whenever(
@@ -193,7 +193,7 @@ class IUpdateTableEquipTest {
                 Equip(
                     id = 1,
                     nro = 20,
-                    desc = "TRATOR"
+                    description = "TRATOR"
                 )
             )
             whenever(
@@ -273,7 +273,7 @@ class IUpdateTableEquipTest {
                 Equip(
                     id = 1,
                     nro = 20,
-                    desc = "TRATOR"
+                    description = "TRATOR"
                 )
             )
             whenever(

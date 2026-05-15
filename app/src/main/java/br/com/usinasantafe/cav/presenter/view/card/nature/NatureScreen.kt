@@ -4,6 +4,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -23,6 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxModel
+import br.com.usinasantafe.cav.presenter.theme.ButtonMaxWidth
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.CheckboxDefault
@@ -40,10 +42,16 @@ fun NatureScreen(
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             val list = viewModel.list
+
+            LaunchedEffect(Unit) {
+                viewModel.list()
+            }
+
             NatureContent(
                 list = list,
                 onCheckChange = viewModel::onCheckChange,
                 updateDatabase = viewModel::updateDatabase,
+                save = viewModel::save,
                 flagAccess = uiState.flagAccess,
                 setCloseDialog = viewModel::setCloseDialog,
                 status = uiState.status,
@@ -59,6 +67,7 @@ fun NatureContent(
     list: List<ItemCheckBoxModel>,
     onCheckChange: (Int, Boolean) -> Unit,
     updateDatabase: () -> Unit,
+    save: () -> Unit,
     flagAccess: Boolean,
     setCloseDialog: () -> Unit,
     status: UpdateStatusState,
@@ -80,6 +89,7 @@ fun NatureContent(
         ) {
             items(list, key = { it.id }) { item ->
                 CheckboxDefault(
+                    id = item.id,
                     text = item.desc,
                     checked = item.flag,
                     onChecked = { isChecked ->
@@ -88,39 +98,40 @@ fun NatureContent(
                 )
             }
         }
-        Button(
-            onClick = updateDatabase,
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            TextButtonDesign(
-                text = stringResource(
-                    id = R.string.text_pattern_update
-                )
-            )
-        }
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
         )  {
             Button(
                 onClick = onNavMenu,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
             ) {
                 TextButtonDesign(
-                    text = stringResource(id = R.string.text_pattern_return)
+                    text = stringResource(
+                        id = R.string.text_pattern_return
+                    ),
+                    padding = 10
                 )
             }
             Button(
-                onClick = {  },
-                modifier = Modifier.weight(1f),
+                onClick = save,
+                modifier = Modifier
+                    .weight(1f)
             ) {
                 TextButtonDesign(
-                    text = stringResource(id = R.string.text_pattern_save)
+                    text = stringResource(
+                        id = R.string.text_pattern_save
+                    ),
+                    padding = 10
                 )
             }
         }
+        Spacer(modifier = Modifier.padding(vertical = 4.dp))
+
+        ButtonMaxWidth(R.string.text_pattern_update) { updateDatabase() }
+
         BackHandler {}
 
         if (status.flagDialog) {
@@ -149,6 +160,7 @@ fun NaturePagePreview() {
                 list = emptyList(),
                 onCheckChange = { _, _ -> },
                 updateDatabase = {},
+                save = {},
                 flagAccess = false,
                 setCloseDialog = {},
                 status = UpdateStatusState(
@@ -203,6 +215,7 @@ fun NaturePagePreviewWithList() {
                 ),
                 onCheckChange = { _, _ -> },
                 updateDatabase = {},
+                save = {},
                 flagAccess = false,
                 setCloseDialog = {},
                 status = UpdateStatusState(

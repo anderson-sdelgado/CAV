@@ -53,12 +53,12 @@ class IEquipRoomDatasourceTest {
                     EquipRoomModel(
                         id = 1,
                         nro = 10,
-                        desc = "TESTE1"
+                        description = "TESTE1"
                     ),
                     EquipRoomModel(
                         id = 1,
                         nro = 10,
-                        desc = "TESTE1"
+                        description = "TESTE1"
                     ),
                 )
             )
@@ -94,12 +94,12 @@ class IEquipRoomDatasourceTest {
                     EquipRoomModel(
                         id = 1,
                         nro = 10,
-                        desc = "TESTE1"
+                        description = "TESTE1"
                     ),
                     EquipRoomModel(
                         id = 2,
                         nro = 20,
-                        desc = "TESTE2"
+                        description = "TESTE2"
                     ),
                 )
             )
@@ -131,7 +131,7 @@ class IEquipRoomDatasourceTest {
                 10
             )
             assertEquals(
-                model1.desc,
+                model1.description,
                 "TESTE1"
             )
             val model2 = list[1]
@@ -144,7 +144,7 @@ class IEquipRoomDatasourceTest {
                 20
             )
             assertEquals(
-                model2.desc,
+                model2.description,
                 "TESTE2"
             )
         }
@@ -157,7 +157,7 @@ class IEquipRoomDatasourceTest {
                     EquipRoomModel(
                         id = 1,
                         nro = 10,
-                        desc = "TESTE1"
+                        description = "TESTE1"
                     )
                 )
             )
@@ -204,7 +204,7 @@ class IEquipRoomDatasourceTest {
                     EquipRoomModel(
                         id = 1,
                         nro = 100,
-                        desc = "TRATOR"
+                        description = "TRATOR"
                     )
                 )
             )
@@ -227,7 +227,7 @@ class IEquipRoomDatasourceTest {
                     EquipRoomModel(
                         id = 2,
                         nro = 200,
-                        desc = "TRATOR"
+                        description = "TRATOR"
                     )
                 )
             )
@@ -256,7 +256,7 @@ class IEquipRoomDatasourceTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
-                "java.util.NoSuchElementException: nro 200 not found"
+                "java.lang.NullPointerException: id is required"
             )
         }
 
@@ -268,7 +268,7 @@ class IEquipRoomDatasourceTest {
                     EquipRoomModel(
                         id = 2,
                         nro = 200,
-                        desc = "TRATOR"
+                        description = "TRATOR"
                     )
                 )
             )
@@ -280,6 +280,52 @@ class IEquipRoomDatasourceTest {
             assertEquals(
                 result.getOrNull()!!,
                 2
+            )
+        }
+
+    @Test
+    fun `getById - Check return failure if not have data fielded`() =
+        runTest {
+            val result = datasource.getById(1)
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IEquipRoomDatasource.getById"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.NullPointerException: model is required"
+            )
+        }
+
+
+    @Test
+    fun `getById - Check return correct if have data fielded`() =
+        runTest {
+            equipDao.insertAll(
+                listOf(
+                    EquipRoomModel(
+                        id = 1,
+                        nro = 2200,
+                        description = "TRATOR"
+                    )
+                )
+            )
+            val result = datasource.getById(1)
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                EquipRoomModel(
+                    id = 1,
+                    nro = 2200,
+                    description = "TRATOR"
+                )
             )
         }
 

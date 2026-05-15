@@ -9,6 +9,7 @@ import br.com.usinasantafe.cav.infra.models.sharedpreferences.sharedPreferencesM
 import br.com.usinasantafe.cav.lib.BASE_SHARED_PREFERENCES_TABLE_CARD
 import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.getClassAndMethod
+import br.com.usinasantafe.cav.utils.required
 import br.com.usinasantafe.cav.utils.result
 import com.google.gson.Gson
 import javax.inject.Inject
@@ -27,15 +28,34 @@ class ICardSharedPreferencesDatasource @Inject constructor(
             }
         }
 
-    suspend fun get(): Result<CardSharedPreferencesModel> =
+    override suspend fun clean(): EmptyResult =
         result(getClassAndMethod()) {
-            val config = sharedPreferences.getString(
+            sharedPreferences.edit {
+                putString(
+                    BASE_SHARED_PREFERENCES_TABLE_CARD,
+                    null
+                )
+            }
+        }
+
+    override suspend fun has(): Result<Boolean> =
+        result(getClassAndMethod()) {
+            val data = sharedPreferences.getString(
                 BASE_SHARED_PREFERENCES_TABLE_CARD,
                 null
             )
-            if(config.isNullOrEmpty()) return@result CardSharedPreferencesModel()
+            !data.isNullOrEmpty()
+        }
+
+    suspend fun get(): Result<CardSharedPreferencesModel> =
+        result(getClassAndMethod()) {
+            val data = sharedPreferences.getString(
+                BASE_SHARED_PREFERENCES_TABLE_CARD,
+                null
+            )
+            if(data.isNullOrEmpty()) return@result CardSharedPreferencesModel()
             val model = Gson().fromJson(
-                config,
+                data,
                 CardSharedPreferencesModel::class.java
             )
             model.sharedPreferencesModelToEntity()
@@ -68,11 +88,43 @@ class ICardSharedPreferencesDatasource @Inject constructor(
             get().getOrThrow().idNatureList
         }
 
-    override suspend fun setIdNatureList(idNatureList: List<Int>): EmptyResult =
+    override suspend fun setIdNatureList(idList: List<Int>): EmptyResult =
         result(getClassAndMethod()) {
             val mainModel = get().getOrThrow()
-            mainModel.idNatureList = idNatureList
+            mainModel.idNatureList = idList
             save(mainModel).getOrThrow()
+        }
+
+    override suspend fun getRegAttendant(): Result<Long> =
+        result(getClassAndMethod()) {
+            get().getOrThrow()::regAttendant.required()
+        }
+
+    override suspend fun getIdCar(): Result<Int> =
+        result(getClassAndMethod()) {
+            get().getOrThrow()::idCar.required()
+        }
+
+    override suspend fun listIdTypeAccident(): Result<List<Int>> =
+        result(getClassAndMethod()) {
+            get().getOrThrow().idTypeAccidentList
+        }
+
+    override suspend fun setIdTypeAccidentList(idList: List<Int>): EmptyResult =
+        result(getClassAndMethod()) {
+            val mainModel = get().getOrThrow()
+            mainModel.idTypeAccidentList = idList
+            save(mainModel).getOrThrow()
+        }
+
+    override suspend fun getLocal(): Result<LocalSharedPreferencesModel> =
+        result(getClassAndMethod()) {
+            get().getOrThrow().local
+        }
+
+    override suspend fun listIdDataLocal(): Result<List<Int>> =
+        result(getClassAndMethod()) {
+            get().getOrThrow().idDataLocalList
         }
 
 }

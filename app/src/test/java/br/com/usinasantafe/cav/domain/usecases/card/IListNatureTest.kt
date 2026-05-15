@@ -57,7 +57,7 @@ class IListNatureTest {
                     listOf(
                         Nature(
                             id = 1,
-                            desc = "Test"
+                            description = "Test"
                         )
                     )
                 )
@@ -96,11 +96,11 @@ class IListNatureTest {
                     listOf(
                         Nature(
                             id = 1,
-                            desc = "Test"
+                            description = "Test"
                         ),
                         Nature(
                             id = 2,
-                            desc = "Test2"
+                            description = "Test2"
                         )
                     )
                 )

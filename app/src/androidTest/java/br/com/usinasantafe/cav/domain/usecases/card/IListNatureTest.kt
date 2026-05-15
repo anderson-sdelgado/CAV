@@ -2,7 +2,6 @@ package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.external.room.dao.stable.NatureDao
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
-import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.room.stable.NatureRoomModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
 import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxModel
@@ -50,13 +49,17 @@ class IListNatureTest {
         }
 
     @Test
-    fun check_return_correct_if_have_data_nature_and_not_have_data_in_card() =
+    fun check_return_correct_if_have_data_nature_room_and_not_have_data_in_card() =
         runTest {
             natureDao.insertAll(
                 listOf(
                     NatureRoomModel(
                         id = 1,
-                        desc = "TEST"
+                        description = "TEST"
+                    ),
+                    NatureRoomModel(
+                        id = 2,
+                        description = "TEST2"
                     )
                 )
             )
@@ -72,6 +75,11 @@ class IListNatureTest {
                         id = 1,
                         desc = "TEST",
                         flag = false
+                    ),
+                    ItemCheckBoxModel(
+                        id = 2,
+                        desc = "TEST2",
+                        flag = false
                     )
                 )
             )
@@ -84,11 +92,11 @@ class IListNatureTest {
                 listOf(
                     NatureRoomModel(
                         id = 1,
-                        desc = "TEST"
+                        description = "TEST"
                     ),
                     NatureRoomModel(
                         id = 2,
-                        desc = "TEST2"
+                        description = "TEST2"
                     )
                 )
             )

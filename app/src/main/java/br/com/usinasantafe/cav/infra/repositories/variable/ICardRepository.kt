@@ -4,6 +4,7 @@ import br.com.usinasantafe.cav.domain.entities.variable.Local
 import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.entityToSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.sharedPreferencesModelToEntity
 import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -33,17 +34,45 @@ class ICardRepository @Inject constructor(
             cardSharedPreferencesDatasource.listIdNature().getOrThrow()
         }
 
-    override suspend fun setIdNatureList(idNatureList: List<Int>): EmptyResult =
+    override suspend fun setIdNatureList(idList: List<Int>): EmptyResult =
         call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.setIdNatureList(idNatureList).getOrThrow()
+            cardSharedPreferencesDatasource.setIdNatureList(idList).getOrThrow()
         }
 
-    override suspend fun getRegAttendant(): Result<Long> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getRegAttendant(): Result<Long> =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.getRegAttendant().getOrThrow()
+        }
 
-    override suspend fun getIdCar(): Result<Int> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getIdCar(): Result<Int> =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.getIdCar().getOrThrow()
+        }
+
+    override suspend fun listIdTypeAccident(): Result<List<Int>> =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.listIdTypeAccident().getOrThrow()
+        }
+
+    override suspend fun setIdTypeAccidentList(idList: List<Int>): EmptyResult =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.setIdTypeAccidentList(idList).getOrThrow()
+        }
+
+    override suspend fun clean(): EmptyResult =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.clean().getOrThrow()
+        }
+
+    override suspend fun getLocal(): Result<Local> =
+        call(getClassAndMethod()) {
+            val model = cardSharedPreferencesDatasource.getLocal().getOrThrow()
+            model.sharedPreferencesModelToEntity()
+        }
+
+    override suspend fun listIdDataLocal(): Result<List<Int>> =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.listIdDataLocal().getOrThrow()
+        }
 
 }

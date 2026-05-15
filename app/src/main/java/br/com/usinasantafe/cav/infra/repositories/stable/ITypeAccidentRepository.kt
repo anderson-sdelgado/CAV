@@ -6,6 +6,7 @@ import br.com.usinasantafe.cav.infra.datasource.retrofit.stable.TypeAccidentRetr
 import br.com.usinasantafe.cav.infra.datasource.room.stable.TypeAccidentRoomDatasource
 import br.com.usinasantafe.cav.infra.models.retrofit.stable.retrofitModelToEntity
 import br.com.usinasantafe.cav.infra.models.room.stable.entityToRoomModel
+import br.com.usinasantafe.cav.infra.models.room.stable.roomModelToEntity
 import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -32,6 +33,18 @@ class ITypeAccidentRepository @Inject constructor(
         call(getClassAndMethod()) {
             val modelList = typeAccidentRetrofitDatasource.listAll(token).getOrThrow()
             modelList.map { it.retrofitModelToEntity() }
+        }
+
+    override suspend fun listAll(): Result<List<TypeAccident>> =
+        call(getClassAndMethod()) {
+            val modeList = typeAccidentRoomDatasource.listAll().getOrThrow()
+            modeList.map { it.roomModelToEntity() }
+        }
+
+    override suspend fun listByIdList(idList: List<Int>): Result<List<TypeAccident>> =
+        call(getClassAndMethod()) {
+            val modeList = typeAccidentRoomDatasource.listByIdList(idList).getOrThrow()
+            modeList.map { it.roomModelToEntity() }
         }
 
 }

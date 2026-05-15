@@ -45,9 +45,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.lib.Errors
-import br.com.usinasantafe.cav.lib.errors
 import br.com.usinasantafe.cav.presenter.theme.AlertDialogCheckDesign
-import br.com.usinasantafe.cav.presenter.theme.AlertDialogSimpleDesign
+import br.com.usinasantafe.cav.presenter.theme.MsgErrors
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -58,8 +57,8 @@ import kotlin.collections.isNotEmpty
 @Composable
 fun LocalScreen(
     viewModel: LocalViewModel = hiltViewModel(),
-    onNavCard: () -> Unit,
-    onNavTypeLocal:  () -> Unit,
+    onNavMenu: () -> Unit,
+    onNavInputLocal:  () -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -70,15 +69,15 @@ fun LocalScreen(
                 longitude = uiState.longitude,
                 set = viewModel::set,
                 onLocalChanged = viewModel::onLocalChanged,
-                setCloseDialog = viewModel::setCloseDialog,
+                onCloseDialog = viewModel::onCloseDialog,
                 flagAccess = uiState.flagAccess,
                 flagDialog = uiState.flagDialog,
                 failure = uiState.failure,
                 errors = uiState.errors,
                 flagDialogCheck = uiState.flagDialogCheck,
                 onDialogCheck = viewModel::onDialogCheck,
-                onNavCard = onNavCard,
-                onNavTypeLocal = onNavTypeLocal,
+                onNavMenu = onNavMenu,
+                onNavTypeLocal = onNavInputLocal,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -92,14 +91,14 @@ fun LocalScreenContent(
     longitude: Double?,
     set: () -> Unit,
     onLocalChanged: (String, Double, Double) -> Unit,
-    setCloseDialog: () -> Unit,
+    onCloseDialog: () -> Unit,
     flagAccess: Boolean,
     flagDialog: Boolean,
     failure: String,
     errors: Errors,
     flagDialogCheck: Boolean,
     onDialogCheck: (Boolean) -> Unit,
-    onNavCard: () -> Unit,
+    onNavMenu: () -> Unit,
     onNavTypeLocal: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -173,19 +172,22 @@ fun LocalScreenContent(
             )
         }
 
-        Button(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 155.dp),
-            onClick = {
-                if (deviceLatLng != null) {
-                    onDialogCheck(true)
-                } else {
-                    permissionLauncher.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION))
+        if(deviceLatLng != null) {
+            Button(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 155.dp)
+                    .fillMaxWidth(0.8f),
+                onClick = {
+                    if (deviceLatLng != null) {
+                        onDialogCheck(true)
+                    } else {
+                        permissionLauncher.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION))
+                    }
                 }
+            ) {
+                Text(stringResource(id = R.string.text_capture_local))
             }
-        ) {
-            Text(stringResource(id = R.string.text_capture_local))
         }
         Button(
             onClick = {
@@ -195,7 +197,8 @@ fun LocalScreenContent(
             },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 105.dp),
+                .padding(bottom = 105.dp)
+                .fillMaxWidth(0.8f),
         ) {
             Text(stringResource(id = R.string.text_local_now))
         }
@@ -203,7 +206,8 @@ fun LocalScreenContent(
         Button(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 55.dp),
+                .padding(bottom = 55.dp)
+                .fillMaxWidth(0.8f),
             onClick = onNavTypeLocal
         ) {
             Text(stringResource(id = R.string.text_type_local))
@@ -212,8 +216,9 @@ fun LocalScreenContent(
         Button(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 5.dp),
-            onClick = onNavCard
+                .padding(bottom = 5.dp)
+                .fillMaxWidth(0.8f),
+            onClick = onNavMenu
         ) {
             Text(stringResource(id = R.string.text_pattern_return))
         }
@@ -230,16 +235,14 @@ fun LocalScreenContent(
         }
 
         if(flagDialog) {
-            val text =
-                errors(errors, failure)
-            AlertDialogSimpleDesign(text = text, setCloseDialog = setCloseDialog,)
+            MsgErrors(errors, onCloseDialog, failure)
         }
 
     }
 
     LaunchedEffect(flagAccess) {
         if(flagAccess) {
-            onNavCard()
+            onNavMenu()
         }
     }
 
@@ -255,31 +258,31 @@ fun getAddressFromLocation(
 
     val formatAddress: (Address?) -> String = { addr ->
         if (addr != null) {
-            val logradouro = addr.thoroughfare ?: addr.featureName ?: "Local não identificado"
-            val numero = addr.subThoroughfare ?: "S/N"
-            val bairro = addr.subLocality ?: addr.locality ?: ""
-            val cidade = addr.subAdminArea ?: addr.adminArea ?: ""
-            "$logradouro, $numero - $bairro, $cidade"
+            val road = addr.thoroughfare ?: addr.featureName ?: ""
+            val number = addr.subThoroughfare ?: ""
+            val district = addr.subLocality ?: addr.locality ?: ""
+            val city = addr.subAdminArea ?: addr.adminArea ?: ""
+            "$road, $number - $district, $city"
         } else {
-            "Endereço não encontrado."
+            ""
         }
     }
     if (Build.VERSION_CODES.TIRAMISU <= Build.VERSION.SDK_INT) {
         geocoder.getFromLocation(lat, lng, 1, object : Geocoder.GeocodeListener {
             override fun onGeocode(addresses: MutableList<Address>) {
                 val addressText =
-                    if (addresses.isNotEmpty()) formatAddress(addresses[0]) else "Endereço não encontrado."
+                    if (addresses.isNotEmpty()) formatAddress(addresses[0]) else ""
                 onResult(addressText)
             }
 
             override fun onError(errorMessage: String?) {
-                onResult("Erro no serviço de geolocalização.")
+                onResult("")
             }
         })
     } else {
         @Suppress("DEPRECATION")
         val addresses = geocoder.getFromLocation(lat, lng, 1)
-        val addressText = if (!addresses.isNullOrEmpty()) formatAddress(addresses[0]) else "Endereço não encontrado."
+        val addressText = if (!addresses.isNullOrEmpty()) formatAddress(addresses[0]) else ""
         onResult(addressText)
     }
 }
@@ -324,14 +327,14 @@ fun LocalScreenPagePreview() {
                 longitude = 0.0,
                 set = {},
                 onLocalChanged = { _, _, _ -> },
-                setCloseDialog = {},
+                onCloseDialog = {},
                 flagAccess = false,
                 flagDialog = false,
                 failure = "",
                 errors = Errors.FIELD_EMPTY,
                 flagDialogCheck = false,
                 onDialogCheck = {},
-                onNavCard = {},
+                onNavMenu = {},
                 onNavTypeLocal = {},
                 modifier = Modifier.padding(innerPadding)
             )
