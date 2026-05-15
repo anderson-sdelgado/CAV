@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -403,12 +404,16 @@ fun CheckboxDefault(
     text: String,
     font: Int = 22,
     checked: Boolean,
+    enabled: Boolean = true,
     onChecked: (Boolean) -> Unit
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .clickable { onChecked(!checked) }
+            .then(
+                if (enabled) Modifier.clickable { onChecked(!checked) }
+                else Modifier
+            )
             .padding(10.dp)
             .testTag("item_check_box_$id")
     ) {
@@ -421,6 +426,7 @@ fun CheckboxDefault(
         Text(
             text = text,
             fontSize = font.sp,
+            color = if (enabled) Color.Unspecified else Color.Gray
         )
     }
 }

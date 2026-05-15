@@ -681,4 +681,62 @@ class IDataLocalRepositoryTest {
             )
         }
 
+    @Test
+    fun `listAllOption - Check return failure if have error in OptionDataLocalRoomDatasource listAll`() =
+        runTest {
+            whenever(
+                optionDataLocalRoomDatasource.listAll()
+            ).thenReturn(
+                resultFailure(
+                    "IOptionDataLocalRoomDatasource.listAll",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.listAllOption()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IDataLocalRepository.listAllOption -> IOptionDataLocalRoomDatasource.listAll"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `listAllOption - Check return correct if function execute successfully - room`() =
+        runTest {
+            whenever(
+                optionDataLocalRoomDatasource.listAll()
+            ).thenReturn(
+                Result.success(
+                    listOf(
+                        OptionDataLocalRoomModel(
+                            id = 1,
+                            description = "Test"
+                        )
+                    )
+                )
+            )
+            val result = repository.listAllOption()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                listOf(
+                    OptionDataLocal(
+                        id = 1,
+                        description = "Test"
+                    )
+                )
+            )
+        }
+
 }

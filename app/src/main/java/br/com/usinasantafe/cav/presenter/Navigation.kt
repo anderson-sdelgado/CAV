@@ -30,6 +30,7 @@ object Screens {
 
 object Args {
     const val OPTION_ARG = "option"
+    const val ID_ARG = "id"
 }
 
 object Routes {

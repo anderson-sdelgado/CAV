@@ -1,8 +1,8 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
-import br.com.usinasantafe.cav.domain.entities.variable.Local
-import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
-import br.com.usinasantafe.cav.presenter.model.LocalScreenModel
+import br.com.usinasantafe.cav.domain.entities.stable.OptionDataLocal
+import br.com.usinasantafe.cav.domain.repositories.stable.DataLocalRepository
+import br.com.usinasantafe.cav.presenter.model.ItemListScreenModel
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.test.runTest
 import org.mockito.Mockito.mock
@@ -10,21 +10,21 @@ import org.mockito.kotlin.whenever
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class IGetLocalTest {
+class IListOptionDataLocalTest {
 
-    private val cardRepository = mock<CardRepository>()
-    private val usecase = IGetLocal(
-        cardRepository = cardRepository
+    private val dataLocalRepository = mock<DataLocalRepository>()
+    private val usecase = IListOptionDataLocal(
+        dataLocalRepository = dataLocalRepository
     )
 
     @Test
-    fun `Check return failure if have error in CardRepository getLocal`() =
+    fun `Check return failure if have error in DataLocalRepository listAllOption`() =
         runTest {
             whenever(
-                cardRepository.getLocal()
+                dataLocalRepository.listAllOption()
             ).thenReturn(
                 resultFailure(
-                    "ICardRepository.getLocal",
+                    "IDataLocalRepository.listAllOption",
                     "-",
                     Exception()
                 )
@@ -36,7 +36,7 @@ class IGetLocalTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IGetLocal -> ICardRepository.getLocal"
+                "IListOptionDataLocal -> IDataLocalRepository.listAllOption"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -45,12 +45,12 @@ class IGetLocalTest {
         }
 
     @Test
-    fun `Check return correct if function execute successfully and Local is empty`() =
+    fun `Check return emptyList if function execute successfully and return is emptyList`() =
         runTest {
             whenever(
-                cardRepository.getLocal()
+                dataLocalRepository.listAllOption()
             ).thenReturn(
-                Result.success(Local())
+                Result.success(emptyList())
             )
             val result = usecase()
             assertEquals(
@@ -59,11 +59,7 @@ class IGetLocalTest {
             )
             assertEquals(
                 result.getOrNull()!!,
-                LocalScreenModel(
-                    address = "-",
-                    latitude = "-",
-                    longitude = "-"
-                )
+                emptyList()
             )
         }
 
@@ -71,13 +67,14 @@ class IGetLocalTest {
     fun `Check return correct if function execute successfully`() =
         runTest {
             whenever(
-                cardRepository.getLocal()
+                dataLocalRepository.listAllOption()
             ).thenReturn(
                 Result.success(
-                    Local(
-                        address = "RUA TEST",
-                        latitude = -25.0563524,
-                        longitude = -27.126546
+                    listOf(
+                        OptionDataLocal(
+                            id = 1,
+                            description = "Test"
+                        )
                     )
                 )
             )
@@ -88,10 +85,11 @@ class IGetLocalTest {
             )
             assertEquals(
                 result.getOrNull()!!,
-                LocalScreenModel(
-                    address = "RUA TEST",
-                    latitude = "-25.0563524",
-                    longitude = "-27.126546"
+                listOf(
+                    ItemListScreenModel(
+                        id = 1,
+                        description = "Test"
+                    )
                 )
             )
         }

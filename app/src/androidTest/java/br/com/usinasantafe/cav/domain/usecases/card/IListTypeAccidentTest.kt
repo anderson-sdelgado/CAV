@@ -4,7 +4,7 @@ import br.com.usinasantafe.cav.external.room.dao.stable.TypeAccidentDao
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.room.stable.TypeAccidentRoomModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxModel
+import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxScreenModel
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
@@ -71,12 +71,12 @@ class IListTypeAccidentTest {
             assertEquals(
                 result.getOrNull()!!,
                 listOf(
-                    ItemCheckBoxModel(
+                    ItemCheckBoxScreenModel(
                         id = 1,
                         desc = "TEST",
                         flag = false
                     ),
-                    ItemCheckBoxModel(
+                    ItemCheckBoxScreenModel(
                         id = 2,
                         desc = "TEST2",
                         flag = false
@@ -113,12 +113,12 @@ class IListTypeAccidentTest {
             assertEquals(
                 result.getOrNull()!!,
                 listOf(
-                    ItemCheckBoxModel(
+                    ItemCheckBoxScreenModel(
                         id = 1,
                         desc = "TEST",
                         flag = true
                     ),
-                    ItemCheckBoxModel(
+                    ItemCheckBoxScreenModel(
                         id = 2,
                         desc = "TEST2",
                         flag = false

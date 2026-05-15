@@ -3,7 +3,7 @@ package br.com.usinasantafe.cav.domain.usecases.card
 import br.com.usinasantafe.cav.domain.entities.stable.Nature
 import br.com.usinasantafe.cav.domain.repositories.stable.NatureRepository
 import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
-import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxModel
+import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxScreenModel
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.test.runTest
 import org.mockito.Mockito.mock
@@ -120,12 +120,12 @@ class IListNatureTest {
             assertEquals(
                 result.getOrNull()!!,
                 listOf(
-                    ItemCheckBoxModel(
+                    ItemCheckBoxScreenModel(
                         id = 1,
                         desc = "Test",
                         flag = true
                     ),
-                    ItemCheckBoxModel(
+                    ItemCheckBoxScreenModel(
                         id = 2,
                         desc = "Test2",
                         flag = false

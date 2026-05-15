@@ -63,4 +63,20 @@ interface CardModule {
     @Singleton
     fun bindGetLocal(usecase: IGetLocal): GetLocal
 
+    @Binds
+    @Singleton
+    fun bindListDataLocal(usecase: IListDataLocal): ListDataLocal
+
+    @Binds
+    @Singleton
+    fun bindListOptionDataLocal(usecase: IListOptionDataLocal): ListOptionDataLocal
+
+    @Binds
+    @Singleton
+    fun bindListItemDataLocal(usecase: IListItemDataLocal): ListItemDataLocal
+
+    @Binds
+    @Singleton
+    fun bindSetDataLocalList(usecase: ISetDataLocalList): SetDataLocalList
+
 }

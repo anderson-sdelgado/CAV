@@ -1,4 +1,4 @@
-package br.com.usinasantafe.cav.presenter.view.card.nature
+package br.com.usinasantafe.cav.presenter.view.card.dataLocal
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
@@ -34,8 +34,9 @@ import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
 import br.com.usinasantafe.cav.utils.UpdateStatusState
 
 @Composable
-fun NatureScreen(
-    viewModel: NatureViewModel = hiltViewModel(),
+fun ItemDataLocalScreen(
+    viewModel: ItemDataLocalViewModel = hiltViewModel(),
+    onNavOption: () -> Unit,
     onNavMenu: () -> Unit
 ) {
     CAVTheme {
@@ -47,7 +48,7 @@ fun NatureScreen(
                 viewModel.list()
             }
 
-            NatureContent(
+            ItemDataLocalContent(
                 list = list,
                 onCheckChange = viewModel::onCheckChange,
                 updateDatabase = viewModel::updateDatabase,
@@ -56,6 +57,7 @@ fun NatureScreen(
                 setCloseDialog = viewModel::setCloseDialog,
                 status = uiState.status,
                 onNavMenu = onNavMenu,
+                onNavOption = onNavOption,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -63,7 +65,7 @@ fun NatureScreen(
 }
 
 @Composable
-fun NatureContent(
+fun ItemDataLocalContent(
     list: List<ItemCheckBoxScreenModel>,
     onCheckChange: (Int, Boolean) -> Unit,
     updateDatabase: () -> Unit,
@@ -71,6 +73,7 @@ fun NatureContent(
     flagAccess: Boolean,
     setCloseDialog: () -> Unit,
     status: UpdateStatusState,
+    onNavOption: () -> Unit,
     onNavMenu: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -80,18 +83,22 @@ fun NatureContent(
     ) {
         TitleDesign(
             text = stringResource(
-                id = R.string.text_nature
+                id = R.string.text_item_data_local
             )
         )
         LazyColumn(
             modifier = Modifier.weight(1f),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+            val hasAnyItemSelected = list.any { it.flag }
+
             items(list, key = { it.id }) { item ->
+                val isEnabled = item.flag || !hasAnyItemSelected
                 CheckboxDefault(
                     id = item.id,
                     text = item.desc,
                     checked = item.flag,
+                    enabled = isEnabled,
                     onChecked = { isChecked ->
                         onCheckChange(item.id, isChecked)
                     }
@@ -152,10 +159,10 @@ fun NatureContent(
 
 @Preview(showBackground = true)
 @Composable
-fun NaturePagePreview() {
+fun ItemDataLocalPagePreview() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            NatureContent(
+            ItemDataLocalContent(
                 list = emptyList(),
                 onCheckChange = { _, _ -> },
                 updateDatabase = {},
@@ -173,61 +180,7 @@ fun NaturePagePreview() {
                     currentProgress = 0f,
                 ),
                 onNavMenu = {},
-                modifier = Modifier.padding(innerPadding)
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun NaturePagePreviewWithList() {
-    CAVTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            NatureContent(
-                list = listOf(
-                    ItemCheckBoxScreenModel(
-                        id = 1,
-                        desc = "ACIDENTE",
-                        flag = false
-                    ),
-                    ItemCheckBoxScreenModel(
-                        id = 2,
-                        desc = "PANE",
-                        flag = false
-                    ),
-                    ItemCheckBoxScreenModel(
-                        id = 3,
-                        desc = "AUX. SINAL.",
-                        flag = false
-                    ),
-                    ItemCheckBoxScreenModel(
-                        id = 4,
-                        desc = "AUX. OBRAS",
-                        flag = false
-                    ),
-                    ItemCheckBoxScreenModel(
-                        id = 5,
-                        desc = "ANIMAIS",
-                        flag = false
-                    )
-                ),
-                onCheckChange = { _, _ -> },
-                updateDatabase = {},
-                save = {},
-                flagAccess = false,
-                setCloseDialog = {},
-                status = UpdateStatusState(
-                    flagDialog = false,
-                    flagFailure = false,
-                    errors = Errors.FIELD_EMPTY,
-                    failure = "",
-                    flagProgress = false,
-                    levelUpdate = null,
-                    tableUpdate = "",
-                    currentProgress = 0f,
-                ),
-                onNavMenu = {},
+                onNavOption = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

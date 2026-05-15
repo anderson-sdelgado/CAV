@@ -6,9 +6,8 @@ import androidx.lifecycle.viewModelScope
 import br.com.usinasantafe.cav.domain.usecases.card.ListTypeAccident
 import br.com.usinasantafe.cav.domain.usecases.card.SetTypeAccidentList
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableTypeAccident
-import br.com.usinasantafe.cav.lib.Errors
-import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxModel
-import br.com.usinasantafe.cav.presenter.view.card.nature.NatureState
+import br.com.usinasantafe.cav.lib.LevelUpdate
+import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxScreenModel
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
 import br.com.usinasantafe.cav.utils.UpdateStatusState
 import br.com.usinasantafe.cav.utils.executeUpdateSteps
@@ -40,7 +39,7 @@ class TypeAccidentViewModel @Inject constructor(
     private val setTypeAccidentList: SetTypeAccidentList
 ) : ViewModel() {
 
-    val list = mutableStateListOf<ItemCheckBoxModel>()
+    val list = mutableStateListOf<ItemCheckBoxScreenModel>()
 
     private val _uiState = MutableStateFlow(TypeAccidentState())
     val uiState = _uiState.asStateFlow()
@@ -78,10 +77,11 @@ class TypeAccidentViewModel @Inject constructor(
     }
 
     fun updateDatabase() = viewModelScope.launch {
-        viewModelScope.launch {
-            updateAllDatabase().collect { stateUpdate ->
-                _uiState.value = stateUpdate
-            }
+        updateAllDatabase().collect { stateUpdate ->
+            _uiState.value = stateUpdate
+        }
+        if (_uiState.value.status.levelUpdate == LevelUpdate.FINISH_UPDATE_COMPLETED) {
+            list()
         }
     }
 

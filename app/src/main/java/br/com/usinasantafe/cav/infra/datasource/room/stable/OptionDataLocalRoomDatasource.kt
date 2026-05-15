@@ -7,4 +7,5 @@ interface OptionDataLocalRoomDatasource {
     suspend fun addAll(list: List<OptionDataLocalRoomModel>): EmptyResult
     suspend fun deleteAll(): EmptyResult
     suspend fun getDescById(id: Int): Result<String>
+    suspend fun listAll(): Result<List<OptionDataLocalRoomModel>>
 }

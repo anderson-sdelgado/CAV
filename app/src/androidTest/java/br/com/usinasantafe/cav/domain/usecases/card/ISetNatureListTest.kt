@@ -2,7 +2,7 @@ package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxModel
+import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxScreenModel
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
@@ -49,17 +49,17 @@ class ISetNatureListTest {
             )
             val result = usecase(
                 listOf(
-                    ItemCheckBoxModel(
+                    ItemCheckBoxScreenModel(
                         id = 3,
                         desc = "Test3",
                         flag = true
                     ),
-                    ItemCheckBoxModel(
+                    ItemCheckBoxScreenModel(
                         id = 4,
                         desc = "Test4",
                         flag = false
                     ),
-                    ItemCheckBoxModel(
+                    ItemCheckBoxScreenModel(
                         id = 5,
                         desc = "Test5",
                         flag = true

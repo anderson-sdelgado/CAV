@@ -79,4 +79,6 @@
     <string name="text_address">ENDEREÇO: </string>
     <string name="text_latitude">LATITUDE: </string>
     <string name="text_longitude">LATITUDE: </string>
+    <string name="text_option_data_local">OPÇÃO</string>
+    <string name="text_item_data_local">ITEM</string>
 </resources>

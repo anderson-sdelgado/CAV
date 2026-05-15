@@ -95,4 +95,10 @@ class IDataLocalRepository @Inject constructor(
             optionDataLocalRoomDatasource.getDescById(id).getOrThrow()
         }
 
+    override suspend fun listAllOption(): Result<List<OptionDataLocal>> =
+        call(getClassAndMethod()) {
+            val modelList = optionDataLocalRoomDatasource.listAll().getOrThrow()
+            modelList.map { it.roomModelToEntity() }
+        }
+
 }

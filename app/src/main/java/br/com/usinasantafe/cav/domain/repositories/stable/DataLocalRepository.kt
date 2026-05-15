@@ -19,4 +19,5 @@ interface DataLocalRepository {
     suspend fun getROptionItemById(id: Int): Result<ROptionItemDataLocal>
     suspend fun getDescItemById(id: Int): Result<String>
     suspend fun getDescOptionById(id: Int): Result<String>
+    suspend fun listAllOption(): Result<List<OptionDataLocal>>
 }

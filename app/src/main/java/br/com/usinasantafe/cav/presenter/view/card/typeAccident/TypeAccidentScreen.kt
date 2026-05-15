@@ -23,7 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.lib.Errors
-import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxModel
+import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxScreenModel
 import br.com.usinasantafe.cav.presenter.theme.ButtonMaxWidth
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
@@ -64,7 +64,7 @@ fun TypeAccidentScreen(
 
 @Composable
 fun TypeAccidentContent(
-    list: List<ItemCheckBoxModel>,
+    list: List<ItemCheckBoxScreenModel>,
     onCheckChange: (Int, Boolean) -> Unit,
     updateDatabase: () -> Unit,
     save: () -> Unit,
@@ -98,6 +98,9 @@ fun TypeAccidentContent(
                 )
             }
         }
+
+        ButtonMaxWidth(R.string.text_pattern_update) { updateDatabase() }
+        Spacer(modifier = Modifier.padding(vertical = 4.dp))
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -122,9 +125,6 @@ fun TypeAccidentContent(
                 )
             }
         }
-        Spacer(modifier = Modifier.padding(vertical = 4.dp))
-
-        ButtonMaxWidth(R.string.text_pattern_update) { updateDatabase() }
 
         BackHandler {}
 
@@ -181,27 +181,27 @@ fun TypeAccidentPagePreviewWithList() {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             TypeAccidentContent(
                 list = listOf(
-                    ItemCheckBoxModel(
+                    ItemCheckBoxScreenModel(
                         id = 1,
                         desc = "ATROP. PEDESTRE",
                         flag = false
                     ),
-                    ItemCheckBoxModel(
+                    ItemCheckBoxScreenModel(
                         id = 2,
                         desc = "ATROP. ANIMAL",
                         flag = false
                     ),
-                    ItemCheckBoxModel(
+                    ItemCheckBoxScreenModel(
                         id = 3,
                         desc = "ATROP. CICLISTA",
                         flag = false
                     ),
-                    ItemCheckBoxModel(
+                    ItemCheckBoxScreenModel(
                         id = 4,
                         desc = "COLISÃO TRASEIRA",
                         flag = false
                     ),
-                    ItemCheckBoxModel(
+                    ItemCheckBoxScreenModel(
                         id = 5,
                         desc = "COLISÃO LATERAL",
                         flag = false

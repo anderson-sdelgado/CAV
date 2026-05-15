@@ -15,7 +15,7 @@ interface OptionDataLocalDao {
     @Query("DELETE FROM $TB_OPTION_DATA_LOCAL")
     suspend fun deleteAll()
 
-    @Query("SELECT * FROM $TB_OPTION_DATA_LOCAL")
+    @Query("SELECT * FROM $TB_OPTION_DATA_LOCAL ORDER BY 1")
     suspend fun all(): List<OptionDataLocalRoomModel>
 
     @Query("SELECT description FROM $TB_OPTION_DATA_LOCAL WHERE id = :id")

@@ -199,4 +199,45 @@ class IOptionDataLocalRoomDatasourceTest {
                 "Option 1"
             )
         }
+
+    @Test
+    fun `listAll - Check return emptyList if not have data`() =
+        runTest {
+            val result = datasource.listAll()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                emptyList()
+            )
+        }
+
+    @Test
+    fun `listAll - Check return list if have data`() =
+        runTest {
+            optionDataLocalDao.insertAll(
+                listOf(
+                    OptionDataLocalRoomModel(
+                        id = 1,
+                        description = "Test"
+                    )
+                )
+            )
+            val result = datasource.listAll()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                listOf(
+                    OptionDataLocalRoomModel(
+                        id = 1,
+                        description = "Test"
+                    )
+                )
+            )
+        }
 }

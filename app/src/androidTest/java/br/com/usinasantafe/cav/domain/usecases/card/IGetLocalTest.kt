@@ -3,7 +3,7 @@ package br.com.usinasantafe.cav.domain.usecases.card
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.LocalSharedPreferencesModel
-import br.com.usinasantafe.cav.presenter.model.LocalViewModel
+import br.com.usinasantafe.cav.presenter.model.LocalScreenModel
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
@@ -40,7 +40,7 @@ class IGetLocalTest {
             )
             assertEquals(
                 result.getOrNull()!!,
-                LocalViewModel(
+                LocalScreenModel(
                     address = "",
                     longitude = "",
                     latitude = ""
@@ -67,7 +67,7 @@ class IGetLocalTest {
             )
             assertEquals(
                 result.getOrNull()!!,
-                LocalViewModel(
+                LocalScreenModel(
                     address = "Test",
                     longitude = "25.6895",
                     latitude = "27.5963"

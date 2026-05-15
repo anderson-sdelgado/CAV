@@ -29,4 +29,9 @@ class IOptionDataLocalRoomDatasource @Inject constructor(
             optionDataLocalDao.getDescById(id).required("desc")
         }
 
+    override suspend fun listAll(): Result<List<OptionDataLocalRoomModel>> =
+        result(getClassAndMethod()) {
+            optionDataLocalDao.all()
+        }
+
 }

@@ -6,7 +6,7 @@ import br.com.usinasantafe.cav.domain.usecases.card.SetNatureList
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableNature
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.LevelUpdate
-import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxModel
+import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxScreenModel
 import br.com.usinasantafe.cav.utils.UpdateStatusState
 import br.com.usinasantafe.cav.utils.percentage
 import br.com.usinasantafe.cav.utils.resultFailure
@@ -75,7 +75,7 @@ class NatureViewModelTest {
             ).thenReturn(
                 Result.success(
                     listOf(
-                        ItemCheckBoxModel(
+                        ItemCheckBoxScreenModel(
                             id = 1,
                             desc = "Test",
                             flag = false
@@ -92,7 +92,7 @@ class NatureViewModelTest {
             assertEquals(
                 list,
                 listOf(
-                    ItemCheckBoxModel(
+                    ItemCheckBoxScreenModel(
                         id = 1,
                         desc = "Test",
                         flag = false
@@ -250,12 +250,12 @@ class NatureViewModelTest {
     fun `onCheckChange - Check altered data`() =
         runTest {
             val listBefore = listOf(
-                ItemCheckBoxModel(
+                ItemCheckBoxScreenModel(
                     id = 1,
                     desc = "Test",
                     flag = false
                 ),
-                ItemCheckBoxModel(
+                ItemCheckBoxScreenModel(
                     id = 2,
                     desc = "Test2",
                     flag = false
@@ -271,12 +271,12 @@ class NatureViewModelTest {
             assertEquals(
                 listAfter,
                 listOf(
-                    ItemCheckBoxModel(
+                    ItemCheckBoxScreenModel(
                         id = 1,
                         desc = "Test",
                         flag = false
                     ),
-                    ItemCheckBoxModel(
+                    ItemCheckBoxScreenModel(
                         id = 2,
                         desc = "Test2",
                         flag = true
@@ -289,7 +289,7 @@ class NatureViewModelTest {
     fun `save - Check return failure if have error in SetListNature`() =
         runTest {
             val list = listOf(
-                ItemCheckBoxModel(
+                ItemCheckBoxScreenModel(
                     id = 1,
                     desc = "Test",
                     flag = false
@@ -328,7 +328,7 @@ class NatureViewModelTest {
     fun `save - Check return true if SetListNature execute successfully`() =
         runTest {
             val list = listOf(
-                ItemCheckBoxModel(
+                ItemCheckBoxScreenModel(
                     id = 1,
                     desc = "Test",
                     flag = false
