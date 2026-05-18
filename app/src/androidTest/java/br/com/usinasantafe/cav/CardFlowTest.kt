@@ -8,15 +8,22 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.core.app.ActivityScenario
 import androidx.test.rule.GrantPermissionRule
+import br.com.usinasantafe.cav.domain.entities.stable.OptionDataLocal
 import br.com.usinasantafe.cav.external.room.dao.stable.ColabDao
 import br.com.usinasantafe.cav.external.room.dao.stable.EquipDao
 import br.com.usinasantafe.cav.external.room.dao.stable.NatureDao
+import br.com.usinasantafe.cav.external.room.dao.stable.DataLocalDao
+import br.com.usinasantafe.cav.external.room.dao.stable.ItemDataLocalDao
+import br.com.usinasantafe.cav.external.room.dao.stable.OptionDataLocalDao
 import br.com.usinasantafe.cav.external.room.dao.stable.TypeAccidentDao
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.ConfigSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.room.stable.ColabRoomModel
+import br.com.usinasantafe.cav.infra.models.room.stable.DataLocalRoomModel
 import br.com.usinasantafe.cav.infra.models.room.stable.EquipRoomModel
+import br.com.usinasantafe.cav.infra.models.room.stable.ItemDataLocalRoomModel
 import br.com.usinasantafe.cav.infra.models.room.stable.NatureRoomModel
+import br.com.usinasantafe.cav.infra.models.room.stable.OptionDataLocalRoomModel
 import br.com.usinasantafe.cav.infra.models.room.stable.TypeAccidentRoomModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.ConfigSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.StatusSend
@@ -26,8 +33,11 @@ import br.com.usinasantafe.cav.presenter.view.card.menu.TAG_CAR_EDIT_BUTTON
 import br.com.usinasantafe.cav.presenter.view.card.menu.TAG_LOCAL_EDIT_BUTTON
 import br.com.usinasantafe.cav.presenter.view.card.menu.TAG_NATURE_EDIT_BUTTON
 import br.com.usinasantafe.cav.presenter.view.card.menu.TAG_TYPE_ACCIDENT_EDIT_BUTTON
-import br.com.usinasantafe.cav.utils.natureList
 import br.com.usinasantafe.cav.utils.typeAccidentList
+import br.com.usinasantafe.cav.utils.dataLocalList
+import br.com.usinasantafe.cav.utils.itemDataLocalList
+import br.com.usinasantafe.cav.utils.natureList
+import br.com.usinasantafe.cav.utils.optionDataLocalList
 import br.com.usinasantafe.cav.utils.waitUntilTimeout
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -73,6 +83,15 @@ class CardFlowTest {
 
     @Inject
     lateinit var typeAccidentDao: TypeAccidentDao
+
+    @Inject
+    lateinit var dataLocalDao: DataLocalDao
+
+    @Inject
+    lateinit var optionDataLocalDao: OptionDataLocalDao
+
+    @Inject
+    lateinit var itemDataLocalDao: ItemDataLocalDao
 
     @Before
     fun setup() {
@@ -133,6 +152,7 @@ class CardFlowTest {
             Log.d("TestDebug", "Position 5")
 
             composeTestRule.waitUntilTimeout(3_000)
+
 
             val resultCardAttendant = cardSharedPreferencesDatasource.get()
             assertEquals(
@@ -458,6 +478,8 @@ class CardFlowTest {
 
     private suspend fun initialRegister() {
 
+        cardSharedPreferencesDatasource.clear()
+
         configSharedPreferencesDatasource.save(
             ConfigSharedPreferencesModel(
                 number = 16997417840,
@@ -506,6 +528,18 @@ class CardFlowTest {
         val typeAccidentType = object : TypeToken<List<TypeAccidentRoomModel>>() {}.type
         val typeAccidentList = gson.fromJson<List<TypeAccidentRoomModel>>(typeAccidentList, typeAccidentType)
         typeAccidentDao.insertAll(typeAccidentList)
+
+        val dataLocalType = object : TypeToken<List<DataLocalRoomModel>>() {}.type
+        val dataLocalList = gson.fromJson<List<DataLocalRoomModel>>(dataLocalList, dataLocalType)
+        dataLocalDao.insertAll(dataLocalList)
+
+        val optionDataLocalType = object : TypeToken<List<OptionDataLocalRoomModel>>() {}.type
+        val optionDataLocalList = gson.fromJson<List<OptionDataLocalRoomModel>>(optionDataLocalList, optionDataLocalType)
+        optionDataLocalDao.insertAll(optionDataLocalList)
+
+        val itemDataLocalType = object : TypeToken<List<ItemDataLocalRoomModel>>() {}.type
+        val itemDataLocalList = gson.fromJson<List<ItemDataLocalRoomModel>>(itemDataLocalList, itemDataLocalType)
+        itemDataLocalDao.insertAll(itemDataLocalList)
 
     }
 

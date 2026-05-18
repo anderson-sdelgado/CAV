@@ -13,6 +13,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,6 +50,11 @@ fun LocalSupportScreen(
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+            LaunchedEffect(Unit) {
+                viewModel.recoverData()
+            }
+
             LocalSupportContent(
                 address = uiState.address,
                 latitude = uiState.latitude,
@@ -256,13 +262,19 @@ fun LocalSupportContent(
                 onClick = onNavDataInitial,
                 modifier = Modifier.weight(1f)
             ) {
-                TextButtonDesign(text = stringResource(id = R.string.text_pattern_return))
+                TextButtonDesign(
+                    text = stringResource(id = R.string.text_pattern_return),
+                    font = 18
+                )
             }
             Button(
                 onClick = {},
                 modifier = Modifier.weight(1f),
             ) {
-                TextButtonDesign(text = stringResource(id = R.string.text_pattern_next))
+                TextButtonDesign(
+                    text = stringResource(id = R.string.text_pattern_next),
+                    font = 18
+                )
             }
         }
     }

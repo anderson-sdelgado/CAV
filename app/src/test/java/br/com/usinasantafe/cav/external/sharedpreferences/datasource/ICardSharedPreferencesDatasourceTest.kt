@@ -472,4 +472,40 @@ class ICardSharedPreferencesDatasourceTest {
             )
         }
 
+    @Test
+    fun `setIdDataLocalList - Check alter data correct in SharedPreferences internal`() =
+        runTest {
+            val data = CardSharedPreferencesModel(
+                idDataLocalList = listOf(1, 2)
+            )
+            datasource.save(data)
+            val resultGetBefore = datasource.get()
+            assertEquals(
+                resultGetBefore.isSuccess,
+                true
+            )
+            val modelBefore = resultGetBefore.getOrNull()!!
+            val listBefore = modelBefore.idDataLocalList
+            assertEquals(
+                listBefore,
+                listOf(1, 2)
+            )
+            val result = datasource.setIdDataLocalList(listOf(3, 4))
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            val resultGetAfter = datasource.get()
+            assertEquals(
+                resultGetAfter.isSuccess,
+                true
+            )
+            val modelAfter= resultGetAfter.getOrNull()!!
+            val listAfter= modelAfter.idDataLocalList
+            assertEquals(
+                listAfter,
+                listOf(3, 4)
+            )
+        }
+
 }

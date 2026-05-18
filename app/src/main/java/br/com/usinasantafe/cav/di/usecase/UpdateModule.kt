@@ -33,7 +33,7 @@ interface UpdateModule {
 
     @Binds
     @Singleton
-    fun bindUpdateTableROptionItemDataLocal(usecase: IUpdateTableROptionItemDataLocal): UpdateTableROptionItemDataLocal
+    fun bindUpdateTableROptionItemDataLocal(usecase: IUpdateTableDataLocal): UpdateTableDataLocal
 
     @Binds
     @Singleton

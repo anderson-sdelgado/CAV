@@ -20,4 +20,8 @@ interface ItemDataLocalDao {
 
     @Query("SELECT description FROM $TB_ITEM_DATA_LOCAL WHERE id = :id")
     suspend fun getDescById(id: Int): String?
+
+    @Query("SELECT * FROM $TB_ITEM_DATA_LOCAL WHERE id in (:idList)")
+    suspend fun listByIdList(idList: List<Int>): List<ItemDataLocalRoomModel>
+
 }

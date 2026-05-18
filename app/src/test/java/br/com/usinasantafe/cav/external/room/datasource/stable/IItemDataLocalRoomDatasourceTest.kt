@@ -200,4 +200,69 @@ class IItemDataLocalRoomDatasourceTest {
                 "Item 1"
             )
         }
+
+    @Test
+    fun `listByIdList - Check return emptyList if not have data fielded`() =
+        runTest {
+            val result = datasource.listByIdList(listOf(1, 2))
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                emptyList()
+            )
+        }
+
+    @Test
+    fun `listByIdList - Check return correct if have data fielded`() =
+        runTest {
+            itemDataLocalDao.insertAll(
+                listOf(
+                    ItemDataLocalRoomModel(
+                        id = 1,
+                        description = "ITEM 1"
+                    ),
+                    ItemDataLocalRoomModel(
+                        id = 2,
+                        description = "ITEM 2"
+                    ),
+                    ItemDataLocalRoomModel(
+                        id = 3,
+                        description = "ITEM 3"
+                    ),
+                    ItemDataLocalRoomModel(
+                        id = 4,
+                        description = "ITEM 4"
+                    ),
+                    ItemDataLocalRoomModel(
+                        id = 5,
+                        description = "ITEM 5"
+                    )
+                )
+            )
+            val result = datasource.listByIdList(listOf(2, 4, 5))
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                listOf(
+                    ItemDataLocalRoomModel(
+                        id = 2,
+                        description = "ITEM 2"
+                    ),
+                    ItemDataLocalRoomModel(
+                        id = 4,
+                        description = "ITEM 4"
+                    ),
+                    ItemDataLocalRoomModel(
+                        id = 5,
+                        description = "ITEM 5"
+                    )
+                )
+            )
+        }
 }

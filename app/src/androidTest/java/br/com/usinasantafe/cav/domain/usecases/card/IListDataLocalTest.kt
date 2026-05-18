@@ -2,11 +2,11 @@ package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.external.room.dao.stable.ItemDataLocalDao
 import br.com.usinasantafe.cav.external.room.dao.stable.OptionDataLocalDao
-import br.com.usinasantafe.cav.external.room.dao.stable.ROptionItemDataLocalDao
+import br.com.usinasantafe.cav.external.room.dao.stable.DataLocalDao
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.room.stable.ItemDataLocalRoomModel
 import br.com.usinasantafe.cav.infra.models.room.stable.OptionDataLocalRoomModel
-import br.com.usinasantafe.cav.infra.models.room.stable.ROptionItemDataLocalRoomModel
+import br.com.usinasantafe.cav.infra.models.room.stable.DataLocalRoomModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -30,7 +30,7 @@ class IListDataLocalTest {
     lateinit var cardSharedPreferencesDatasource: ICardSharedPreferencesDatasource
 
     @Inject
-    lateinit var rOptionItemDataLocalDao: ROptionItemDataLocalDao
+    lateinit var dataLocalDao: DataLocalDao
 
     @Inject
     lateinit var optionDataLocalDao: OptionDataLocalDao
@@ -88,13 +88,13 @@ class IListDataLocalTest {
                     idDataLocalList = listOf(1, 2)
                 )
             )
-            rOptionItemDataLocalDao.insertAll(
+            dataLocalDao.insertAll(
                 listOf(
-                    ROptionItemDataLocalRoomModel(
+                    DataLocalRoomModel(
                         id = 1,
                         idOption = 1,
                         idItem = 2,
-                    ),ROptionItemDataLocalRoomModel(
+                    ),DataLocalRoomModel(
                         id = 2,
                         idOption = 3,
                         idItem = 4,
@@ -124,13 +124,13 @@ class IListDataLocalTest {
                     idDataLocalList = listOf(1, 2)
                 )
             )
-            rOptionItemDataLocalDao.insertAll(
+            dataLocalDao.insertAll(
                 listOf(
-                    ROptionItemDataLocalRoomModel(
+                    DataLocalRoomModel(
                         id = 1,
                         idOption = 1,
                         idItem = 2,
-                    ),ROptionItemDataLocalRoomModel(
+                    ),DataLocalRoomModel(
                         id = 2,
                         idOption = 3,
                         idItem = 4,
@@ -172,13 +172,13 @@ class IListDataLocalTest {
                     idDataLocalList = listOf(1, 2)
                 )
             )
-            rOptionItemDataLocalDao.insertAll(
+            dataLocalDao.insertAll(
                 listOf(
-                    ROptionItemDataLocalRoomModel(
+                    DataLocalRoomModel(
                         id = 1,
                         idOption = 1,
                         idItem = 2,
-                    ),ROptionItemDataLocalRoomModel(
+                    ),DataLocalRoomModel(
                         id = 2,
                         idOption = 3,
                         idItem = 4,

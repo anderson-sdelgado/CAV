@@ -1,7 +1,7 @@
 package br.com.usinasantafe.cav.domain.usecases.update
 
 import br.com.usinasantafe.cav.di.provider.BaseUrlModuleTest
-import br.com.usinasantafe.cav.external.room.dao.stable.ROptionItemDataLocalDao
+import br.com.usinasantafe.cav.external.room.dao.stable.DataLocalDao
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.ConfigSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.ConfigSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.Errors
@@ -20,19 +20,19 @@ import javax.inject.Inject
 import kotlin.test.assertEquals
 
 @HiltAndroidTest
-class IUpdateTableROptionItemDataLocalTest {
+class IUpdateTableDataLocalTest {
 
     @get:Rule
     val hiltRule = HiltAndroidRule(this)
 
     @Inject
-    lateinit var usecase: UpdateTableROptionItemDataLocal
+    lateinit var usecase: UpdateTableDataLocal
 
     @Inject
     lateinit var configSharedPreferencesDatasource: ConfigSharedPreferencesDatasource
 
     @Inject
-    lateinit var rOptionItemDataLocalDao: ROptionItemDataLocalDao
+    lateinit var dataLocalDao: DataLocalDao
 
     @Test
     fun check_return_failure_if_not_have_data_config_internal() =
@@ -330,7 +330,7 @@ class IUpdateTableROptionItemDataLocalTest {
                     currentProgress = updatePercentage(++pos, 1f, 16f)
                 )
             )
-            val modelList = rOptionItemDataLocalDao.all()
+            val modelList = dataLocalDao.all()
             assertEquals(
                 modelList.size,
                 2

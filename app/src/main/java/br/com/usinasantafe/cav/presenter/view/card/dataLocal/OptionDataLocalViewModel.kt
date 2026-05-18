@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import br.com.usinasantafe.cav.domain.usecases.card.ListOptionDataLocal
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableItemDataLocal
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableOptionDataLocal
-import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableROptionItemDataLocal
+import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableDataLocal
 import br.com.usinasantafe.cav.lib.LevelUpdate
 import br.com.usinasantafe.cav.presenter.model.ItemListScreenModel
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
@@ -39,7 +39,7 @@ class OptionDataLocalViewModel @Inject constructor(
     private val listOptionDataLocal: ListOptionDataLocal,
     private val updateTableItemDataLocal: UpdateTableItemDataLocal,
     private val updateTableOptionDataLocal: UpdateTableOptionDataLocal,
-    private val updateTableROptionItemDataLocal: UpdateTableROptionItemDataLocal,
+    private val updateTableDataLocal: UpdateTableDataLocal,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(OptionDataLocalState())
@@ -83,7 +83,7 @@ class OptionDataLocalViewModel @Inject constructor(
         var count = 0f
         list.add(updateTableItemDataLocal(sizeAll, ++count))
         list.add(updateTableOptionDataLocal(sizeAll, ++count))
-        list.add(updateTableROptionItemDataLocal(sizeAll, ++count))
+        list.add(updateTableDataLocal(sizeAll, ++count))
         return list
     }
 }

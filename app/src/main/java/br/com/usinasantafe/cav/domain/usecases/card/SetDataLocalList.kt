@@ -1,5 +1,7 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
+import br.com.usinasantafe.cav.domain.repositories.stable.DataLocalRepository
+import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxScreenModel
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -13,6 +15,8 @@ interface SetDataLocalList {
 }
 
 class ISetDataLocalList @Inject constructor(
+    private val dataLocalRepository: DataLocalRepository,
+    private val cardRepository: CardRepository
 ): SetDataLocalList {
 
     override suspend fun invoke(
@@ -20,7 +24,14 @@ class ISetDataLocalList @Inject constructor(
         list: List<ItemCheckBoxScreenModel>
     ): Result<Unit> =
         call(getClassAndMethod()) {
-            TODO("Not yet implemented")
+            val rOptionItemDataLocalList = dataLocalRepository.listROptionItemByIdOption(idOption).getOrThrow()
+            val idDataLocalNoteList = cardRepository.listIdDataLocal().getOrThrow()
+            val idDataLocalDBList = rOptionItemDataLocalList.map { it.id }
+            val idDataLocalDBSet = idDataLocalDBList.toSet()
+            val idDataLocalCleanList = idDataLocalNoteList.filterNot{ idDataLocalDBSet.contains(it) }
+            val idDataLocalCheckList = list.filter { it.flag }.map { it.id }
+            val idDataLocalFinishList = idDataLocalCleanList + idDataLocalCheckList
+            cardRepository.setIdDataLocalList(idDataLocalFinishList).getOrThrow()
         }
 
 }

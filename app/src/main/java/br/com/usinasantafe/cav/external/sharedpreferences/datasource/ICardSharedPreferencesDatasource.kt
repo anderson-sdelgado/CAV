@@ -127,4 +127,11 @@ class ICardSharedPreferencesDatasource @Inject constructor(
             get().getOrThrow().idDataLocalList
         }
 
+    override suspend fun setIdDataLocalList(idList: List<Int>): EmptyResult =
+        result(getClassAndMethod()) {
+            val mainModel = get().getOrThrow()
+            mainModel.idDataLocalList = idList
+            save(mainModel).getOrThrow()
+        }
+
 }

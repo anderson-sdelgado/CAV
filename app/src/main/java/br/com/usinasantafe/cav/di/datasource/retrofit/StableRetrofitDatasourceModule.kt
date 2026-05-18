@@ -34,7 +34,7 @@ interface StableRetrofitDatasourceModule {
 
     @Binds
     @Singleton
-    fun bindROptionItemDataLocalRetrofitDatasource(datasource: IROptionItemDataLocalRetrofitDatasource): ROptionItemDataLocalRetrofitDatasource
+    fun bindROptionItemDataLocalRetrofitDatasource(datasource: IROptionItemDataLocalRetrofitDatasource): DataLocalRetrofitDatasource
 
     @Binds
     @Singleton

@@ -1,16 +1,16 @@
 package br.com.usinasantafe.cav.infra.models.retrofit.stable
 
-import br.com.usinasantafe.cav.domain.entities.stable.ROptionItemDataLocal
+import br.com.usinasantafe.cav.domain.entities.stable.DataLocal
 
-data class ROptionItemDataLocalRetrofitModel(
+data class DataLocalRetrofitModel(
     val id: Int,
     val idOption: Int,
     val idItem: Int
 )
 
-fun ROptionItemDataLocalRetrofitModel.retrofitModelToEntity(): ROptionItemDataLocal {
+fun DataLocalRetrofitModel.retrofitModelToEntity(): DataLocal {
     return with(this) {
-        ROptionItemDataLocal(
+        DataLocal(
             id = id,
             idOption = idOption,
             idItem = idItem

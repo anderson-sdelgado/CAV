@@ -28,4 +28,9 @@ class IItemDataLocalRoomDatasource @Inject constructor(
             itemDataLocalDao.getDescById(id).required("desc")
         }
 
+    override suspend fun listByIdList(idList: List<Int>): Result<List<ItemDataLocalRoomModel>> =
+        result(getClassAndMethod()) {
+            itemDataLocalDao.listByIdList(idList)
+        }
+
 }

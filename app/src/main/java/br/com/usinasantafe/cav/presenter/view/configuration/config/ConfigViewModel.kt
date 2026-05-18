@@ -11,7 +11,7 @@ import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableEquip
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableItemDataLocal
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableNature
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableOptionDataLocal
-import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableROptionItemDataLocal
+import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableDataLocal
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableSupportTeams
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableTypeAccident
 import br.com.usinasantafe.cav.lib.Errors
@@ -59,7 +59,7 @@ class ConfigViewModel @Inject constructor(
     private val updateTableItemDataLocal: UpdateTableItemDataLocal,
     private val updateTableNature: UpdateTableNature,
     private val updateTableOptionDataLocal: UpdateTableOptionDataLocal,
-    private val updateTableROptionItemDataLocal: UpdateTableROptionItemDataLocal,
+    private val updateTableDataLocal: UpdateTableDataLocal,
     private val updateTableSupportTeams: UpdateTableSupportTeams,
     private val updateTableTypeAccess: UpdateTableTypeAccident
 ) : ViewModel() {
@@ -196,7 +196,7 @@ class ConfigViewModel @Inject constructor(
         list.add(updateTableItemDataLocal(sizeAll, ++count))
         list.add(updateTableNature(sizeAll, ++count))
         list.add(updateTableOptionDataLocal(sizeAll, ++count))
-        list.add(updateTableROptionItemDataLocal(sizeAll, ++count))
+        list.add(updateTableDataLocal(sizeAll, ++count))
         list.add(updateTableSupportTeams(sizeAll, ++count))
         list.add(updateTableTypeAccess(sizeAll, ++count))
         return list

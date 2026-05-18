@@ -8,11 +8,9 @@ import br.com.usinasantafe.cav.domain.usecases.card.ListItemDataLocal
 import br.com.usinasantafe.cav.domain.usecases.card.SetDataLocalList
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableItemDataLocal
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableOptionDataLocal
-import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableROptionItemDataLocal
+import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableDataLocal
 import br.com.usinasantafe.cav.lib.LevelUpdate
-import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.presenter.Args.ID_ARG
-import br.com.usinasantafe.cav.presenter.Args.OPTION_ARG
 import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxScreenModel
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
 import br.com.usinasantafe.cav.utils.UpdateStatusState
@@ -45,7 +43,7 @@ class ItemDataLocalViewModel @Inject constructor(
     private val listItemDataLocal: ListItemDataLocal,
     private val updateTableItemDataLocal: UpdateTableItemDataLocal,
     private val updateTableOptionDataLocal: UpdateTableOptionDataLocal,
-    private val updateTableROptionItemDataLocal: UpdateTableROptionItemDataLocal,
+    private val updateTableDataLocal: UpdateTableDataLocal,
     private val setDataLocalList: SetDataLocalList
 ) : ViewModel() {
 
@@ -117,7 +115,7 @@ class ItemDataLocalViewModel @Inject constructor(
         var count = 0f
         list.add(updateTableItemDataLocal(sizeAll, ++count))
         list.add(updateTableOptionDataLocal(sizeAll, ++count))
-        list.add(updateTableROptionItemDataLocal(sizeAll, ++count))
+        list.add(updateTableDataLocal(sizeAll, ++count))
         return list
     }
 }

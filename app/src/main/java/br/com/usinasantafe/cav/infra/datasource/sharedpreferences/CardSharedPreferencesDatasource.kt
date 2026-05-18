@@ -18,4 +18,5 @@ interface CardSharedPreferencesDatasource {
     suspend fun has(): Result<Boolean>
     suspend fun getLocal(): Result<LocalSharedPreferencesModel>
     suspend fun listIdDataLocal(): Result<List<Int>>
+    suspend fun setIdDataLocalList(idList: List<Int>): EmptyResult
 }

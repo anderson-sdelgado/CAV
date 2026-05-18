@@ -75,4 +75,9 @@ class ICardRepository @Inject constructor(
             cardSharedPreferencesDatasource.listIdDataLocal().getOrThrow()
         }
 
+    override suspend fun setIdDataLocalList(idList: List<Int>): EmptyResult =
+        call(getClassAndMethod()) {
+            TODO("Not yet implemented")
+        }
+
 }

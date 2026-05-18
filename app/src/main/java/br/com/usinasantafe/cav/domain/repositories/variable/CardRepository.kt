@@ -16,4 +16,5 @@ interface CardRepository {
     suspend fun clean(): EmptyResult
     suspend fun getLocal(): Result<Local>
     suspend fun listIdDataLocal(): Result<List<Int>>
+    suspend fun setIdDataLocalList(idList: List<Int>): EmptyResult
 }

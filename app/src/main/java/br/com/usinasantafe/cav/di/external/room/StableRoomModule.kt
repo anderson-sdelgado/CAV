@@ -6,7 +6,7 @@ import br.com.usinasantafe.cav.external.room.dao.stable.EquipDao
 import br.com.usinasantafe.cav.external.room.dao.stable.ItemDataLocalDao
 import br.com.usinasantafe.cav.external.room.dao.stable.NatureDao
 import br.com.usinasantafe.cav.external.room.dao.stable.OptionDataLocalDao
-import br.com.usinasantafe.cav.external.room.dao.stable.ROptionItemDataLocalDao
+import br.com.usinasantafe.cav.external.room.dao.stable.DataLocalDao
 import br.com.usinasantafe.cav.external.room.dao.stable.SupportTeamsDao
 import br.com.usinasantafe.cav.external.room.dao.stable.TypeAccidentDao
 import dagger.Module
@@ -51,7 +51,7 @@ object StableRoomModule {
 
     @Provides
     @Singleton
-    fun provideROptionItemDataLocalDao(database: DatabaseRoom): ROptionItemDataLocalDao {
+    fun provideROptionItemDataLocalDao(database: DatabaseRoom): DataLocalDao {
         return database.rOptionItemDataLocalDao()
     }
 

@@ -348,7 +348,7 @@ const val itemDataLocalList = """
     ]
 """
 
-const val rOptionItemDataLocalList = """
+const val dataLocalList = """
     [
         {
             "id": 1,
@@ -556,84 +556,79 @@ const val rOptionItemDataLocalList = """
             "idItem": 32
         },
         {
-            "id": 41,
+            "id": 42,
             "idOption": 10,
             "idItem": 33
         },
         {
-            "id": 42,
-            "idOption": 11,
-            "idItem": 34
-        },
-        {
             "id": 43,
             "idOption": 11,
-            "idItem": 30
+            "idItem": 34
         },
         {
             "id": 44,
             "idOption": 11,
-            "idItem": 32
+            "idItem": 30
         },
         {
             "id": 45,
             "idOption": 11,
-            "idItem": 35
+            "idItem": 32
         },
         {
             "id": 46,
-            "idOption": 12,
-            "idItem": 34
+            "idOption": 11,
+            "idItem": 35
         },
         {
             "id": 47,
             "idOption": 12,
-            "idItem": 30
+            "idItem": 34
         },
         {
             "id": 48,
             "idOption": 12,
-            "idItem": 32
+            "idItem": 30
         },
         {
             "id": 49,
             "idOption": 12,
-            "idItem": 35
+            "idItem": 32
         },
         {
             "id": 50,
-            "idOption": 13,
-            "idItem": 36
+            "idOption": 12,
+            "idItem": 35
         },
         {
             "id": 51,
             "idOption": 13,
-            "idItem": 37
+            "idItem": 36
         },
         {
             "id": 52,
             "idOption": 13,
-            "idItem": 38
+            "idItem": 37
         },
         {
             "id": 53,
             "idOption": 13,
-            "idItem": 39
+            "idItem": 38
         },
         {
             "id": 54,
             "idOption": 13,
-            "idItem": 40
+            "idItem": 39
         },
         {
             "id": 55,
-            "idOption": 14,
-            "idItem": 13
+            "idOption": 13,
+            "idItem": 40
         },
         {
             "id": 56,
             "idOption": 14,
-            "idItem": 14
+            "idItem": 13
         },
         {
             "id": 57,
@@ -643,50 +638,55 @@ const val rOptionItemDataLocalList = """
         {
             "id": 58,
             "idOption": 14,
-            "idItem": 15
+            "idItem": 14
         },
         {
             "id": 59,
             "idOption": 14,
-            "idItem": 41
+            "idItem": 15
         },
         {
             "id": 60,
-            "idOption": 15,
-            "idItem": 11
+            "idOption": 14,
+            "idItem": 41
         },
         {
             "id": 61,
             "idOption": 15,
-            "idItem": 12
+            "idItem": 11
         },
         {
             "id": 62,
             "idOption": 15,
-            "idItem": 42
+            "idItem": 12
         },
         {
             "id": 63,
             "idOption": 15,
-            "idItem": 43
+            "idItem": 42
         },
         {
             "id": 64,
-            "idOption": 16,
-            "idItem": 11
+            "idOption": 15,
+            "idItem": 43
         },
         {
             "id": 65,
             "idOption": 16,
-            "idItem": 12
+            "idItem": 11
         },
         {
             "id": 66,
             "idOption": 16,
-            "idItem": 44
+            "idItem": 12
         },
         {
             "id": 67,
+            "idOption": 16,
+            "idItem": 44
+        },
+        {
+            "id": 68,
             "idOption": 16,
             "idItem": 45
         }

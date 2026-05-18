@@ -6,7 +6,7 @@ import br.com.usinasantafe.cav.domain.usecases.card.ListItemDataLocal
 import br.com.usinasantafe.cav.domain.usecases.card.SetDataLocalList
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableItemDataLocal
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableOptionDataLocal
-import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableROptionItemDataLocal
+import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableDataLocal
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.LevelUpdate
 import br.com.usinasantafe.cav.presenter.Args
@@ -39,7 +39,7 @@ class ItemDataLocalViewModelTest {
     private val listItemDataLocal = mock<ListItemDataLocal>()
     private val updateTableItemDataLocal = mock<UpdateTableItemDataLocal>()
     private val updateTableOptionDataLocal = mock<UpdateTableOptionDataLocal>()
-    private val updateTableROptionItemDataLocal = mock<UpdateTableROptionItemDataLocal>()
+    private val updateTableDataLocal = mock<UpdateTableDataLocal>()
     private val setDataLocalList = mock<SetDataLocalList>()
     private val viewModel = ItemDataLocalViewModel(
         saveStateHandle = SavedStateHandle(
@@ -50,7 +50,7 @@ class ItemDataLocalViewModelTest {
         listItemDataLocal = listItemDataLocal,
         updateTableItemDataLocal = updateTableItemDataLocal,
         updateTableOptionDataLocal = updateTableOptionDataLocal,
-        updateTableROptionItemDataLocal = updateTableROptionItemDataLocal,
+        updateTableDataLocal = updateTableDataLocal,
         setDataLocalList = setDataLocalList
     )
 
@@ -266,7 +266,7 @@ class ItemDataLocalViewModelTest {
             val qtdBefore = 2f
             wheneverSuccess(qtdBefore)
             whenever(
-                updateTableROptionItemDataLocal(
+                updateTableDataLocal(
                     sizeAll = sizeUpdate(qtdTable),
                     count = (qtdBefore + 1)
                 )
@@ -494,7 +494,7 @@ class ItemDataLocalViewModelTest {
                     >(
                 { sizeAll, count -> updateTableItemDataLocal(sizeAll, count) },
                 { sizeAll, count -> updateTableOptionDataLocal(sizeAll, count) },
-                { sizeAll, count -> updateTableROptionItemDataLocal(sizeAll, count) },
+                { sizeAll, count -> updateTableDataLocal(sizeAll, count) },
             )
 
             for(func in updateFunctions) {

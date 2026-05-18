@@ -4,13 +4,10 @@ import br.com.usinasantafe.cav.MainCoroutineRule
 import br.com.usinasantafe.cav.domain.usecases.card.ListOptionDataLocal
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableItemDataLocal
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableOptionDataLocal
-import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableROptionItemDataLocal
+import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableDataLocal
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.LevelUpdate
-import br.com.usinasantafe.cav.lib.TypeButton
 import br.com.usinasantafe.cav.presenter.model.ItemListScreenModel
-import br.com.usinasantafe.cav.presenter.view.card.attendant.AttendantState
-import br.com.usinasantafe.cav.presenter.view.configuration.config.ConfigState
 import br.com.usinasantafe.cav.utils.UpdateStatusState
 import br.com.usinasantafe.cav.utils.percentage
 import br.com.usinasantafe.cav.utils.resultFailure
@@ -39,12 +36,12 @@ class OptionDataLocalViewModelTest {
     private val listOptionDataLocal = mock<ListOptionDataLocal>()
     private val updateTableItemDataLocal = mock<UpdateTableItemDataLocal>()
     private val updateTableOptionDataLocal = mock<UpdateTableOptionDataLocal>()
-    private val updateTableROptionItemDataLocal = mock<UpdateTableROptionItemDataLocal>()
+    private val updateTableDataLocal = mock<UpdateTableDataLocal>()
     private val viewModel = OptionDataLocalViewModel(
         listOptionDataLocal = listOptionDataLocal,
         updateTableItemDataLocal = updateTableItemDataLocal,
         updateTableOptionDataLocal = updateTableOptionDataLocal,
-        updateTableROptionItemDataLocal = updateTableROptionItemDataLocal
+        updateTableDataLocal = updateTableDataLocal
     )
 
     @Test
@@ -248,7 +245,7 @@ class OptionDataLocalViewModelTest {
             val qtdBefore = 2f
             wheneverSuccess(qtdBefore)
             whenever(
-                updateTableROptionItemDataLocal(
+                updateTableDataLocal(
                     sizeAll = sizeUpdate(qtdTable),
                     count = (qtdBefore + 1)
                 )
@@ -367,7 +364,7 @@ class OptionDataLocalViewModelTest {
                     >(
                 { sizeAll, count -> updateTableItemDataLocal(sizeAll, count) },
                 { sizeAll, count -> updateTableOptionDataLocal(sizeAll, count) },
-                { sizeAll, count -> updateTableROptionItemDataLocal(sizeAll, count) },
+                { sizeAll, count -> updateTableDataLocal(sizeAll, count) },
             )
 
             for(func in updateFunctions) {

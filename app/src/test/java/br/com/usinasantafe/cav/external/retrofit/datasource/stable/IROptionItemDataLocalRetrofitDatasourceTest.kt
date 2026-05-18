@@ -2,7 +2,7 @@ package br.com.usinasantafe.cav.external.retrofit.datasource.stable
 
 import br.com.usinasantafe.cav.di.external.ApiModuleTest.provideRetrofitTest
 import br.com.usinasantafe.cav.external.retrofit.api.stable.ROptionItemDataLocalApi
-import br.com.usinasantafe.cav.infra.models.retrofit.stable.ROptionItemDataLocalRetrofitModel
+import br.com.usinasantafe.cav.infra.models.retrofit.stable.DataLocalRetrofitModel
 import kotlinx.coroutines.test.runTest
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -98,12 +98,12 @@ class IROptionItemDataLocalRetrofitDatasourceTest {
             assertEquals(
                 Result.success(
                     listOf(
-                        ROptionItemDataLocalRetrofitModel(
+                        DataLocalRetrofitModel(
                             id = 1,
                             idItem = 1,
                             idOption = 1
                         ),
-                        ROptionItemDataLocalRetrofitModel(
+                        DataLocalRetrofitModel(
                             id = 2,
                             idItem = 2,
                             idOption = 2

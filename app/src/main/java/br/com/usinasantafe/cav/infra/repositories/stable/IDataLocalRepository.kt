@@ -2,16 +2,15 @@ package br.com.usinasantafe.cav.infra.repositories.stable
 
 import br.com.usinasantafe.cav.domain.entities.stable.ItemDataLocal
 import br.com.usinasantafe.cav.domain.entities.stable.OptionDataLocal
-import br.com.usinasantafe.cav.domain.entities.stable.ROptionItemDataLocal
+import br.com.usinasantafe.cav.domain.entities.stable.DataLocal
 import br.com.usinasantafe.cav.domain.repositories.stable.DataLocalRepository
 import br.com.usinasantafe.cav.infra.datasource.retrofit.stable.ItemDataLocalRetrofitDatasource
 import br.com.usinasantafe.cav.infra.datasource.retrofit.stable.OptionDataLocalRetrofitDatasource
-import br.com.usinasantafe.cav.infra.datasource.retrofit.stable.ROptionItemDataLocalRetrofitDatasource
+import br.com.usinasantafe.cav.infra.datasource.retrofit.stable.DataLocalRetrofitDatasource
 import br.com.usinasantafe.cav.infra.datasource.room.stable.ItemDataLocalRoomDatasource
 import br.com.usinasantafe.cav.infra.datasource.room.stable.OptionDataLocalRoomDatasource
-import br.com.usinasantafe.cav.infra.datasource.room.stable.ROptionItemDataLocalRoomDatasource
+import br.com.usinasantafe.cav.infra.datasource.room.stable.DataLocalRoomDatasource
 import br.com.usinasantafe.cav.infra.models.retrofit.stable.retrofitModelToEntity
-import br.com.usinasantafe.cav.infra.models.room.stable.ROptionItemDataLocalRoomModel
 import br.com.usinasantafe.cav.infra.models.room.stable.entityToRoomModel
 import br.com.usinasantafe.cav.infra.models.room.stable.roomModelToEntity
 import br.com.usinasantafe.cav.utils.EmptyResult
@@ -23,10 +22,10 @@ import kotlin.getOrThrow
 class IDataLocalRepository @Inject constructor(
     private val itemDataLocalRetrofitDatasource: ItemDataLocalRetrofitDatasource,
     private val optionDataLocalRetrofitDatasource: OptionDataLocalRetrofitDatasource,
-    private val rOptionItemDataLocalRetrofitDatasource: ROptionItemDataLocalRetrofitDatasource,
+    private val dataLocalRetrofitDatasource: DataLocalRetrofitDatasource,
     private val itemDataLocalRoomDatasource: ItemDataLocalRoomDatasource,
     private val optionDataLocalRoomDatasource: OptionDataLocalRoomDatasource,
-    private val rOptionItemDataLocalRoomDatasource: ROptionItemDataLocalRoomDatasource
+    private val dataLocalRoomDatasource: DataLocalRoomDatasource
 ): DataLocalRepository {
 
     override suspend fun addAllItem(list: List<ItemDataLocal>): EmptyResult =
@@ -41,10 +40,10 @@ class IDataLocalRepository @Inject constructor(
             optionDataLocalRoomDatasource.addAll(roomModelList).getOrThrow()
         }
 
-    override suspend fun addAllROptionItem(list: List<ROptionItemDataLocal>): EmptyResult =
+    override suspend fun addAllDataLocal(list: List<DataLocal>): EmptyResult =
         call(getClassAndMethod()) {
             val roomModelList = list.map { it.entityToRoomModel() }
-            rOptionItemDataLocalRoomDatasource.addAll(roomModelList).getOrThrow()
+            dataLocalRoomDatasource.addAll(roomModelList).getOrThrow()
         }
 
     override suspend fun deleteAllItem(): EmptyResult =
@@ -57,9 +56,9 @@ class IDataLocalRepository @Inject constructor(
             optionDataLocalRoomDatasource.deleteAll().getOrThrow()
         }
 
-    override suspend fun deleteAllROptionItem(): EmptyResult =
+    override suspend fun deleteAllDataLocal(): EmptyResult =
         call(getClassAndMethod()) {
-            rOptionItemDataLocalRoomDatasource.deleteAll().getOrThrow()
+            dataLocalRoomDatasource.deleteAll().getOrThrow()
         }
 
     override suspend fun listAllItem(token: String): Result<List<ItemDataLocal>> =
@@ -74,15 +73,15 @@ class IDataLocalRepository @Inject constructor(
             modelList.map { it.retrofitModelToEntity() }
         }
 
-    override suspend fun listAllROptionItem(token: String): Result<List<ROptionItemDataLocal>> =
+    override suspend fun listAllDataLocal(token: String): Result<List<DataLocal>> =
         call(getClassAndMethod()) {
-            val modelList = rOptionItemDataLocalRetrofitDatasource.listAll(token).getOrThrow()
+            val modelList = dataLocalRetrofitDatasource.listAll(token).getOrThrow()
             modelList.map { it.retrofitModelToEntity() }
         }
 
-    override suspend fun getROptionItemById(id: Int): Result<ROptionItemDataLocal> =
+    override suspend fun getROptionItemById(id: Int): Result<DataLocal> =
         call(getClassAndMethod()) {
-            rOptionItemDataLocalRoomDatasource.getById(id).getOrThrow().roomModelToEntity()
+            dataLocalRoomDatasource.getById(id).getOrThrow().roomModelToEntity()
         }
 
     override suspend fun getDescItemById(id: Int): Result<String> =
@@ -98,6 +97,18 @@ class IDataLocalRepository @Inject constructor(
     override suspend fun listAllOption(): Result<List<OptionDataLocal>> =
         call(getClassAndMethod()) {
             val modelList = optionDataLocalRoomDatasource.listAll().getOrThrow()
+            modelList.map { it.roomModelToEntity() }
+        }
+
+    override suspend fun listROptionItemByIdOption(id: Int): Result<List<DataLocal>> =
+        call(getClassAndMethod()) {
+            val modelList = dataLocalRoomDatasource.listByIdOption(id).getOrThrow()
+            modelList.map { it.roomModelToEntity() }
+        }
+
+    override suspend fun listItemByIdList(idList: List<Int>): Result<List<ItemDataLocal>> =
+        call(getClassAndMethod()) {
+            val modelList = itemDataLocalRoomDatasource.listByIdList(idList).getOrThrow()
             modelList.map { it.roomModelToEntity() }
         }
 

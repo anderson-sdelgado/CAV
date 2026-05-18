@@ -1,6 +1,6 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
-import br.com.usinasantafe.cav.domain.entities.stable.ROptionItemDataLocal
+import br.com.usinasantafe.cav.domain.entities.stable.DataLocal
 import br.com.usinasantafe.cav.domain.repositories.stable.DataLocalRepository
 import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.utils.resultFailure
@@ -113,7 +113,7 @@ class IListDataLocalTest {
                 dataLocalRepository.getROptionItemById(1)
             ).thenReturn(
                 Result.success(
-                    ROptionItemDataLocal(
+                    DataLocal(
                         id = 1,
                         idOption = 2,
                         idItem = 3
@@ -158,7 +158,7 @@ class IListDataLocalTest {
                 dataLocalRepository.getROptionItemById(1)
             ).thenReturn(
                 Result.success(
-                    ROptionItemDataLocal(
+                    DataLocal(
                         id = 1,
                         idOption = 2,
                         idItem = 3
@@ -208,7 +208,7 @@ class IListDataLocalTest {
                 dataLocalRepository.getROptionItemById(1)
             ).thenReturn(
                 Result.success(
-                    ROptionItemDataLocal(
+                    DataLocal(
                         id = 1,
                         idOption = 2,
                         idItem = 3

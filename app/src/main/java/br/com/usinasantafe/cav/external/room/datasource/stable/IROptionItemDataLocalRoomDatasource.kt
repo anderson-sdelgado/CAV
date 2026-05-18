@@ -1,8 +1,8 @@
 package br.com.usinasantafe.cav.external.room.datasource.stable
 
-import br.com.usinasantafe.cav.external.room.dao.stable.ROptionItemDataLocalDao
-import br.com.usinasantafe.cav.infra.datasource.room.stable.ROptionItemDataLocalRoomDatasource
-import br.com.usinasantafe.cav.infra.models.room.stable.ROptionItemDataLocalRoomModel
+import br.com.usinasantafe.cav.external.room.dao.stable.DataLocalDao
+import br.com.usinasantafe.cav.infra.datasource.room.stable.DataLocalRoomDatasource
+import br.com.usinasantafe.cav.infra.models.room.stable.DataLocalRoomModel
 import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import br.com.usinasantafe.cav.utils.required
@@ -10,22 +10,27 @@ import br.com.usinasantafe.cav.utils.result
 import javax.inject.Inject
 
 class IROptionItemDataLocalRoomDatasource @Inject constructor(
-    private val rOptionItemDataLocalDao: ROptionItemDataLocalDao
-): ROptionItemDataLocalRoomDatasource {
+    private val dataLocalDao: DataLocalDao
+): DataLocalRoomDatasource {
 
-    override suspend fun addAll(list: List<ROptionItemDataLocalRoomModel>): EmptyResult =
+    override suspend fun addAll(list: List<DataLocalRoomModel>): EmptyResult =
         result(getClassAndMethod()) {
-            rOptionItemDataLocalDao.insertAll(list)
+            dataLocalDao.insertAll(list)
         }
 
     override suspend fun deleteAll(): EmptyResult =
         result(getClassAndMethod()) {
-            rOptionItemDataLocalDao.deleteAll()
+            dataLocalDao.deleteAll()
         }
 
-    override suspend fun getById(id: Int): Result<ROptionItemDataLocalRoomModel> =
+    override suspend fun getById(id: Int): Result<DataLocalRoomModel> =
         result(getClassAndMethod()) {
-            rOptionItemDataLocalDao.getById(id).required("model")
+            dataLocalDao.getById(id).required("model")
+        }
+
+    override suspend fun listByIdOption(idOption: Int): Result<List<DataLocalRoomModel>> =
+        result(getClassAndMethod()) {
+            dataLocalDao.listByIdOption(idOption)
         }
 
 }

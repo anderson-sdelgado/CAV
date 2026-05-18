@@ -225,7 +225,7 @@ class DataInitialViewModelTest {
         }
     
     @Test
-    fun `recoverData - Check return true if GetAttendant execute successfully and return is null`() =
+    fun `recoverData - Check return true if process execute successfully and return is null`() =
         runTest {
             whenever(
                 getAttendant()

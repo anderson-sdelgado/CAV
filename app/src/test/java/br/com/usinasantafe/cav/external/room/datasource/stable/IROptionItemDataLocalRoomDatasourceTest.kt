@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import br.com.usinasantafe.cav.external.room.dao.DatabaseRoom
-import br.com.usinasantafe.cav.external.room.dao.stable.ROptionItemDataLocalDao
-import br.com.usinasantafe.cav.infra.models.room.stable.ROptionItemDataLocalRoomModel
+import br.com.usinasantafe.cav.external.room.dao.stable.DataLocalDao
+import br.com.usinasantafe.cav.infra.models.room.stable.DataLocalRoomModel
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -20,7 +20,7 @@ import kotlin.test.assertEquals
 @Config(sdk = [34])
 class IROptionItemDataLocalRoomDatasourceTest {
 
-    private lateinit var rOptionItemDataLocalDao: ROptionItemDataLocalDao
+    private lateinit var dataLocalDao: DataLocalDao
     private lateinit var db: DatabaseRoom
     private lateinit var datasource: IROptionItemDataLocalRoomDatasource
 
@@ -30,8 +30,8 @@ class IROptionItemDataLocalRoomDatasourceTest {
         db = Room.inMemoryDatabaseBuilder(
             context, DatabaseRoom::class.java
         ).allowMainThreadQueries().build()
-        rOptionItemDataLocalDao = db.rOptionItemDataLocalDao()
-        datasource = IROptionItemDataLocalRoomDatasource(rOptionItemDataLocalDao)
+        dataLocalDao = db.rOptionItemDataLocalDao()
+        datasource = IROptionItemDataLocalRoomDatasource(dataLocalDao)
     }
 
     @After
@@ -43,19 +43,19 @@ class IROptionItemDataLocalRoomDatasourceTest {
     @Test
     fun `addAll - Check failure if have row repeated`() =
         runTest {
-            val listBefore = rOptionItemDataLocalDao.all()
+            val listBefore = dataLocalDao.all()
             assertEquals(
                 listBefore.size,
                 0
             )
             val result = datasource.addAll(
                 listOf(
-                    ROptionItemDataLocalRoomModel(
+                    DataLocalRoomModel(
                         id = 1,
                         idItem = 1,
                         idOption = 1
                     ),
-                    ROptionItemDataLocalRoomModel(
+                    DataLocalRoomModel(
                         id = 1,
                         idItem = 1,
                         idOption = 1
@@ -74,7 +74,7 @@ class IROptionItemDataLocalRoomDatasourceTest {
                 result.exceptionOrNull()!!.cause.toString(),
                 "android.database.sqlite.SQLiteConstraintException: DB[1] step() [INSERT OR ABORT INTO `tb_r_option_item_data_local` (`id`,`idOption`,`idItem`) VALUES (?,?,?)]DB[1][C] [UNIQUE constraint failed: tb_r_option_item_data_local.id] (code 1555 SQLITE_CONSTRAINT_PRIMARYKEY)"
             )
-            val listAfter = rOptionItemDataLocalDao.all()
+            val listAfter = dataLocalDao.all()
             assertEquals(
                 listAfter.size,
                 0
@@ -84,19 +84,19 @@ class IROptionItemDataLocalRoomDatasourceTest {
     @Test
     fun `addAll - Check success if have row is correct`() =
         runTest {
-            val listBefore = rOptionItemDataLocalDao.all()
+            val listBefore = dataLocalDao.all()
             assertEquals(
                 listBefore.size,
                 0
             )
             val result = datasource.addAll(
                 listOf(
-                    ROptionItemDataLocalRoomModel(
+                    DataLocalRoomModel(
                         id = 1,
                         idItem = 1,
                         idOption = 1
                     ),
-                    ROptionItemDataLocalRoomModel(
+                    DataLocalRoomModel(
                         id = 2,
                         idItem = 2,
                         idOption = 2
@@ -107,7 +107,7 @@ class IROptionItemDataLocalRoomDatasourceTest {
                 result.isSuccess,
                 true
             )
-            val listAfter = rOptionItemDataLocalDao.all()
+            val listAfter = dataLocalDao.all()
             assertEquals(
                 listAfter.size,
                 2
@@ -147,16 +147,16 @@ class IROptionItemDataLocalRoomDatasourceTest {
     @Test
     fun `deleteAll - Check execution correct`() =
         runTest {
-            rOptionItemDataLocalDao.insertAll(
+            dataLocalDao.insertAll(
                 listOf(
-                    ROptionItemDataLocalRoomModel(
+                    DataLocalRoomModel(
                         id = 1,
                         idItem = 1,
                         idOption = 1
                     )
                 )
             )
-            val listBefore = rOptionItemDataLocalDao.all()
+            val listBefore = dataLocalDao.all()
             assertEquals(
                 listBefore.size,
                 1
@@ -166,7 +166,7 @@ class IROptionItemDataLocalRoomDatasourceTest {
                 result.isSuccess,
                 true
             )
-            val listAfter = rOptionItemDataLocalDao.all()
+            val listAfter = dataLocalDao.all()
             assertEquals(
                 listAfter.size,
                 0
@@ -194,9 +194,9 @@ class IROptionItemDataLocalRoomDatasourceTest {
     @Test
     fun `getById - Check return correct if have data fielded`() =
         runTest {
-            rOptionItemDataLocalDao.insertAll(
+            dataLocalDao.insertAll(
                 listOf(
-                    ROptionItemDataLocalRoomModel(
+                    DataLocalRoomModel(
                         id = 1,
                         idOption = 1,
                         idItem = 1
@@ -210,10 +210,73 @@ class IROptionItemDataLocalRoomDatasourceTest {
             )
             assertEquals(
                 result.getOrNull()!!,
-                ROptionItemDataLocalRoomModel(
+                DataLocalRoomModel(
                     id = 1,
                     idOption = 1,
                     idItem = 1
+                )
+            )
+        }
+
+    @Test
+    fun `listByIdOption - Check return empty if not have data fielded`() =
+        runTest {
+            val result = datasource.listByIdOption(1)
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                emptyList()
+            )
+        }
+
+    @Test
+    fun `listByIdOption - Check return correct if have data fielded`() =
+        runTest {
+            dataLocalDao.insertAll(
+                listOf(
+                    DataLocalRoomModel(
+                        id = 1,
+                        idOption = 1,
+                        idItem = 1
+                    ),
+                    DataLocalRoomModel(
+                        id = 2,
+                        idOption = 1,
+                        idItem = 2
+                    ),
+                    DataLocalRoomModel(
+                        id = 3,
+                        idOption = 2,
+                        idItem = 3
+                    ),
+                    DataLocalRoomModel(
+                        id = 4,
+                        idOption = 2,
+                        idItem = 4
+                    )
+                )
+            )
+            val result = datasource.listByIdOption(2)
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                listOf(
+                    DataLocalRoomModel(
+                        id = 3,
+                        idOption = 2,
+                        idItem = 3
+                    ),
+                    DataLocalRoomModel(
+                        id = 4,
+                        idOption = 2,
+                        idItem = 4
+                    )
                 )
             )
         }

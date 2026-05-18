@@ -1,6 +1,6 @@
 package br.com.usinasantafe.cav.domain.usecases.update
 
-import br.com.usinasantafe.cav.domain.entities.stable.ROptionItemDataLocal
+import br.com.usinasantafe.cav.domain.entities.stable.DataLocal
 import br.com.usinasantafe.cav.domain.repositories.stable.DataLocalRepository
 import br.com.usinasantafe.cav.domain.usecases.common.GetToken
 import br.com.usinasantafe.cav.lib.Errors
@@ -18,11 +18,11 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import kotlin.test.assertEquals
 
-class IUpdateTableROptionItemDataLocalTest {
+class IUpdateTableDataLocalTest {
 
     private val getToken = mock<GetToken>()
     private val dataLocalRepository = mock<DataLocalRepository>()
-    private val usecase = IUpdateTableROptionItemDataLocal(
+    private val usecase = IUpdateTableDataLocal(
         getToken = getToken,
         dataLocalRepository = dataLocalRepository
     )
@@ -78,7 +78,7 @@ class IUpdateTableROptionItemDataLocalTest {
                 Result.success("token")
             )
             whenever(
-                dataLocalRepository.listAllROptionItem("token")
+                dataLocalRepository.listAllDataLocal("token")
             ).thenReturn(
                 resultFailure(
                     "IDataLocalRepository.recoverAll",
@@ -120,7 +120,7 @@ class IUpdateTableROptionItemDataLocalTest {
     fun `Check return failure if have error in ColabRepository deleteAll`() =
         runTest {
             val list = listOf(
-                ROptionItemDataLocal(
+                DataLocal(
                     id = 1,
                     idItem = 1,
                     idOption = 1
@@ -132,14 +132,14 @@ class IUpdateTableROptionItemDataLocalTest {
                 Result.success("token")
             )
             whenever(
-                dataLocalRepository.listAllROptionItem("token")
+                dataLocalRepository.listAllDataLocal("token")
             ).thenReturn(
                 Result.success(
                     list
                 )
             )
             whenever(
-                dataLocalRepository.deleteAllROptionItem()
+                dataLocalRepository.deleteAllDataLocal()
             ).thenReturn(
                 resultFailure(
                     "IDataLocalRepository.deleteAll",
@@ -190,7 +190,7 @@ class IUpdateTableROptionItemDataLocalTest {
     fun `Check return failure if have error in ColabRepository addAll`() =
         runTest {
             val list = listOf(
-                ROptionItemDataLocal(
+                DataLocal(
                     id = 1,
                     idItem = 1,
                     idOption = 1
@@ -202,14 +202,14 @@ class IUpdateTableROptionItemDataLocalTest {
                 Result.success("token")
             )
             whenever(
-                dataLocalRepository.listAllROptionItem("token")
+                dataLocalRepository.listAllDataLocal("token")
             ).thenReturn(
                 Result.success(
                     list
                 )
             )
             whenever(
-                dataLocalRepository.addAllROptionItem(list)
+                dataLocalRepository.addAllDataLocal(list)
             ).thenReturn(
                 resultFailure(
                     "IDataLocalRepository.addAll",
@@ -222,7 +222,7 @@ class IUpdateTableROptionItemDataLocalTest {
                 count = 1f
             )
             val resultList = result.toList()
-            verify(dataLocalRepository, atLeastOnce()).deleteAllROptionItem()
+            verify(dataLocalRepository, atLeastOnce()).deleteAllDataLocal()
             assertEquals(
                 result.count(),
                 4
@@ -270,7 +270,7 @@ class IUpdateTableROptionItemDataLocalTest {
     fun `Check return correct if function execute successfully`() =
         runTest {
             val list = listOf(
-                ROptionItemDataLocal(
+                DataLocal(
                     id = 1,
                     idItem = 1,
                     idOption = 1
@@ -282,7 +282,7 @@ class IUpdateTableROptionItemDataLocalTest {
                 Result.success("token")
             )
             whenever(
-                dataLocalRepository.listAllROptionItem("token")
+                dataLocalRepository.listAllDataLocal("token")
             ).thenReturn(
                 Result.success(
                     list
@@ -293,8 +293,8 @@ class IUpdateTableROptionItemDataLocalTest {
                 count = 1f
             )
             val resultList = result.toList()
-            verify(dataLocalRepository, atLeastOnce()).deleteAllROptionItem()
-            verify(dataLocalRepository, atLeastOnce()).addAllROptionItem(list)
+            verify(dataLocalRepository, atLeastOnce()).deleteAllDataLocal()
+            verify(dataLocalRepository, atLeastOnce()).addAllDataLocal(list)
             assertEquals(
                 result.count(),
                 3

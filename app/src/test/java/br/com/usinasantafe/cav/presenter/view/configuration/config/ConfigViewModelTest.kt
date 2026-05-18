@@ -11,7 +11,7 @@ import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableEquip
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableItemDataLocal
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableNature
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableOptionDataLocal
-import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableROptionItemDataLocal
+import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableDataLocal
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableSupportTeams
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableTypeAccident
 import br.com.usinasantafe.cav.lib.Errors
@@ -50,7 +50,7 @@ class ConfigViewModelTest {
     private val updateTableItemDataLocal = mock<UpdateTableItemDataLocal>()
     private val updateTableNature = mock<UpdateTableNature>()
     private val updateTableOptionDataLocal = mock<UpdateTableOptionDataLocal>()
-    private val updateTableROptionItemDataLocal = mock<UpdateTableROptionItemDataLocal>()
+    private val updateTableDataLocal = mock<UpdateTableDataLocal>()
     private val updateTableSupportTeams = mock<UpdateTableSupportTeams>()
     private val updateTableTypeAccess = mock<UpdateTableTypeAccident>()
     private var tableList = mutableListOf<String>()
@@ -66,7 +66,7 @@ class ConfigViewModelTest {
         updateTableItemDataLocal = updateTableItemDataLocal,
         updateTableNature = updateTableNature,
         updateTableOptionDataLocal = updateTableOptionDataLocal,
-        updateTableROptionItemDataLocal = updateTableROptionItemDataLocal,
+        updateTableDataLocal = updateTableDataLocal,
         updateTableSupportTeams = updateTableSupportTeams,
         updateTableTypeAccess = updateTableTypeAccess
     )
@@ -725,7 +725,7 @@ class ConfigViewModelTest {
             val qtdBefore = 5f
             wheneverSuccess(qtdBefore)
             whenever(
-                updateTableROptionItemDataLocal(
+                updateTableDataLocal(
                     sizeAll = sizeUpdate(qtdTable),
                     count = (qtdBefore + 1)
                 )
@@ -1044,7 +1044,7 @@ class ConfigViewModelTest {
                 { sizeAll, count -> updateTableItemDataLocal(sizeAll, count) },
                 { sizeAll, count -> updateTableNature(sizeAll, count) },
                 { sizeAll, count -> updateTableOptionDataLocal(sizeAll, count) },
-                { sizeAll, count -> updateTableROptionItemDataLocal(sizeAll, count) },
+                { sizeAll, count -> updateTableDataLocal(sizeAll, count) },
                 { sizeAll, count -> updateTableSupportTeams(sizeAll, count) },
                 { sizeAll, count -> updateTableTypeAccess(sizeAll, count) },
             )

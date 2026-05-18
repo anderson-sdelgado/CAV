@@ -34,7 +34,7 @@ interface StableRoomDatasourceModule {
 
     @Binds
     @Singleton
-    fun bindROptionItemDataLocalRoomDatasource(datasource: IROptionItemDataLocalRoomDatasource): ROptionItemDataLocalRoomDatasource
+    fun bindROptionItemDataLocalRoomDatasource(datasource: IROptionItemDataLocalRoomDatasource): DataLocalRoomDatasource
 
     @Binds
     @Singleton
