@@ -134,4 +134,16 @@ class ICardSharedPreferencesDatasource @Inject constructor(
             save(mainModel).getOrThrow()
         }
 
+    override suspend fun listIdSupportTeams(): Result<List<Int>> =
+        result(getClassAndMethod()) {
+            get().getOrThrow().idSupportTeamsList
+        }
+
+    override suspend fun setIdSupportTeamsList(idList: List<Int>): EmptyResult =
+        result(getClassAndMethod()) {
+            val mainModel = get().getOrThrow()
+            mainModel.idSupportTeamsList = idList
+            save(mainModel).getOrThrow()
+        }
+
 }

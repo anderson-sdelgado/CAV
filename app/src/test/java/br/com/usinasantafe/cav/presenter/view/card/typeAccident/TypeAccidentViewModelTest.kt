@@ -166,6 +166,13 @@ class TypeAccidentViewModelTest {
     fun `updateDatabase - Check return success in updateAllDatabase`() =
         runTest {
             whenever(
+                listTypeAccident()
+            ).thenReturn(
+                Result.success(
+                    emptyList()
+                )
+            )
+            whenever(
                 updateTableTypeAccident(
                     count = 1f,
                     sizeAll = 4f

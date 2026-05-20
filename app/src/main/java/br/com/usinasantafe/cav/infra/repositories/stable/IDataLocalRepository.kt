@@ -100,7 +100,7 @@ class IDataLocalRepository @Inject constructor(
             modelList.map { it.roomModelToEntity() }
         }
 
-    override suspend fun listROptionItemByIdOption(id: Int): Result<List<DataLocal>> =
+    override suspend fun listDataLocalByIdOption(id: Int): Result<List<DataLocal>> =
         call(getClassAndMethod()) {
             val modelList = dataLocalRoomDatasource.listByIdOption(id).getOrThrow()
             modelList.map { it.roomModelToEntity() }

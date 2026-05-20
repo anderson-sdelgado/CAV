@@ -12,6 +12,7 @@ import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.presenter.Args.ID_ARG
 import br.com.usinasantafe.cav.presenter.Args.OPTION_ARG
 import br.com.usinasantafe.cav.presenter.Routes.ATTENDANT_ROUTE
+import br.com.usinasantafe.cav.presenter.Routes.CAR_FULL_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.CAR_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.CONFIG_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.DATA_INITIAL_ROUTE
@@ -24,6 +25,7 @@ import br.com.usinasantafe.cav.presenter.Routes.NATURE_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.OPTION_DATA_LOCAL_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.PASSWORD_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.SPLASH_ROUTE
+import br.com.usinasantafe.cav.presenter.Routes.SUPPORT_TEAMS_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.TYPE_ACCIDENT_ROUTE
 import br.com.usinasantafe.cav.presenter.view.card.attendant.AttendantScreen
 import br.com.usinasantafe.cav.presenter.view.card.car.CarScreen
@@ -31,9 +33,11 @@ import br.com.usinasantafe.cav.presenter.view.card.dataLocal.ItemDataLocalScreen
 import br.com.usinasantafe.cav.presenter.view.card.dataLocal.OptionDataLocalScreen
 import br.com.usinasantafe.cav.presenter.view.card.local.InputLocalScreen
 import br.com.usinasantafe.cav.presenter.view.card.local.LocalScreen
+import br.com.usinasantafe.cav.presenter.view.card.menu.VehicleFullScreen
 import br.com.usinasantafe.cav.presenter.view.card.menu.DataInitialScreen
 import br.com.usinasantafe.cav.presenter.view.card.menu.LocalSupportScreen
 import br.com.usinasantafe.cav.presenter.view.card.nature.NatureScreen
+import br.com.usinasantafe.cav.presenter.view.card.supportTeams.SupportTeamsScreen
 import br.com.usinasantafe.cav.presenter.view.card.typeAccident.TypeAccidentScreen
 import br.com.usinasantafe.cav.presenter.view.configuration.config.ConfigScreen
 import br.com.usinasantafe.cav.presenter.view.configuration.initial.InitialMenuScreen
@@ -197,8 +201,17 @@ fun NavigationGraph(
             )
         ) {
             ItemDataLocalScreen(
-                onNavMenu = {},
-                onNavOption = {}
+                onNavOption = {
+                    navActions.navigateToOptionDataLocal()
+                }
+            )
+        }
+
+        composable(SUPPORT_TEAMS_ROUTE) {
+            SupportTeamsScreen(
+                onNavMenu = {
+                    navActions.navigateToLocalSupport()
+                }
             )
         }
 
@@ -244,9 +257,19 @@ fun NavigationGraph(
                 onNavDataLocal = {
                     navActions.navigateToOptionDataLocal()
                 },
-                onNavSupport = {
-
+                onNavSupportTeams = {
+                    navActions.navigateToSupportTeams()
+                },
+                onNavCarFull = {
+                    navActions.navigateToCarFull()
                 }
+            )
+        }
+
+        composable(CAR_FULL_ROUTE) {
+            VehicleFullScreen(
+                onNavLocalSupport = {},
+                onNavInvolvedWitness = {}
             )
         }
 

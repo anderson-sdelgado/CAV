@@ -37,7 +37,6 @@ import br.com.usinasantafe.cav.utils.UpdateStatusState
 fun ItemDataLocalScreen(
     viewModel: ItemDataLocalViewModel = hiltViewModel(),
     onNavOption: () -> Unit,
-    onNavMenu: () -> Unit
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -56,7 +55,6 @@ fun ItemDataLocalScreen(
                 flagAccess = uiState.flagAccess,
                 setCloseDialog = viewModel::setCloseDialog,
                 status = uiState.status,
-                onNavMenu = onNavMenu,
                 onNavOption = onNavOption,
                 modifier = Modifier.padding(innerPadding)
             )
@@ -74,7 +72,6 @@ fun ItemDataLocalContent(
     setCloseDialog: () -> Unit,
     status: UpdateStatusState,
     onNavOption: () -> Unit,
-    onNavMenu: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -114,7 +111,7 @@ fun ItemDataLocalContent(
             horizontalArrangement = Arrangement.Center,
         )  {
             Button(
-                onClick = onNavMenu,
+                onClick = onNavOption,
                 modifier = Modifier
                     .weight(1f)
             ) {
@@ -141,7 +138,7 @@ fun ItemDataLocalContent(
         BackHandler {}
 
         if (status.flagDialog) {
-            MsgUpdate(status = status, setCloseDialog = setCloseDialog, value = stringResource(id = R.string.text_title_attendant))
+            MsgUpdate(status = status, onClickOk = setCloseDialog, value = stringResource(id = R.string.text_title_attendant))
         }
 
         if (status.flagProgress) {
@@ -152,7 +149,7 @@ fun ItemDataLocalContent(
 
     LaunchedEffect(flagAccess) {
         if (flagAccess) {
-            onNavMenu()
+            onNavOption()
         }
     }
 }
@@ -179,7 +176,6 @@ fun ItemDataLocalPagePreview() {
                     tableUpdate = "",
                     currentProgress = 0f,
                 ),
-                onNavMenu = {},
                 onNavOption = {},
                 modifier = Modifier.padding(innerPadding)
             )

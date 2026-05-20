@@ -9,7 +9,8 @@ data class CardSharedPreferencesModel(
     var local: LocalSharedPreferencesModel = LocalSharedPreferencesModel(),
     var idNatureList: List<Int> = emptyList(),
     var idTypeAccidentList: List<Int> = emptyList(),
-    var idDataLocalList: List<Int> = emptyList()
+    var idDataLocalList: List<Int> = emptyList(),
+    var idSupportTeamsList: List<Int> = emptyList()
 )
 
 data class LocalSharedPreferencesModel(
@@ -23,7 +24,11 @@ fun CardSharedPreferencesModel.sharedPreferencesModelToEntity(): Card {
         Card(
             regAttendant = regAttendant,
             idCar = idCar,
-            local = local.sharedPreferencesModelToEntity()
+            local = local.sharedPreferencesModelToEntity(),
+            idNatureList = idNatureList,
+            idTypeAccidentList = idTypeAccidentList,
+            idDataLocalList = idDataLocalList,
+            idSupportTeamsList = idSupportTeamsList
         )
     }
 }
@@ -32,7 +37,11 @@ fun Card.entityToSharedPreferencesModel(): CardSharedPreferencesModel {
         CardSharedPreferencesModel(
             regAttendant = regAttendant,
             idCar = idCar,
-            local = local.entityToSharedPreferencesModel()
+            local = local.entityToSharedPreferencesModel(),
+            idNatureList = idNatureList,
+            idTypeAccidentList = idTypeAccidentList,
+            idDataLocalList = idDataLocalList,
+            idSupportTeamsList = idSupportTeamsList
         )
     }
 }

@@ -6,6 +6,7 @@ import androidx.test.core.app.ApplicationProvider
 import br.com.usinasantafe.cav.external.room.dao.DatabaseRoom
 import br.com.usinasantafe.cav.external.room.dao.stable.SupportTeamsDao
 import br.com.usinasantafe.cav.infra.models.room.stable.SupportTeamsRoomModel
+import br.com.usinasantafe.cav.infra.models.room.stable.TypeAccidentRoomModel
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -160,4 +161,88 @@ class ISupportTeamsRoomDatasourceTest {
             )
         }
 
+    @Test
+    fun `listAll - Check return list if have data`() =
+        runTest {
+            supportTeamsDao.insertAll(
+                listOf(
+                    SupportTeamsRoomModel(
+                        id = 1,
+                        description = "TEST"
+                    )
+                )
+            )
+            val result = datasource.listAll()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            val list = result.getOrNull()!!
+            assertEquals(
+                list,
+                listOf(
+                    SupportTeamsRoomModel(
+                        id = 1,
+                        description = "TEST"
+                    )
+                )
+            )
+        }
+
+    @Test
+    fun `listByIdList - Check return emptyList if not have data`() =
+        runTest {
+            val result = datasource.listByIdList(listOf(1, 2))
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                emptyList()
+            )
+        }
+
+    @Test
+    fun `listByIdList - Check return list if have data fielded`() =
+        runTest {
+            supportTeamsDao.insertAll(
+                listOf(
+                    SupportTeamsRoomModel(
+                        id = 1,
+                        description = "Item 1"
+                    ),
+                    SupportTeamsRoomModel(
+                        id = 2,
+                        description = "Item 2"
+                    ),
+                    SupportTeamsRoomModel(
+                        id = 3,
+                        description = "Item 3"
+                    ),
+                    SupportTeamsRoomModel(
+                        id = 4,
+                        description = "Item 4"
+                    )
+                )
+            )
+            val result = datasource.listByIdList(listOf(2, 3))
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                listOf(
+                    SupportTeamsRoomModel(
+                        id = 2,
+                        description = "Item 2"
+                    ),
+                    SupportTeamsRoomModel(
+                        id = 3,
+                        description = "Item 3"
+                    ),
+                )
+            )
+        }
 }

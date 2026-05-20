@@ -15,7 +15,10 @@ interface SupportTeamsDao {
     @Query("DELETE FROM $TB_SUPPORT_TEAMS")
     suspend fun deleteAll()
 
-    @Query("SELECT * FROM $TB_SUPPORT_TEAMS")
+    @Query("SELECT * FROM $TB_SUPPORT_TEAMS ORDER BY 1")
     suspend fun all(): List<SupportTeamsRoomModel>
+
+    @Query("SELECT * FROM $TB_SUPPORT_TEAMS WHERE id in (:idList) ORDER BY 1")
+    suspend fun listByIdList(idList: List<Int>): List<SupportTeamsRoomModel>
 
 }

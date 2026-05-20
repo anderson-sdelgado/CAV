@@ -77,7 +77,17 @@ class ICardRepository @Inject constructor(
 
     override suspend fun setIdDataLocalList(idList: List<Int>): EmptyResult =
         call(getClassAndMethod()) {
-            TODO("Not yet implemented")
+            cardSharedPreferencesDatasource.setIdDataLocalList(idList).getOrThrow()
+        }
+
+    override suspend fun listIdSupportTeams(): Result<List<Int>> =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.listIdSupportTeams().getOrThrow()
+        }
+
+    override suspend fun setIdSupportTeamsList(idList: List<Int>): EmptyResult =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.setIdSupportTeamsList(idList).getOrThrow()
         }
 
 }

@@ -229,8 +229,8 @@ fun LocalScreenContent(
                     id = R.string.text_local,
                     address, latitude?: 0.0, longitude?: 0.0
                 ),
-                setCloseDialog = { onDialogCheck(false) },
-                setActionButtonYes = set
+                onClickDismiss = { onDialogCheck(false) },
+                onClickYes = set
             )
         }
 

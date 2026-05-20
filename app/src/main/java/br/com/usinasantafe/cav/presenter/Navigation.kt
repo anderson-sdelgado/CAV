@@ -4,6 +4,7 @@ import androidx.navigation.NavHostController
 import br.com.usinasantafe.cav.presenter.Args.ID_ARG
 import br.com.usinasantafe.cav.presenter.Args.OPTION_ARG
 import br.com.usinasantafe.cav.presenter.Screens.ATTENDANT_SCREEN
+import br.com.usinasantafe.cav.presenter.Screens.CAR_FULL_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.CAR_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.CONFIG_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.DATA_INITIAL_SCREEN
@@ -16,6 +17,7 @@ import br.com.usinasantafe.cav.presenter.Screens.NATURE_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.OPTION_DATA_LOCAL_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.PASSWORD_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.SPLASH_SCREEN
+import br.com.usinasantafe.cav.presenter.Screens.SUPPORT_TEAMS_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.TYPE_ACCIDENT_SCREEN
 
 object Screens {
@@ -33,6 +35,8 @@ object Screens {
     const val INPUT_LOCAL_SCREEN = "inputLocalScreen"
     const val OPTION_DATA_LOCAL_SCREEN = "optionDataLocalScreen"
     const val ITEM_DATA_LOCAL_SCREEN = "itemDataLocalScreen"
+    const val SUPPORT_TEAMS_SCREEN = "supportTeamsScreen"
+    const val CAR_FULL_SCREEN = "carFullScreen"
 }
 
 object Args {
@@ -55,6 +59,8 @@ object Routes {
     const val INPUT_LOCAL_ROUTE = INPUT_LOCAL_SCREEN
     const val OPTION_DATA_LOCAL_ROUTE = OPTION_DATA_LOCAL_SCREEN
     const val ITEM_DATA_LOCAL_ROUTE = "$ITEM_DATA_LOCAL_SCREEN/{$ID_ARG}"
+    const val SUPPORT_TEAMS_ROUTE = SUPPORT_TEAMS_SCREEN
+    const val CAR_FULL_ROUTE = CAR_FULL_SCREEN
 }
 
 class NavigationActions(private val navController: NavHostController) {
@@ -123,6 +129,10 @@ class NavigationActions(private val navController: NavHostController) {
         navController.navigate("$ITEM_DATA_LOCAL_SCREEN/$id")
     }
 
+    fun navigateToSupportTeams() {
+        navController.navigate(SUPPORT_TEAMS_SCREEN)
+    }
+
     //////////////////////////////////////////////////////////////////////
 
     ///////////////////////// Menu Card //////////////////////////////////
@@ -133,6 +143,10 @@ class NavigationActions(private val navController: NavHostController) {
 
     fun navigateToLocalSupport() {
         navController.navigate(LOCAL_SUPPORT_SCREEN)
+    }
+
+    fun navigateToCarFull() {
+        navController.navigate(CAR_FULL_SCREEN)
     }
 
     //////////////////////////////////////////////////////////////////////

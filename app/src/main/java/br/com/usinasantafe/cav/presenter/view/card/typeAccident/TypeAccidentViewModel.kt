@@ -25,7 +25,7 @@ import javax.inject.Inject
 data class TypeAccidentState(
     val flagAccess: Boolean = false,
     override val status: UpdateStatusState = UpdateStatusState()
-) : UiStateWithStatus<TypeAccidentState> {
+): UiStateWithStatus<TypeAccidentState> {
 
     override fun copyWithStatus(status: UpdateStatusState): TypeAccidentState =
         copy(status = status)

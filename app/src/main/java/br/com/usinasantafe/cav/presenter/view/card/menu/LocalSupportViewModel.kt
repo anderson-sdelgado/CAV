@@ -3,6 +3,8 @@ package br.com.usinasantafe.cav.presenter.view.card.menu
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.usinasantafe.cav.domain.usecases.card.GetLocal
+import br.com.usinasantafe.cav.domain.usecases.card.GetSupportTeams
+import br.com.usinasantafe.cav.domain.usecases.card.ListDataLocal
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import br.com.usinasantafe.cav.utils.onFailureHandled
@@ -29,6 +31,8 @@ data class LocalSupportState(
 @HiltViewModel
 class LocalSupportViewModel @Inject constructor(
     private val getLocal: GetLocal,
+    private val listDataLocal: ListDataLocal,
+    private val getSupportTeams: GetSupportTeams
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LocalSupportState())
@@ -43,10 +47,14 @@ class LocalSupportViewModel @Inject constructor(
     fun recoverData() = viewModelScope.launch {
         runCatching {
             val local = getLocal().getOrThrow()
+            val dataLocalList = listDataLocal().getOrThrow()
+            val supportTeams = getSupportTeams().getOrThrow()
             LocalSupportState(
                 address = local.address,
                 latitude = local.latitude,
-                longitude = local.longitude
+                longitude = local.longitude,
+                dataLocalList = dataLocalList,
+                supportTeams = supportTeams
             )
         }
             .onSuccess { newState ->

@@ -8,13 +8,13 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.core.app.ActivityScenario
 import androidx.test.rule.GrantPermissionRule
-import br.com.usinasantafe.cav.domain.entities.stable.OptionDataLocal
 import br.com.usinasantafe.cav.external.room.dao.stable.ColabDao
 import br.com.usinasantafe.cav.external.room.dao.stable.EquipDao
 import br.com.usinasantafe.cav.external.room.dao.stable.NatureDao
 import br.com.usinasantafe.cav.external.room.dao.stable.DataLocalDao
 import br.com.usinasantafe.cav.external.room.dao.stable.ItemDataLocalDao
 import br.com.usinasantafe.cav.external.room.dao.stable.OptionDataLocalDao
+import br.com.usinasantafe.cav.external.room.dao.stable.SupportTeamsDao
 import br.com.usinasantafe.cav.external.room.dao.stable.TypeAccidentDao
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.ConfigSharedPreferencesDatasource
@@ -24,20 +24,24 @@ import br.com.usinasantafe.cav.infra.models.room.stable.EquipRoomModel
 import br.com.usinasantafe.cav.infra.models.room.stable.ItemDataLocalRoomModel
 import br.com.usinasantafe.cav.infra.models.room.stable.NatureRoomModel
 import br.com.usinasantafe.cav.infra.models.room.stable.OptionDataLocalRoomModel
+import br.com.usinasantafe.cav.infra.models.room.stable.SupportTeamsRoomModel
 import br.com.usinasantafe.cav.infra.models.room.stable.TypeAccidentRoomModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.ConfigSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.StatusSend
 import br.com.usinasantafe.cav.presenter.MainActivity
 import br.com.usinasantafe.cav.presenter.view.card.menu.TAG_ATTENDANT_EDIT_BUTTON
 import br.com.usinasantafe.cav.presenter.view.card.menu.TAG_CAR_EDIT_BUTTON
+import br.com.usinasantafe.cav.presenter.view.card.menu.TAG_DATA_LOCAL_EDIT_BUTTON
 import br.com.usinasantafe.cav.presenter.view.card.menu.TAG_LOCAL_EDIT_BUTTON
 import br.com.usinasantafe.cav.presenter.view.card.menu.TAG_NATURE_EDIT_BUTTON
+import br.com.usinasantafe.cav.presenter.view.card.menu.TAG_SUPPORT_TEAMS_EDIT_BUTTON
 import br.com.usinasantafe.cav.presenter.view.card.menu.TAG_TYPE_ACCIDENT_EDIT_BUTTON
 import br.com.usinasantafe.cav.utils.typeAccidentList
 import br.com.usinasantafe.cav.utils.dataLocalList
 import br.com.usinasantafe.cav.utils.itemDataLocalList
 import br.com.usinasantafe.cav.utils.natureList
 import br.com.usinasantafe.cav.utils.optionDataLocalList
+import br.com.usinasantafe.cav.utils.supportTeamsList
 import br.com.usinasantafe.cav.utils.waitUntilTimeout
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -92,6 +96,9 @@ class CardFlowTest {
 
     @Inject
     lateinit var itemDataLocalDao: ItemDataLocalDao
+
+    @Inject
+    lateinit var supportTeamsDao: SupportTeamsDao
 
     @Before
     fun setup() {
@@ -472,13 +479,160 @@ class CardFlowTest {
 
             Log.d("TestDebug", "Position 36")
 
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithTag(TAG_DATA_LOCAL_EDIT_BUTTON)
+                .performClick()
+
+            Log.d("TestDebug", "Position 37")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("RETORNAR")
+                .performClick()
+
+            Log.d("TestDebug", "Position 38")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithTag(TAG_DATA_LOCAL_EDIT_BUTTON)
+                .performClick()
+
+            Log.d("TestDebug", "Position 39")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithTag("item_list_3")
+                .performClick()
+
+            Log.d("TestDebug", "Position 40")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("RETORNAR")
+                .performClick()
+
+            Log.d("TestDebug", "Position 41")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithTag("item_list_3")
+                .performClick()
+
+            Log.d("TestDebug", "Position 42")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("SIM")
+                .performClick()
+
+            Log.d("TestDebug", "Position 43")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("SALVAR")
+                .performClick()
+
+            Log.d("TestDebug", "Position 44")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithTag("item_list_7")
+                .performClick()
+
+            Log.d("TestDebug", "Position 45")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("BARREIRA")
+                .performClick()
+
+            Log.d("TestDebug", "Position 46")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("SALVAR")
+                .performClick()
+
+            Log.d("TestDebug", "Position 47")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("RETORNAR")
+                .performClick()
+
+            Log.d("TestDebug", "Position 48")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithTag(TAG_SUPPORT_TEAMS_EDIT_BUTTON)
+                .performClick()
+
+            Log.d("TestDebug", "Position 49")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("RETORNAR")
+                .performClick()
+
+            Log.d("TestDebug", "Position 50")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithTag(TAG_SUPPORT_TEAMS_EDIT_BUTTON)
+                .performClick()
+
+            Log.d("TestDebug", "Position 51")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("GUINCHOS")
+                .performClick()
+
+            Log.d("TestDebug", "Position 52")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("BOMBEIROS")
+                .performClick()
+
+            Log.d("TestDebug", "Position 53")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("SALVAR")
+                .performClick()
+
+            Log.d("TestDebug", "Position 54")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("RETORNAR")
+                .performClick()
+
+            Log.d("TestDebug", "Position 55")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("AVANÇAR")
+                .performClick()
+
+            Log.d("TestDebug", "Position 56")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("AVANÇAR")
+                .performClick()
+
+            Log.d("TestDebug", "Position 57")
+
             composeTestRule.waitUntilTimeout(20_000)
 
         }
 
     private suspend fun initialRegister() {
 
-        cardSharedPreferencesDatasource.clear()
+        cardSharedPreferencesDatasource.clean()
 
         configSharedPreferencesDatasource.save(
             ConfigSharedPreferencesModel(
@@ -540,6 +694,10 @@ class CardFlowTest {
         val itemDataLocalType = object : TypeToken<List<ItemDataLocalRoomModel>>() {}.type
         val itemDataLocalList = gson.fromJson<List<ItemDataLocalRoomModel>>(itemDataLocalList, itemDataLocalType)
         itemDataLocalDao.insertAll(itemDataLocalList)
+
+        val supportTeamsType = object : TypeToken<List<SupportTeamsRoomModel>>() {}.type
+        val supportTeamsList = gson.fromJson<List<SupportTeamsRoomModel>>(supportTeamsList, supportTeamsType)
+        supportTeamsDao.insertAll(supportTeamsList)
 
     }
 

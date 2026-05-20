@@ -508,4 +508,74 @@ class ICardSharedPreferencesDatasourceTest {
             )
         }
 
+    @Test
+    fun `listIdSupportTeams - Check return data and sharePreferences is empty`() =
+        runTest {
+            val result = datasource.listIdSupportTeams()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            val list = result.getOrNull()!!
+            assertEquals(
+                list,
+                emptyList()
+            )
+        }
+
+    @Test
+    fun `listIdSupportTeams - Check return data and sharePreferences with data`() =
+        runTest {
+            val data = CardSharedPreferencesModel(
+                idSupportTeamsList = listOf(1, 2)
+            )
+            datasource.save(data)
+            val result = datasource.listIdSupportTeams()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            val list = result.getOrNull()!!
+            assertEquals(
+                list,
+                listOf(1, 2)
+            )
+        }
+
+    @Test
+    fun `setIdSupportTeamsList - Check alter data correct in SharedPreferences internal`() =
+        runTest {
+            val data = CardSharedPreferencesModel(
+                idSupportTeamsList = listOf(1, 2)
+            )
+            datasource.save(data)
+            val resultGetBefore = datasource.get()
+            assertEquals(
+                resultGetBefore.isSuccess,
+                true
+            )
+            val modelBefore = resultGetBefore.getOrNull()!!
+            val listBefore = modelBefore.idSupportTeamsList
+            assertEquals(
+                listBefore,
+                listOf(1, 2)
+            )
+            val result = datasource.setIdSupportTeamsList(listOf(3, 4))
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            val resultGetAfter = datasource.get()
+            assertEquals(
+                resultGetAfter.isSuccess,
+                true
+            )
+            val modelAfter= resultGetAfter.getOrNull()!!
+            val listAfter= modelAfter.idSupportTeamsList
+            assertEquals(
+                listAfter,
+                listOf(3, 4)
+            )
+        }
+
 }

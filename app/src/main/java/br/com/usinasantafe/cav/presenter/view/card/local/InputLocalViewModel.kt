@@ -45,18 +45,17 @@ class InputLocalViewModel @Inject constructor(
         }
     }
 
-    fun set() =
-        viewModelScope.launch {
-            runCatching {
-                if (state.address.isBlank()) {
-                    handleFailure(getClassAndMethod(), Errors.FIELD_EMPTY, ::onError)
-                    return@launch
-                }
-                setLocal(address = state.address).getOrThrow()
+    fun set() = viewModelScope.launch {
+        runCatching {
+            if (state.address.isBlank()) {
+                handleFailure(getClassAndMethod(), Errors.FIELD_EMPTY, ::onError)
+                return@launch
             }
-                .onSuccess { updateState { copy(flagAccess = true, flagDialog = false) } }
-                .onFailureHandled(getClassAndMethod(), ::onError)
+            setLocal(address = state.address).getOrThrow()
         }
+            .onSuccess { updateState { copy(flagAccess = true, flagDialog = false) } }
+            .onFailureHandled(getClassAndMethod(), ::onError)
+    }
 
     private fun onError(failure: String, errors: Errors = Errors.EXCEPTION) = updateState { copy(flagDialog = true, failure = failure, errors = errors) }
 

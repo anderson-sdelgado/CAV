@@ -79,4 +79,16 @@ interface CardModule {
     @Singleton
     fun bindSetDataLocalList(usecase: ISetDataLocalList): SetDataLocalList
 
+    @Binds
+    @Singleton
+    fun bindListSupportTeams(usecase: IListSupportTeams): ListSupportTeams
+
+    @Binds
+    @Singleton
+    fun bindSetSupportTeamsList(usecase: ISetSupportTeamsList): SetSupportTeamsList
+
+    @Binds
+    @Singleton
+    fun bindGetSupportTeams(usecase: IGetSupportTeams): GetSupportTeams
+
 }

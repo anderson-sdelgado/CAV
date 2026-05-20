@@ -6,6 +6,7 @@ import br.com.usinasantafe.cav.infra.datasource.retrofit.stable.SupportTeamsRetr
 import br.com.usinasantafe.cav.infra.datasource.room.stable.SupportTeamsRoomDatasource
 import br.com.usinasantafe.cav.infra.models.retrofit.stable.retrofitModelToEntity
 import br.com.usinasantafe.cav.infra.models.room.stable.entityToRoomModel
+import br.com.usinasantafe.cav.infra.models.room.stable.roomModelToEntity
 import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -32,6 +33,18 @@ class ISupportTeamsRepository @Inject constructor(
         call(getClassAndMethod()) {
             val modelList = supportTeamsRetrofitDatasource.listAll(token).getOrThrow()
             modelList.map { it.retrofitModelToEntity() }
+        }
+
+    override suspend fun listAll(): Result<List<SupportTeams>> =
+        call(getClassAndMethod()) {
+            val modelList = supportTeamsRoomDatasource.listAll().getOrThrow()
+            modelList.map { it.roomModelToEntity() }
+        }
+
+    override suspend fun listByIdList(idList: List<Int>): Result<List<SupportTeams>> =
+        call(getClassAndMethod()) {
+            val modelList = supportTeamsRoomDatasource.listByIdList(idList).getOrThrow()
+            modelList.map { it.roomModelToEntity() }
         }
 
 }

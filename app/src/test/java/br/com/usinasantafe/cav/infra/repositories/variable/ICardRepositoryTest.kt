@@ -559,4 +559,126 @@ class ICardRepositoryTest {
             )
         }
 
+    @Test
+    fun `setIdDataLocalList - Check return failure if have error in CardSharedPreferencesDatasource setIdDataLocalList`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.setIdDataLocalList(listOf(1, 2))
+            ).thenReturn(
+                resultFailure(
+                    "ICardSharedPreferencesDatasource.setIdDataLocalList",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.setIdDataLocalList(listOf(1, 2))
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "ICardRepository.setIdDataLocalList -> ICardSharedPreferencesDatasource.setIdDataLocalList"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `setIdDataLocalList - Check return correct if function execute successfully`() =
+        runTest {
+            val result = repository.setIdDataLocalList(listOf(1, 2))
+            verify(cardSharedPreferencesDatasource, atLeastOnce()).setIdDataLocalList(listOf(1, 2))
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+        }
+
+    @Test
+    fun `listIdSupportTeams - Check return failure if have error in CardSharedPreferencesDatasource listIdSupportTeams`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.listIdSupportTeams()
+            ).thenReturn(
+                resultFailure(
+                    "ICardSharedPreferencesDatasource.listIdSupportTeams",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.listIdSupportTeams()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "ICardRepository.listIdSupportTeams -> ICardSharedPreferencesDatasource.listIdSupportTeams"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `listIdSupportTeams - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.listIdSupportTeams()
+            ).thenReturn(
+                Result.success(listOf(1))
+            )
+            val result = repository.listIdSupportTeams()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                listOf(1)
+            )
+        }
+
+    @Test
+    fun `setIdSupportTeamsList - Check return failure if have error in CardSharedPreferencesDatasource setIdSupportTeamsList`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.setIdSupportTeamsList(listOf(1, 2))
+            ).thenReturn(
+                resultFailure(
+                    "ICardSharedPreferencesDatasource.setIdSupportTeamsList",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.setIdSupportTeamsList(listOf(1, 2))
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "ICardRepository.setIdSupportTeamsList -> ICardSharedPreferencesDatasource.setIdSupportTeamsList"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `setIdSupportTeamsList - Check return correct if function execute successfully`() =
+        runTest {
+            val result = repository.setIdSupportTeamsList(listOf(1, 2))
+            verify(cardSharedPreferencesDatasource, atLeastOnce()).setIdSupportTeamsList(listOf(1, 2))
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+        }
+
 }

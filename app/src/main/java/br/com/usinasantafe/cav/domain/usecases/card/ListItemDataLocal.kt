@@ -18,7 +18,7 @@ class IListItemDataLocal @Inject constructor(
 
     override suspend fun invoke(id: Int): Result<List<ItemCheckBoxScreenModel>> =
         call(getClassAndMethod()) {
-            val rOptionItemDataLocalList = dataLocalRepository.listROptionItemByIdOption(id).getOrThrow()
+            val rOptionItemDataLocalList = dataLocalRepository.listDataLocalByIdOption(id).getOrThrow()
 
             val idItemList = rOptionItemDataLocalList.map { it.idItem }
             val itemList = dataLocalRepository.listItemByIdList(idItemList).getOrThrow()

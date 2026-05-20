@@ -29,6 +29,7 @@ import br.com.usinasantafe.cav.lib.errors
 import br.com.usinasantafe.cav.presenter.theme.AlertDialogSimpleDesign
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
+import br.com.usinasantafe.cav.presenter.theme.MsgErrors
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
 
 const val TAG_LOCAL_TEXT_FIELD = "tag_local_text_field"
@@ -45,6 +46,7 @@ fun InputLocalScreen(
                 address = uiState.address,
                 onAddressChanged = viewModel::onAddressChanged,
                 setCloseDialog = viewModel::setCloseDialog,
+                set = viewModel::set,
                 flagAccess = uiState.flagAccess,
                 flagDialog = uiState.flagDialog,
                 failure = uiState.failure,
@@ -61,6 +63,7 @@ fun InputLocalContent(
     address: String,
     onAddressChanged: (String) -> Unit,
     setCloseDialog: () -> Unit,
+    set: () -> Unit,
     flagAccess: Boolean,
     flagDialog: Boolean,
     failure: String,
@@ -97,13 +100,13 @@ fun InputLocalContent(
             horizontalArrangement = Arrangement.Center,
         ) {
             Button(
-                onClick = {},
+                onClick = onNavCard,
                 modifier = Modifier.weight(1f)
             ) {
                 TextButtonDesign(text = stringResource(id = R.string.text_pattern_cancel))
             }
             Button(
-                onClick = {},
+                onClick = set,
                 modifier = Modifier.weight(1f),
             ) {
                 TextButtonDesign(text = stringResource(id = R.string.text_pattern_ok))
@@ -111,9 +114,7 @@ fun InputLocalContent(
         }
 
         if(flagDialog) {
-            val text =
-                errors(errors, failure)
-            AlertDialogSimpleDesign(text = text, setCloseDialog = setCloseDialog,)
+            MsgErrors(errors, setCloseDialog, failure)
         }
 
     }
@@ -134,12 +135,13 @@ fun InputLocalPagePreview() {
             InputLocalContent(
                 address = "Local",
                 onAddressChanged = {},
-                onNavCard = {},
                 setCloseDialog = {},
+                set = {},
                 flagAccess = false,
                 flagDialog = false,
                 failure = "",
                 errors = Errors.FIELD_EMPTY,
+                onNavCard = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

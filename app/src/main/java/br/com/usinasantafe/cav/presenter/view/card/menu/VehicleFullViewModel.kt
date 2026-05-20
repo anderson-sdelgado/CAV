@@ -1,16 +1,17 @@
-package br.com.usinasantafe.cav.presenter.view.card.support
+package br.com.usinasantafe.cav.presenter.view.card.menu
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import br.com.usinasantafe.cav.lib.Errors
+import br.com.usinasantafe.cav.presenter.model.VehicleScreenModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class SupportState(
+data class VehicleFullState(
+    val vehicleOwnList: List<VehicleScreenModel> = emptyList(),
+    val vehicleForeignList: List<VehicleScreenModel> = emptyList(),
     val flagAccess: Boolean = false,
     val flagDialog: Boolean = false,
     val flagFailure: Boolean = false,
@@ -19,15 +20,13 @@ data class SupportState(
 )
 
 @HiltViewModel
-class SupportViewModel @Inject constructor(
+class VehicleFullViewModel @Inject constructor(
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(SupportState())
+    private val _uiState = MutableStateFlow(VehicleFullState())
     val uiState = _uiState.asStateFlow()
 
-    private val state get() = uiState.value
-
-    private fun updateState(block: SupportState.() -> SupportState) {
+    private fun updateState(block: VehicleFullState.() -> VehicleFullState) {
         _uiState.update(block)
     }
 

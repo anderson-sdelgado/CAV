@@ -17,12 +17,12 @@ data class LocalState(
     val address: String = "",
     val latitude: Double? = null,
     val longitude: Double? = null,
+    val flagDialogCheck: Boolean = false,
     val flagAccess: Boolean = false,
     val flagDialog: Boolean = false,
     val flagFailure: Boolean = false,
     val failure: String = "",
     val errors: Errors = Errors.FIELD_EMPTY,
-    val flagDialogCheck: Boolean = false,
 )
 
 @HiltViewModel
@@ -47,8 +47,7 @@ class LocalViewModel @Inject constructor(
         updateState { copy(address = address, latitude = latitude, longitude = longitude) }
     }
 
-    fun set() =
-        viewModelScope.launch {
+    fun set() = viewModelScope.launch {
         runCatching {
             setLocal(address = state.address, latitude = state.latitude, longitude = state.longitude).getOrThrow()
         }

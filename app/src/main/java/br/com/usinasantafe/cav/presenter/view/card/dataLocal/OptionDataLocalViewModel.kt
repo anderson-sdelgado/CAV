@@ -25,7 +25,6 @@ import kotlin.onSuccess
 
 data class OptionDataLocalState(
     val list: List<ItemListScreenModel> = emptyList(),
-    val flagAccess: Boolean = false,
     override val status: UpdateStatusState = UpdateStatusState()
 ) : UiStateWithStatus<OptionDataLocalState> {
 

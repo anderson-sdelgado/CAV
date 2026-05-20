@@ -22,4 +22,14 @@ class ISupportTeamsRoomDatasource @Inject constructor(
             supportTeamsDao.deleteAll()
         }
 
+    override suspend fun listAll(): Result<List<SupportTeamsRoomModel>> =
+        result(getClassAndMethod()) {
+            supportTeamsDao.all()
+        }
+
+    override suspend fun listByIdList(idList: List<Int>): Result<List<SupportTeamsRoomModel>> =
+        result(getClassAndMethod()) {
+            supportTeamsDao.listByIdList(idList)
+        }
+
 }

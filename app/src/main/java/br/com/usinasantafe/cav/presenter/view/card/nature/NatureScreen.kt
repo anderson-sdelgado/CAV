@@ -134,7 +134,7 @@ fun NatureContent(
         BackHandler {}
 
         if (status.flagDialog) {
-            MsgUpdate(status = status, setCloseDialog = setCloseDialog, value = stringResource(id = R.string.text_title_attendant))
+            MsgUpdate(status = status, onClickOk = setCloseDialog, value = stringResource(id = R.string.text_title_attendant))
         }
 
         if (status.flagProgress) {

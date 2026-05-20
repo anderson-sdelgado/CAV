@@ -37,7 +37,7 @@ import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
 
 const val TAG_LOCAL_EDIT_BUTTON = "tag_local_edit_button"
 const val TAG_DATA_LOCAL_EDIT_BUTTON = "tag_data_local_edit_button"
-const val TAG_SUPPORT_EDIT_BUTTON = "tag_support_edit_button"
+const val TAG_SUPPORT_TEAMS_EDIT_BUTTON = "tag_support_teams_edit_button"
 
 @Composable
 fun LocalSupportScreen(
@@ -45,7 +45,8 @@ fun LocalSupportScreen(
     onNavDataInitial: () -> Unit,
     onNavLocal: () -> Unit,
     onNavDataLocal: () -> Unit,
-    onNavSupport: () -> Unit,
+    onNavSupportTeams: () -> Unit,
+    onNavCarFull: () -> Unit
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -64,7 +65,8 @@ fun LocalSupportScreen(
                 onNavDataInitial = onNavDataInitial,
                 onNavLocal = onNavLocal,
                 onNavDataLocal = onNavDataLocal,
-                onNavSupport = onNavSupport,
+                onNavSupport = onNavSupportTeams,
+                onNavCarFull = onNavCarFull,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -82,6 +84,7 @@ fun LocalSupportContent(
     onNavLocal: () -> Unit,
     onNavDataLocal: () -> Unit,
     onNavSupport: () -> Unit,
+    onNavCarFull: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -128,7 +131,8 @@ fun LocalSupportContent(
                                             )
                                         )
                                     }
-                                    append(address.ifEmpty { " -" })
+                                    append(" ")
+                                    append(address.ifEmpty { "-" })
                                 }
                             )
                             Text(
@@ -140,7 +144,8 @@ fun LocalSupportContent(
                                             )
                                         )
                                     }
-                                    append(longitude.ifEmpty { " -" })
+                                    append(" ")
+                                    append(longitude.ifEmpty { "-" })
                                 }
                             )
                             Text(
@@ -152,7 +157,8 @@ fun LocalSupportContent(
                                             )
                                         )
                                     }
-                                    append(latitude.ifEmpty { " -" })
+                                    append(" ")
+                                    append(latitude.ifEmpty { "-" })
                                 }
                             )
 
@@ -191,7 +197,7 @@ fun LocalSupportContent(
                             fontSize = 20.sp
                         )
                         if(dataLocalList.isEmpty()){
-                            Text("")
+                            Text("-")
                         } else {
                             dataLocalList.forEach {
                                 Text(buildAnnotatedString {
@@ -241,7 +247,7 @@ fun LocalSupportContent(
                     Button(
                         onClick = onNavSupport,
                         Modifier
-                            .testTag(TAG_SUPPORT_EDIT_BUTTON)
+                            .testTag(TAG_SUPPORT_TEAMS_EDIT_BUTTON)
                     ) {
                         Text(
                             text = stringResource(
@@ -268,7 +274,7 @@ fun LocalSupportContent(
                 )
             }
             Button(
-                onClick = {},
+                onClick = onNavCarFull,
                 modifier = Modifier.weight(1f),
             ) {
                 TextButtonDesign(
@@ -295,6 +301,7 @@ fun LocalSupportPagePreviewIsNull() {
                 onNavLocal = {},
                 onNavDataLocal = {},
                 onNavSupport = {},
+                onNavCarFull = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -316,6 +323,7 @@ fun LocalSupportPagePreview() {
                 onNavLocal = {},
                 onNavDataLocal = {},
                 onNavSupport = {},
+                onNavCarFull = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -337,6 +345,7 @@ fun LocalSupportPagePreviewIsPartNull() {
                 onNavLocal = {},
                 onNavDataLocal = {},
                 onNavSupport = {},
+                onNavCarFull = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

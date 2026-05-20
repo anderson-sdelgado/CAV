@@ -6,7 +6,8 @@ data class Card(
     var local: Local = Local(),
     var idNatureList: List<Int> = emptyList(),
     var idTypeAccidentList: List<Int> = emptyList(),
-    var idDataLocalList: List<Int> = emptyList()
+    var idDataLocalList: List<Int> = emptyList(),
+    var idSupportTeamsList: List<Int> = emptyList()
 )
 
 data class Local(

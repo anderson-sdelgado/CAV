@@ -186,7 +186,7 @@ class IDataLocalRepositoryTest {
                 dataLocalRoomDatasource.addAll(modelList)
             ).thenReturn(
                 resultFailure(
-                    "IROptionItemDataLocalRoomDatasource.addAll",
+                    "IDataLocalRoomDatasource.addAll",
                     "-",
                     Exception()
                 )
@@ -198,7 +198,7 @@ class IDataLocalRepositoryTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IDataLocalRepository.addAllROptionItem -> IROptionItemDataLocalRoomDatasource.addAll"
+                "IDataLocalRepository.addAllDataLocal -> IDataLocalRoomDatasource.addAll"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -322,7 +322,7 @@ class IDataLocalRepositoryTest {
                 dataLocalRoomDatasource.deleteAll()
             ).thenReturn(
                 resultFailure(
-                    "IROptionItemDataLocalRoomDatasource.deleteAll",
+                    "IDataLocalRoomDatasource.deleteAll",
                     "-",
                     Exception()
                 )
@@ -334,7 +334,7 @@ class IDataLocalRepositoryTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IDataLocalRepository.deleteAllROptionItem -> IROptionItemDataLocalRoomDatasource.deleteAll"
+                "IDataLocalRepository.deleteAllDataLocal -> IDataLocalRoomDatasource.deleteAll"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -480,7 +480,7 @@ class IDataLocalRepositoryTest {
                 dataLocalRetrofitDatasource.listAll("TOKEN")
             ).thenReturn(
                 resultFailure(
-                    "IROptionItemRetrofitDatasource.listAll",
+                    "IDataLocalRetrofitDatasource.listAll",
                     "-",
                     Exception()
                 )
@@ -492,7 +492,7 @@ class IDataLocalRepositoryTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IDataLocalRepository.listAllROptionItem -> IROptionItemRetrofitDatasource.listAll"
+                "IDataLocalRepository.listAllDataLocal -> IDataLocalRetrofitDatasource.listAll"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -751,7 +751,7 @@ class IDataLocalRepositoryTest {
                     Exception()
                 )
             )
-            val result = repository.listROptionItemByIdOption(1)
+            val result = repository.listDataLocalByIdOption(1)
             assertEquals(
                 result.isFailure,
                 true
@@ -782,7 +782,7 @@ class IDataLocalRepositoryTest {
                     )
                 )
             )
-            val result = repository.listROptionItemByIdOption(1)
+            val result = repository.listDataLocalByIdOption(1)
             assertEquals(
                 result.isSuccess,
                 true

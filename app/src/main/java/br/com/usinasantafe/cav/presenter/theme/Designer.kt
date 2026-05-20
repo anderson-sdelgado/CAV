@@ -10,11 +10,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -34,6 +40,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.errors
 import br.com.usinasantafe.cav.lib.msg
@@ -86,7 +93,7 @@ const val TAG_BUTTON_NO_ALERT_DIALOG_CHECK = "tag_button_no_alert_dialog_check"
 @Composable
 fun AlertDialogSimpleDesign(
     text: String,
-    setCloseDialog: () -> Unit
+    onClickOk: () -> Unit
 ) {
     return AlertDialog(
         title = {
@@ -101,10 +108,10 @@ fun AlertDialogSimpleDesign(
                 modifier = Modifier.testTag("text_alert_dialog_simple")
             )
         },
-        onDismissRequest = setCloseDialog,
+        onDismissRequest = onClickOk,
         confirmButton = {
             Button(
-                onClick = setCloseDialog,
+                onClick = onClickOk,
                 modifier = Modifier.testTag(TAG_BUTTON_OK_ALERT_DIALOG_SIMPLE)
             ) {
                 Text("OK")
@@ -246,7 +253,7 @@ fun AlertDialogProgressDesign(
 }
 
 @Composable
-fun MsgUpdate(status : UpdateStatusState, setCloseDialog: () -> Unit, value: String = ""){
+fun MsgUpdate(status : UpdateStatusState, onClickOk: () -> Unit, value: String = ""){
     val text =
         if (status.flagFailure) {
             errors(status.errors, status.failure, value)
@@ -256,7 +263,7 @@ fun MsgUpdate(status : UpdateStatusState, setCloseDialog: () -> Unit, value: Str
 
     AlertDialogSimpleDesign(
         text = text,
-        setCloseDialog = setCloseDialog,
+        onClickOk = onClickOk,
     )
 }
 
@@ -362,8 +369,8 @@ fun TextButtonCleanDesign(
 @Composable
 fun AlertDialogCheckDesign(
     text: String,
-    setCloseDialog: () -> Unit,
-    setActionButtonYes: () -> Unit
+    onClickDismiss: () -> Unit,
+    onClickYes: () -> Unit
 ) {
     return AlertDialog(
         title = {
@@ -378,10 +385,10 @@ fun AlertDialogCheckDesign(
                 modifier = Modifier.testTag("text_alert_dialog_check")
             )
         },
-        onDismissRequest = setCloseDialog,
+        onDismissRequest = onClickDismiss,
         confirmButton = {
             Button(
-                onClick = setActionButtonYes,
+                onClick = onClickYes,
                 modifier = Modifier.testTag(TAG_BUTTON_YES_ALERT_DIALOG_CHECK)
             ) {
                 Text("SIM")
@@ -389,7 +396,7 @@ fun AlertDialogCheckDesign(
         },
         dismissButton = {
             Button(
-                onClick = setCloseDialog,
+                onClick = onClickDismiss,
                 modifier = Modifier.testTag(TAG_BUTTON_NO_ALERT_DIALOG_CHECK)
             ) {
                 Text("NÃO")
@@ -432,10 +439,53 @@ fun CheckboxDefault(
 }
 
 @Composable
-fun MsgErrors(errors: Errors, setCloseDialog: () -> Unit, failure: String){
+fun MsgErrors(errors: Errors, onClickOk: () -> Unit, failure: String){
     val text = errors(errors, failure)
     AlertDialogSimpleDesign(
         text = text,
-        setCloseDialog = setCloseDialog,
+        onClickOk = onClickOk,
     )
+}
+
+@Composable
+fun ItemDefaultEditDelListScreenModel(
+    id: Int,
+    desc: String,
+    onClickEdit: () -> Unit,
+    onClickDel: () -> Unit
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ){
+        Text(
+            text = desc,
+            modifier = Modifier
+                .weight(1f)
+        )
+        IconButton(
+            onClick = onClickEdit,
+            colors = IconButtonDefaults.iconButtonColors(
+                containerColor = Color.LightGray
+            ),
+            modifier = Modifier.testTag("tag_item_edit_$id")
+        ) {
+            Icon(
+                imageVector = Icons.Default.Edit,
+                contentDescription = stringResource(id = R.string.text_pattern_edit)
+            )
+        }
+        IconButton(
+            onClick = onClickDel,
+            colors = IconButtonDefaults.iconButtonColors(
+                containerColor = Color.LightGray
+            ),
+            modifier = Modifier.testTag("tag_item_delete_$id")
+        ) {
+            Icon(
+                imageVector = Icons.Default.Delete,
+                contentDescription = stringResource(id = R.string.text_pattern_delete),
+                tint = Color.Red
+            )
+        }
+    }
 }

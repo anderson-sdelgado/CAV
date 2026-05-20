@@ -24,9 +24,9 @@ class ISetDataLocalList @Inject constructor(
         list: List<ItemCheckBoxScreenModel>
     ): Result<Unit> =
         call(getClassAndMethod()) {
-            val rOptionItemDataLocalList = dataLocalRepository.listROptionItemByIdOption(idOption).getOrThrow()
+            val dataLocalList = dataLocalRepository.listDataLocalByIdOption(idOption).getOrThrow()
             val idDataLocalNoteList = cardRepository.listIdDataLocal().getOrThrow()
-            val idDataLocalDBList = rOptionItemDataLocalList.map { it.id }
+            val idDataLocalDBList = dataLocalList.map { it.id }
             val idDataLocalDBSet = idDataLocalDBList.toSet()
             val idDataLocalCleanList = idDataLocalNoteList.filterNot{ idDataLocalDBSet.contains(it) }
             val idDataLocalCheckList = list.filter { it.flag }.map { it.id }

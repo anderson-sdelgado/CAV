@@ -46,7 +46,6 @@ fun OptionDataLocalScreen(
             OptionDataLocalContent(
                 list = uiState.list,
                 updateDatabase = viewModel::updateDatabase,
-                flagAccess = uiState.flagAccess,
                 setCloseDialog = viewModel::setCloseDialog,
                 status = uiState.status,
                 onNavMenu = onNavMenu,
@@ -61,7 +60,6 @@ fun OptionDataLocalScreen(
 fun OptionDataLocalContent(
     list: List<ItemListScreenModel>,
     updateDatabase: () -> Unit,
-    flagAccess: Boolean,
     setCloseDialog: () -> Unit,
     status: UpdateStatusState,
     onNavMenu: () -> Unit,
@@ -83,6 +81,7 @@ fun OptionDataLocalContent(
         ) {
             items(list) { item ->
                 ItemDefaultListDesign(
+                    id = item.id,
                     text = item.description,
                     setActionItem = {
                         onNavItem(item.id)
@@ -98,7 +97,7 @@ fun OptionDataLocalContent(
         BackHandler {}
 
         if (status.flagDialog) {
-            MsgUpdate(status = status, setCloseDialog = setCloseDialog)
+            MsgUpdate(status = status, onClickOk = setCloseDialog)
         }
 
         if (status.flagProgress) {
@@ -117,7 +116,6 @@ fun OptionDataLocalPagePreview() {
             OptionDataLocalContent(
                 list = emptyList(),
                 updateDatabase = {},
-                flagAccess = false,
                 setCloseDialog = {},
                 status = UpdateStatusState(
                     flagFailure = false,
@@ -158,7 +156,6 @@ fun OptionDataLocalPagePreviewWithData() {
                     )
                 ),
                 updateDatabase = {},
-                flagAccess = false,
                 setCloseDialog = {},
                 status = UpdateStatusState(
                     flagFailure = false,
@@ -199,7 +196,6 @@ fun OptionDataLocalPagePreviewWithFailureUpdate() {
                     )
                 ),
                 updateDatabase = {},
-                flagAccess = false,
                 setCloseDialog = {},
                 status = UpdateStatusState(
                     flagFailure = true,
@@ -240,7 +236,6 @@ fun OptionDataLocalPagePreviewWithProgressUpdate() {
                     )
                 ),
                 updateDatabase = {},
-                flagAccess = false,
                 setCloseDialog = {},
                 status = UpdateStatusState(
                     flagFailure = false,
@@ -281,7 +276,6 @@ fun OptionDataLocalPagePreviewWithFailureError() {
                     )
                 ),
                 updateDatabase = {},
-                flagAccess = false,
                 setCloseDialog = {},
                 status = UpdateStatusState(
                     flagFailure = true,

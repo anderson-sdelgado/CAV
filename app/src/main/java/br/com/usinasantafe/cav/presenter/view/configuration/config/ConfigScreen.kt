@@ -157,7 +157,7 @@ fun ConfigContent(
         BackHandler {}
 
         if (status.flagDialog) {
-            MsgUpdate(status = status, setCloseDialog = setCloseDialog)
+            MsgUpdate(status = status, onClickOk = setCloseDialog)
         }
     }
 

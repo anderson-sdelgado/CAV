@@ -26,7 +26,7 @@ class ISetDataLocalListTest {
     fun `Check return failure if have error in DataLocalRepository listROptionItemByIdOption`() =
         runTest {
             whenever(
-                dataLocalRepository.listROptionItemByIdOption(10)
+                dataLocalRepository.listDataLocalByIdOption(10)
             ).thenReturn(
                 resultFailure(
                     "IDataLocalRepository.listROptionItemByIdOption",
@@ -82,7 +82,7 @@ class ISetDataLocalListTest {
     fun `Check return failure if have error in CardRepository listIdDataLocal`() =
         runTest {
             whenever(
-                dataLocalRepository.listROptionItemByIdOption(5)
+                dataLocalRepository.listDataLocalByIdOption(5)
             ).thenReturn(
                 Result.success(
                     listOf(
@@ -161,7 +161,7 @@ class ISetDataLocalListTest {
     fun `Check return failure if have error in CardRepository setIdDataLocalList`() =
         runTest {
             whenever(
-                dataLocalRepository.listROptionItemByIdOption(5)
+                dataLocalRepository.listDataLocalByIdOption(5)
             ).thenReturn(
                 Result.success(
                     listOf(
@@ -247,7 +247,7 @@ class ISetDataLocalListTest {
     fun `Check return correct if function execute successfully`() =
         runTest {
             whenever(
-                dataLocalRepository.listROptionItemByIdOption(5)
+                dataLocalRepository.listDataLocalByIdOption(5)
             ).thenReturn(
                 Result.success(
                     listOf(

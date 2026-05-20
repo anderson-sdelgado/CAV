@@ -7,4 +7,6 @@ interface SupportTeamsRepository {
     suspend fun addAll(list: List<SupportTeams>): EmptyResult
     suspend fun deleteAll(): EmptyResult
     suspend fun listAll(token: String): Result<List<SupportTeams>>
+    suspend fun listAll(): Result<List<SupportTeams>>
+    suspend fun listByIdList(idList: List<Int>): Result<List<SupportTeams>>
 }

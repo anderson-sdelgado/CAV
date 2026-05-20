@@ -88,7 +88,7 @@ fun CarContent(
         }
 
         if (status.flagDialog) {
-            MsgUpdate(status = status, setCloseDialog = setCloseDialog, value = stringResource(id = R.string.text_title_car))
+            MsgUpdate(status = status, onClickOk = setCloseDialog, value = stringResource(id = R.string.text_title_car))
         }
 
         if (status.flagProgress) {
