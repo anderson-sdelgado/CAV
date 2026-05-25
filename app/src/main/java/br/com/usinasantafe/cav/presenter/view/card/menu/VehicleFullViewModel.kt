@@ -32,6 +32,4 @@ class VehicleFullViewModel @Inject constructor(
 
     fun setCloseDialog() = updateState { copy(flagDialog = false) }
 
-
-
 }

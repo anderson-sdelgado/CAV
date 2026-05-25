@@ -8,4 +8,5 @@ enum class Status { OPEN, CLOSE, FINISH }
 enum class LevelUpdate { RECOVERY, CLEAN, SAVE, GET_TOKEN, SAVE_TOKEN, FINISH_UPDATE_INITIAL, FINISH_UPDATE_COMPLETED }
 enum class Option { INSERT, EDIT }
 
-enum class TypeDetailOwn { EQUIP, EQUIP_SEC, DRIVER, PASSENGER }
+enum class Type { MAIN, SECONDARY }
+enum class TypeDetail { EQUIP_VEHICLE, EQUIP_VEHICLE_SEC, DRIVER, PASSENGER }

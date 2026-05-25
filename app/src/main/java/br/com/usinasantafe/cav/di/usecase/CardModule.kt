@@ -91,4 +91,13 @@ interface CardModule {
     @Singleton
     fun bindGetSupportTeams(usecase: IGetSupportTeams): GetSupportTeams
 
+    @Binds
+    @Singleton
+    fun bindGetEquip(usecase: IGetEquip): GetEquip
+
+    @Binds
+    @Singleton
+    fun bindSetIdEquip(usecase: ISetIdEquip): SetIdEquip
+
+
 }

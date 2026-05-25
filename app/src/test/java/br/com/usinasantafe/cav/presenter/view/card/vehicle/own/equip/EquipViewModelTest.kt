@@ -1,8 +1,9 @@
-package br.com.usinasantafe.cav.presenter.view.card.car
+package br.com.usinasantafe.cav.presenter.view.card.vehicle.own.equip
 
 import androidx.lifecycle.SavedStateHandle
 import br.com.usinasantafe.cav.MainCoroutineRule
-import br.com.usinasantafe.cav.domain.usecases.card.SetIdCar
+import br.com.usinasantafe.cav.domain.usecases.card.GetEquip
+import br.com.usinasantafe.cav.domain.usecases.card.SetIdEquip
 import br.com.usinasantafe.cav.domain.usecases.common.HasNroEquip
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableEquip
 import br.com.usinasantafe.cav.lib.Errors
@@ -11,6 +12,7 @@ import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.Type
 import br.com.usinasantafe.cav.lib.TypeButton
 import br.com.usinasantafe.cav.presenter.Args
+import br.com.usinasantafe.cav.presenter.view.card.car.CarState
 import br.com.usinasantafe.cav.utils.UpdateStatusState
 import br.com.usinasantafe.cav.utils.percentage
 import br.com.usinasantafe.cav.utils.resultFailure
@@ -25,25 +27,84 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @ExperimentalCoroutinesApi
-class CarViewModelTest {
+class EquipViewModelTest {
 
     @ExperimentalCoroutinesApi
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
+    private val getEquip = mock<GetEquip>()
     private val updateTableEquip = mock<UpdateTableEquip>()
     private val hasNroEquip = mock<HasNroEquip>()
-    private val setIdCar = mock<SetIdCar>()
-    private val viewModel = CarViewModel(
+    private val setIdEquip = mock<SetIdEquip>()
+    private val viewModel = EquipViewModel(
         saveStateHandle = SavedStateHandle(
             mapOf(
-                Args.OPTION_ARG to Option.INSERT.ordinal
+                Args.OPTION_ARG to Option.INSERT.ordinal,
+                Args.TYPE_ARG to Type.MAIN.ordinal
             )
         ),
+        getEquip = getEquip,
         updateTableEquip = updateTableEquip,
         hasNroEquip = hasNroEquip,
-        setIdCar = setIdCar
+        setIdEquip = setIdEquip
     )
+
+    @Test
+    fun `recoverData - Check return failure if have error in GetEquip`() =
+        runTest {
+            whenever(
+                getEquip(
+                    option = Option.INSERT,
+                    type = Type.MAIN
+                )
+            ).thenReturn(
+                resultFailure(
+                    context = "GetEquip",
+                    message = "-",
+                    cause = Exception()
+                )
+            )
+            viewModel.recoverData()
+            assertEquals(
+                viewModel.uiState.value.status.flagDialog,
+                true
+            )
+            assertEquals(
+                viewModel.uiState.value.status.failure,
+                "EquipViewModel.recoverData -> GetEquip -> java.lang.Exception"
+            )
+            assertEquals(
+                viewModel.uiState.value.status.errors,
+                Errors.EXCEPTION
+            )
+            assertEquals(
+                viewModel.uiState.value.status.flagFailure,
+                true
+            )
+        }
+
+    @Test
+    fun `recoverData - Check return true if process execute successfully`() =
+        runTest {
+            whenever(
+                getEquip(
+                    option = Option.INSERT,
+                    type = Type.MAIN
+                )
+            ).thenReturn(
+                Result.success("2200")
+            )
+            viewModel.recoverData()
+            assertEquals(
+                viewModel.uiState.value.flagAccess,
+                false
+            )
+            assertEquals(
+                viewModel.uiState.value.nroEquip,
+                "2200"
+            )
+        }
 
     @Test
     fun `setTextField - Check add char`() {
@@ -130,7 +191,7 @@ class CarViewModelTest {
             assertEquals(result.count(), 2)
             assertEquals(
                 result[0],
-                CarState(
+                EquipState(
                     status = UpdateStatusState(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
@@ -141,12 +202,12 @@ class CarViewModelTest {
             )
             assertEquals(
                 result[1],
-                CarState(
+                EquipState(
                     status = UpdateStatusState(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
-                        failure = "CarViewModel.updateAllDatabase -> CleanEquip -> java.lang.NullPointerException",
+                        failure = "EquipViewModel.updateAllDatabase -> CleanEquip -> java.lang.NullPointerException",
                         currentProgress = 1f,
                     )
                 )
@@ -161,7 +222,7 @@ class CarViewModelTest {
             )
             assertEquals(
                 viewModel.uiState.value.status.failure,
-                "CarViewModel.setTextField -> CarViewModel.updateAllDatabase -> CleanEquip -> java.lang.NullPointerException"
+                "EquipViewModel.setTextField -> EquipViewModel.updateAllDatabase -> CleanEquip -> java.lang.NullPointerException"
             )
         }
 
@@ -199,7 +260,7 @@ class CarViewModelTest {
             assertEquals(result.count(), 4)
             assertEquals(
                 result[0],
-                CarState(
+                EquipState(
                     status = UpdateStatusState(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
@@ -210,7 +271,7 @@ class CarViewModelTest {
             )
             assertEquals(
                 result[1],
-                CarState(
+                EquipState(
                     status = UpdateStatusState(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.CLEAN,
@@ -221,7 +282,7 @@ class CarViewModelTest {
             )
             assertEquals(
                 result[2],
-                CarState(
+                EquipState(
                     status = UpdateStatusState(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.SAVE,
@@ -232,7 +293,7 @@ class CarViewModelTest {
             )
             assertEquals(
                 result[3],
-                CarState(
+                EquipState(
                     status = UpdateStatusState(
                         flagDialog = true,
                         flagProgress = false,
@@ -273,7 +334,7 @@ class CarViewModelTest {
             )
             assertEquals(
                 viewModel.uiState.value.status.failure,
-                "CarViewModel.setTextField -> CarViewModel.updateState -> CarViewModel.set -> FIELD_EMPTY"
+                "EquipViewModel.setTextField -> EquipViewModel.updateState -> EquipViewModel.set -> FIELD_EMPTY"
             )
             assertEquals(
                 viewModel.uiState.value.status.flagProgress,
@@ -319,7 +380,7 @@ class CarViewModelTest {
             )
             assertEquals(
                 viewModel.uiState.value.status.failure,
-                "CarViewModel.setTextField -> CarViewModel.set -> IHasNroEquip -> java.lang.Exception"
+                "EquipViewModel.setTextField -> EquipViewModel.set -> IHasNroEquip -> java.lang.Exception"
             )
             assertEquals(
                 viewModel.uiState.value.status.flagProgress,
@@ -366,7 +427,7 @@ class CarViewModelTest {
         }
 
     @Test
-    fun `setTextField - Check return failure if have error in usecase SetIdCar`() =
+    fun `setTextField - Check return failure if have error in usecase SetIdEquip`() =
         runTest {
             whenever(
                 hasNroEquip("200")
@@ -374,7 +435,11 @@ class CarViewModelTest {
                 Result.success(true)
             )
             whenever(
-                setIdCar("200")
+                setIdEquip(
+                    option = Option.INSERT,
+                    type = Type.MAIN,
+                    nroEquip = "200"
+                )
             ).thenReturn(
                 resultFailure(
                     context = "ISetIdCar",
@@ -404,7 +469,7 @@ class CarViewModelTest {
             )
             assertEquals(
                 viewModel.uiState.value.status.failure,
-                "CarViewModel.setTextField -> CarViewModel.set -> ISetIdCar -> java.lang.Exception"
+                "EquipViewModel.setTextField -> EquipViewModel.set -> ISetIdEquip -> java.lang.Exception"
             )
             assertEquals(
                 viewModel.uiState.value.status.flagProgress,

@@ -10,9 +10,4 @@ data class Card(
     var idSupportTeamsList: List<Int> = emptyList()
 )
 
-data class Local(
-    var address: String? = null,
-    var latitude: Double? = null,
-    var longitude: Double? = null
-)
 

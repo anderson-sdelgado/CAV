@@ -18,6 +18,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.Option
+import br.com.usinasantafe.cav.lib.Type
 import br.com.usinasantafe.cav.lib.TypeButton
 import br.com.usinasantafe.cav.presenter.theme.ButtonsGenericNumeric
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
@@ -32,13 +33,15 @@ fun ColabScreen(
     viewModel: ColabViewModel = hiltViewModel(),
     onNavEquipSecList:  () -> Unit,
     onNavPassengerList:  () -> Unit,
-    onNavState:  () -> Unit,
+    onNavState: () -> Unit,
+    onNavData: () -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             ColabContent(
                 option = uiState.option,
+                type = uiState.type,
                 regColab = uiState.regColab,
                 setTextField = viewModel::setTextField,
                 flagAccess = uiState.flagAccess,
@@ -47,6 +50,7 @@ fun ColabScreen(
                 onNavEquipSecList = onNavEquipSecList,
                 onNavPassengerList = onNavPassengerList,
                 onNavState = onNavState,
+                onNavData = onNavData,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -56,6 +60,7 @@ fun ColabScreen(
 @Composable
 fun ColabContent(
     option: Option,
+    type: Type,
     regColab: String,
     setTextField: (String, TypeButton) -> Unit,
     flagAccess: Boolean,
@@ -64,6 +69,7 @@ fun ColabContent(
     onNavEquipSecList:  () -> Unit,
     onNavPassengerList:  () -> Unit,
     onNavState:  () -> Unit,
+    onNavData: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -83,9 +89,14 @@ fun ColabContent(
             setActionButton = setTextField
         )
         BackHandler {
-            when(option){
-                Option.INSERT -> onNavEquipSecList()
-                Option.EDIT -> onNavState()
+            when(type) {
+                Type.MAIN -> {
+                    when(option){
+                        Option.INSERT -> onNavEquipSecList()
+                        Option.EDIT -> onNavState()
+                    }
+                }
+                Type.SECONDARY -> onNavPassengerList()
             }
         }
 
@@ -100,10 +111,7 @@ fun ColabContent(
 
     LaunchedEffect(flagAccess) {
         if(flagAccess) {
-            when(option){
-                Option.INSERT -> onNavPassengerList()
-                Option.EDIT -> onNavState()
-            }
+            onNavState()
         }
     }
 }
@@ -115,6 +123,7 @@ fun ColabPagePreview() {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             ColabContent(
                 option = Option.INSERT,
+                type = Type.MAIN,
                 regColab = "",
                 setTextField = { _, _ -> },
                 flagAccess = false,
@@ -132,6 +141,7 @@ fun ColabPagePreview() {
                 onNavEquipSecList = {},
                 onNavPassengerList = {},
                 onNavState = {},
+                onNavData = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

@@ -90,4 +90,8 @@
     <string name="text_check_delete_equip_sec">DESEJA REALMENTE EXCLUIR O EQUIPAMENTO SECUNDÁRIO \"%1$s\"?</string>
     <string name="text_title_passenger">PASSAGEIRO(S)</string>
     <string name="text_check_delete_passenger">DESEJA REALMENTE EXCLUIR O PASSAGEIRO \"%1$s\"?</string>
+    <string name="text_title_state">ESTADO</string>
+    <string name="text_item_dead">MORTO</string>
+    <string name="text_item_injured">FERIDO</string>
+    <string name="text_item_unharmed">ILESO</string>
 </resources>

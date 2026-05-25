@@ -18,6 +18,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.Option
+import br.com.usinasantafe.cav.lib.Type
 import br.com.usinasantafe.cav.lib.TypeButton
 import br.com.usinasantafe.cav.presenter.theme.ButtonsGenericNumeric
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
@@ -32,13 +33,20 @@ fun EquipScreen(
     viewModel: EquipViewModel = hiltViewModel(),
     onNavMenu:  () -> Unit,
     onNavDetail: () -> Unit,
-    onNavData: () -> Unit
+    onNavData: () -> Unit,
+    onNavEquipSecList: () -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+            LaunchedEffect(Unit) {
+                viewModel.recoverData()
+            }
+
             EquipContent(
                 option = uiState.option,
+                type = uiState.type,
                 nroEquip = uiState.nroEquip,
                 setTextField = viewModel::setTextField,
                 flagAccess = uiState.flagAccess,
@@ -47,6 +55,7 @@ fun EquipScreen(
                 onNavMenu = onNavMenu,
                 onNavDetail = onNavDetail,
                 onNavData = onNavData,
+                onNavEquipSecList = onNavEquipSecList,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -56,6 +65,7 @@ fun EquipScreen(
 @Composable
 fun EquipContent(
     option: Option,
+    type: Type,
     nroEquip: String,
     setTextField: (String, TypeButton) -> Unit,
     flagAccess: Boolean,
@@ -64,6 +74,7 @@ fun EquipContent(
     onNavMenu:  () -> Unit,
     onNavDetail: () -> Unit,
     onNavData: () -> Unit,
+    onNavEquipSecList: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -83,9 +94,14 @@ fun EquipContent(
             setActionButton = setTextField
         )
         BackHandler {
-            when(option) {
-                Option.INSERT -> onNavMenu()
-                Option.EDIT -> onNavData()
+            when(type) {
+                Type.MAIN -> {
+                    when(option) {
+                        Option.INSERT -> onNavMenu()
+                        Option.EDIT -> onNavData()
+                    }
+                }
+                Type.SECONDARY -> onNavEquipSecList()
             }
         }
 
@@ -100,10 +116,7 @@ fun EquipContent(
 
     LaunchedEffect(flagAccess) {
         if(flagAccess) {
-            when(option) {
-                Option.INSERT -> onNavDetail()
-                Option.EDIT -> onNavData()
-            }
+            onNavDetail()
         }
     }
 }
@@ -115,6 +128,7 @@ fun EquipPagePreview() {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             EquipContent(
                 option = Option.INSERT,
+                type = Type.MAIN,
                 nroEquip = "",
                 setTextField = { _, _ -> },
                 flagAccess = false,
@@ -132,6 +146,7 @@ fun EquipPagePreview() {
                 onNavMenu = {},
                 onNavDetail = {},
                 onNavData = {},
+                onNavEquipSecList = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

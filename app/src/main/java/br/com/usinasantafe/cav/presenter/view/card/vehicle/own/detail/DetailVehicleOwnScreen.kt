@@ -26,7 +26,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.Option
-import br.com.usinasantafe.cav.lib.TypeDetailOwn
+import br.com.usinasantafe.cav.lib.TypeDetail
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.MsgErrors
@@ -45,9 +45,14 @@ fun DetailVehicleOwnScreen(
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+            LaunchedEffect(Unit) {
+                viewModel.recoverData()
+            }
+
             DetailVehicleOwnContent(
                 option = uiState.option,
-                typeDetailOwn = uiState.typeDetailOwn,
+                typeDetail = uiState.typeDetail,
                 text = uiState.text,
                 onTextChanged = viewModel::onTextChanged,
                 set = viewModel::set,
@@ -70,7 +75,7 @@ fun DetailVehicleOwnScreen(
 @Composable
 fun DetailVehicleOwnContent(
     option: Option,
-    typeDetailOwn: TypeDetailOwn,
+    typeDetail: TypeDetail,
     text: String,
     onTextChanged: (String) -> Unit,
     set: () -> Unit,
@@ -116,11 +121,11 @@ fun DetailVehicleOwnContent(
         ) {
             Button(
                 onClick = {
-                    when(typeDetailOwn){
-                        TypeDetailOwn.EQUIP -> onNavEquip()
-                        TypeDetailOwn.EQUIP_SEC -> onNavEquipSecList()
-                        TypeDetailOwn.DRIVER -> onNavState()
-                        TypeDetailOwn.PASSENGER -> onNavPassengerList()
+                    when(typeDetail){
+                        TypeDetail.EQUIP_VEHICLE -> onNavEquip()
+                        TypeDetail.EQUIP_VEHICLE_SEC -> onNavEquipSecList()
+                        TypeDetail.DRIVER -> onNavState()
+                        TypeDetail.PASSENGER -> onNavPassengerList()
                     }
                 },
                 modifier = Modifier.weight(1f)
@@ -144,21 +149,21 @@ fun DetailVehicleOwnContent(
 
     LaunchedEffect(flagAccess) {
         if (flagAccess) {
-            when(typeDetailOwn){
-                TypeDetailOwn.EQUIP -> {
+            when(typeDetail){
+                TypeDetail.EQUIP_VEHICLE -> {
                     when(option){
                         Option.INSERT -> onNavEquipSecList()
                         Option.EDIT -> onNavData()
                     }
                 }
-                TypeDetailOwn.EQUIP_SEC -> onNavEquipSecList()
-                TypeDetailOwn.DRIVER -> {
+                TypeDetail.EQUIP_VEHICLE_SEC -> onNavEquipSecList()
+                TypeDetail.DRIVER -> {
                     when(option){
                         Option.INSERT -> onNavPassengerList()
                         Option.EDIT -> onNavData()
                     }
                 }
-                TypeDetailOwn.PASSENGER -> onNavPassengerList()
+                TypeDetail.PASSENGER -> onNavPassengerList()
             }
         }
     }
@@ -172,7 +177,7 @@ fun DetailVehicleOwnPagePreview() {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             DetailVehicleOwnContent(
                 option = Option.INSERT,
-                typeDetailOwn = TypeDetailOwn.EQUIP,
+                typeDetail = TypeDetail.EQUIP_VEHICLE,
                 text = "Text",
                 onTextChanged = {},
                 set = {},

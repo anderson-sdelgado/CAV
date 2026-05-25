@@ -39,7 +39,9 @@ import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
 fun VehicleFullScreen(
     viewModel: VehicleFullViewModel = hiltViewModel(),
     onNavLocalSupport: () -> Unit,
-    onNavInvolvedWitness: () -> Unit
+    onNavInvolvedWitness: () -> Unit,
+    onNavEquip: () -> Unit,
+    onNavDataVehicleOwn: () -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -50,6 +52,8 @@ fun VehicleFullScreen(
                 vehicleForeignList = uiState.vehicleForeignList,
                 onNavLocalSupport = onNavLocalSupport,
                 onNavInvolvedWitness = onNavInvolvedWitness,
+                onNavEquip = onNavEquip,
+                onNavDataVehicleOwn = onNavDataVehicleOwn,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -62,6 +66,8 @@ fun VehicleFullContent(
     vehicleForeignList: List<VehicleScreenModel>,
     onNavLocalSupport: () -> Unit,
     onNavInvolvedWitness: () -> Unit,
+    onNavEquip: () -> Unit,
+    onNavDataVehicleOwn: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -79,7 +85,11 @@ fun VehicleFullContent(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             item {
-                VehicleOwnSection( vehicleOwnList)
+                VehicleOwnSection(
+                    vehicleList = vehicleOwnList,
+                    onNavEquip = onNavEquip,
+                    onNavDataVehicleOwn = onNavDataVehicleOwn,
+                )
             }
             item {
                 VehicleForeignSection(vehicleForeignList)
@@ -120,7 +130,9 @@ fun VehicleFullContent(
 
 @Composable
 fun VehicleOwnSection(
-    vehicleList: List<VehicleScreenModel>
+    vehicleList: List<VehicleScreenModel>,
+    onNavEquip: () -> Unit,
+    onNavDataVehicleOwn: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -243,6 +255,8 @@ fun VehicleFullPagePreview() {
                 vehicleForeignList = emptyList(),
                 onNavLocalSupport = {},
                 onNavInvolvedWitness = {},
+                onNavDataVehicleOwn = {},
+                onNavEquip = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -271,6 +285,8 @@ fun VehicleFullPagePreviewWithData() {
                 ),
                 onNavLocalSupport = {},
                 onNavInvolvedWitness = {},
+                onNavDataVehicleOwn = {},
+                onNavEquip = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

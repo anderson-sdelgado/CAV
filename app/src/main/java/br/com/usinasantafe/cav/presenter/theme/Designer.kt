@@ -23,6 +23,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -403,6 +404,39 @@ fun AlertDialogCheckDesign(
             }
         }
     )
+}
+
+@Composable
+fun RadioButtonDefault(
+    id: Int,
+    text: String,
+    font: Int = 22,
+    checked: Boolean,
+    enabled: Boolean = true,
+    onChecked: (Boolean) -> Unit
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .then(
+                if (enabled) Modifier.clickable { onChecked(!checked) }
+                else Modifier
+            )
+            .padding(10.dp)
+            .testTag("item_check_box_$id")
+    ) {
+        RadioButton(
+            selected = true,
+            onClick = {},
+            modifier = Modifier
+                .padding(end = 10.dp)
+        )
+        Text(
+            text = text,
+            fontSize = font.sp,
+            color = if (enabled) Color.Unspecified else Color.Gray
+        )
+    }
 }
 
 @Composable

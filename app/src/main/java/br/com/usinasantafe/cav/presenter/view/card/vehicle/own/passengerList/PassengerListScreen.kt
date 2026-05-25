@@ -35,7 +35,7 @@ import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
 fun PassengerListScreen(
     viewModel: PassengerListViewModel = hiltViewModel(),
     onNavDetail: () -> Unit,
-    onNavObs: () -> Unit,
+    onNavMenu: () -> Unit,
     onNavData: () -> Unit,
     onNavColab: (Int) -> Unit
 ) {
@@ -47,15 +47,15 @@ fun PassengerListScreen(
                 list = uiState.list,
                 idSelection = uiState.idSelection,
                 onCheckDelete = viewModel::onCheckDelete,
-                onCloseDialog = viewModel::onCloseDialog,
                 flagDialogCheck = uiState.flagDialogCheck,
                 onDialogCheck = viewModel::onDialogCheck,
                 delete = viewModel::delete,
+                onCloseDialog = viewModel::onCloseDialog,
                 flagDialog = uiState.flagDialog,
                 failure = uiState.failure,
                 errors = uiState.errors,
                 onNavDetail = onNavDetail,
-                onNavObs = onNavObs,
+                onNavMenu = onNavMenu,
                 onNavData = onNavData,
                 onNavColab = onNavColab,
                 modifier = Modifier.padding(innerPadding)
@@ -72,13 +72,13 @@ fun PassengerListContent(
     onCheckDelete: (Int) -> Unit,
     flagDialogCheck: Boolean,
     onDialogCheck: (Boolean) -> Unit,
-    onCloseDialog: () -> Unit,
     delete: () -> Unit,
+    onCloseDialog: () -> Unit,
     flagDialog: Boolean,
     failure: String,
     errors: Errors,
     onNavDetail: () -> Unit,
-    onNavObs: () -> Unit,
+    onNavMenu: () -> Unit,
     onNavData: () -> Unit,
     onNavColab: (Int) -> Unit,
     modifier: Modifier = Modifier
@@ -132,7 +132,7 @@ fun PassengerListContent(
             Button(
                 onClick = {
                     when(option) {
-                        Option.INSERT -> onNavObs()
+                        Option.INSERT -> onNavMenu()
                         Option.EDIT -> onNavData()
                     }
                 },
@@ -160,6 +160,7 @@ fun PassengerListContent(
         }
 
     }
+
 }
 
 @Preview(showBackground = true)
@@ -180,7 +181,7 @@ fun PassengerListPagePreview() {
                 failure = "",
                 errors = Errors.FIELD_EMPTY,
                 onNavDetail = {},
-                onNavObs = {},
+                onNavMenu = {},
                 onNavData = {},
                 onNavColab = {},
                 modifier = Modifier.padding(innerPadding)

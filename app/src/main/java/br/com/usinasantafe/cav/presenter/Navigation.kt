@@ -3,11 +3,18 @@ package br.com.usinasantafe.cav.presenter
 import androidx.navigation.NavHostController
 import br.com.usinasantafe.cav.presenter.Args.ID_ARG
 import br.com.usinasantafe.cav.presenter.Args.OPTION_ARG
+import br.com.usinasantafe.cav.presenter.Args.TYPE_ARG
+import br.com.usinasantafe.cav.presenter.Args.TYPE_DETAIL_ARG
 import br.com.usinasantafe.cav.presenter.Screens.ATTENDANT_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.CAR_FULL_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.CAR_SCREEN
+import br.com.usinasantafe.cav.presenter.Screens.COLAB_VEHICLE_OWN_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.CONFIG_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.DATA_INITIAL_SCREEN
+import br.com.usinasantafe.cav.presenter.Screens.DATA_VEHICLE_OWN_SCREEN
+import br.com.usinasantafe.cav.presenter.Screens.DETAIL_VEHICLE_OWN_SCREEN
+import br.com.usinasantafe.cav.presenter.Screens.EQUIP_VEHICLE_OWN_SCREEN
+import br.com.usinasantafe.cav.presenter.Screens.EQUIP_SEC_LIST_VEHICLE_OWN_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.INITIAL_MENU_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.INPUT_LOCAL_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.ITEM_DATA_LOCAL_SCREEN
@@ -15,8 +22,10 @@ import br.com.usinasantafe.cav.presenter.Screens.LOCAL_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.LOCAL_SUPPORT_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.NATURE_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.OPTION_DATA_LOCAL_SCREEN
+import br.com.usinasantafe.cav.presenter.Screens.PASSENGER_LIST_VEHICLE_OWN_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.PASSWORD_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.SPLASH_SCREEN
+import br.com.usinasantafe.cav.presenter.Screens.STATE_VEHICLE_OWN_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.SUPPORT_TEAMS_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.TYPE_ACCIDENT_SCREEN
 
@@ -37,11 +46,20 @@ object Screens {
     const val ITEM_DATA_LOCAL_SCREEN = "itemDataLocalScreen"
     const val SUPPORT_TEAMS_SCREEN = "supportTeamsScreen"
     const val CAR_FULL_SCREEN = "carFullScreen"
+    const val COLAB_VEHICLE_OWN_SCREEN = "colabVehicleOwnScreen"
+    const val EQUIP_VEHICLE_OWN_SCREEN = "equipVehicleOwnScreen"
+    const val DATA_VEHICLE_OWN_SCREEN = "dataVehicleOwnScreen"
+    const val DETAIL_VEHICLE_OWN_SCREEN = "detailVehicleOwnScreen"
+    const val EQUIP_SEC_LIST_VEHICLE_OWN_SCREEN = "equipSecListVehicleOwnScreen"
+    const val PASSENGER_LIST_VEHICLE_OWN_SCREEN = "passengerListVehicleOwnScreen"
+    const val STATE_VEHICLE_OWN_SCREEN = "stateVehicleOwnScreen"
 }
 
 object Args {
     const val OPTION_ARG = "option"
     const val ID_ARG = "id"
+    const val TYPE_ARG = "type"
+    const val TYPE_DETAIL_ARG = "typeDetail"
 }
 
 object Routes {
@@ -61,6 +79,13 @@ object Routes {
     const val ITEM_DATA_LOCAL_ROUTE = "$ITEM_DATA_LOCAL_SCREEN/{$ID_ARG}"
     const val SUPPORT_TEAMS_ROUTE = SUPPORT_TEAMS_SCREEN
     const val CAR_FULL_ROUTE = CAR_FULL_SCREEN
+    const val COLAB_ROUTE = "$COLAB_VEHICLE_OWN_SCREEN/{$OPTION_ARG}/{$TYPE_ARG}"
+    const val EQUIP_ROUTE = "$EQUIP_VEHICLE_OWN_SCREEN/{$OPTION_ARG}/{$TYPE_ARG}"
+    const val DATA_VEHICLE_OWN_ROUTE = DATA_VEHICLE_OWN_SCREEN
+    const val DETAIL_VEHICLE_OWN_ROUTE = "$DETAIL_VEHICLE_OWN_SCREEN/{$OPTION_ARG}/{$TYPE_DETAIL_ARG}"
+    const val EQUIP_SEC_LIST_VEHICLE_OWN_ROUTE = "$EQUIP_SEC_LIST_VEHICLE_OWN_SCREEN/{$OPTION_ARG}"
+    const val PASSENGER_LIST_VEHICLE_OWN_ROUTE = "$PASSENGER_LIST_VEHICLE_OWN_SCREEN/{$OPTION_ARG}"
+    const val STATE_VEHICLE_OWN_ROUTE = "$STATE_VEHICLE_OWN_SCREEN/{$OPTION_ARG}/{$TYPE_ARG}"
 }
 
 class NavigationActions(private val navController: NavHostController) {
@@ -132,6 +157,51 @@ class NavigationActions(private val navController: NavHostController) {
     fun navigateToSupportTeams() {
         navController.navigate(SUPPORT_TEAMS_SCREEN)
     }
+
+    fun navigateToEquipVehicleOwn(
+        option: Int,
+        type: Int
+    ){
+        navController.navigate("$EQUIP_VEHICLE_OWN_SCREEN/$option/$type")
+    }
+
+    fun navigateToColabVehicleOwn(
+        option: Int,
+        type: Int
+    ){
+        navController.navigate("$COLAB_VEHICLE_OWN_SCREEN/$option/$type")
+    }
+
+    fun navigateToDataVehicleOwn(){
+        navController.navigate(DATA_VEHICLE_OWN_SCREEN)
+    }
+
+    fun navigateToDetailVehicleOwn(
+        option: Int,
+        typeDetail: Int
+    ){
+        navController.navigate("$DETAIL_VEHICLE_OWN_SCREEN/$option/$typeDetail")
+    }
+
+    fun navigateToEquipSecListVehicleOwn(
+        option: Int
+    ){
+        navController.navigate("$EQUIP_SEC_LIST_VEHICLE_OWN_SCREEN/$option")
+    }
+
+    fun navigateToPassengerListVehicleOwn(
+        option: Int
+    ){
+        navController.navigate("$PASSENGER_LIST_VEHICLE_OWN_SCREEN/$option")
+    }
+
+    fun navigateToStateVehicleOwn(
+        option: Int,
+        type: Int
+    ){
+        navController.navigate("$STATE_VEHICLE_OWN_SCREEN/$option/$type")
+    }
+
 
     //////////////////////////////////////////////////////////////////////
 

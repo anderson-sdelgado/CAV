@@ -3,6 +3,7 @@ package br.com.usinasantafe.cav.presenter.view.card.vehicle.own.colab
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.usinasantafe.cav.lib.Option
+import br.com.usinasantafe.cav.lib.Type
 import br.com.usinasantafe.cav.lib.TypeButton
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
 import br.com.usinasantafe.cav.utils.UpdateStatusState
@@ -15,6 +16,7 @@ import javax.inject.Inject
 
 data class ColabState(
     val option: Option = Option.INSERT,
+    val type: Type = Type.MAIN,
     val flagAccess: Boolean = false,
     val regColab: String = "",
     override val status: UpdateStatusState = UpdateStatusState()
