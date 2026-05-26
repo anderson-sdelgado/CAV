@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -20,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
-import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.presenter.model.ItemListScreenModel
 import br.com.usinasantafe.cav.presenter.theme.AlertDialogCheckDesign
@@ -30,6 +30,7 @@ import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.ItemDefaultEditDelListScreenModel
 import br.com.usinasantafe.cav.presenter.theme.MsgErrors
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
+import br.com.usinasantafe.cav.utils.UiStatusState
 
 @Composable
 fun EquipSecListScreen(
@@ -42,18 +43,21 @@ fun EquipSecListScreen(
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+            LaunchedEffect(Unit) {
+                viewModel.recoverData()
+            }
+
             EquipSecListContent(
                 option = uiState.option,
                 list = uiState.list,
                 idSelection = uiState.idSelection,
-                onCheckDelete = viewModel::onCheckDelete,
+                onSelectionDelete = viewModel::onSelectionDelete,
                 onCloseDialog = viewModel::onCloseDialog,
                 flagDialogCheck = uiState.flagDialogCheck,
                 onDialogCheck = viewModel::onDialogCheck,
                 delete = viewModel::delete,
-                flagDialog = uiState.flagDialog,
-                failure = uiState.failure,
-                errors = uiState.errors,
+                status = uiState.status,
                 onNavDetail = onNavDetail,
                 onNavColab = onNavColab,
                 onNavData = onNavData,
@@ -69,14 +73,12 @@ fun EquipSecListContent(
     option: Option,
     list: List<ItemListScreenModel>,
     idSelection: Int,
-    onCheckDelete: (Int) -> Unit,
+    onSelectionDelete: (Int) -> Unit,
     flagDialogCheck: Boolean,
     onDialogCheck: (Boolean) -> Unit,
     onCloseDialog: () -> Unit,
     delete: () -> Unit,
-    flagDialog: Boolean,
-    failure: String,
-    errors: Errors,
+    status: UiStatusState,
     onNavDetail: () -> Unit,
     onNavColab: () -> Unit,
     onNavData: () -> Unit,
@@ -99,12 +101,12 @@ fun EquipSecListContent(
             items(list) { item ->
                 ItemDefaultEditDelListScreenModel(
                     id = item.id,
-                    desc = item.description,
+                    desc = item.desc,
                     onClickEdit = {
                         onNavEquip(item.id)
                     },
                     onClickDel = {
-                        onCheckDelete(item.id)
+                        onSelectionDelete(item.id)
                     }
                 )
             }
@@ -144,7 +146,7 @@ fun EquipSecListContent(
         BackHandler {}
 
         if(flagDialogCheck){
-            val desc = list.first{ it.id == idSelection }.description
+            val desc = list.first{ it.id == idSelection }.desc
             AlertDialogCheckDesign(
                 text = stringResource(
                     id = R.string.text_check_delete_equip_sec,
@@ -155,8 +157,8 @@ fun EquipSecListContent(
             )
         }
 
-        if(flagDialog) {
-            MsgErrors(errors, onCloseDialog, failure)
+        if(status.flagDialog) {
+            MsgErrors(status.errors, onCloseDialog, status.failure)
         }
 
     }
@@ -171,14 +173,12 @@ fun EquipSecListPagePreview() {
                 option = Option.INSERT,
                 list = emptyList(),
                 idSelection = 0,
-                onCheckDelete = {},
+                onSelectionDelete = {},
                 flagDialogCheck = true,
                 onDialogCheck = {},
                 delete = {},
                 onCloseDialog = {},
-                flagDialog = false,
-                failure = "",
-                errors = Errors.FIELD_EMPTY,
+                status = UiStatusState(),
                 onNavColab = {},
                 onNavDetail = {},
                 onNavData = {},
@@ -199,26 +199,24 @@ fun EquipSecListPagePreviewWithData() {
                 list = listOf(
                     ItemListScreenModel(
                         id = 1,
-                        description = "ITEM 1"
+                        desc = "ITEM 1"
                     ),
                     ItemListScreenModel(
                         id = 2,
-                        description = "ITEM 2"
+                        desc = "ITEM 2"
                     ),
                     ItemListScreenModel(
                         id = 3,
-                        description = "ITEM 3"
+                        desc = "ITEM 3"
                     )
                 ),
                 idSelection = 0,
-                onCheckDelete = {},
+                onSelectionDelete = {},
                 flagDialogCheck = true,
                 onDialogCheck = {},
                 delete = {},
                 onCloseDialog = {},
-                flagDialog = false,
-                failure = "",
-                errors = Errors.FIELD_EMPTY,
+                status = UiStatusState(),
                 onNavColab = {},
                 onNavDetail = {},
                 onNavData = {},

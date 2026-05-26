@@ -16,8 +16,8 @@ import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableSupportTeams
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableTypeAccident
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.LevelUpdate
-import br.com.usinasantafe.cav.utils.UiStateWithStatus
-import br.com.usinasantafe.cav.utils.UpdateStatusState
+import br.com.usinasantafe.cav.utils.UiStateWithStatusUpdate
+import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 import br.com.usinasantafe.cav.utils.executeUpdateSteps
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import br.com.usinasantafe.cav.utils.onFailureEmit
@@ -36,16 +36,16 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class ConfigState(
+data class ConfigStateUpdate(
     val number: String = "",
     val password: String = "",
     val version: String = "",
-    val flagAccess: Boolean = false,
-    override val status: UpdateStatusState = UpdateStatusState()
-) : UiStateWithStatus<ConfigState> {
+    override val status: UiStatusStateUpdate = UiStatusStateUpdate()
+) : UiStateWithStatusUpdate<ConfigStateUpdate> {
 
-    override fun copyWithStatus(status: UpdateStatusState): ConfigState =
+    override fun copyWithStatus(status: UiStatusStateUpdate): ConfigStateUpdate =
         copy(status = status)
+
 }
 
 @HiltViewModel
@@ -64,18 +64,18 @@ class ConfigViewModel @Inject constructor(
     private val updateTableTypeAccess: UpdateTableTypeAccident
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(ConfigState())
+    private val _uiState = MutableStateFlow(ConfigStateUpdate())
     val uiState = _uiState.asStateFlow()
 
     private val state get() = uiState.value
 
-    private fun updateState(block: ConfigState.() -> ConfigState) {
+    private fun updateState(block: ConfigStateUpdate.() -> ConfigStateUpdate) {
         _uiState.update(block)
     }
 
     fun setCloseDialog() = updateState {
         val flag = (status.levelUpdate == LevelUpdate.FINISH_UPDATE_COMPLETED)
-        copy(status = status.copy(flagDialog = false, flagFailure = false), flagAccess = flag)
+        copy(status = status.copy(flagDialog = false, flagFailure = false, flagAccess = flag))
     }
 
     fun onNumberChanged(v: String) = updateState { copy(number = v) }
@@ -97,7 +97,7 @@ class ConfigViewModel @Inject constructor(
             .onFailureUpdate(getClassAndMethod(), ::updateState)
     }
 
-    private fun ConfigState.isValid() = number.isNotBlank() && password.isNotBlank()
+    private fun ConfigStateUpdate.isValid() = number.isNotBlank() && password.isNotBlank()
 
     fun onSaveAndUpdate() = viewModelScope.launch {
         if (!state.isValid()) {
@@ -136,7 +136,7 @@ class ConfigViewModel @Inject constructor(
         }
     }
 
-    fun token(): Flow<ConfigState> = flow {
+    fun token(): Flow<ConfigStateUpdate> = flow {
             runCatching {
                 val sizeToken = 3f
                 emit(
@@ -177,7 +177,7 @@ class ConfigViewModel @Inject constructor(
                 .onFailureEmit(this, state, getClassAndMethod(), Errors.TOKEN)
     }
 
-    suspend fun updateAllDatabase(): Flow<ConfigState> =
+    suspend fun updateAllDatabase(): Flow<ConfigStateUpdate> =
         executeUpdateSteps(
             steps = listUpdate(),
             getState = { _uiState.value },
@@ -187,9 +187,9 @@ class ConfigViewModel @Inject constructor(
             flagUpdateFinish = false
         )
 
-    suspend fun listUpdate() : List<Flow<UpdateStatusState>> {
+    suspend fun listUpdate() : List<Flow<UiStatusStateUpdate>> {
         val sizeAll = sizeUpdate(8f)
-        val list = mutableListOf<Flow<UpdateStatusState>>()
+        val list = mutableListOf<Flow<UiStatusStateUpdate>>()
         var count = 0f
         list.add(updateTableColab(sizeAll, ++count))
         list.add(updateTableEquip(sizeAll, ++count))

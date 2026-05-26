@@ -39,8 +39,8 @@ class InitialMenuViewModelTest {
                     Exception()
                 )
             )
-            viewModel.checkAccess()
-            val uiState = viewModel.uiState.value
+            viewModel.onCheckAccess()
+            val uiState = viewModel.uiState.value.status
             assertEquals(
                 uiState.flagDialog,
                 true
@@ -67,8 +67,8 @@ class InitialMenuViewModelTest {
             ).thenReturn(
                 Result.success(false)
             )
-            viewModel.checkAccess()
-            val uiState = viewModel.uiState.value
+            viewModel.onCheckAccess()
+            val uiState = viewModel.uiState.value.status
             assertEquals(
                 uiState.flagDialog,
                 true
@@ -96,7 +96,7 @@ class InitialMenuViewModelTest {
                 )
             )
             viewModel.recoverStatusSend()
-            val uiState = viewModel.uiState.value
+            val uiState = viewModel.uiState.value.status
             assertEquals(
                 uiState.failure,
                 "InitialMenuViewModel.recoverStatusSend -> GetStatusSend -> java.lang.Exception",
@@ -114,13 +114,13 @@ class InitialMenuViewModelTest {
                 )
             )
             viewModel.recoverStatusSend()
-            val uiState = viewModel.uiState.value
+            val uiState = viewModel.uiState.value.status
             assertEquals(
                 uiState.failure,
                 ""
             )
             assertEquals(
-                uiState.statusSend,
+                viewModel.uiState.value.statusSend,
                 StatusSend.SENT
             )
         }

@@ -8,8 +8,12 @@ import br.com.usinasantafe.cav.domain.usecases.card.GetCar
 import br.com.usinasantafe.cav.domain.usecases.card.GetNature
 import br.com.usinasantafe.cav.domain.usecases.card.GetTypeAccident
 import br.com.usinasantafe.cav.lib.Errors
+import br.com.usinasantafe.cav.presenter.view.card.local.InputLocalState
+import br.com.usinasantafe.cav.utils.UiStateWithStatus
+import br.com.usinasantafe.cav.utils.UiStatusState
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import br.com.usinasantafe.cav.utils.onFailureHandled
+import br.com.usinasantafe.cav.utils.onFailureState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,12 +28,14 @@ data class DataInitialState(
     val nature: String = "",
     val typeAccident: String = "",
     val flagCancel: Boolean = false,
-    val flagDialog: Boolean = false,
     val flagDialogCheck: Boolean = false,
-    val flagFailure: Boolean = false,
-    val failure: String = "",
-    val errors: Errors = Errors.EXCEPTION,
-)
+    override val status: UiStatusState = UiStatusState()
+) : UiStateWithStatus<DataInitialState> {
+
+    override fun copyWithStatus(status: UiStatusState): DataInitialState =
+        copy(status = status)
+
+}
 
 @HiltViewModel
 class DataInitialViewModel @Inject constructor(
@@ -47,7 +53,7 @@ class DataInitialViewModel @Inject constructor(
         _uiState.update(block)
     }
     
-    fun onCloseDialog() = updateState { copy(flagDialog = false) }
+    fun onCloseDialog() = updateState { copy(status = status.copy(flagDialog = false, flagFailure = false)) }
 
     fun onDialogCheck(flag: Boolean) = updateState { copy(flagDialogCheck = flag) }
 
@@ -66,10 +72,10 @@ class DataInitialViewModel @Inject constructor(
         }
             .onSuccess { newState ->
                 updateState {
-                    newState.copy(flagFailure = false)
+                    newState.copy(status = status.copy(flagFailure = false))
                 }
             }
-            .onFailureHandled(getClassAndMethod(), ::onError)
+            .onFailureState(getClassAndMethod(), ::updateState)
     }
 
     fun cancel() = viewModelScope.launch {
@@ -78,9 +84,7 @@ class DataInitialViewModel @Inject constructor(
             cancelCard().getOrThrow()
         }
             .onSuccess { updateState { copy(flagCancel = true) } }
-            .onFailureHandled(getClassAndMethod(), ::onError)
+            .onFailureState(getClassAndMethod(), ::updateState)
     }
-
-    private fun onError(failure: String) = updateState { copy(flagDialog = true, failure = failure, flagFailure = true) }
 
 }

@@ -7,7 +7,7 @@ import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableTypeAccident
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.LevelUpdate
 import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxScreenModel
-import br.com.usinasantafe.cav.utils.UpdateStatusState
+import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 import br.com.usinasantafe.cav.utils.percentage
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -62,7 +62,7 @@ class TypeAccidentViewModelTest {
                 Errors.EXCEPTION
             )
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 false
             )
         }
@@ -111,13 +111,13 @@ class TypeAccidentViewModelTest {
                 )
             ).thenReturn(
                 flowOf(
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_type_accident",
                         currentProgress = percentage(1f, 4f)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -130,8 +130,8 @@ class TypeAccidentViewModelTest {
             assertEquals(result.count(), 2)
             assertEquals(
                 result[0],
-                TypeAccidentState(
-                    status = UpdateStatusState(
+                TypeAccidentStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_type_accident",
@@ -141,8 +141,8 @@ class TypeAccidentViewModelTest {
             )
             assertEquals(
                 result[1],
-                TypeAccidentState(
-                    status = UpdateStatusState(
+                TypeAccidentStateUpdate(
+                    status = UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -179,19 +179,19 @@ class TypeAccidentViewModelTest {
                 )
             ).thenReturn(
                 flowOf(
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_type_accident",
                         currentProgress = percentage(1f, 4f)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.CLEAN,
                         tableUpdate = "tb_type_accident",
                         currentProgress = percentage(2f, 4f)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.SAVE,
                         tableUpdate = "tb_type_accident",
@@ -203,8 +203,8 @@ class TypeAccidentViewModelTest {
             assertEquals(result.count(), 4)
             assertEquals(
                 result[0],
-                TypeAccidentState(
-                    status = UpdateStatusState(
+                TypeAccidentStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_type_accident",
@@ -214,8 +214,8 @@ class TypeAccidentViewModelTest {
             )
             assertEquals(
                 result[1],
-                TypeAccidentState(
-                    status = UpdateStatusState(
+                TypeAccidentStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.CLEAN,
                         tableUpdate = "tb_type_accident",
@@ -225,8 +225,8 @@ class TypeAccidentViewModelTest {
             )
             assertEquals(
                 result[2],
-                TypeAccidentState(
-                    status = UpdateStatusState(
+                TypeAccidentStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.SAVE,
                         tableUpdate = "tb_type_accident",
@@ -236,8 +236,8 @@ class TypeAccidentViewModelTest {
             )
             assertEquals(
                 result[3],
-                TypeAccidentState(
-                    status = UpdateStatusState(
+                TypeAccidentStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagDialog = true,
                         flagProgress = false,
                         flagFailure = false,
@@ -326,7 +326,7 @@ class TypeAccidentViewModelTest {
                 Errors.EXCEPTION
             )
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 false
             )
         }
@@ -344,7 +344,7 @@ class TypeAccidentViewModelTest {
             viewModel.list.addAll(list)
             viewModel.save()
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 true
             )
         }

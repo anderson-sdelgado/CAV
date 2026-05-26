@@ -26,7 +26,7 @@ import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.MsgUpdate
 import br.com.usinasantafe.cav.presenter.theme.Progress
 import br.com.usinasantafe.cav.presenter.theme.TextFieldDesign
-import br.com.usinasantafe.cav.utils.UpdateStatusState
+import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 
 @Composable
 fun AttendantScreen(
@@ -41,9 +41,8 @@ fun AttendantScreen(
             AttendantContent(
                 option = uiState.option,
                 regColab = uiState.regColab,
-                setTextField = viewModel::setTextField,
-                flagAccess = uiState.flagAccess,
-                setCloseDialog = viewModel::setCloseDialog,
+                setTextField = viewModel::onTextField,
+                setCloseDialog = viewModel::onCloseDialog,
                 status = uiState.status,
                 onNavInitialMenu = onNavInitialMenu,
                 onNavCar = onNavCar,
@@ -59,9 +58,8 @@ fun AttendantContent(
     option: Option,
     regColab: String,
     setTextField: (String, TypeButton) -> Unit,
-    flagAccess: Boolean,
     setCloseDialog: () -> Unit,
-    status: UpdateStatusState,
+    status: UiStatusStateUpdate,
     onNavInitialMenu: () -> Unit,
     onNavCar: () -> Unit,
     onNavMenu: () -> Unit,
@@ -81,7 +79,7 @@ fun AttendantContent(
         )
         Spacer(modifier = Modifier.padding(vertical = 8.dp))
         ButtonsGenericNumeric(
-            setActionButton = setTextField
+            onTextField = setTextField
         )
         BackHandler {
             when(option){
@@ -99,8 +97,8 @@ fun AttendantContent(
         }
     }
 
-    LaunchedEffect(flagAccess) {
-        if(flagAccess) {
+    LaunchedEffect(status.flagAccess) {
+        if(status.flagAccess) {
             when(option){
                 Option.INSERT -> onNavCar()
                 Option.EDIT -> onNavMenu()
@@ -118,9 +116,9 @@ fun AttendantPagePreview() {
                 option = Option.INSERT,
                 regColab = "",
                 setTextField = { _, _ -> },
-                flagAccess = false,
                 setCloseDialog = {},
-                status = UpdateStatusState(
+                status = UiStatusStateUpdate(
+                    flagAccess = false,
                     flagDialog = false,
                     flagFailure = false,
                     errors = Errors.FIELD_EMPTY,
@@ -148,9 +146,9 @@ fun AttendantPagePreviewWithData() {
                 option = Option.INSERT,
                 regColab = "19759",
                 setTextField = { _, _ -> },
-                flagAccess = false,
                 setCloseDialog = {},
-                status = UpdateStatusState(
+                status = UiStatusStateUpdate(
+                    flagAccess = false,
                     flagDialog = false,
                     flagFailure = false,
                     errors = Errors.FIELD_EMPTY,
@@ -178,9 +176,9 @@ fun AttendantPagePreviewWithMsgEmpty() {
                 option = Option.INSERT,
                 regColab = "",
                 setTextField = { _, _ -> },
-                flagAccess = false,
                 setCloseDialog = {},
-                status = UpdateStatusState(
+                status = UiStatusStateUpdate(
+                    flagAccess = false,
                     flagDialog = true,
                     flagFailure = true,
                     errors = Errors.FIELD_EMPTY,
@@ -208,9 +206,9 @@ fun AttendantPagePreviewUpdate() {
                 option = Option.INSERT,
                 regColab = "",
                 setTextField = { _, _ -> },
-                flagAccess = false,
                 setCloseDialog = {},
-                status = UpdateStatusState(
+                status = UiStatusStateUpdate(
+                    flagAccess = false,
                     flagDialog = false,
                     failure = "",
                     flagFailure = false,

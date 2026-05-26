@@ -4,7 +4,7 @@ import br.com.usinasantafe.cav.domain.repositories.stable.NatureRepository
 import br.com.usinasantafe.cav.domain.usecases.common.GetToken
 import br.com.usinasantafe.cav.lib.LevelUpdate
 import br.com.usinasantafe.cav.lib.TB_NATURE
-import br.com.usinasantafe.cav.utils.UpdateStatusState
+import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 import br.com.usinasantafe.cav.utils.emitProgress
 import br.com.usinasantafe.cav.utils.flowCall
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -16,7 +16,7 @@ interface UpdateTableNature {
     suspend operator fun invoke(
         sizeAll: Float,
         count: Float = 1f
-    ): Flow<UpdateStatusState>
+    ): Flow<UiStatusStateUpdate>
 }
 
 class IUpdateTableNature @Inject constructor(
@@ -27,7 +27,7 @@ class IUpdateTableNature @Inject constructor(
     override suspend fun invoke(
         sizeAll: Float,
         count: Float
-    ): Flow<UpdateStatusState> = flow {
+    ): Flow<UiStatusStateUpdate> = flow {
         flowCall(getClassAndMethod()) {
 
             emitProgress(count, sizeAll, LevelUpdate.RECOVERY, TB_NATURE)

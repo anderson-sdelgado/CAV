@@ -8,8 +8,8 @@ import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableOptionDataLocal
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableDataLocal
 import br.com.usinasantafe.cav.lib.LevelUpdate
 import br.com.usinasantafe.cav.presenter.model.ItemListScreenModel
-import br.com.usinasantafe.cav.utils.UiStateWithStatus
-import br.com.usinasantafe.cav.utils.UpdateStatusState
+import br.com.usinasantafe.cav.utils.UiStateWithStatusUpdate
+import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 import br.com.usinasantafe.cav.utils.executeUpdateSteps
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import br.com.usinasantafe.cav.utils.onFailureUpdate
@@ -23,12 +23,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.onSuccess
 
-data class OptionDataLocalState(
+data class OptionDataLocalStateUpdate(
     val list: List<ItemListScreenModel> = emptyList(),
-    override val status: UpdateStatusState = UpdateStatusState()
-) : UiStateWithStatus<OptionDataLocalState> {
+    override val status: UiStatusStateUpdate = UiStatusStateUpdate()
+) : UiStateWithStatusUpdate<OptionDataLocalStateUpdate> {
 
-    override fun copyWithStatus(status: UpdateStatusState): OptionDataLocalState =
+    override fun copyWithStatus(status: UiStatusStateUpdate): OptionDataLocalStateUpdate =
         copy(status = status)
 
 }
@@ -41,14 +41,14 @@ class OptionDataLocalViewModel @Inject constructor(
     private val updateTableDataLocal: UpdateTableDataLocal,
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(OptionDataLocalState())
+    private val _uiState = MutableStateFlow(OptionDataLocalStateUpdate())
     val uiState = _uiState.asStateFlow()
 
-    private fun updateState(block: OptionDataLocalState.() -> OptionDataLocalState) {
+    private fun updateState(block: OptionDataLocalStateUpdate.() -> OptionDataLocalStateUpdate) {
         _uiState.update(block)
     }
 
-    fun setCloseDialog() = updateState { copy(status = status.copy(flagDialog = false, flagFailure = false)) }
+    fun onCloseDialog() = updateState { copy(status = status.copy(flagDialog = false, flagFailure = false)) }
 
     fun list() = viewModelScope.launch {
         runCatching {
@@ -67,7 +67,7 @@ class OptionDataLocalViewModel @Inject constructor(
         }
     }
 
-    suspend fun updateAllDatabase(): Flow<OptionDataLocalState> =
+    suspend fun updateAllDatabase(): Flow<OptionDataLocalStateUpdate> =
         executeUpdateSteps(
             steps = listUpdate(),
             getState = { _uiState.value },
@@ -76,9 +76,9 @@ class OptionDataLocalViewModel @Inject constructor(
             classAndMethod = getClassAndMethod(),
         )
 
-    suspend fun listUpdate() : List<Flow<UpdateStatusState>> {
+    suspend fun listUpdate() : List<Flow<UiStatusStateUpdate>> {
         val sizeAll = sizeUpdate(3f)
-        val list = mutableListOf<Flow<UpdateStatusState>>()
+        val list = mutableListOf<Flow<UiStatusStateUpdate>>()
         var count = 0f
         list.add(updateTableItemDataLocal(sizeAll, ++count))
         list.add(updateTableOptionDataLocal(sizeAll, ++count))

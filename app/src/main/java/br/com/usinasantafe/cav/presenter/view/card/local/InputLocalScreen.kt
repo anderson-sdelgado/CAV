@@ -25,12 +25,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.lib.Errors
-import br.com.usinasantafe.cav.lib.errors
-import br.com.usinasantafe.cav.presenter.theme.AlertDialogSimpleDesign
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.MsgErrors
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
+import br.com.usinasantafe.cav.utils.UiStatusState
 
 const val TAG_LOCAL_TEXT_FIELD = "tag_local_text_field"
 
@@ -45,12 +44,9 @@ fun InputLocalScreen(
             InputLocalContent(
                 address = uiState.address,
                 onAddressChanged = viewModel::onAddressChanged,
-                setCloseDialog = viewModel::setCloseDialog,
+                setCloseDialog = viewModel::onCloseDialog,
                 set = viewModel::set,
-                flagAccess = uiState.flagAccess,
-                flagDialog = uiState.flagDialog,
-                failure = uiState.failure,
-                errors = uiState.errors,
+                status = uiState.status,
                 onNavCard = onNavCard,
                 modifier = Modifier.padding(innerPadding)
             )
@@ -64,10 +60,7 @@ fun InputLocalContent(
     onAddressChanged: (String) -> Unit,
     setCloseDialog: () -> Unit,
     set: () -> Unit,
-    flagAccess: Boolean,
-    flagDialog: Boolean,
-    failure: String,
-    errors: Errors,
+    status: UiStatusState,
     onNavCard: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -113,14 +106,14 @@ fun InputLocalContent(
             }
         }
 
-        if(flagDialog) {
-            MsgErrors(errors, setCloseDialog, failure)
+        if(status.flagDialog) {
+            MsgErrors(status.errors, setCloseDialog, status.failure)
         }
 
     }
 
-    LaunchedEffect(flagAccess) {
-        if(flagAccess) {
+    LaunchedEffect(status.flagAccess) {
+        if(status.flagAccess) {
             onNavCard()
         }
     }
@@ -137,10 +130,12 @@ fun InputLocalPagePreview() {
                 onAddressChanged = {},
                 setCloseDialog = {},
                 set = {},
-                flagAccess = false,
-                flagDialog = false,
-                failure = "",
-                errors = Errors.FIELD_EMPTY,
+                status = UiStatusState(
+                    flagAccess = false,
+                    flagDialog = false,
+                    failure = "",
+                    errors = Errors.FIELD_EMPTY,
+                ),
                 onNavCard = {},
                 modifier = Modifier.padding(innerPadding)
             )

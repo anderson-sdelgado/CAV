@@ -32,6 +32,7 @@ import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.MsgErrors
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
 import br.com.usinasantafe.cav.presenter.view.card.local.TAG_LOCAL_TEXT_FIELD
+import br.com.usinasantafe.cav.utils.UiStatusState
 
 @Composable
 fun DetailVehicleOwnScreen(
@@ -56,11 +57,8 @@ fun DetailVehicleOwnScreen(
                 text = uiState.text,
                 onTextChanged = viewModel::onTextChanged,
                 set = viewModel::set,
-                setCloseDialog = viewModel::setCloseDialog,
-                flagAccess = uiState.flagAccess,
-                flagDialog = uiState.flagDialog,
-                failure = uiState.failure,
-                errors = uiState.errors,
+                onCloseDialog = viewModel::onCloseDialog,
+                status = uiState.status,
                 onNavState = onNavState,
                 onNavEquip = onNavEquip,
                 onNavPassengerList = onNavPassengerList,
@@ -79,11 +77,8 @@ fun DetailVehicleOwnContent(
     text: String,
     onTextChanged: (String) -> Unit,
     set: () -> Unit,
-    setCloseDialog: () -> Unit,
-    flagAccess: Boolean,
-    flagDialog: Boolean,
-    failure: String,
-    errors: Errors,
+    onCloseDialog: () -> Unit,
+    status: UiStatusState,
     onNavState: () -> Unit,
     onNavEquip: () -> Unit,
     onNavPassengerList: () -> Unit,
@@ -140,15 +135,15 @@ fun DetailVehicleOwnContent(
             }
         }
 
-        if(flagDialog) {
-            MsgErrors(errors, setCloseDialog, failure)
+        if(status.flagDialog) {
+            MsgErrors(status.errors, onCloseDialog, status.failure)
         }
 
     }
 
 
-    LaunchedEffect(flagAccess) {
-        if (flagAccess) {
+    LaunchedEffect(status.flagAccess) {
+        if (status.flagAccess) {
             when(typeDetail){
                 TypeDetail.EQUIP_VEHICLE -> {
                     when(option){
@@ -181,11 +176,8 @@ fun DetailVehicleOwnPagePreview() {
                 text = "Text",
                 onTextChanged = {},
                 set = {},
-                setCloseDialog = {},
-                flagAccess = false,
-                flagDialog = false,
-                failure = "",
-                errors = Errors.FIELD_EMPTY,
+                onCloseDialog = {},
+                status = UiStatusState(),
                 onNavState = {},
                 onNavEquip = {},
                 onNavPassengerList = {},

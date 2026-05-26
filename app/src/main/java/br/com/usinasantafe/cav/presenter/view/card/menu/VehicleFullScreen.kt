@@ -41,7 +41,7 @@ fun VehicleFullScreen(
     onNavLocalSupport: () -> Unit,
     onNavInvolvedWitness: () -> Unit,
     onNavEquip: () -> Unit,
-    onNavDataVehicleOwn: () -> Unit,
+    onNavDataVehicleOwn: (Int) -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -67,7 +67,7 @@ fun VehicleFullContent(
     onNavLocalSupport: () -> Unit,
     onNavInvolvedWitness: () -> Unit,
     onNavEquip: () -> Unit,
-    onNavDataVehicleOwn: () -> Unit,
+    onNavDataVehicleOwn: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -132,7 +132,7 @@ fun VehicleFullContent(
 fun VehicleOwnSection(
     vehicleList: List<VehicleScreenModel>,
     onNavEquip: () -> Unit,
-    onNavDataVehicleOwn: () -> Unit,
+    onNavDataVehicleOwn: (Int) -> Unit,
 ) {
     Column(
         modifier = Modifier

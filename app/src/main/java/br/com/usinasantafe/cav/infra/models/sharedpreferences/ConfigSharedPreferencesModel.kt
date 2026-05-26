@@ -1,8 +1,10 @@
 package br.com.usinasantafe.cav.infra.models.sharedpreferences
 
 import br.com.usinasantafe.cav.domain.entities.variable.Config
-import br.com.usinasantafe.cav.lib.FlagUpdate
+import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.StatusSend
+import br.com.usinasantafe.cav.lib.Type
+import br.com.usinasantafe.cav.lib.TypeDetail
 import br.com.usinasantafe.cav.utils.required
 
 data class ConfigSharedPreferencesModel(
@@ -22,7 +24,7 @@ fun ConfigSharedPreferencesModel.sharedPreferencesModelToEntity(): Config {
             idServ = idServ,
             version = version,
             statusSend = statusSend,
-            flagUpdate = flagUpdate
+            flagUpdate = flagUpdate,
         )
     }
 }
@@ -35,7 +37,7 @@ fun Config.entityToSharedPreferencesModel(): ConfigSharedPreferencesModel {
             idServ = ::idServ.required(),
             version = ::version.required(),
             statusSend = statusSend,
-            flagUpdate = flagUpdate
+            flagUpdate = flagUpdate,
         )
     }
 }

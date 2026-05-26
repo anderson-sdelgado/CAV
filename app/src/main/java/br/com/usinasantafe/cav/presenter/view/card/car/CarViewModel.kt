@@ -12,12 +12,12 @@ import br.com.usinasantafe.cav.lib.TypeButton
 import br.com.usinasantafe.cav.presenter.Args.OPTION_ARG
 import br.com.usinasantafe.cav.presenter.theme.addTextField
 import br.com.usinasantafe.cav.presenter.theme.clearTextField
-import br.com.usinasantafe.cav.presenter.view.card.attendant.AttendantState
-import br.com.usinasantafe.cav.utils.UiStateWithStatus
-import br.com.usinasantafe.cav.utils.UpdateStatusState
+import br.com.usinasantafe.cav.utils.UiStateWithStatusUpdate
+import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 import br.com.usinasantafe.cav.utils.executeUpdateSteps
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import br.com.usinasantafe.cav.utils.onFailureUpdate
+import br.com.usinasantafe.cav.utils.onSuccessUpdateCheckAccess
 import br.com.usinasantafe.cav.utils.sizeUpdate
 import br.com.usinasantafe.cav.utils.withFailure
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,11 +31,10 @@ import javax.inject.Inject
 data class CarState(
     val option: Option = Option.INSERT,
     val nroEquip: String = "",
-    val flagAccess: Boolean = false,
-    override val status: UpdateStatusState = UpdateStatusState()
-) : UiStateWithStatus<CarState> {
+    override val status: UiStatusStateUpdate = UiStatusStateUpdate()
+) : UiStateWithStatusUpdate<CarState> {
 
-    override fun copyWithStatus(status: UpdateStatusState): CarState =
+    override fun copyWithStatus(status: UiStatusStateUpdate): CarState =
         copy(status = status)
 
 }
@@ -59,11 +58,11 @@ class CarViewModel @Inject constructor(
         _uiState.update(block)
     }
 
-    fun setCloseDialog() = updateState { copy(status = status.copy(flagDialog = false, flagFailure = false)) }
+    fun onCloseDialog() = updateState { copy(status = status.copy(flagDialog = false, flagFailure = false)) }
 
     init { updateState { copy(option = Option.entries[this@CarViewModel.option]) } }
 
-    fun setTextField(text: String, typeButton: TypeButton) {
+    fun onTextField(text: String, typeButton: TypeButton) {
         when (typeButton) {
             TypeButton.NUMERIC -> updateState { copy(nroEquip = addTextField(nroEquip, text)) }
             TypeButton.CLEAN -> updateState { copy(nroEquip = clearTextField(nroEquip)) }
@@ -84,18 +83,7 @@ class CarViewModel @Inject constructor(
             if (check) setIdCar(state.nroEquip).getOrThrow()
             check
         }
-            .onSuccess {
-                updateState {
-                    copy(
-                        flagAccess = it,
-                        status = status.copy(
-                            flagDialog = !it,
-                            flagFailure = !it,
-                            errors = Errors.INVALID
-                        )
-                    )
-                }
-            }
+            .onSuccessUpdateCheckAccess(::updateState)
             .onFailureUpdate(getClassAndMethod(), ::updateState)
     }
 

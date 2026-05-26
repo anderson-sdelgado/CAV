@@ -4,9 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.usinasantafe.cav.domain.usecases.card.SetLocal
 import br.com.usinasantafe.cav.lib.Errors
+import br.com.usinasantafe.cav.utils.UiStateWithStatus
+import br.com.usinasantafe.cav.utils.UiStatusState
 import br.com.usinasantafe.cav.utils.getClassAndMethod
-import br.com.usinasantafe.cav.utils.handleFailure
-import br.com.usinasantafe.cav.utils.onFailureHandled
+import br.com.usinasantafe.cav.utils.onFailureState
+import br.com.usinasantafe.cav.utils.onSuccessState
+import br.com.usinasantafe.cav.utils.withFailure
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,12 +19,13 @@ import javax.inject.Inject
 
 data class InputLocalState(
     val address: String = "",
-    val flagAccess: Boolean = false,
-    val flagDialog: Boolean = false,
-    val flagFailure: Boolean = false,
-    val failure: String = "",
-    val errors: Errors = Errors.FIELD_EMPTY,
-)
+    override val status: UiStatusState = UiStatusState()
+) : UiStateWithStatus<InputLocalState> {
+
+    override fun copyWithStatus(status: UiStatusState): InputLocalState =
+        copy(status = status)
+
+}
 
 @HiltViewModel
 class InputLocalViewModel @Inject constructor(
@@ -37,7 +41,7 @@ class InputLocalViewModel @Inject constructor(
         _uiState.update(block)
     }
 
-    fun setCloseDialog() = updateState { copy(flagDialog = false) }
+    fun onCloseDialog() = updateState { copy(status = status.copy(flagDialog = false, flagFailure = false)) }
 
     fun onAddressChanged(address: String) {
         _uiState.update {
@@ -48,15 +52,13 @@ class InputLocalViewModel @Inject constructor(
     fun set() = viewModelScope.launch {
         runCatching {
             if (state.address.isBlank()) {
-                handleFailure(getClassAndMethod(), Errors.FIELD_EMPTY, ::onError)
+                updateState { withFailure(getClassAndMethod(), Errors.FIELD_EMPTY) }
                 return@launch
             }
             setLocal(address = state.address).getOrThrow()
         }
-            .onSuccess { updateState { copy(flagAccess = true, flagDialog = false) } }
-            .onFailureHandled(getClassAndMethod(), ::onError)
+            .onSuccessState(::updateState)
+            .onFailureState(getClassAndMethod(), ::updateState)
     }
-
-    private fun onError(failure: String, errors: Errors = Errors.EXCEPTION) = updateState { copy(flagDialog = true, failure = failure, errors = errors) }
 
 }

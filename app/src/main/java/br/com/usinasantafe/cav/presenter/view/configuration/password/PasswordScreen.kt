@@ -24,6 +24,7 @@ import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
 import br.com.usinasantafe.cav.presenter.theme.TextFieldPasswordDesign
+import br.com.usinasantafe.cav.utils.UiStatusState
 
 const val TAG_PASSWORD_TEXT_FIELD_SCREEN = "tag_password_text_field_screen"
 
@@ -41,10 +42,7 @@ fun PasswordScreen(
                 onPasswordChanged =  viewModel::onPasswordChanged,
                 onCheckAccess = viewModel::onCheckAccess,
                 setCloseDialog = viewModel::setCloseDialog,
-                flagDialog = uiState.flagDialog,
-                flagFailure = uiState.flagFailure,
-                failure = uiState.failure,
-                flagAccess = uiState.flagAccess,
+                status = uiState.status,
                 onNavInitialMenu = onNavInitialMenu,
                 onNavConfig = onNavConfig,
                 modifier = Modifier.padding(innerPadding)
@@ -59,10 +57,7 @@ fun PasswordContent(
     onPasswordChanged: (String) -> Unit,
     onCheckAccess: () -> Unit,
     setCloseDialog: () -> Unit,
-    flagDialog: Boolean,
-    flagFailure: Boolean,
-    failure: String,
-    flagAccess: Boolean,
+    status: UiStatusState,
     onNavInitialMenu: () -> Unit,
     onNavConfig: () -> Unit,
     modifier: Modifier = Modifier
@@ -106,14 +101,14 @@ fun PasswordContent(
         }
         BackHandler {}
 
-        if(flagDialog) {
+        if(status.flagDialog) {
             val text =
-                if(!flagFailure) {
+                if(!status.flagFailure) {
                     stringResource(id = R.string.text_password_invalid)
                 } else {
                     stringResource(
                         id = R.string.text_failure,
-                        failure
+                        status.failure
                     )
                 }
             AlertDialogSimpleDesign(
@@ -124,8 +119,8 @@ fun PasswordContent(
 
     }
 
-    LaunchedEffect(flagAccess) {
-        if(flagAccess) {
+    LaunchedEffect(status.flagAccess) {
+        if(status.flagAccess) {
             onNavConfig()
         }
     }
@@ -139,11 +134,8 @@ fun PasswordPagePreview() {
             PasswordContent(
                 password = "",
                 onPasswordChanged = {},
-                flagDialog = false,
                 setCloseDialog = {},
-                flagFailure = false,
-                failure = "",
-                flagAccess = false,
+                status = UiStatusState(),
                 onCheckAccess = {},
                 onNavInitialMenu = {},
                 onNavConfig = {},

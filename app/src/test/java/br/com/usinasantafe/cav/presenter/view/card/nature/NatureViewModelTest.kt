@@ -7,7 +7,7 @@ import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableNature
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.LevelUpdate
 import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxScreenModel
-import br.com.usinasantafe.cav.utils.UpdateStatusState
+import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 import br.com.usinasantafe.cav.utils.percentage
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -62,7 +62,7 @@ class NatureViewModelTest {
                 Errors.EXCEPTION
             )
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 false
             )
         }
@@ -111,13 +111,13 @@ class NatureViewModelTest {
                 )
             ).thenReturn(
                 flowOf(
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_nature",
                         currentProgress = percentage(1f, 4f)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -130,8 +130,8 @@ class NatureViewModelTest {
             assertEquals(result.count(), 2)
             assertEquals(
                 result[0],
-                NatureState(
-                    status = UpdateStatusState(
+                NatureStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_nature",
@@ -141,8 +141,8 @@ class NatureViewModelTest {
             )
             assertEquals(
                 result[1],
-                NatureState(
-                    status = UpdateStatusState(
+                NatureStateUpdate(
+                    status = UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -172,19 +172,19 @@ class NatureViewModelTest {
                 )
             ).thenReturn(
                 flowOf(
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_nature",
                         currentProgress = percentage(1f, 4f)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.CLEAN,
                         tableUpdate = "tb_nature",
                         currentProgress = percentage(2f, 4f)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.SAVE,
                         tableUpdate = "tb_nature",
@@ -196,8 +196,8 @@ class NatureViewModelTest {
             assertEquals(result.count(), 4)
             assertEquals(
                 result[0],
-                NatureState(
-                    status = UpdateStatusState(
+                NatureStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_nature",
@@ -207,8 +207,8 @@ class NatureViewModelTest {
             )
             assertEquals(
                 result[1],
-                NatureState(
-                    status = UpdateStatusState(
+                NatureStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.CLEAN,
                         tableUpdate = "tb_nature",
@@ -218,8 +218,8 @@ class NatureViewModelTest {
             )
             assertEquals(
                 result[2],
-                NatureState(
-                    status = UpdateStatusState(
+                NatureStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.SAVE,
                         tableUpdate = "tb_nature",
@@ -229,8 +229,8 @@ class NatureViewModelTest {
             )
             assertEquals(
                 result[3],
-                NatureState(
-                    status = UpdateStatusState(
+                NatureStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagDialog = true,
                         flagProgress = false,
                         flagFailure = false,
@@ -319,7 +319,7 @@ class NatureViewModelTest {
                 Errors.EXCEPTION
             )
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 false
             )
         }
@@ -337,7 +337,7 @@ class NatureViewModelTest {
             viewModel.list.addAll(list)
             viewModel.save()
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 true
             )
         }

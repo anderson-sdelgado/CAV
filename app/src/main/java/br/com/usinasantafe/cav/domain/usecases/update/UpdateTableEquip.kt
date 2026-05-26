@@ -4,8 +4,7 @@ import br.com.usinasantafe.cav.domain.repositories.stable.EquipRepository
 import br.com.usinasantafe.cav.domain.usecases.common.GetToken
 import br.com.usinasantafe.cav.lib.LevelUpdate
 import br.com.usinasantafe.cav.lib.TB_EQUIP
-import br.com.usinasantafe.cav.utils.UpdateStatusState
-import br.com.usinasantafe.cav.utils.call
+import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 import br.com.usinasantafe.cav.utils.emitProgress
 import br.com.usinasantafe.cav.utils.flowCall
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -17,7 +16,7 @@ interface UpdateTableEquip {
     suspend operator fun invoke(
         sizeAll: Float,
         count: Float = 1f
-    ): Flow<UpdateStatusState>
+    ): Flow<UiStatusStateUpdate>
 }
 
 class IUpdateTableEquip @Inject constructor(
@@ -28,7 +27,7 @@ class IUpdateTableEquip @Inject constructor(
     override suspend fun invoke(
         sizeAll: Float,
         count: Float
-    ): Flow<UpdateStatusState> = flow {
+    ): Flow<UiStatusStateUpdate> = flow {
         flowCall(getClassAndMethod()) {
 
             emitProgress(count, sizeAll, LevelUpdate.RECOVERY, TB_EQUIP)

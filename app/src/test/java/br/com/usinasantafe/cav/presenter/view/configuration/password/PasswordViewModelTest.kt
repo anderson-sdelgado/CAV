@@ -38,7 +38,7 @@ class PasswordViewModelTest {
                 )
             )
             viewModel.onCheckAccess()
-            val uiState = viewModel.uiState.value
+            val uiState = viewModel.uiState.value.status
             assertEquals(
                 uiState.flagDialog,
                 true
@@ -68,7 +68,7 @@ class PasswordViewModelTest {
                 Result.success(false)
             )
             viewModel.onCheckAccess()
-            val uiState = viewModel.uiState.value
+            val uiState = viewModel.uiState.value.status
             assertEquals(
                 uiState.flagDialog,
                 true
@@ -94,7 +94,7 @@ class PasswordViewModelTest {
                 Result.success(true)
             )
             viewModel.onCheckAccess()
-            val uiState = viewModel.uiState.value
+            val uiState = viewModel.uiState.value.status
             assertEquals(
                 uiState.flagDialog,
                 false

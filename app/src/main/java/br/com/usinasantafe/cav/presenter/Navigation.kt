@@ -1,7 +1,8 @@
 package br.com.usinasantafe.cav.presenter
 
 import androidx.navigation.NavHostController
-import br.com.usinasantafe.cav.presenter.Args.ID_ARG
+import br.com.usinasantafe.cav.presenter.Args.ID_MAIN_ARG
+import br.com.usinasantafe.cav.presenter.Args.ID_SECONDARY_ARG
 import br.com.usinasantafe.cav.presenter.Args.OPTION_ARG
 import br.com.usinasantafe.cav.presenter.Args.TYPE_ARG
 import br.com.usinasantafe.cav.presenter.Args.TYPE_DETAIL_ARG
@@ -57,7 +58,8 @@ object Screens {
 
 object Args {
     const val OPTION_ARG = "option"
-    const val ID_ARG = "id"
+    const val ID_MAIN_ARG = "idMain"
+    const val ID_SECONDARY_ARG = "idSecondary"
     const val TYPE_ARG = "type"
     const val TYPE_DETAIL_ARG = "typeDetail"
 }
@@ -76,16 +78,16 @@ object Routes {
     const val LOCAL_ROUTE = LOCAL_SCREEN
     const val INPUT_LOCAL_ROUTE = INPUT_LOCAL_SCREEN
     const val OPTION_DATA_LOCAL_ROUTE = OPTION_DATA_LOCAL_SCREEN
-    const val ITEM_DATA_LOCAL_ROUTE = "$ITEM_DATA_LOCAL_SCREEN/{$ID_ARG}"
+    const val ITEM_DATA_LOCAL_ROUTE = "$ITEM_DATA_LOCAL_SCREEN/{$ID_MAIN_ARG}"
     const val SUPPORT_TEAMS_ROUTE = SUPPORT_TEAMS_SCREEN
     const val CAR_FULL_ROUTE = CAR_FULL_SCREEN
-    const val COLAB_ROUTE = "$COLAB_VEHICLE_OWN_SCREEN/{$OPTION_ARG}/{$TYPE_ARG}"
-    const val EQUIP_ROUTE = "$EQUIP_VEHICLE_OWN_SCREEN/{$OPTION_ARG}/{$TYPE_ARG}"
-    const val DATA_VEHICLE_OWN_ROUTE = DATA_VEHICLE_OWN_SCREEN
-    const val DETAIL_VEHICLE_OWN_ROUTE = "$DETAIL_VEHICLE_OWN_SCREEN/{$OPTION_ARG}/{$TYPE_DETAIL_ARG}"
-    const val EQUIP_SEC_LIST_VEHICLE_OWN_ROUTE = "$EQUIP_SEC_LIST_VEHICLE_OWN_SCREEN/{$OPTION_ARG}"
-    const val PASSENGER_LIST_VEHICLE_OWN_ROUTE = "$PASSENGER_LIST_VEHICLE_OWN_SCREEN/{$OPTION_ARG}"
-    const val STATE_VEHICLE_OWN_ROUTE = "$STATE_VEHICLE_OWN_SCREEN/{$OPTION_ARG}/{$TYPE_ARG}"
+    const val COLAB_ROUTE = "$COLAB_VEHICLE_OWN_SCREEN/{$OPTION_ARG}/{$TYPE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
+    const val EQUIP_ROUTE = "$EQUIP_VEHICLE_OWN_SCREEN/{$OPTION_ARG}/{$TYPE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
+    const val DATA_VEHICLE_OWN_ROUTE = "$DATA_VEHICLE_OWN_SCREEN/{$ID_MAIN_ARG}"
+    const val DETAIL_VEHICLE_OWN_ROUTE = "$DETAIL_VEHICLE_OWN_SCREEN/{$OPTION_ARG}/{$TYPE_DETAIL_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
+    const val EQUIP_SEC_LIST_VEHICLE_OWN_ROUTE = "$EQUIP_SEC_LIST_VEHICLE_OWN_SCREEN/{$OPTION_ARG}/{$ID_MAIN_ARG}"
+    const val PASSENGER_LIST_VEHICLE_OWN_ROUTE = "$PASSENGER_LIST_VEHICLE_OWN_SCREEN/{$OPTION_ARG}/{$ID_MAIN_ARG}"
+    const val STATE_VEHICLE_OWN_ROUTE = "$STATE_VEHICLE_OWN_SCREEN/{$OPTION_ARG}/{$TYPE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
 }
 
 class NavigationActions(private val navController: NavHostController) {
@@ -160,46 +162,58 @@ class NavigationActions(private val navController: NavHostController) {
 
     fun navigateToEquipVehicleOwn(
         option: Int,
-        type: Int
+        type: Int,
+        idMain: Int,
+        idSecondary: Int,
     ){
-        navController.navigate("$EQUIP_VEHICLE_OWN_SCREEN/$option/$type")
+        navController.navigate("$EQUIP_VEHICLE_OWN_SCREEN/$option/$type/$idMain/$idSecondary")
     }
 
     fun navigateToColabVehicleOwn(
         option: Int,
-        type: Int
+        type: Int,
+        idMain: Int,
+        idSecondary: Int,
     ){
-        navController.navigate("$COLAB_VEHICLE_OWN_SCREEN/$option/$type")
+        navController.navigate("$COLAB_VEHICLE_OWN_SCREEN/$option/$type/$idMain/$idSecondary")
     }
 
-    fun navigateToDataVehicleOwn(){
-        navController.navigate(DATA_VEHICLE_OWN_SCREEN)
+    fun navigateToDataVehicleOwn(
+        id: Int,
+    ){
+        navController.navigate("$DATA_VEHICLE_OWN_SCREEN/$id")
     }
 
     fun navigateToDetailVehicleOwn(
         option: Int,
-        typeDetail: Int
+        typeDetail: Int,
+        idMain: Int,
+        idSecondary: Int,
     ){
-        navController.navigate("$DETAIL_VEHICLE_OWN_SCREEN/$option/$typeDetail")
+        navController.navigate("$DETAIL_VEHICLE_OWN_SCREEN/$option/$typeDetail/$idMain/$idSecondary")
     }
 
     fun navigateToEquipSecListVehicleOwn(
-        option: Int
+        option: Int,
+        idMain: Int,
     ){
-        navController.navigate("$EQUIP_SEC_LIST_VEHICLE_OWN_SCREEN/$option")
+        navController.navigate("$EQUIP_SEC_LIST_VEHICLE_OWN_SCREEN/$option/$idMain")
     }
 
     fun navigateToPassengerListVehicleOwn(
-        option: Int
+        option: Int,
+        idMain: Int,
     ){
-        navController.navigate("$PASSENGER_LIST_VEHICLE_OWN_SCREEN/$option")
+        navController.navigate("$PASSENGER_LIST_VEHICLE_OWN_SCREEN/$option/$idMain")
     }
 
     fun navigateToStateVehicleOwn(
         option: Int,
-        type: Int
+        type: Int,
+        idMain: Int,
+        idSecondary: Int,
     ){
-        navController.navigate("$STATE_VEHICLE_OWN_SCREEN/$option/$type")
+        navController.navigate("$STATE_VEHICLE_OWN_SCREEN/$option/$type/$idMain/$idSecondary")
     }
 
 

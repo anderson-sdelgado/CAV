@@ -31,9 +31,13 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
+import br.com.usinasantafe.cav.lib.Errors
+import br.com.usinasantafe.cav.presenter.theme.AlertDialogCheckDesign
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
+import br.com.usinasantafe.cav.presenter.theme.MsgErrors
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
+import br.com.usinasantafe.cav.utils.UiStatusState
 
 const val TAG_LOCAL_EDIT_BUTTON = "tag_local_edit_button"
 const val TAG_DATA_LOCAL_EDIT_BUTTON = "tag_data_local_edit_button"
@@ -62,6 +66,8 @@ fun LocalSupportScreen(
                 longitude = uiState.longitude,
                 dataLocalList = uiState.dataLocalList,
                 supportTeams = uiState.supportTeams,
+                onCloseDialog = viewModel::onCloseDialog,
+                status = uiState.status,
                 onNavDataInitial = onNavDataInitial,
                 onNavLocal = onNavLocal,
                 onNavDataLocal = onNavDataLocal,
@@ -80,6 +86,8 @@ fun LocalSupportContent(
     longitude: String,
     dataLocalList: List<Pair<String, String>>,
     supportTeams: String,
+    onCloseDialog: () -> Unit,
+    status: UiStatusState,
     onNavDataInitial: () -> Unit,
     onNavLocal: () -> Unit,
     onNavDataLocal: () -> Unit,
@@ -283,6 +291,11 @@ fun LocalSupportContent(
                 )
             }
         }
+
+        if(status.flagDialog) {
+            MsgErrors(status.errors, onCloseDialog, status.failure)
+        }
+
     }
 }
 
@@ -297,6 +310,12 @@ fun LocalSupportPagePreviewIsNull() {
                 longitude = "",
                 dataLocalList = emptyList(),
                 supportTeams = "-",
+                onCloseDialog = {},
+                status = UiStatusState(
+                    flagDialog = false,
+                    failure = "",
+                    errors = Errors.FIELD_EMPTY,
+                ),
                 onNavDataInitial = {},
                 onNavLocal = {},
                 onNavDataLocal = {},
@@ -319,6 +338,12 @@ fun LocalSupportPagePreview() {
                 longitude = "-26,35665",
                 dataLocalList = listOf("TRAÇADO" to "RETA", "PERFIL" to "ACENTUADO"),
                 supportTeams = "GUINCHOS - BOMBEIROS",
+                onCloseDialog = {},
+                status = UiStatusState(
+                    flagDialog = false,
+                    failure = "",
+                    errors = Errors.FIELD_EMPTY,
+                ),
                 onNavDataInitial = {},
                 onNavLocal = {},
                 onNavDataLocal = {},
@@ -341,6 +366,12 @@ fun LocalSupportPagePreviewIsPartNull() {
                 longitude = "-27.15368",
                 dataLocalList = emptyList(),
                 supportTeams = "-",
+                onCloseDialog = {},
+                status = UiStatusState(
+                    flagDialog = false,
+                    failure = "",
+                    errors = Errors.FIELD_EMPTY,
+                ),
                 onNavDataInitial = {},
                 onNavLocal = {},
                 onNavDataLocal = {},

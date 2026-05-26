@@ -30,6 +30,7 @@ import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.ItemDefaultEditDelListScreenModel
 import br.com.usinasantafe.cav.presenter.theme.MsgErrors
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
+import br.com.usinasantafe.cav.utils.UiStatusState
 
 @Composable
 fun PassengerListScreen(
@@ -46,14 +47,12 @@ fun PassengerListScreen(
                 option = uiState.option,
                 list = uiState.list,
                 idSelection = uiState.idSelection,
-                onCheckDelete = viewModel::onCheckDelete,
+                onSelectionDelete = viewModel::onSelectionDelete,
                 flagDialogCheck = uiState.flagDialogCheck,
                 onDialogCheck = viewModel::onDialogCheck,
-                delete = viewModel::delete,
                 onCloseDialog = viewModel::onCloseDialog,
-                flagDialog = uiState.flagDialog,
-                failure = uiState.failure,
-                errors = uiState.errors,
+                delete = viewModel::delete,
+                status = uiState.status,
                 onNavDetail = onNavDetail,
                 onNavMenu = onNavMenu,
                 onNavData = onNavData,
@@ -69,14 +68,12 @@ fun PassengerListContent(
     option: Option,
     list: List<ItemListScreenModel>,
     idSelection: Int,
-    onCheckDelete: (Int) -> Unit,
+    onSelectionDelete: (Int) -> Unit,
     flagDialogCheck: Boolean,
     onDialogCheck: (Boolean) -> Unit,
-    delete: () -> Unit,
     onCloseDialog: () -> Unit,
-    flagDialog: Boolean,
-    failure: String,
-    errors: Errors,
+    delete: () -> Unit,
+    status: UiStatusState,
     onNavDetail: () -> Unit,
     onNavMenu: () -> Unit,
     onNavData: () -> Unit,
@@ -99,12 +96,12 @@ fun PassengerListContent(
             items(list) { item ->
                 ItemDefaultEditDelListScreenModel(
                     id = item.id,
-                    desc = item.description,
+                    desc = item.desc,
                     onClickEdit = {
                         onNavColab(item.id)
                     },
                     onClickDel = {
-                        onCheckDelete(item.id)
+                        onSelectionDelete(item.id)
                     }
                 )
             }
@@ -144,7 +141,7 @@ fun PassengerListContent(
         BackHandler {}
 
         if(flagDialogCheck){
-            val desc = list.first{ it.id == idSelection }.description
+            val desc = list.first{ it.id == idSelection }.desc
             AlertDialogCheckDesign(
                 text = stringResource(
                     id = R.string.text_check_delete_passenger,
@@ -155,8 +152,8 @@ fun PassengerListContent(
             )
         }
 
-        if(flagDialog) {
-            MsgErrors(errors, onCloseDialog, failure)
+        if(status.flagDialog) {
+            MsgErrors(status.errors, onCloseDialog, status.failure)
         }
 
     }
@@ -172,14 +169,12 @@ fun PassengerListPagePreview() {
                 option = Option.INSERT,
                 list = emptyList(),
                 idSelection = 0,
-                onCheckDelete = {},
+                onSelectionDelete = {},
                 flagDialogCheck = true,
                 onDialogCheck = {},
                 delete = {},
                 onCloseDialog = {},
-                flagDialog = false,
-                failure = "",
-                errors = Errors.FIELD_EMPTY,
+                status = UiStatusState(),
                 onNavDetail = {},
                 onNavMenu = {},
                 onNavData = {},

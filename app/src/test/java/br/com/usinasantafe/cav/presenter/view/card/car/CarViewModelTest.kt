@@ -8,10 +8,9 @@ import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableEquip
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.LevelUpdate
 import br.com.usinasantafe.cav.lib.Option
-import br.com.usinasantafe.cav.lib.Type
 import br.com.usinasantafe.cav.lib.TypeButton
 import br.com.usinasantafe.cav.presenter.Args
-import br.com.usinasantafe.cav.utils.UpdateStatusState
+import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 import br.com.usinasantafe.cav.utils.percentage
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -47,7 +46,7 @@ class CarViewModelTest {
 
     @Test
     fun `setTextField - Check add char`() {
-        viewModel.setTextField(
+        viewModel.onTextField(
             "1",
             TypeButton.NUMERIC
         )
@@ -59,23 +58,23 @@ class CarViewModelTest {
 
     @Test
     fun `setTextField - Check remover char`() {
-        viewModel.setTextField(
+        viewModel.onTextField(
             "19759",
             TypeButton.NUMERIC
         )
-        viewModel.setTextField(
+        viewModel.onTextField(
             "APAGAR",
             TypeButton.CLEAN
         )
-        viewModel.setTextField(
+        viewModel.onTextField(
             "APAGAR",
             TypeButton.CLEAN
         )
-        viewModel.setTextField(
+        viewModel.onTextField(
             "APAGAR",
             TypeButton.CLEAN
         )
-        viewModel.setTextField(
+        viewModel.onTextField(
             "1",
             TypeButton.NUMERIC
         )
@@ -87,7 +86,7 @@ class CarViewModelTest {
 
     @Test
     fun `setTextField - Check msg of empty field`() {
-        viewModel.setTextField(
+        viewModel.onTextField(
             "OK",
             TypeButton.OK
         )
@@ -111,13 +110,13 @@ class CarViewModelTest {
                 )
             ).thenReturn(
                 flowOf(
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_equip",
                         currentProgress = percentage(1f, 4f)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -131,7 +130,7 @@ class CarViewModelTest {
             assertEquals(
                 result[0],
                 CarState(
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_equip",
@@ -142,7 +141,7 @@ class CarViewModelTest {
             assertEquals(
                 result[1],
                 CarState(
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -151,7 +150,7 @@ class CarViewModelTest {
                     )
                 )
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "ATUALIZAR DADOS",
                 TypeButton.UPDATE
             )
@@ -175,19 +174,19 @@ class CarViewModelTest {
                 )
             ).thenReturn(
                 flowOf(
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_equip",
                         currentProgress = percentage(1f, 4f)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.CLEAN,
                         tableUpdate = "tb_equip",
                         currentProgress = percentage(2f, 4f)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.SAVE,
                         tableUpdate = "tb_equip",
@@ -200,7 +199,7 @@ class CarViewModelTest {
             assertEquals(
                 result[0],
                 CarState(
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_equip",
@@ -211,7 +210,7 @@ class CarViewModelTest {
             assertEquals(
                 result[1],
                 CarState(
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.CLEAN,
                         tableUpdate = "tb_equip",
@@ -222,7 +221,7 @@ class CarViewModelTest {
             assertEquals(
                 result[2],
                 CarState(
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.SAVE,
                         tableUpdate = "tb_equip",
@@ -233,7 +232,7 @@ class CarViewModelTest {
             assertEquals(
                 result[3],
                 CarState(
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         flagDialog = true,
                         flagProgress = false,
                         flagFailure = false,
@@ -242,7 +241,7 @@ class CarViewModelTest {
                     )
                 )
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "ATUALIZAR DADOS",
                 TypeButton.UPDATE
             )
@@ -255,7 +254,7 @@ class CarViewModelTest {
     @Test
     fun `setTextField - Check return failure if field is empty`() =
         runTest {
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "OK",
                 TypeButton.OK
             )
@@ -280,7 +279,7 @@ class CarViewModelTest {
                 false
             )
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 false
             )
         }
@@ -297,11 +296,11 @@ class CarViewModelTest {
                     cause = Exception()
                 )
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "200",
                 TypeButton.NUMERIC
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "OK",
                 TypeButton.OK
             )
@@ -326,7 +325,7 @@ class CarViewModelTest {
                 false
             )
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 false
             )
         }
@@ -339,11 +338,11 @@ class CarViewModelTest {
             ).thenReturn(
                 Result.success(false)
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "200",
                 TypeButton.NUMERIC
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "OK",
                 TypeButton.OK
             )
@@ -360,7 +359,7 @@ class CarViewModelTest {
                 Errors.INVALID
             )
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 false
             )
         }
@@ -382,11 +381,11 @@ class CarViewModelTest {
                     cause = Exception()
                 )
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "200",
                 TypeButton.NUMERIC
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "OK",
                 TypeButton.OK
             )
@@ -411,7 +410,7 @@ class CarViewModelTest {
                 false
             )
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 false
             )
         }
@@ -424,11 +423,11 @@ class CarViewModelTest {
             ).thenReturn(
                 Result.success(true)
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "200",
                 TypeButton.NUMERIC
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "OK",
                 TypeButton.OK
             )
@@ -437,7 +436,7 @@ class CarViewModelTest {
                 false
             )
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 true
             )
         }

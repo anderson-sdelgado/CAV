@@ -2,8 +2,8 @@ package br.com.usinasantafe.cav.presenter.view.card.vehicle.own.equip
 
 import androidx.lifecycle.SavedStateHandle
 import br.com.usinasantafe.cav.MainCoroutineRule
-import br.com.usinasantafe.cav.domain.usecases.card.GetEquip
-import br.com.usinasantafe.cav.domain.usecases.card.SetIdEquip
+import br.com.usinasantafe.cav.domain.usecases.card.GetNroEquip
+import br.com.usinasantafe.cav.domain.usecases.card.SetEquip
 import br.com.usinasantafe.cav.domain.usecases.common.HasNroEquip
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableEquip
 import br.com.usinasantafe.cav.lib.Errors
@@ -12,8 +12,7 @@ import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.Type
 import br.com.usinasantafe.cav.lib.TypeButton
 import br.com.usinasantafe.cav.presenter.Args
-import br.com.usinasantafe.cav.presenter.view.card.car.CarState
-import br.com.usinasantafe.cav.utils.UpdateStatusState
+import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 import br.com.usinasantafe.cav.utils.percentage
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -33,10 +32,10 @@ class EquipViewModelTest {
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
-    private val getEquip = mock<GetEquip>()
+    private val getNroEquip = mock<GetNroEquip>()
     private val updateTableEquip = mock<UpdateTableEquip>()
     private val hasNroEquip = mock<HasNroEquip>()
-    private val setIdEquip = mock<SetIdEquip>()
+    private val setEquip = mock<SetEquip>()
     private val viewModel = EquipViewModel(
         saveStateHandle = SavedStateHandle(
             mapOf(
@@ -44,17 +43,17 @@ class EquipViewModelTest {
                 Args.TYPE_ARG to Type.MAIN.ordinal
             )
         ),
-        getEquip = getEquip,
+        getNroEquip = getNroEquip,
         updateTableEquip = updateTableEquip,
         hasNroEquip = hasNroEquip,
-        setIdEquip = setIdEquip
+        setEquip = setEquip
     )
 
     @Test
     fun `recoverData - Check return failure if have error in GetEquip`() =
         runTest {
             whenever(
-                getEquip(
+                getNroEquip(
                     option = Option.INSERT,
                     type = Type.MAIN
                 )
@@ -88,7 +87,7 @@ class EquipViewModelTest {
     fun `recoverData - Check return true if process execute successfully`() =
         runTest {
             whenever(
-                getEquip(
+                getNroEquip(
                     option = Option.INSERT,
                     type = Type.MAIN
                 )
@@ -97,7 +96,7 @@ class EquipViewModelTest {
             )
             viewModel.recoverData()
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 false
             )
             assertEquals(
@@ -108,7 +107,7 @@ class EquipViewModelTest {
 
     @Test
     fun `setTextField - Check add char`() {
-        viewModel.setTextField(
+        viewModel.onTextField(
             "1",
             TypeButton.NUMERIC
         )
@@ -120,23 +119,23 @@ class EquipViewModelTest {
 
     @Test
     fun `setTextField - Check remover char`() {
-        viewModel.setTextField(
+        viewModel.onTextField(
             "19759",
             TypeButton.NUMERIC
         )
-        viewModel.setTextField(
+        viewModel.onTextField(
             "APAGAR",
             TypeButton.CLEAN
         )
-        viewModel.setTextField(
+        viewModel.onTextField(
             "APAGAR",
             TypeButton.CLEAN
         )
-        viewModel.setTextField(
+        viewModel.onTextField(
             "APAGAR",
             TypeButton.CLEAN
         )
-        viewModel.setTextField(
+        viewModel.onTextField(
             "1",
             TypeButton.NUMERIC
         )
@@ -148,7 +147,7 @@ class EquipViewModelTest {
 
     @Test
     fun `setTextField - Check msg of empty field`() {
-        viewModel.setTextField(
+        viewModel.onTextField(
             "OK",
             TypeButton.OK
         )
@@ -172,13 +171,13 @@ class EquipViewModelTest {
                 )
             ).thenReturn(
                 flowOf(
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_equip",
                         currentProgress = percentage(1f, 4f)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -191,8 +190,8 @@ class EquipViewModelTest {
             assertEquals(result.count(), 2)
             assertEquals(
                 result[0],
-                EquipState(
-                    status = UpdateStatusState(
+                EquipStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_equip",
@@ -202,8 +201,8 @@ class EquipViewModelTest {
             )
             assertEquals(
                 result[1],
-                EquipState(
-                    status = UpdateStatusState(
+                EquipStateUpdate(
+                    status = UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -212,7 +211,7 @@ class EquipViewModelTest {
                     )
                 )
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "ATUALIZAR DADOS",
                 TypeButton.UPDATE
             )
@@ -236,19 +235,19 @@ class EquipViewModelTest {
                 )
             ).thenReturn(
                 flowOf(
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_equip",
                         currentProgress = percentage(1f, 4f)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.CLEAN,
                         tableUpdate = "tb_equip",
                         currentProgress = percentage(2f, 4f)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.SAVE,
                         tableUpdate = "tb_equip",
@@ -260,8 +259,8 @@ class EquipViewModelTest {
             assertEquals(result.count(), 4)
             assertEquals(
                 result[0],
-                EquipState(
-                    status = UpdateStatusState(
+                EquipStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_equip",
@@ -271,8 +270,8 @@ class EquipViewModelTest {
             )
             assertEquals(
                 result[1],
-                EquipState(
-                    status = UpdateStatusState(
+                EquipStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.CLEAN,
                         tableUpdate = "tb_equip",
@@ -282,8 +281,8 @@ class EquipViewModelTest {
             )
             assertEquals(
                 result[2],
-                EquipState(
-                    status = UpdateStatusState(
+                EquipStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.SAVE,
                         tableUpdate = "tb_equip",
@@ -293,8 +292,8 @@ class EquipViewModelTest {
             )
             assertEquals(
                 result[3],
-                EquipState(
-                    status = UpdateStatusState(
+                EquipStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagDialog = true,
                         flagProgress = false,
                         flagFailure = false,
@@ -303,7 +302,7 @@ class EquipViewModelTest {
                     )
                 )
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "ATUALIZAR DADOS",
                 TypeButton.UPDATE
             )
@@ -316,7 +315,7 @@ class EquipViewModelTest {
     @Test
     fun `setTextField - Check return failure if field is empty`() =
         runTest {
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "OK",
                 TypeButton.OK
             )
@@ -341,7 +340,7 @@ class EquipViewModelTest {
                 false
             )
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 false
             )
         }
@@ -358,11 +357,11 @@ class EquipViewModelTest {
                     cause = Exception()
                 )
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "200",
                 TypeButton.NUMERIC
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "OK",
                 TypeButton.OK
             )
@@ -387,7 +386,7 @@ class EquipViewModelTest {
                 false
             )
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 false
             )
         }
@@ -400,11 +399,11 @@ class EquipViewModelTest {
             ).thenReturn(
                 Result.success(false)
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "200",
                 TypeButton.NUMERIC
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "OK",
                 TypeButton.OK
             )
@@ -421,7 +420,7 @@ class EquipViewModelTest {
                 Errors.INVALID
             )
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 false
             )
         }
@@ -435,7 +434,7 @@ class EquipViewModelTest {
                 Result.success(true)
             )
             whenever(
-                setIdEquip(
+                setEquip(
                     option = Option.INSERT,
                     type = Type.MAIN,
                     nroEquip = "200"
@@ -447,11 +446,11 @@ class EquipViewModelTest {
                     cause = Exception()
                 )
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "200",
                 TypeButton.NUMERIC
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "OK",
                 TypeButton.OK
             )
@@ -476,7 +475,7 @@ class EquipViewModelTest {
                 false
             )
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 false
             )
         }
@@ -489,11 +488,11 @@ class EquipViewModelTest {
             ).thenReturn(
                 Result.success(true)
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "200",
                 TypeButton.NUMERIC
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "OK",
                 TypeButton.OK
             )
@@ -502,7 +501,7 @@ class EquipViewModelTest {
                 false
             )
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 true
             )
         }

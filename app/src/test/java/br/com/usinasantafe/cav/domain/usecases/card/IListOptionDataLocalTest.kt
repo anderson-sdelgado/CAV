@@ -88,7 +88,7 @@ class IListOptionDataLocalTest {
                 listOf(
                     ItemListScreenModel(
                         id = 1,
-                        description = "Test"
+                        desc = "Test"
                     )
                 )
             )

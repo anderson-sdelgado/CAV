@@ -46,7 +46,7 @@ fun clearTextFieldComma(text: String): String {
 
 @Composable
 fun ButtonsGenericNumeric(
-    setActionButton: (
+    onTextField: (
         text: String,
         typeButton: TypeButton,
     ) -> Unit,
@@ -55,19 +55,19 @@ fun ButtonsGenericNumeric(
     Column(
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        val text_number_1 = stringResource(id = R.string.text_number_1)
-        val text_number_2 = stringResource(id = R.string.text_number_2)
-        val text_number_3 = stringResource(id = R.string.text_number_3)
-        val text_number_4 = stringResource(id = R.string.text_number_4)
-        val text_number_5 = stringResource(id = R.string.text_number_5)
-        val text_number_6 = stringResource(id = R.string.text_number_6)
-        val text_number_7 = stringResource(id = R.string.text_number_7)
-        val text_number_8 = stringResource(id = R.string.text_number_8)
-        val text_number_9 = stringResource(id = R.string.text_number_9)
-        val text_number_0 = stringResource(id = R.string.text_number_0)
-        val text_clean = stringResource(id = R.string.text_pattern_clean)
-        val text_ok = stringResource(id = R.string.text_pattern_ok)
-        val text_update = stringResource(id = R.string.text_pattern_update)
+        val number1 = stringResource(id = R.string.text_number_1)
+        val number2 = stringResource(id = R.string.text_number_2)
+        val number3 = stringResource(id = R.string.text_number_3)
+        val number4 = stringResource(id = R.string.text_number_4)
+        val number5 = stringResource(id = R.string.text_number_5)
+        val number6 = stringResource(id = R.string.text_number_6)
+        val number7 = stringResource(id = R.string.text_number_7)
+        val number8 = stringResource(id = R.string.text_number_8)
+        val number9 = stringResource(id = R.string.text_number_9)
+        val number0 = stringResource(id = R.string.text_number_0)
+        val clean = stringResource(id = R.string.text_pattern_clean)
+        val ok = stringResource(id = R.string.text_pattern_ok)
+        val update = stringResource(id = R.string.text_pattern_update)
         Row(
             modifier = Modifier
                 .weight(1f),
@@ -77,12 +77,12 @@ fun ButtonsGenericNumeric(
             ButtonNumericDesign(
                 {
                     TextButtonNumericDesign(
-                        text = text_number_1
+                        text = number1
                     )
                 },
                 {
-                    setActionButton(
-                        text_number_1,
+                    onTextField(
+                        number1,
                         TypeButton.NUMERIC
                     )
                 },
@@ -92,12 +92,12 @@ fun ButtonsGenericNumeric(
             ButtonNumericDesign(
                 {
                     TextButtonNumericDesign(
-                        text = text_number_2
+                        text = number2
                     )
                 },
                 {
-                    setActionButton(
-                        text_number_2,
+                    onTextField(
+                        number2,
                         TypeButton.NUMERIC
                     )
                 },
@@ -107,63 +107,12 @@ fun ButtonsGenericNumeric(
             ButtonNumericDesign(
                 {
                     TextButtonNumericDesign(
-                        text = text_number_3
+                        text = number3
                     )
                 },
                 {
-                    setActionButton(
-                        text_number_3,
-                        TypeButton.NUMERIC
-                    )
-                },
-                Modifier
-                    .weight(1f)
-            )
-        }
-        Row(
-            modifier = Modifier
-                .weight(1f),
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            ButtonNumericDesign(
-                {
-                    TextButtonNumericDesign(
-                        text = text_number_4
-                    )
-                },
-                {
-                    setActionButton(
-                        text_number_4,
-                        TypeButton.NUMERIC
-                    )
-                },
-                Modifier
-                    .weight(1f)
-            )
-            ButtonNumericDesign(
-                {
-                    TextButtonNumericDesign(
-                        text = text_number_5
-                    )
-                },
-                {
-                    setActionButton(
-                        text_number_5,
-                        TypeButton.NUMERIC
-                    )
-                },
-                Modifier
-                    .weight(1f)
-            )
-            ButtonNumericDesign(
-                {
-                    TextButtonNumericDesign(
-                        text = text_number_6
-                    )
-                },
-                {
-                    setActionButton(
-                        text_number_6,
+                    onTextField(
+                        number3,
                         TypeButton.NUMERIC
                     )
                 },
@@ -179,12 +128,12 @@ fun ButtonsGenericNumeric(
             ButtonNumericDesign(
                 {
                     TextButtonNumericDesign(
-                        text = text_number_7
+                        text = number4
                     )
                 },
                 {
-                    setActionButton(
-                        text_number_7,
+                    onTextField(
+                        number4,
                         TypeButton.NUMERIC
                     )
                 },
@@ -194,12 +143,12 @@ fun ButtonsGenericNumeric(
             ButtonNumericDesign(
                 {
                     TextButtonNumericDesign(
-                        text = text_number_8
+                        text = number5
                     )
                 },
                 {
-                    setActionButton(
-                        text_number_8,
+                    onTextField(
+                        number5,
                         TypeButton.NUMERIC
                     )
                 },
@@ -209,12 +158,63 @@ fun ButtonsGenericNumeric(
             ButtonNumericDesign(
                 {
                     TextButtonNumericDesign(
-                        text = text_number_9
+                        text = number6
                     )
                 },
                 {
-                    setActionButton(
-                        text_number_9,
+                    onTextField(
+                        number6,
+                        TypeButton.NUMERIC
+                    )
+                },
+                Modifier
+                    .weight(1f)
+            )
+        }
+        Row(
+            modifier = Modifier
+                .weight(1f),
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            ButtonNumericDesign(
+                {
+                    TextButtonNumericDesign(
+                        text = number7
+                    )
+                },
+                {
+                    onTextField(
+                        number7,
+                        TypeButton.NUMERIC
+                    )
+                },
+                Modifier
+                    .weight(1f)
+            )
+            ButtonNumericDesign(
+                {
+                    TextButtonNumericDesign(
+                        text = number8
+                    )
+                },
+                {
+                    onTextField(
+                        number8,
+                        TypeButton.NUMERIC
+                    )
+                },
+                Modifier
+                    .weight(1f)
+            )
+            ButtonNumericDesign(
+                {
+                    TextButtonNumericDesign(
+                        text = number9
+                    )
+                },
+                {
+                    onTextField(
+                        number9,
                         TypeButton.NUMERIC
                     )
                 },
@@ -230,12 +230,12 @@ fun ButtonsGenericNumeric(
             ButtonNumericDesign(
                 text = {
                     TextButtonCleanDesign(
-                        text = text_clean
+                        text = clean
                     )
                 },
                 {
-                    setActionButton(
-                        text_clean,
+                    onTextField(
+                        clean,
                         TypeButton.CLEAN
                     )
                 },
@@ -245,12 +245,12 @@ fun ButtonsGenericNumeric(
             ButtonNumericDesign(
                 {
                     TextButtonNumericDesign(
-                        text = text_number_0
+                        text = number0
                     )
                 },
                 {
-                    setActionButton(
-                        text_number_0,
+                    onTextField(
+                        number0,
                         TypeButton.NUMERIC
                     )
                 },
@@ -260,12 +260,12 @@ fun ButtonsGenericNumeric(
             ButtonNumericDesign(
                 {
                     TextButtonNumericDesign(
-                        text = text_ok
+                        text = ok
                     )
                 },
                 {
-                    setActionButton(
-                        text_ok,
+                    onTextField(
+                        ok,
                         TypeButton.OK
                     )
                 },
@@ -282,12 +282,12 @@ fun ButtonsGenericNumeric(
                 ButtonNumericDesign(
                     {
                         TextButtonNumericDesign(
-                            text = text_update
+                            text = update
                         )
                     },
                     {
-                        setActionButton(
-                            text_update,
+                        onTextField(
+                            update,
                             TypeButton.UPDATE
                         )
                     },

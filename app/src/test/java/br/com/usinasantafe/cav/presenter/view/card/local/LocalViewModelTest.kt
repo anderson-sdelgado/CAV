@@ -12,7 +12,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @ExperimentalCoroutinesApi
-class LocalScreenModelTest {
+class LocalViewModelTest {
 
     @ExperimentalCoroutinesApi
     @get:Rule

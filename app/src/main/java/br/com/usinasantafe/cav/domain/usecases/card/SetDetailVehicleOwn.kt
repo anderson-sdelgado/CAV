@@ -10,7 +10,7 @@ interface SetDetailVehicleOwn {
     suspend operator fun invoke(
         option: Option,
         typeDetail: TypeDetail,
-        detail: String
+        text: String
     ): Result<Unit>
 }
 
@@ -20,7 +20,7 @@ class ISetDetailVehicleOwn @Inject constructor(
     override suspend fun invoke(
         option: Option,
         typeDetail: TypeDetail,
-        detail: String
+        text: String
     ): Result<Unit> =
         call(getClassAndMethod()) {
             TODO("Not yet implemented")

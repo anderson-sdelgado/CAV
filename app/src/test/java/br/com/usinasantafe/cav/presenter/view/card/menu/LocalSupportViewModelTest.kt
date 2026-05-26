@@ -36,19 +36,19 @@ class LocalSupportViewModelTest {
         runTest {
             viewModel.recoverData()
             assertEquals(
-                viewModel.uiState.value.flagDialog,
+                viewModel.uiState.value.status.flagDialog,
                 true
             )
             assertEquals(
-                viewModel.uiState.value.failure,
+                viewModel.uiState.value.status.failure,
                 "LocalSupportViewModel.recoverData -> Cannot invoke \"br.com.usinasantafe.cav.presenter.model.LocalScreenModel.getAddress()\" because \"local\\1\" is null"
             )
             assertEquals(
-                viewModel.uiState.value.errors,
+                viewModel.uiState.value.status.errors,
                 Errors.EXCEPTION
             )
             assertEquals(
-                viewModel.uiState.value.flagFailure,
+                viewModel.uiState.value.status.flagFailure,
                 true
             )
             assertEquals(
@@ -79,19 +79,19 @@ class LocalSupportViewModelTest {
             )
             viewModel.recoverData()
             assertEquals(
-                viewModel.uiState.value.flagDialog,
+                viewModel.uiState.value.status.flagDialog,
                 true
             )
             assertEquals(
-                viewModel.uiState.value.failure,
+                viewModel.uiState.value.status.failure,
                 "LocalSupportViewModel.recoverData -> GetLocal -> java.lang.Exception"
             )
             assertEquals(
-                viewModel.uiState.value.errors,
+                viewModel.uiState.value.status.errors,
                 Errors.EXCEPTION
             )
             assertEquals(
-                viewModel.uiState.value.flagFailure,
+                viewModel.uiState.value.status.flagFailure,
                 true
             )
             assertEquals(
@@ -133,19 +133,19 @@ class LocalSupportViewModelTest {
             )
             viewModel.recoverData()
             assertEquals(
-                viewModel.uiState.value.flagDialog,
+                viewModel.uiState.value.status.flagDialog,
                 true
             )
             assertEquals(
-                viewModel.uiState.value.failure,
+                viewModel.uiState.value.status.failure,
                 "LocalSupportViewModel.recoverData -> ListDataLocal -> java.lang.Exception"
             )
             assertEquals(
-                viewModel.uiState.value.errors,
+                viewModel.uiState.value.status.errors,
                 Errors.EXCEPTION
             )
             assertEquals(
-                viewModel.uiState.value.flagFailure,
+                viewModel.uiState.value.status.flagFailure,
                 true
             )
         }
@@ -185,19 +185,19 @@ class LocalSupportViewModelTest {
             )
             viewModel.recoverData()
             assertEquals(
-                viewModel.uiState.value.flagDialog,
+                viewModel.uiState.value.status.flagDialog,
                 true
             )
             assertEquals(
-                viewModel.uiState.value.failure,
+                viewModel.uiState.value.status.failure,
                 "LocalSupportViewModel.recoverData -> GetSupportTeams -> java.lang.Exception"
             )
             assertEquals(
-                viewModel.uiState.value.errors,
+                viewModel.uiState.value.status.errors,
                 Errors.EXCEPTION
             )
             assertEquals(
-                viewModel.uiState.value.flagFailure,
+                viewModel.uiState.value.status.flagFailure,
                 true
             )
         }
@@ -233,7 +233,7 @@ class LocalSupportViewModelTest {
             )
             viewModel.recoverData()
             assertEquals(
-                viewModel.uiState.value.flagFailure,
+                viewModel.uiState.value.status.flagFailure,
                 false
             )
             assertEquals(

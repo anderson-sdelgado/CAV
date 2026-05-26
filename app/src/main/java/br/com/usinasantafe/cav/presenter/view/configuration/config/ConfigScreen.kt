@@ -35,7 +35,7 @@ import br.com.usinasantafe.cav.presenter.theme.MsgUpdate
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
 import br.com.usinasantafe.cav.presenter.theme.TextFieldConfigDesign
 import br.com.usinasantafe.cav.presenter.theme.TextFieldPasswordDesign
-import br.com.usinasantafe.cav.utils.UpdateStatusState
+import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 
 const val TAG_NUMBER_TEXT_FIELD_CONFIG_SCREEN = "tag_number_text_field_config_screen"
 const val TAG_PASSWORD_TEXT_FIELD_CONFIG_SCREEN = "tag_password_text_field_config_screen"
@@ -63,7 +63,6 @@ fun ConfigScreen(
                 onPasswordChanged = viewModel::onPasswordChanged,
                 onSaveAndUpdate = viewModel::onSaveAndUpdate,
                 setCloseDialog = viewModel::setCloseDialog,
-                flagAccess = uiState.flagAccess,
                 status = uiState.status,
                 onNavInitialMenu = onNavInitialMenu,
                 modifier = Modifier.padding(innerPadding)
@@ -80,8 +79,7 @@ fun ConfigContent(
     onPasswordChanged: (String) -> Unit,
     onSaveAndUpdate: () -> Unit,
     setCloseDialog: () -> Unit,
-    flagAccess: Boolean,
-    status: UpdateStatusState,
+    status: UiStatusStateUpdate,
     onNavInitialMenu: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -161,8 +159,8 @@ fun ConfigContent(
         }
     }
 
-    LaunchedEffect(flagAccess) {
-        if(flagAccess) {
+    LaunchedEffect(status.flagAccess) {
+        if(status.flagAccess) {
             onNavInitialMenu()
         }
     }
@@ -180,8 +178,8 @@ fun ConfigPagePreview() {
                 onPasswordChanged = {},
                 onSaveAndUpdate = {},
                 setCloseDialog = {},
-                flagAccess = false,
-                status = UpdateStatusState(
+                status = UiStatusStateUpdate(
+                    flagAccess = false,
                     flagProgress = false,
                     currentProgress = 0.0f,
                     levelUpdate = null,
@@ -210,8 +208,8 @@ fun ConfigPagePreviewWithData() {
                 onPasswordChanged = {},
                 onSaveAndUpdate = {},
                 setCloseDialog = {},
-                flagAccess = false,
-                status = UpdateStatusState(
+                status = UiStatusStateUpdate(
+                    flagAccess = false,
                     flagProgress = false,
                     currentProgress = 0.0f,
                     levelUpdate = null,
@@ -240,8 +238,7 @@ fun ConfigPagePreviewShowProgress() {
                 onPasswordChanged = {},
                 onSaveAndUpdate = {},
                 setCloseDialog = {},
-                flagAccess = false,
-                status = UpdateStatusState(
+                status = UiStatusStateUpdate(
                     flagProgress = true,
                     currentProgress = 0.2f,
                     levelUpdate = LevelUpdate.RECOVERY,
@@ -270,8 +267,7 @@ fun ConfigPagePreviewShowMsgFieldEmpty() {
                 onPasswordChanged = {},
                 onSaveAndUpdate = {},
                 setCloseDialog = {},
-                flagAccess = false,
-                status = UpdateStatusState(
+                status = UiStatusStateUpdate(
                     flagProgress = false,
                     currentProgress = 0.0f,
                     levelUpdate = null,
@@ -300,8 +296,7 @@ fun ConfigPagePreviewShowMsgSuccess() {
                 onPasswordChanged = {},
                 onSaveAndUpdate = {},
                 setCloseDialog = {},
-                flagAccess = false,
-                status = UpdateStatusState(
+                status = UiStatusStateUpdate(
                     flagProgress = false,
                     currentProgress = 0.0f,
                     levelUpdate = LevelUpdate.FINISH_UPDATE_COMPLETED,

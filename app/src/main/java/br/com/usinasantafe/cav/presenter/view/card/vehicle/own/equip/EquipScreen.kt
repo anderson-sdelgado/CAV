@@ -26,7 +26,7 @@ import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.MsgUpdate
 import br.com.usinasantafe.cav.presenter.theme.Progress
 import br.com.usinasantafe.cav.presenter.theme.TextFieldDesign
-import br.com.usinasantafe.cav.utils.UpdateStatusState
+import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 
 @Composable
 fun EquipScreen(
@@ -48,9 +48,8 @@ fun EquipScreen(
                 option = uiState.option,
                 type = uiState.type,
                 nroEquip = uiState.nroEquip,
-                setTextField = viewModel::setTextField,
-                flagAccess = uiState.flagAccess,
-                setCloseDialog = viewModel::setCloseDialog,
+                onTextField = viewModel::onTextField,
+                onCloseDialog = viewModel::onCloseDialog,
                 status = uiState.status,
                 onNavMenu = onNavMenu,
                 onNavDetail = onNavDetail,
@@ -67,10 +66,9 @@ fun EquipContent(
     option: Option,
     type: Type,
     nroEquip: String,
-    setTextField: (String, TypeButton) -> Unit,
-    flagAccess: Boolean,
-    setCloseDialog: () -> Unit,
-    status: UpdateStatusState,
+    onTextField: (String, TypeButton) -> Unit,
+    onCloseDialog: () -> Unit,
+    status: UiStatusStateUpdate,
     onNavMenu:  () -> Unit,
     onNavDetail: () -> Unit,
     onNavData: () -> Unit,
@@ -91,7 +89,7 @@ fun EquipContent(
         )
         Spacer(modifier = Modifier.padding(vertical = 8.dp))
         ButtonsGenericNumeric(
-            setActionButton = setTextField
+            onTextField = onTextField
         )
         BackHandler {
             when(type) {
@@ -106,7 +104,7 @@ fun EquipContent(
         }
 
         if (status.flagDialog) {
-            MsgUpdate(status = status, onClickOk = setCloseDialog, value = stringResource(id = R.string.text_title_car))
+            MsgUpdate(status = status, onClickOk = onCloseDialog, value = stringResource(id = R.string.text_title_car))
         }
 
         if (status.flagProgress) {
@@ -114,8 +112,8 @@ fun EquipContent(
         }
     }
 
-    LaunchedEffect(flagAccess) {
-        if(flagAccess) {
+    LaunchedEffect(status.flagAccess) {
+        if(status.flagAccess) {
             onNavDetail()
         }
     }
@@ -130,10 +128,9 @@ fun EquipPagePreview() {
                 option = Option.INSERT,
                 type = Type.MAIN,
                 nroEquip = "",
-                setTextField = { _, _ -> },
-                flagAccess = false,
-                setCloseDialog = {},
-                status = UpdateStatusState(
+                onTextField = { _, _ -> },
+                onCloseDialog = {},
+                status = UiStatusStateUpdate(
                     flagDialog = false,
                     flagFailure = false,
                     errors = Errors.FIELD_EMPTY,

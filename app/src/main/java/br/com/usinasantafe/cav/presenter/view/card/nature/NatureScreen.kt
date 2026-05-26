@@ -31,7 +31,7 @@ import br.com.usinasantafe.cav.presenter.theme.CheckboxDefault
 import br.com.usinasantafe.cav.presenter.theme.MsgUpdate
 import br.com.usinasantafe.cav.presenter.theme.Progress
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
-import br.com.usinasantafe.cav.utils.UpdateStatusState
+import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 
 @Composable
 fun NatureScreen(
@@ -52,7 +52,6 @@ fun NatureScreen(
                 onCheckChange = viewModel::onCheckChange,
                 updateDatabase = viewModel::updateDatabase,
                 save = viewModel::save,
-                flagAccess = uiState.flagAccess,
                 setCloseDialog = viewModel::setCloseDialog,
                 status = uiState.status,
                 onNavMenu = onNavMenu,
@@ -68,9 +67,8 @@ fun NatureContent(
     onCheckChange: (Int, Boolean) -> Unit,
     updateDatabase: () -> Unit,
     save: () -> Unit,
-    flagAccess: Boolean,
     setCloseDialog: () -> Unit,
-    status: UpdateStatusState,
+    status: UiStatusStateUpdate,
     onNavMenu: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -143,8 +141,8 @@ fun NatureContent(
 
     }
 
-    LaunchedEffect(flagAccess) {
-        if (flagAccess) {
+    LaunchedEffect(status.flagAccess) {
+        if (status.flagAccess) {
             onNavMenu()
         }
     }
@@ -160,9 +158,8 @@ fun NaturePagePreview() {
                 onCheckChange = { _, _ -> },
                 updateDatabase = {},
                 save = {},
-                flagAccess = false,
                 setCloseDialog = {},
-                status = UpdateStatusState(
+                status = UiStatusStateUpdate(
                     flagDialog = false,
                     flagFailure = false,
                     errors = Errors.FIELD_EMPTY,
@@ -215,9 +212,8 @@ fun NaturePagePreviewWithList() {
                 onCheckChange = { _, _ -> },
                 updateDatabase = {},
                 save = {},
-                flagAccess = false,
                 setCloseDialog = {},
-                status = UpdateStatusState(
+                status = UiStatusStateUpdate(
                     flagDialog = false,
                     flagFailure = false,
                     errors = Errors.FIELD_EMPTY,

@@ -27,7 +27,7 @@ import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.ItemDefaultListDesign
 import br.com.usinasantafe.cav.presenter.theme.MsgUpdate
 import br.com.usinasantafe.cav.presenter.theme.Progress
-import br.com.usinasantafe.cav.utils.UpdateStatusState
+import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 
 @Composable
 fun OptionDataLocalScreen(
@@ -46,7 +46,7 @@ fun OptionDataLocalScreen(
             OptionDataLocalContent(
                 list = uiState.list,
                 updateDatabase = viewModel::updateDatabase,
-                setCloseDialog = viewModel::setCloseDialog,
+                setCloseDialog = viewModel::onCloseDialog,
                 status = uiState.status,
                 onNavMenu = onNavMenu,
                 onNavItem = onNavItem,
@@ -61,7 +61,7 @@ fun OptionDataLocalContent(
     list: List<ItemListScreenModel>,
     updateDatabase: () -> Unit,
     setCloseDialog: () -> Unit,
-    status: UpdateStatusState,
+    status: UiStatusStateUpdate,
     onNavMenu: () -> Unit,
     onNavItem: (Int) -> Unit,
     modifier: Modifier = Modifier
@@ -82,7 +82,7 @@ fun OptionDataLocalContent(
             items(list) { item ->
                 ItemDefaultListDesign(
                     id = item.id,
-                    text = item.description,
+                    text = item.desc,
                     setActionItem = {
                         onNavItem(item.id)
                     },
@@ -117,7 +117,7 @@ fun OptionDataLocalPagePreview() {
                 list = emptyList(),
                 updateDatabase = {},
                 setCloseDialog = {},
-                status = UpdateStatusState(
+                status = UiStatusStateUpdate(
                     flagFailure = false,
                     errors = Errors.FIELD_EMPTY,
                     failure = "",
@@ -144,20 +144,20 @@ fun OptionDataLocalPagePreviewWithData() {
                 list = listOf(
                     ItemListScreenModel(
                         id = 1,
-                        description = "TRAÇADO"
+                        desc = "TRAÇADO"
                     ),
                     ItemListScreenModel(
                         id = 2,
-                        description = "PERFIL"
+                        desc = "PERFIL"
                     ),
                     ItemListScreenModel(
                         id = 3,
-                        description = "LOMBADA"
+                        desc = "LOMBADA"
                     )
                 ),
                 updateDatabase = {},
                 setCloseDialog = {},
-                status = UpdateStatusState(
+                status = UiStatusStateUpdate(
                     flagFailure = false,
                     errors = Errors.FIELD_EMPTY,
                     failure = "",
@@ -184,20 +184,20 @@ fun OptionDataLocalPagePreviewWithFailureUpdate() {
                 list = listOf(
                     ItemListScreenModel(
                         id = 1,
-                        description = "TRAÇADO"
+                        desc = "TRAÇADO"
                     ),
                     ItemListScreenModel(
                         id = 2,
-                        description = "PERFIL"
+                        desc = "PERFIL"
                     ),
                     ItemListScreenModel(
                         id = 3,
-                        description = "LOMBADA"
+                        desc = "LOMBADA"
                     )
                 ),
                 updateDatabase = {},
                 setCloseDialog = {},
-                status = UpdateStatusState(
+                status = UiStatusStateUpdate(
                     flagFailure = true,
                     errors = Errors.UPDATE,
                     failure = "Failure",
@@ -224,20 +224,20 @@ fun OptionDataLocalPagePreviewWithProgressUpdate() {
                 list = listOf(
                     ItemListScreenModel(
                         id = 1,
-                        description = "TRAÇADO"
+                        desc = "TRAÇADO"
                     ),
                     ItemListScreenModel(
                         id = 2,
-                        description = "PERFIL"
+                        desc = "PERFIL"
                     ),
                     ItemListScreenModel(
                         id = 3,
-                        description = "LOMBADA"
+                        desc = "LOMBADA"
                     )
                 ),
                 updateDatabase = {},
                 setCloseDialog = {},
-                status = UpdateStatusState(
+                status = UiStatusStateUpdate(
                     flagFailure = false,
                     errors = Errors.UPDATE,
                     failure = "Failure",
@@ -264,20 +264,20 @@ fun OptionDataLocalPagePreviewWithFailureError() {
                 list = listOf(
                     ItemListScreenModel(
                         id = 1,
-                        description = "TRAÇADO"
+                        desc = "TRAÇADO"
                     ),
                     ItemListScreenModel(
                         id = 2,
-                        description = "PERFIL"
+                        desc = "PERFIL"
                     ),
                     ItemListScreenModel(
                         id = 3,
-                        description = "LOMBADA"
+                        desc = "LOMBADA"
                     )
                 ),
                 updateDatabase = {},
                 setCloseDialog = {},
-                status = UpdateStatusState(
+                status = UiStatusStateUpdate(
                     flagFailure = true,
                     errors = Errors.EXCEPTION,
                     failure = "Failure",

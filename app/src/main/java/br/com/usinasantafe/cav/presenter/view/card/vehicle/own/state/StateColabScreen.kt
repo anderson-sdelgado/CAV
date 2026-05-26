@@ -13,6 +13,7 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,6 +30,7 @@ import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.MsgErrors
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
+import br.com.usinasantafe.cav.utils.UiStatusState
 
 @Composable
 fun StateColabScreen(
@@ -43,9 +45,8 @@ fun StateColabScreen(
                 idSelection = uiState.idSelection,
                 onSelection = viewModel::onSelection,
                 onCloseDialog = viewModel::onCloseDialog,
-                flagDialog = uiState.flagDialog,
-                failure = uiState.failure,
-                errors = uiState.errors,
+                set = viewModel::set,
+                status = uiState.status,
                 onNavColab = onNavColab,
                 onNavObs = onNavDetail,
                 modifier = Modifier.padding(innerPadding)
@@ -59,9 +60,8 @@ fun StateColabContent(
     idSelection: Int,
     onSelection: (Int) -> Unit,
     onCloseDialog: () -> Unit,
-    flagDialog: Boolean,
-    failure: String,
-    errors: Errors,
+    set: () -> Unit,
+    status: UiStatusState,
     onNavColab: () -> Unit,
     onNavObs: () -> Unit,
     modifier: Modifier = Modifier
@@ -175,7 +175,7 @@ fun StateColabContent(
                 )
             }
             Button(
-                onClick = onNavObs,
+                onClick = set,
                 modifier = Modifier.weight(1f)
             ) {
                 TextButtonDesign(
@@ -185,10 +185,17 @@ fun StateColabContent(
             }
         }
 
-        if(flagDialog) {
-            MsgErrors(errors, onCloseDialog, failure)
+        if(status.flagDialog) {
+            MsgErrors(status.errors, onCloseDialog, status.failure)
         }
     }
+
+    LaunchedEffect(status.flagAccess) {
+        if(status.flagAccess) {
+            onNavObs()
+        }
+    }
+
 }
 
 @Preview(showBackground = true)
@@ -200,9 +207,8 @@ fun StateColabPagePreview() {
                 idSelection = 1,
                 onSelection = {},
                 onCloseDialog = {},
-                flagDialog = false,
-                failure = "",
-                errors = Errors.FIELD_EMPTY,
+                set = {},
+                status = UiStatusState(),
                 onNavColab = {},
                 onNavObs = {},
                 modifier = Modifier.padding(innerPadding)

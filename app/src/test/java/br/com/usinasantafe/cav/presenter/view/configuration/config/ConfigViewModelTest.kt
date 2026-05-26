@@ -17,7 +17,7 @@ import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableTypeAccident
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.LevelUpdate
 import br.com.usinasantafe.cav.presenter.model.ConfigModel
-import br.com.usinasantafe.cav.utils.UpdateStatusState
+import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 import br.com.usinasantafe.cav.utils.percentage
 import br.com.usinasantafe.cav.utils.resultFailure
 import br.com.usinasantafe.cav.utils.sizeUpdate
@@ -189,11 +189,11 @@ class ConfigViewModelTest {
             assertEquals(result.count(), 2)
             assertEquals(
                 result[0],
-                ConfigState(
+                ConfigStateUpdate(
                     number = "16997417840",
                     password = "12345",
                     version = "1.00",
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.GET_TOKEN,
                         currentProgress = percentage(1f, 3f)
@@ -202,11 +202,11 @@ class ConfigViewModelTest {
             )
             assertEquals(
                 result[1],
-                ConfigState(
+                ConfigStateUpdate(
                     number = "16997417840",
                     password = "12345",
                     version = "1.00",
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         errors = Errors.TOKEN,
                         flagDialog = true,
                         flagFailure = true,
@@ -245,11 +245,11 @@ class ConfigViewModelTest {
             assertEquals(result.count(), 3)
             assertEquals(
                 result[0],
-                ConfigState(
+                ConfigStateUpdate(
                     number = "16997417840",
                     password = "12345",
                     version = "1.00",
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.GET_TOKEN,
                         currentProgress = percentage(1f, 3f)
@@ -258,11 +258,11 @@ class ConfigViewModelTest {
             )
             assertEquals(
                 result[1],
-                ConfigState(
+                ConfigStateUpdate(
                     number = "16997417840",
                     password = "12345",
                     version = "1.00",
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.SAVE_TOKEN,
                         currentProgress = percentage(2f, 3f)
@@ -271,11 +271,11 @@ class ConfigViewModelTest {
             )
             assertEquals(
                 result[2],
-                ConfigState(
+                ConfigStateUpdate(
                     number = "16997417840",
                     password = "12345",
                     version = "1.00",
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         errors = Errors.TOKEN,
                         flagDialog = true,
                         flagFailure = true,
@@ -330,11 +330,11 @@ class ConfigViewModelTest {
             assertEquals(result.count(), 3)
             assertEquals(
                 result[0],
-                ConfigState(
+                ConfigStateUpdate(
                     number = "16997417840",
                     password = "12345",
                     version = "1.00",
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.GET_TOKEN,
                         currentProgress = percentage(1f, 3f)
@@ -343,11 +343,11 @@ class ConfigViewModelTest {
             )
             assertEquals(
                 result[1],
-                ConfigState(
+                ConfigStateUpdate(
                     number = "16997417840",
                     password = "12345",
                     version = "1.00",
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.SAVE_TOKEN,
                         currentProgress = percentage(2f, 3f)
@@ -356,11 +356,11 @@ class ConfigViewModelTest {
             )
             assertEquals(
                 result[2],
-                ConfigState(
+                ConfigStateUpdate(
                     number = "16997417840",
                     password = "12345",
                     version = "1.00",
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         errors = Errors.TOKEN,
                         flagDialog = true,
                         flagFailure = true,
@@ -402,11 +402,11 @@ class ConfigViewModelTest {
             assertEquals(result.count(), 3)
             assertEquals(
                 result[0],
-                ConfigState(
+                ConfigStateUpdate(
                     number = "16997417840",
                     password = "12345",
                     version = "1.00",
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.GET_TOKEN,
                         currentProgress = percentage(1f, 3f)
@@ -415,11 +415,11 @@ class ConfigViewModelTest {
             )
             assertEquals(
                 result[1],
-                ConfigState(
+                ConfigStateUpdate(
                     number = "16997417840",
                     password = "12345",
                     version = "1.00",
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.SAVE_TOKEN,
                         currentProgress = percentage(2f, 3f)
@@ -428,11 +428,11 @@ class ConfigViewModelTest {
             )
             assertEquals(
                 result[2],
-                ConfigState(
+                ConfigStateUpdate(
                     number = "16997417840",
                     password = "12345",
                     version = "1.00",
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.FINISH_UPDATE_INITIAL,
                         currentProgress = 1f,
@@ -452,13 +452,13 @@ class ConfigViewModelTest {
                 )
             ).thenReturn(
                 flowOf(
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_colab",
                         currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -473,8 +473,8 @@ class ConfigViewModelTest {
             )
             assertEquals(
                 result[(qtdBefore * 3).toInt()],
-                ConfigState(
-                    status = UpdateStatusState(
+                ConfigStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_colab",
@@ -484,8 +484,8 @@ class ConfigViewModelTest {
             )
             assertEquals(
                 result[((qtdBefore * 3) + 1).toInt()],
-                ConfigState(
-                    status = UpdateStatusState(
+                ConfigStateUpdate(
+                    status = UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -507,13 +507,13 @@ class ConfigViewModelTest {
                 )
             ).thenReturn(
                 flowOf(
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_equip",
                         currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -529,8 +529,8 @@ class ConfigViewModelTest {
             checkResultUpdate(qtdBefore, result)
             assertEquals(
                 result[(qtdBefore * 3).toInt()],
-                ConfigState(
-                    status = UpdateStatusState(
+                ConfigStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_equip",
@@ -540,8 +540,8 @@ class ConfigViewModelTest {
             )
             assertEquals(
                 result[((qtdBefore * 3) + 1).toInt()],
-                ConfigState(
-                    status = UpdateStatusState(
+                ConfigStateUpdate(
+                    status = UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -563,13 +563,13 @@ class ConfigViewModelTest {
                 )
             ).thenReturn(
                 flowOf(
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_item_data_local",
                         currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -585,8 +585,8 @@ class ConfigViewModelTest {
             checkResultUpdate(qtdBefore, result)
             assertEquals(
                 result[(qtdBefore * 3).toInt()],
-                ConfigState(
-                    status = UpdateStatusState(
+                ConfigStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_item_data_local",
@@ -596,8 +596,8 @@ class ConfigViewModelTest {
             )
             assertEquals(
                 result[((qtdBefore * 3) + 1).toInt()],
-                ConfigState(
-                    status = UpdateStatusState(
+                ConfigStateUpdate(
+                    status = UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -619,13 +619,13 @@ class ConfigViewModelTest {
                 )
             ).thenReturn(
                 flowOf(
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_nature",
                         currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -641,8 +641,8 @@ class ConfigViewModelTest {
             checkResultUpdate(qtdBefore, result)
             assertEquals(
                 result[(qtdBefore * 3).toInt()],
-                ConfigState(
-                    status = UpdateStatusState(
+                ConfigStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_nature",
@@ -652,8 +652,8 @@ class ConfigViewModelTest {
             )
             assertEquals(
                 result[((qtdBefore * 3) + 1).toInt()],
-                ConfigState(
-                    status = UpdateStatusState(
+                ConfigStateUpdate(
+                    status = UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -675,13 +675,13 @@ class ConfigViewModelTest {
                 )
             ).thenReturn(
                 flowOf(
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_option_data_local",
                         currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -697,8 +697,8 @@ class ConfigViewModelTest {
             checkResultUpdate(qtdBefore, result)
             assertEquals(
                 result[(qtdBefore * 3).toInt()],
-                ConfigState(
-                    status = UpdateStatusState(
+                ConfigStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_option_data_local",
@@ -708,8 +708,8 @@ class ConfigViewModelTest {
             )
             assertEquals(
                 result[((qtdBefore * 3) + 1).toInt()],
-                ConfigState(
-                    status = UpdateStatusState(
+                ConfigStateUpdate(
+                    status = UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -731,13 +731,13 @@ class ConfigViewModelTest {
                 )
             ).thenReturn(
                 flowOf(
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_r_option_item_data_local",
                         currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -753,8 +753,8 @@ class ConfigViewModelTest {
             checkResultUpdate(qtdBefore, result)
             assertEquals(
                 result[(qtdBefore * 3).toInt()],
-                ConfigState(
-                    status = UpdateStatusState(
+                ConfigStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_r_option_item_data_local",
@@ -764,8 +764,8 @@ class ConfigViewModelTest {
             )
             assertEquals(
                 result[((qtdBefore * 3) + 1).toInt()],
-                ConfigState(
-                    status = UpdateStatusState(
+                ConfigStateUpdate(
+                    status = UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -787,13 +787,13 @@ class ConfigViewModelTest {
                 )
             ).thenReturn(
                 flowOf(
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_support_teams",
                         currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -809,8 +809,8 @@ class ConfigViewModelTest {
             checkResultUpdate(qtdBefore, result)
             assertEquals(
                 result[(qtdBefore * 3).toInt()],
-                ConfigState(
-                    status = UpdateStatusState(
+                ConfigStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_support_teams",
@@ -820,8 +820,8 @@ class ConfigViewModelTest {
             )
             assertEquals(
                 result[((qtdBefore * 3) + 1).toInt()],
-                ConfigState(
-                    status = UpdateStatusState(
+                ConfigStateUpdate(
+                    status = UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -843,13 +843,13 @@ class ConfigViewModelTest {
                 )
             ).thenReturn(
                 flowOf(
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_type_access",
                         currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -865,8 +865,8 @@ class ConfigViewModelTest {
             checkResultUpdate(qtdBefore, result)
             assertEquals(
                 result[(qtdBefore * 3).toInt()],
-                ConfigState(
-                    status = UpdateStatusState(
+                ConfigStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_type_access",
@@ -876,8 +876,8 @@ class ConfigViewModelTest {
             )
             assertEquals(
                 result[((qtdBefore * 3) + 1).toInt()],
-                ConfigState(
-                    status = UpdateStatusState(
+                ConfigStateUpdate(
+                    status = UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -942,11 +942,11 @@ class ConfigViewModelTest {
             val configState = viewModel.uiState.value
             assertEquals(
                 configState,
-                ConfigState(
+                ConfigStateUpdate(
                     number = "16997417840",
                     password = "12345",
                     version = "1.00",
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         errors = Errors.EXCEPTION,
                         flagFailure = true,
                         flagDialog = true,
@@ -1007,11 +1007,11 @@ class ConfigViewModelTest {
             val configState = viewModel.uiState.value
             assertEquals(
                 configState,
-                ConfigState(
+                ConfigStateUpdate(
                     number = "16997417840",
                     password = "12345",
                     version = "1.00",
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         flagDialog = true,
                         flagProgress = true,
                         flagFailure = false,
@@ -1037,7 +1037,7 @@ class ConfigViewModelTest {
             )
 
             val updateFunctions = mutableListOf<
-                    suspend (Float, Float) -> Flow<UpdateStatusState>
+                    suspend (Float, Float) -> Flow<UiStatusStateUpdate>
                     >(
                 { sizeAll, count -> updateTableColab(sizeAll, count) },
                 { sizeAll, count -> updateTableEquip(sizeAll, count) },
@@ -1057,19 +1057,19 @@ class ConfigViewModelTest {
                     )
                 ).thenReturn(
                     flowOf(
-                        UpdateStatusState(
+                        UiStatusStateUpdate(
                             flagProgress = true,
                             levelUpdate = LevelUpdate.RECOVERY,
                             tableUpdate = tableList[contUpdate.toInt() - 1],
                             currentProgress = percentage(++contWhenever, sizeAll)
                         ),
-                        UpdateStatusState(
+                        UiStatusStateUpdate(
                             flagProgress = true,
                             levelUpdate = LevelUpdate.CLEAN,
                             tableUpdate = tableList[contUpdate.toInt() - 1],
                             currentProgress = percentage(++contWhenever, sizeAll)
                         ),
-                        UpdateStatusState(
+                        UiStatusStateUpdate(
                             flagProgress = true,
                             levelUpdate = LevelUpdate.SAVE,
                             tableUpdate = tableList[contUpdate.toInt() - 1],
@@ -1081,7 +1081,7 @@ class ConfigViewModelTest {
             }
         }
 
-    private fun checkResultUpdate(posTable: Float, result: List<ConfigState>) =
+    private fun checkResultUpdate(posTable: Float, result: List<ConfigStateUpdate>) =
         runTest {
             val sizeAll = sizeUpdate(qtdTable)
             var contUpdate = 0f
@@ -1089,8 +1089,8 @@ class ConfigViewModelTest {
             for(table in tableList) {
                 assertEquals(
                     result[cont++],
-                    ConfigState(
-                        status = UpdateStatusState(
+                    ConfigStateUpdate(
+                        status = UiStatusStateUpdate(
                             flagProgress = true,
                             levelUpdate = LevelUpdate.RECOVERY,
                             tableUpdate = table,
@@ -1100,8 +1100,8 @@ class ConfigViewModelTest {
                 )
                 assertEquals(
                     result[cont++],
-                    ConfigState(
-                        status = UpdateStatusState(
+                    ConfigStateUpdate(
+                        status = UiStatusStateUpdate(
                             flagProgress = true,
                             levelUpdate = LevelUpdate.CLEAN,
                             tableUpdate = table,
@@ -1111,8 +1111,8 @@ class ConfigViewModelTest {
                 )
                 assertEquals(
                     result[cont++],
-                    ConfigState(
-                        status = UpdateStatusState(
+                    ConfigStateUpdate(
+                        status = UiStatusStateUpdate(
                             flagProgress = true,
                             levelUpdate = LevelUpdate.SAVE,
                             tableUpdate = table,
@@ -1125,7 +1125,7 @@ class ConfigViewModelTest {
             }
         }
 
-    private fun checkResultUpdateAll(result: List<ConfigState>) =
+    private fun checkResultUpdateAll(result: List<ConfigStateUpdate>) =
         runTest {
             val sizeAll = sizeUpdate(qtdTable)
             var contUpdate = 0f
@@ -1133,11 +1133,11 @@ class ConfigViewModelTest {
             for(table in tableList) {
                 assertEquals(
                     result[cont++],
-                    ConfigState(
+                    ConfigStateUpdate(
                         number = "16997417840",
                         password = "12345",
                         version = "1.00",
-                        status = UpdateStatusState(
+                        status = UiStatusStateUpdate(
                             flagProgress = true,
                             levelUpdate = LevelUpdate.RECOVERY,
                             tableUpdate = table,
@@ -1147,11 +1147,11 @@ class ConfigViewModelTest {
                 )
                 assertEquals(
                     result[cont++],
-                    ConfigState(
+                    ConfigStateUpdate(
                         number = "16997417840",
                         password = "12345",
                         version = "1.00",
-                        status = UpdateStatusState(
+                        status = UiStatusStateUpdate(
                             flagProgress = true,
                             levelUpdate = LevelUpdate.CLEAN,
                             tableUpdate = table,
@@ -1161,11 +1161,11 @@ class ConfigViewModelTest {
                 )
                 assertEquals(
                     result[cont++],
-                    ConfigState(
+                    ConfigStateUpdate(
                         number = "16997417840",
                         password = "12345",
                         version = "1.00",
-                        status = UpdateStatusState(
+                        status = UiStatusStateUpdate(
                             flagProgress = true,
                             levelUpdate = LevelUpdate.SAVE,
                             tableUpdate = table,

@@ -6,8 +6,12 @@ import br.com.usinasantafe.cav.domain.usecases.card.GetLocal
 import br.com.usinasantafe.cav.domain.usecases.card.GetSupportTeams
 import br.com.usinasantafe.cav.domain.usecases.card.ListDataLocal
 import br.com.usinasantafe.cav.lib.Errors
+import br.com.usinasantafe.cav.presenter.view.card.local.InputLocalState
+import br.com.usinasantafe.cav.utils.UiStateWithStatus
+import br.com.usinasantafe.cav.utils.UiStatusState
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import br.com.usinasantafe.cav.utils.onFailureHandled
+import br.com.usinasantafe.cav.utils.onFailureState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,12 +25,13 @@ data class LocalSupportState(
     val longitude: String = "",
     val dataLocalList: List<Pair<String, String>> = emptyList(),
     val supportTeams: String = "",
-    val flagAccess: Boolean = false,
-    val flagDialog: Boolean = false,
-    val flagFailure: Boolean = false,
-    val failure: String = "",
-    val errors: Errors = Errors.EXCEPTION,
-)
+    override val status: UiStatusState = UiStatusState()
+) : UiStateWithStatus<LocalSupportState> {
+
+    override fun copyWithStatus(status: UiStatusState): LocalSupportState =
+        copy(status = status)
+
+}
 
 @HiltViewModel
 class LocalSupportViewModel @Inject constructor(
@@ -42,7 +47,7 @@ class LocalSupportViewModel @Inject constructor(
         _uiState.update(block)
     }
     
-    fun setCloseDialog() = updateState { copy(flagDialog = false) }
+    fun onCloseDialog() = updateState { copy(status = status.copy(flagDialog = false, flagFailure = false)) }
 
     fun recoverData() = viewModelScope.launch {
         runCatching {
@@ -59,12 +64,10 @@ class LocalSupportViewModel @Inject constructor(
         }
             .onSuccess { newState ->
                 updateState {
-                    newState.copy(flagFailure = false)
+                    newState.copy(status = status.copy(flagFailure = false))
                 }
             }
-            .onFailureHandled(getClassAndMethod(), ::onError)
+            .onFailureState(getClassAndMethod(), ::updateState)
     }
-
-    private fun onError(failure: String) = updateState { copy(flagDialog = true, failure = failure, flagFailure = true) }
 
 }

@@ -26,7 +26,7 @@ import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.MsgUpdate
 import br.com.usinasantafe.cav.presenter.theme.Progress
 import br.com.usinasantafe.cav.presenter.theme.TextFieldDesign
-import br.com.usinasantafe.cav.utils.UpdateStatusState
+import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 
 @Composable
 fun ColabScreen(
@@ -44,7 +44,6 @@ fun ColabScreen(
                 type = uiState.type,
                 regColab = uiState.regColab,
                 setTextField = viewModel::setTextField,
-                flagAccess = uiState.flagAccess,
                 setCloseDialog = viewModel::setCloseDialog,
                 status = uiState.status,
                 onNavEquipSecList = onNavEquipSecList,
@@ -63,9 +62,8 @@ fun ColabContent(
     type: Type,
     regColab: String,
     setTextField: (String, TypeButton) -> Unit,
-    flagAccess: Boolean,
     setCloseDialog: () -> Unit,
-    status: UpdateStatusState,
+    status: UiStatusStateUpdate,
     onNavEquipSecList:  () -> Unit,
     onNavPassengerList:  () -> Unit,
     onNavState:  () -> Unit,
@@ -86,14 +84,14 @@ fun ColabContent(
         )
         Spacer(modifier = Modifier.padding(vertical = 8.dp))
         ButtonsGenericNumeric(
-            setActionButton = setTextField
+            onTextField = setTextField
         )
         BackHandler {
             when(type) {
                 Type.MAIN -> {
                     when(option){
                         Option.INSERT -> onNavEquipSecList()
-                        Option.EDIT -> onNavState()
+                        Option.EDIT -> onNavData()
                     }
                 }
                 Type.SECONDARY -> onNavPassengerList()
@@ -109,8 +107,8 @@ fun ColabContent(
         }
     }
 
-    LaunchedEffect(flagAccess) {
-        if(flagAccess) {
+    LaunchedEffect(status.flagAccess) {
+        if(status.flagAccess) {
             onNavState()
         }
     }
@@ -126,9 +124,9 @@ fun ColabPagePreview() {
                 type = Type.MAIN,
                 regColab = "",
                 setTextField = { _, _ -> },
-                flagAccess = false,
                 setCloseDialog = {},
-                status = UpdateStatusState(
+                status = UiStatusStateUpdate(
+                    flagAccess = false,
                     flagDialog = false,
                     flagFailure = false,
                     errors = Errors.FIELD_EMPTY,

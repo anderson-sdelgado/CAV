@@ -5,8 +5,11 @@ import androidx.lifecycle.viewModelScope
 import br.com.usinasantafe.cav.domain.usecases.common.GetStatusSend
 import br.com.usinasantafe.cav.domain.usecases.config.CheckAccessInitial
 import br.com.usinasantafe.cav.lib.StatusSend
+import br.com.usinasantafe.cav.utils.UiStateWithStatus
+import br.com.usinasantafe.cav.utils.UiStatusState
 import br.com.usinasantafe.cav.utils.getClassAndMethod
-import br.com.usinasantafe.cav.utils.onFailureHandled
+import br.com.usinasantafe.cav.utils.onFailureState
+import br.com.usinasantafe.cav.utils.onSuccessState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,12 +18,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class InitialMenuState(
-    val flagAccess: Boolean = false,
-    val flagDialog: Boolean = false,
-    val flagFailure: Boolean = false,
-    val failure: String = "",
-    val statusSend: StatusSend = StatusSend.STARTED
-)
+    val statusSend: StatusSend = StatusSend.STARTED,
+    override val status: UiStatusState = UiStatusState()
+) : UiStateWithStatus<InitialMenuState> {
+
+    override fun copyWithStatus(status: UiStatusState): InitialMenuState =
+        copy(status = status)
+
+}
 
 @HiltViewModel
 class InitialMenuViewModel @Inject constructor(
@@ -31,30 +36,26 @@ class InitialMenuViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(InitialMenuState())
     val uiState = _uiState.asStateFlow()
 
-    private val state get() = uiState.value
-
     private fun updateState(block: InitialMenuState.() -> InitialMenuState) {
         _uiState.update(block)
     }
 
-    fun setCloseDialog() = updateState { copy(flagDialog = false) }
+    fun setCloseDialog() = updateState { copy(status = status.copy(flagDialog = false)) }
 
     fun recoverStatusSend() = viewModelScope.launch {
         runCatching {
             getStatusSend().getOrThrow()
         }
             .onSuccess { updateState { copy(statusSend = it) } }
-            .onFailureHandled(getClassAndMethod(), ::onError)
+            .onFailureState(getClassAndMethod(), ::updateState)
     }
 
-    fun checkAccess() = viewModelScope.launch {
+    fun onCheckAccess() = viewModelScope.launch {
         runCatching {
             checkAccessInitial().getOrThrow()
         }
-            .onSuccess { updateState { copy(flagDialog = !it, flagAccess = it) } }
-            .onFailureHandled(getClassAndMethod(), ::onError)
+            .onSuccessState(::updateState)
+            .onFailureState(getClassAndMethod(), ::updateState)
     }
-
-    private fun onError(failure: String) = updateState { copy(flagDialog = true, failure = failure, flagFailure = true) }
 
 }

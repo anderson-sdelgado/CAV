@@ -45,7 +45,8 @@ import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.errors
 import br.com.usinasantafe.cav.lib.msg
-import br.com.usinasantafe.cav.utils.UpdateStatusState
+import br.com.usinasantafe.cav.presenter.view.card.menu.TAG_ATTENDANT_EDIT_BUTTON
+import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 
 @Composable
 fun ItemDefaultListDesign(
@@ -254,7 +255,7 @@ fun AlertDialogProgressDesign(
 }
 
 @Composable
-fun MsgUpdate(status : UpdateStatusState, onClickOk: () -> Unit, value: String = ""){
+fun MsgUpdate(status : UiStatusStateUpdate, onClickOk: () -> Unit, value: String = ""){
     val text =
         if (status.flagFailure) {
             errors(status.errors, status.failure, value)
@@ -269,7 +270,7 @@ fun MsgUpdate(status : UpdateStatusState, onClickOk: () -> Unit, value: String =
 }
 
 @Composable
-fun Progress(status : UpdateStatusState){
+fun Progress(status : UiStatusStateUpdate){
     val msgProgress = msg(status.levelUpdate, status.failure, status.tableUpdate)
     AlertDialogProgressDesign(
         currentProgress = status.currentProgress,
@@ -404,39 +405,6 @@ fun AlertDialogCheckDesign(
             }
         }
     )
-}
-
-@Composable
-fun RadioButtonDefault(
-    id: Int,
-    text: String,
-    font: Int = 22,
-    checked: Boolean,
-    enabled: Boolean = true,
-    onChecked: (Boolean) -> Unit
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .then(
-                if (enabled) Modifier.clickable { onChecked(!checked) }
-                else Modifier
-            )
-            .padding(10.dp)
-            .testTag("item_check_box_$id")
-    ) {
-        RadioButton(
-            selected = true,
-            onClick = {},
-            modifier = Modifier
-                .padding(end = 10.dp)
-        )
-        Text(
-            text = text,
-            fontSize = font.sp,
-            color = if (enabled) Color.Unspecified else Color.Gray
-        )
-    }
 }
 
 @Composable

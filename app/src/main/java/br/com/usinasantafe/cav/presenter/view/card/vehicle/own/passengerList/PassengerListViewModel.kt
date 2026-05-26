@@ -2,9 +2,16 @@ package br.com.usinasantafe.cav.presenter.view.card.vehicle.own.passengerList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.usinasantafe.cav.domain.usecases.card.DeletePassenger
+import br.com.usinasantafe.cav.domain.usecases.card.ListPassenger
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.presenter.model.ItemListScreenModel
+import br.com.usinasantafe.cav.presenter.view.card.vehicle.own.equipSecList.EquipSecListState
+import br.com.usinasantafe.cav.utils.UiStateWithStatus
+import br.com.usinasantafe.cav.utils.UiStatusState
+import br.com.usinasantafe.cav.utils.getClassAndMethod
+import br.com.usinasantafe.cav.utils.onFailureState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,14 +24,18 @@ data class PassengerListState(
     val list: List<ItemListScreenModel> = emptyList(),
     val idSelection: Int = 0,
     val flagDialogCheck: Boolean = false,
-    val flagDialog: Boolean = false,
-    val flagFailure: Boolean = false,
-    val failure: String = "",
-    val errors: Errors = Errors.EXCEPTION,
-)
+    override val status: UiStatusState = UiStatusState()
+) : UiStateWithStatus<PassengerListState> {
+
+    override fun copyWithStatus(status: UiStatusState): PassengerListState =
+        copy(status = status)
+
+}
 
 @HiltViewModel
 class PassengerListViewModel @Inject constructor(
+    private val listPassenger: ListPassenger,
+    private val deletePassenger: DeletePassenger
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PassengerListState())
@@ -35,16 +46,26 @@ class PassengerListViewModel @Inject constructor(
     private fun updateState(block: PassengerListState.() -> PassengerListState) {
         _uiState.update(block)
     }
-    
-    fun setCloseDialog() = updateState { copy(flagDialog = false) }
 
-    fun onCloseDialog() = updateState { copy(flagDialog = false) }
+    fun onCloseDialog() = updateState { copy(status = status.copy(flagDialog = false, flagFailure = false)) }
 
     fun onDialogCheck(flag: Boolean) = updateState { copy(flagDialogCheck = flag) }
 
-    fun onCheckDelete(id: Int) = updateState { copy(flagDialogCheck = true, idSelection = id) }
+    fun onSelectionDelete(id: Int) = updateState { copy(flagDialogCheck = true, idSelection = id) }
+
+    fun recoverData() = viewModelScope.launch {
+        runCatching {
+            listPassenger().getOrThrow()
+        }
+            .onSuccess { updateState { copy(list = it) } }
+            .onFailureState(getClassAndMethod(), ::updateState)
+    }
 
     fun delete() = viewModelScope.launch {
-
+        runCatching {
+            deletePassenger(state.idSelection).getOrThrow()
+        }
+            .onSuccess { recoverData() }
+            .onFailureState(getClassAndMethod(), ::updateState)
     }
 }

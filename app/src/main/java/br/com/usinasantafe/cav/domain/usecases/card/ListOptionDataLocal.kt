@@ -20,7 +20,7 @@ class IListOptionDataLocal @Inject constructor(
             list.map {
                 ItemListScreenModel(
                     id = it.id,
-                    description = it.description
+                    desc = it.description
                 )
             }
         }

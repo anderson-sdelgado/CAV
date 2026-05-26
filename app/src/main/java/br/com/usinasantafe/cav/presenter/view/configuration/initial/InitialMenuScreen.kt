@@ -30,6 +30,7 @@ import br.com.usinasantafe.cav.presenter.theme.AlertDialogSimpleDesign
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.ItemDefaultListDesign
+import br.com.usinasantafe.cav.utils.UiStatusState
 
 @Composable
 fun InitialMenuScreen(
@@ -47,12 +48,9 @@ fun InitialMenuScreen(
 
             InitialMenuContent(
                 statusSend = uiState.statusSend,
-                onCheckAccess = viewModel::checkAccess,
-                flagDialog = uiState.flagDialog,
+                onCheckAccess = viewModel::onCheckAccess,
                 setCloseDialog = viewModel::setCloseDialog,
-                flagFailure = uiState.flagFailure,
-                failure = uiState.failure,
-                flagAccess = uiState.flagAccess,
+                status = uiState.status,
                 onNavPassword = onNavPassword,
                 onNavAttendant = onNavAttendant,
                 modifier = Modifier.padding(innerPadding)
@@ -66,11 +64,8 @@ fun InitialMenuScreen(
 fun InitialMenuContent(
     statusSend: StatusSend,
     onCheckAccess: () -> Unit,
-    flagDialog: Boolean,
     setCloseDialog: () -> Unit,
-    flagFailure: Boolean,
-    failure: String,
-    flagAccess: Boolean,
+    status: UiStatusState,
     onNavPassword: () -> Unit,
     onNavAttendant: () -> Unit,
     modifier: Modifier = Modifier
@@ -123,24 +118,24 @@ fun InitialMenuContent(
         }
         Text(
             textAlign = TextAlign.Left,
-            text = textStatus(failure, statusSend )
+            text = textStatus(status.failure, statusSend )
             ,
             fontSize = 22.sp,
-            color = colorStatus(failure, statusSend)
+            color = colorStatus(status.failure, statusSend)
             , modifier = Modifier
                 .padding(vertical = 8.dp)
                 .fillMaxWidth()
         )
         BackHandler {}
 
-        if (flagDialog) {
+        if (status.flagDialog) {
             val text =
-                if (!flagFailure) {
+                if (!status.flagFailure) {
                     stringResource(id = R.string.text_blocked_access_app)
                 } else {
                     stringResource(
                         id = R.string.text_failure,
-                        failure
+                        status.failure
                     )
                 }
             AlertDialogSimpleDesign(
@@ -151,8 +146,8 @@ fun InitialMenuContent(
     }
 
 
-    LaunchedEffect(flagAccess) {
-        if(flagAccess) {
+    LaunchedEffect(status.flagAccess) {
+        if(status.flagAccess) {
             onNavAttendant()
         }
     }
@@ -193,11 +188,13 @@ fun InitialMenuPagePreview() {
             InitialMenuContent(
                 statusSend = StatusSend.STARTED,
                 onCheckAccess = {},
-                flagDialog = false,
                 setCloseDialog = {},
-                flagFailure = false,
-                flagAccess = false,
-                failure = "",
+                status = UiStatusState(
+                    flagDialog = false,
+                    flagFailure = false,
+                    flagAccess = false,
+                    failure = "",
+                ),
                 onNavPassword = {},
                 onNavAttendant = {},
                 modifier = Modifier.padding(innerPadding)
@@ -214,11 +211,13 @@ fun InitialMenuPagePreviewSend() {
             InitialMenuContent(
                 statusSend = StatusSend.SENT,
                 onCheckAccess = {},
-                flagDialog = false,
                 setCloseDialog = {},
-                flagFailure = false,
-                flagAccess = false,
-                failure = "",
+                status = UiStatusState(
+                    flagDialog = false,
+                    flagFailure = false,
+                    flagAccess = false,
+                    failure = "",
+                ),
                 onNavPassword = {},
                 onNavAttendant = {},
                 modifier = Modifier.padding(innerPadding)
@@ -235,11 +234,13 @@ fun InitialMenuPagePreviewException() {
             InitialMenuContent(
                 statusSend = StatusSend.STARTED,
                 onCheckAccess = {},
-                flagDialog = true,
                 setCloseDialog = {},
-                flagFailure = true,
-                flagAccess = false,
-                failure = "Failure",
+                status = UiStatusState(
+                    flagDialog = true,
+                    flagFailure = true,
+                    flagAccess = false,
+                    failure = "Failure",
+                ),
                 onNavPassword = {},
                 onNavAttendant = {},
                 modifier = Modifier.padding(innerPadding)
@@ -256,11 +257,13 @@ fun InitialMenuPagePreviewBlocked() {
             InitialMenuContent(
                 statusSend = StatusSend.STARTED,
                 onCheckAccess = {},
-                flagDialog = true,
                 setCloseDialog = {},
-                flagFailure = false,
-                flagAccess = false,
-                failure = "",
+                status = UiStatusState(
+                    flagDialog = true,
+                    flagFailure = false,
+                    flagAccess = false,
+                    failure = "",
+                ),
                 onNavPassword = {},
                 onNavAttendant = {},
                 modifier = Modifier.padding(innerPadding)

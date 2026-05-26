@@ -13,7 +13,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @ExperimentalCoroutinesApi
-class InputLocalScreenModelTest {
+class InputLocalViewModelTest {
 
     @ExperimentalCoroutinesApi
     @get:Rule
@@ -29,15 +29,15 @@ class InputLocalScreenModelTest {
         runTest {
             viewModel.set()
             assertEquals(
-                viewModel.uiState.value.flagDialog,
+                viewModel.uiState.value.status.flagDialog,
                 true
             )
             assertEquals(
-                viewModel.uiState.value.failure,
+                viewModel.uiState.value.status.failure,
                 "TypeLocalViewModel.set -> FIELD_EMPTY"
             )
             assertEquals(
-                viewModel.uiState.value.errors,
+                viewModel.uiState.value.status.errors,
                 Errors.FIELD_EMPTY
             )
         }
@@ -57,19 +57,19 @@ class InputLocalScreenModelTest {
             viewModel.onAddressChanged("Test")
             viewModel.set()
             assertEquals(
-                viewModel.uiState.value.flagDialog,
+                viewModel.uiState.value.status.flagDialog,
                 true
             )
             assertEquals(
-                viewModel.uiState.value.failure,
+                viewModel.uiState.value.status.failure,
                 "TypeLocalViewModel.set -> SetLocal -> java.lang.Exception"
             )
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 false
             )
             assertEquals(
-                viewModel.uiState.value.errors,
+                viewModel.uiState.value.status.errors,
                 Errors.EXCEPTION
             )
         }
@@ -80,11 +80,11 @@ class InputLocalScreenModelTest {
             viewModel.onAddressChanged("Test")
             viewModel.set()
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 true
             )
             assertEquals(
-                viewModel.uiState.value.flagDialog,
+                viewModel.uiState.value.status.flagDialog,
                 false
             )
         }

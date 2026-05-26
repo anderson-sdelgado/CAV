@@ -6,22 +6,20 @@ import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import javax.inject.Inject
 
-interface SetIdEquip {
+interface GetNroEquip {
     suspend operator fun invoke(
         option: Option,
-        type: Type,
-        nroEquip: String
-    ): Result<Unit>
+        type: Type
+    ): Result<String>
 }
 
-class ISetIdEquip @Inject constructor(
-): SetIdEquip {
+class IGetNroEquip @Inject constructor(
+): GetNroEquip {
 
     override suspend fun invoke(
         option: Option,
-        type: Type,
-        nroEquip: String
-    ): Result<Unit> =
+        type: Type
+    ): Result<String> =
         call(getClassAndMethod()) {
             TODO("Not yet implemented")
         }

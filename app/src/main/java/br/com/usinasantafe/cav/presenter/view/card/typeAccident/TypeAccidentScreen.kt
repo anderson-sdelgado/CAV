@@ -31,7 +31,7 @@ import br.com.usinasantafe.cav.presenter.theme.CheckboxDefault
 import br.com.usinasantafe.cav.presenter.theme.MsgUpdate
 import br.com.usinasantafe.cav.presenter.theme.Progress
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
-import br.com.usinasantafe.cav.utils.UpdateStatusState
+import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 
 @Composable
 fun TypeAccidentScreen(
@@ -52,7 +52,6 @@ fun TypeAccidentScreen(
                 onCheckChange = viewModel::onCheckChange,
                 updateDatabase = viewModel::updateDatabase,
                 save = viewModel::save,
-                flagAccess = uiState.flagAccess,
                 setCloseDialog = viewModel::setCloseDialog,
                 status = uiState.status,
                 onNavMenu = onNavMenu,
@@ -68,9 +67,8 @@ fun TypeAccidentContent(
     onCheckChange: (Int, Boolean) -> Unit,
     updateDatabase: () -> Unit,
     save: () -> Unit,
-    flagAccess: Boolean,
     setCloseDialog: () -> Unit,
-    status: UpdateStatusState,
+    status: UiStatusStateUpdate,
     onNavMenu: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -137,8 +135,8 @@ fun TypeAccidentContent(
 
     }
 
-    LaunchedEffect(flagAccess) {
-        if (flagAccess) {
+    LaunchedEffect(status.flagAccess) {
+        if (status.flagAccess) {
             onNavMenu()
         }
     }
@@ -154,9 +152,8 @@ fun TypeAccidentPagePreview() {
                 onCheckChange = { _, _ -> },
                 updateDatabase = {},
                 save = {},
-                flagAccess = false,
                 setCloseDialog = {},
-                status = UpdateStatusState(
+                status = UiStatusStateUpdate(
                     flagDialog = false,
                     flagFailure = false,
                     errors = Errors.FIELD_EMPTY,
@@ -209,9 +206,8 @@ fun TypeAccidentPagePreviewWithList() {
                 onCheckChange = { _, _ -> },
                 updateDatabase = {},
                 save = {},
-                flagAccess = false,
                 setCloseDialog = {},
-                status = UpdateStatusState(
+                status = UiStatusStateUpdate(
                     flagDialog = false,
                     flagFailure = false,
                     errors = Errors.FIELD_EMPTY,

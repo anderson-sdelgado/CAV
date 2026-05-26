@@ -50,19 +50,19 @@ class DataInitialViewModelTest {
             )
             viewModel.recoverData()
             assertEquals(
-                viewModel.uiState.value.flagDialog,
+                viewModel.uiState.value.status.flagDialog,
                 true
             )
             assertEquals(
-                viewModel.uiState.value.failure,
+                viewModel.uiState.value.status.failure,
                 "DataInitialViewModel.recoverData -> GetAttendant -> java.lang.Exception"
             )
             assertEquals(
-                viewModel.uiState.value.errors,
+                viewModel.uiState.value.status.errors,
                 Errors.EXCEPTION
             )
             assertEquals(
-                viewModel.uiState.value.flagFailure,
+                viewModel.uiState.value.status.flagFailure,
                 true
             )
             assertEquals(
@@ -97,19 +97,19 @@ class DataInitialViewModelTest {
             )
             viewModel.recoverData()
             assertEquals(
-                viewModel.uiState.value.flagDialog,
+                viewModel.uiState.value.status.flagDialog,
                 true
             )
             assertEquals(
-                viewModel.uiState.value.failure,
+                viewModel.uiState.value.status.failure,
                 "DataInitialViewModel.recoverData -> GetCar -> java.lang.Exception"
             )
             assertEquals(
-                viewModel.uiState.value.errors,
+                viewModel.uiState.value.status.errors,
                 Errors.EXCEPTION
             )
             assertEquals(
-                viewModel.uiState.value.flagFailure,
+                viewModel.uiState.value.status.flagFailure,
                 true
             )
             assertEquals(
@@ -144,19 +144,19 @@ class DataInitialViewModelTest {
             )
             viewModel.recoverData()
             assertEquals(
-                viewModel.uiState.value.flagDialog,
+                viewModel.uiState.value.status.flagDialog,
                 true
             )
             assertEquals(
-                viewModel.uiState.value.failure,
+                viewModel.uiState.value.status.failure,
                 "DataInitialViewModel.recoverData -> GetNature -> java.lang.Exception"
             )
             assertEquals(
-                viewModel.uiState.value.errors,
+                viewModel.uiState.value.status.errors,
                 Errors.EXCEPTION
             )
             assertEquals(
-                viewModel.uiState.value.flagFailure,
+                viewModel.uiState.value.status.flagFailure,
                 true
             )
             assertEquals(
@@ -191,19 +191,19 @@ class DataInitialViewModelTest {
             )
             viewModel.recoverData()
             assertEquals(
-                viewModel.uiState.value.flagDialog,
+                viewModel.uiState.value.status.flagDialog,
                 true
             )
             assertEquals(
-                viewModel.uiState.value.failure,
+                viewModel.uiState.value.status.failure,
                 "DataInitialViewModel.recoverData -> GetTypeAccident -> java.lang.Exception"
             )
             assertEquals(
-                viewModel.uiState.value.errors,
+                viewModel.uiState.value.status.errors,
                 Errors.EXCEPTION
             )
             assertEquals(
-                viewModel.uiState.value.flagFailure,
+                viewModel.uiState.value.status.flagFailure,
                 true
             )
             assertEquals(
@@ -234,19 +234,19 @@ class DataInitialViewModelTest {
             )
             viewModel.recoverData()
             assertEquals(
-                viewModel.uiState.value.flagDialog,
+                viewModel.uiState.value.status.flagDialog,
                 true
             )
             assertEquals(
-                viewModel.uiState.value.failure,
+                viewModel.uiState.value.status.failure,
                 "DataInitialViewModel.recoverData -> Parameter specified as non-null is null: method br.com.usinasantafe.cav.presenter.view.card.menu.DataInitialState.<init>, parameter car"
             )
             assertEquals(
-                viewModel.uiState.value.errors,
+                viewModel.uiState.value.status.errors,
                 Errors.EXCEPTION
             )
             assertEquals(
-                viewModel.uiState.value.flagFailure,
+                viewModel.uiState.value.status.flagFailure,
                 true
             )
             assertEquals(
@@ -328,19 +328,19 @@ class DataInitialViewModelTest {
             )
             viewModel.cancel()
             assertEquals(
-                viewModel.uiState.value.flagDialog,
+                viewModel.uiState.value.status.flagDialog,
                 true
             )
             assertEquals(
-                viewModel.uiState.value.failure,
+                viewModel.uiState.value.status.failure,
                 "DataInitialViewModel.cancel -> CancelCard -> java.lang.Exception"
             )
             assertEquals(
-                viewModel.uiState.value.errors,
+                viewModel.uiState.value.status.errors,
                 Errors.EXCEPTION
             )
             assertEquals(
-                viewModel.uiState.value.flagFailure,
+                viewModel.uiState.value.status.flagFailure,
                 true
             )
             assertEquals(

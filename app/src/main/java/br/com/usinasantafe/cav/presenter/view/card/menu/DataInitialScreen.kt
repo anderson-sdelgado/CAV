@@ -33,6 +33,7 @@ import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.MsgErrors
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
+import br.com.usinasantafe.cav.utils.UiStatusState
 
 const val TAG_ATTENDANT_EDIT_BUTTON = "tag_attendant_edit_button"
 const val TAG_CAR_EDIT_BUTTON = "tag_car_edit_button"
@@ -62,14 +63,12 @@ fun DataInitialScreen(
                 car = uiState.car,
                 nature = uiState.nature,
                 typeAccident = uiState.typeAccident,
-                onCloseDialog = viewModel::onCloseDialog,
                 flagDialogCheck = uiState.flagDialogCheck,
                 onDialogCheck = viewModel::onDialogCheck,
                 flagCancel = uiState.flagCancel,
                 cancel = viewModel::cancel,
-                flagDialog = uiState.flagDialog,
-                failure = uiState.failure,
-                errors = uiState.errors,
+                onCloseDialog = viewModel::onCloseDialog,
+                status = uiState.status,
                 onNavSplash = onNavSplash,
                 onNavAttendant = onNavAttendant,
                 onNavCar = onNavCar,
@@ -88,14 +87,12 @@ fun DataInitialContent(
     car: String,
     nature: String,
     typeAccident: String,
-    onCloseDialog: () -> Unit,
     flagDialogCheck: Boolean,
     onDialogCheck: (Boolean) -> Unit,
     flagCancel: Boolean,
     cancel: () -> Unit,
-    flagDialog: Boolean,
-    failure: String,
-    errors: Errors,
+    onCloseDialog: () -> Unit,
+    status: UiStatusState,
     onNavSplash: () -> Unit,
     onNavAttendant: () -> Unit,
     onNavCar: () -> Unit,
@@ -270,8 +267,8 @@ fun DataInitialContent(
             }
         }
 
-        if(flagDialog) {
-            MsgErrors(errors, onCloseDialog, failure)
+        if(status.flagDialog) {
+            MsgErrors(status.errors, onCloseDialog, status.failure)
         }
 
         if(flagDialogCheck){
@@ -301,14 +298,16 @@ fun DataInitialPagePreview() {
                 car = "100 - AMBULANCIA",
                 nature = "ACIDENTE - ANIMAIS",
                 typeAccident = "ATROP. ANIMAL - COLISÃO LATERAL - INCÊNDIO",
-                flagDialog = false,
                 onCloseDialog = {},
                 flagDialogCheck = false,
                 onDialogCheck = {},
                 flagCancel = false,
                 cancel = {},
-                failure = "",
-                errors = Errors.FIELD_EMPTY,
+                status = UiStatusState(
+                    flagDialog = false,
+                    failure = "",
+                    errors = Errors.FIELD_EMPTY,
+                ),
                 onNavSplash = {},
                 onNavAttendant = {},
                 onNavCar = {},

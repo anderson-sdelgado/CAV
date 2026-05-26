@@ -26,7 +26,7 @@ import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.MsgUpdate
 import br.com.usinasantafe.cav.presenter.theme.Progress
 import br.com.usinasantafe.cav.presenter.theme.TextFieldDesign
-import br.com.usinasantafe.cav.utils.UpdateStatusState
+import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 
 @Composable
 fun CarScreen(
@@ -40,9 +40,8 @@ fun CarScreen(
             CarContent(
                 option = uiState.option,
                 nroEquip = uiState.nroEquip,
-                setTextField = viewModel::setTextField,
-                flagAccess = uiState.flagAccess,
-                setCloseDialog = viewModel::setCloseDialog,
+                setTextField = viewModel::onTextField,
+                setCloseDialog = viewModel::onCloseDialog,
                 status = uiState.status,
                 onNavAttendant = onNavAttendant,
                 onNavMenu = onNavMenu,
@@ -57,9 +56,8 @@ fun CarContent(
     option: Option,
     nroEquip: String,
     setTextField: (String, TypeButton) -> Unit,
-    flagAccess: Boolean,
     setCloseDialog: () -> Unit,
-    status: UpdateStatusState,
+    status: UiStatusStateUpdate,
     onNavAttendant: () -> Unit,
     onNavMenu: () -> Unit,
     modifier: Modifier = Modifier
@@ -78,7 +76,7 @@ fun CarContent(
         )
         Spacer(modifier = Modifier.padding(vertical = 8.dp))
         ButtonsGenericNumeric(
-            setActionButton = setTextField
+            onTextField = setTextField
         )
         BackHandler {
             when(option) {
@@ -96,8 +94,8 @@ fun CarContent(
         }
     }
 
-    LaunchedEffect(flagAccess) {
-        if(flagAccess) {
+    LaunchedEffect(status.flagAccess) {
+        if(status.flagAccess) {
             onNavMenu()
         }
     }
@@ -112,9 +110,9 @@ fun CarPagePreview() {
                 option = Option.INSERT,
                 nroEquip = "",
                 setTextField = { _, _ -> },
-                flagAccess = false,
                 setCloseDialog = {},
-                status = UpdateStatusState(
+                status = UiStatusStateUpdate(
+                    flagAccess = false,
                     flagDialog = false,
                     flagFailure = false,
                     errors = Errors.FIELD_EMPTY,
@@ -141,9 +139,9 @@ fun CarPagePreviewWithData() {
                 option = Option.INSERT,
                 nroEquip = "2200",
                 setTextField = { _, _ -> },
-                flagAccess = false,
                 setCloseDialog = {},
-                status = UpdateStatusState(
+                status = UiStatusStateUpdate(
+                    flagAccess = false,
                     flagDialog = false,
                     flagFailure = false,
                     errors = Errors.FIELD_EMPTY,
@@ -170,9 +168,9 @@ fun CarPagePreviewWithMsgEmpty() {
                 option = Option.INSERT,
                 nroEquip = "2200",
                 setTextField = { _, _ -> },
-                flagAccess = false,
                 setCloseDialog = {},
-                status = UpdateStatusState(
+                status = UiStatusStateUpdate(
+                    flagAccess = false,
                     flagDialog = true,
                     flagFailure = true,
                     errors = Errors.FIELD_EMPTY,
@@ -199,9 +197,9 @@ fun CarPagePreviewUpdate() {
                 option = Option.INSERT,
                 nroEquip = "2200",
                 setTextField = { _, _ -> },
-                flagAccess = false,
                 setCloseDialog = {},
-                status = UpdateStatusState(
+                status = UiStatusStateUpdate(
+                    flagAccess = false,
                     flagDialog = false,
                     failure = "",
                     flagFailure = false,

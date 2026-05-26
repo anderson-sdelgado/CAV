@@ -8,7 +8,7 @@ import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableColab
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.LevelUpdate
 import br.com.usinasantafe.cav.lib.TypeButton
-import br.com.usinasantafe.cav.utils.UpdateStatusState
+import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 import br.com.usinasantafe.cav.utils.percentage
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -40,7 +40,7 @@ class AttendantViewModelTest {
 
     @Test
     fun `setTextField - Check add char`() {
-        viewModel.setTextField(
+        viewModel.onTextField(
             "1",
             TypeButton.NUMERIC
         )
@@ -52,23 +52,23 @@ class AttendantViewModelTest {
 
     @Test
     fun `setTextField - Check remover char`() {
-        viewModel.setTextField(
+        viewModel.onTextField(
             "19759",
             TypeButton.NUMERIC
         )
-        viewModel.setTextField(
+        viewModel.onTextField(
             "APAGAR",
             TypeButton.CLEAN
         )
-        viewModel.setTextField(
+        viewModel.onTextField(
             "APAGAR",
             TypeButton.CLEAN
         )
-        viewModel.setTextField(
+        viewModel.onTextField(
             "APAGAR",
             TypeButton.CLEAN
         )
-        viewModel.setTextField(
+        viewModel.onTextField(
             "1",
             TypeButton.NUMERIC
         )
@@ -80,7 +80,7 @@ class AttendantViewModelTest {
 
     @Test
     fun `setTextField - Check msg of empty field`() {
-        viewModel.setTextField(
+        viewModel.onTextField(
             "OK",
             TypeButton.OK
         )
@@ -104,13 +104,13 @@ class AttendantViewModelTest {
                 )
             ).thenReturn(
                 flowOf(
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_colab",
                         currentProgress = percentage(1f, 4f)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -123,8 +123,8 @@ class AttendantViewModelTest {
             assertEquals(result.count(), 2)
             assertEquals(
                 result[0],
-                AttendantState(
-                    status = UpdateStatusState(
+                AttendantStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_colab",
@@ -134,8 +134,8 @@ class AttendantViewModelTest {
             )
             assertEquals(
                 result[1],
-                AttendantState(
-                    status = UpdateStatusState(
+                AttendantStateUpdate(
+                    status = UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -144,7 +144,7 @@ class AttendantViewModelTest {
                     )
                 )
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "ATUALIZAR DADOS",
                 TypeButton.UPDATE
             )
@@ -168,19 +168,19 @@ class AttendantViewModelTest {
                 )
             ).thenReturn(
                 flowOf(
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_colab",
                         currentProgress = percentage(1f, 4f)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.CLEAN,
                         tableUpdate = "tb_colab",
                         currentProgress = percentage(2f, 4f)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.SAVE,
                         tableUpdate = "tb_colab",
@@ -192,8 +192,8 @@ class AttendantViewModelTest {
             assertEquals(result.count(), 4)
             assertEquals(
                 result[0],
-                AttendantState(
-                    status = UpdateStatusState(
+                AttendantStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_colab",
@@ -203,8 +203,8 @@ class AttendantViewModelTest {
             )
             assertEquals(
                 result[1],
-                AttendantState(
-                    status = UpdateStatusState(
+                AttendantStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.CLEAN,
                         tableUpdate = "tb_colab",
@@ -214,8 +214,8 @@ class AttendantViewModelTest {
             )
             assertEquals(
                 result[2],
-                AttendantState(
-                    status = UpdateStatusState(
+                AttendantStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.SAVE,
                         tableUpdate = "tb_colab",
@@ -225,8 +225,8 @@ class AttendantViewModelTest {
             )
             assertEquals(
                 result[3],
-                AttendantState(
-                    status = UpdateStatusState(
+                AttendantStateUpdate(
+                    status = UiStatusStateUpdate(
                         flagDialog = true,
                         flagProgress = false,
                         flagFailure = false,
@@ -235,7 +235,7 @@ class AttendantViewModelTest {
                     )
                 )
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "ATUALIZAR DADOS",
                 TypeButton.UPDATE
             )
@@ -248,7 +248,7 @@ class AttendantViewModelTest {
     @Test
     fun `setTextField - Check return failure if field is empty`() =
         runTest {
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "OK",
                 TypeButton.OK
             )
@@ -273,7 +273,7 @@ class AttendantViewModelTest {
                 false
             )
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 false
             )
         }
@@ -290,11 +290,11 @@ class AttendantViewModelTest {
                     cause = Exception()
                 )
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "19759",
                 TypeButton.NUMERIC
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "OK",
                 TypeButton.OK
             )
@@ -319,7 +319,7 @@ class AttendantViewModelTest {
                 false
             )
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 false
             )
         }
@@ -332,11 +332,11 @@ class AttendantViewModelTest {
             ).thenReturn(
                 Result.success(false)
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "19759",
                 TypeButton.NUMERIC
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "OK",
                 TypeButton.OK
             )
@@ -353,7 +353,7 @@ class AttendantViewModelTest {
                 Errors.INVALID
             )
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 false
             )
         }
@@ -375,11 +375,11 @@ class AttendantViewModelTest {
                     cause = Exception()
                 )
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "19759",
                 TypeButton.NUMERIC
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "OK",
                 TypeButton.OK
             )
@@ -404,7 +404,7 @@ class AttendantViewModelTest {
                 false
             )
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 false
             )
         }
@@ -417,11 +417,11 @@ class AttendantViewModelTest {
             ).thenReturn(
                 Result.success(true)
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "19759",
                 TypeButton.NUMERIC
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "OK",
                 TypeButton.OK
             )
@@ -430,7 +430,7 @@ class AttendantViewModelTest {
                 false
             )
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 true
             )
         }

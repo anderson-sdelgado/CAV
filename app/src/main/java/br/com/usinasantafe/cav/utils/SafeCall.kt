@@ -28,7 +28,7 @@ suspend fun <T> result (
     }
 }
 
-suspend fun FlowCollector<UpdateStatusState>.flowCall(
+suspend fun FlowCollector<UiStatusStateUpdate>.flowCall(
     context: String,
     block: suspend () -> Unit
 ) {

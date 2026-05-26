@@ -11,7 +11,7 @@ import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.LevelUpdate
 import br.com.usinasantafe.cav.presenter.Args
 import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxScreenModel
-import br.com.usinasantafe.cav.utils.UpdateStatusState
+import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 import br.com.usinasantafe.cav.utils.percentage
 import br.com.usinasantafe.cav.utils.resultFailure
 import br.com.usinasantafe.cav.utils.sizeUpdate
@@ -44,7 +44,7 @@ class ItemDataLocalViewModelTest {
     private val viewModel = ItemDataLocalViewModel(
         saveStateHandle = SavedStateHandle(
             mapOf(
-                Args.ID_ARG to 1,
+                Args.ID_MAIN_ARG to 1,
             )
         ),
         listItemDataLocal = listItemDataLocal,
@@ -80,7 +80,7 @@ class ItemDataLocalViewModelTest {
                 Errors.EXCEPTION
             )
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 false
             )
         }
@@ -130,13 +130,13 @@ class ItemDataLocalViewModelTest {
                 )
             ).thenReturn(
                 flowOf(
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_item_data_local",
                         currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -152,9 +152,9 @@ class ItemDataLocalViewModelTest {
             checkResultUpdate(qtdBefore, result)
             assertEquals(
                 result[(qtdBefore * 3).toInt()],
-                ItemDataLocalState(
+                ItemDataLocalStateUpdate(
                     id = 1,
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_item_data_local",
@@ -164,9 +164,9 @@ class ItemDataLocalViewModelTest {
             )
             assertEquals(
                 result[((qtdBefore * 3) + 1).toInt()],
-                ItemDataLocalState(
+                ItemDataLocalStateUpdate(
                     id = 1,
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -201,13 +201,13 @@ class ItemDataLocalViewModelTest {
                 )
             ).thenReturn(
                 flowOf(
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_option_data_local",
                         currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -223,9 +223,9 @@ class ItemDataLocalViewModelTest {
             checkResultUpdate(qtdBefore, result)
             assertEquals(
                 result[(qtdBefore * 3).toInt()],
-                ItemDataLocalState(
+                ItemDataLocalStateUpdate(
                     id = 1,
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_option_data_local",
@@ -235,9 +235,9 @@ class ItemDataLocalViewModelTest {
             )
             assertEquals(
                 result[((qtdBefore * 3) + 1).toInt()],
-                ItemDataLocalState(
+                ItemDataLocalStateUpdate(
                     id = 1,
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -272,13 +272,13 @@ class ItemDataLocalViewModelTest {
                 )
             ).thenReturn(
                 flowOf(
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_r_option_item_data_local",
                         currentProgress = percentage(((qtdBefore * 3) + 1), qtdTable)
                     ),
-                    UpdateStatusState(
+                    UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -294,9 +294,9 @@ class ItemDataLocalViewModelTest {
             checkResultUpdate(qtdBefore, result)
             assertEquals(
                 result[(qtdBefore * 3).toInt()],
-                ItemDataLocalState(
+                ItemDataLocalStateUpdate(
                     id = 1,
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         flagProgress = true,
                         levelUpdate = LevelUpdate.RECOVERY,
                         tableUpdate = "tb_r_option_item_data_local",
@@ -306,9 +306,9 @@ class ItemDataLocalViewModelTest {
             )
             assertEquals(
                 result[((qtdBefore * 3) + 1).toInt()],
-                ItemDataLocalState(
+                ItemDataLocalStateUpdate(
                     id = 1,
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         errors = Errors.UPDATE,
                         flagDialog = true,
                         flagFailure = true,
@@ -352,9 +352,9 @@ class ItemDataLocalViewModelTest {
             checkResultUpdate(qtdBefore, result)
             assertEquals(
                 result[9],
-                ItemDataLocalState(
+                ItemDataLocalStateUpdate(
                     id = 1,
-                    status = UpdateStatusState(
+                    status = UiStatusStateUpdate(
                         flagDialog = true,
                         flagProgress = false,
                         flagFailure = false,
@@ -472,7 +472,7 @@ class ItemDataLocalViewModelTest {
             viewModel.list.addAll(list)
             viewModel.save()
             assertEquals(
-                viewModel.uiState.value.flagAccess,
+                viewModel.uiState.value.status.flagAccess,
                 true
             )
         }
@@ -490,7 +490,7 @@ class ItemDataLocalViewModelTest {
             )
 
             val updateFunctions = mutableListOf<
-                    suspend (Float, Float) -> Flow<UpdateStatusState>
+                    suspend (Float, Float) -> Flow<UiStatusStateUpdate>
                     >(
                 { sizeAll, count -> updateTableItemDataLocal(sizeAll, count) },
                 { sizeAll, count -> updateTableOptionDataLocal(sizeAll, count) },
@@ -505,19 +505,19 @@ class ItemDataLocalViewModelTest {
                     )
                 ).thenReturn(
                     flowOf(
-                        UpdateStatusState(
+                        UiStatusStateUpdate(
                             flagProgress = true,
                             levelUpdate = LevelUpdate.RECOVERY,
                             tableUpdate = tableList[contUpdate.toInt() - 1],
                             currentProgress = percentage(++contWhenever, sizeAll)
                         ),
-                        UpdateStatusState(
+                        UiStatusStateUpdate(
                             flagProgress = true,
                             levelUpdate = LevelUpdate.CLEAN,
                             tableUpdate = tableList[contUpdate.toInt() - 1],
                             currentProgress = percentage(++contWhenever, sizeAll)
                         ),
-                        UpdateStatusState(
+                        UiStatusStateUpdate(
                             flagProgress = true,
                             levelUpdate = LevelUpdate.SAVE,
                             tableUpdate = tableList[contUpdate.toInt() - 1],
@@ -529,7 +529,7 @@ class ItemDataLocalViewModelTest {
             }
         }
 
-    private fun checkResultUpdate(posTable: Float, result: List<ItemDataLocalState>) =
+    private fun checkResultUpdate(posTable: Float, result: List<ItemDataLocalStateUpdate>) =
         runTest {
             val sizeAll = sizeUpdate(qtdTable)
             var contUpdate = 0f
@@ -537,9 +537,9 @@ class ItemDataLocalViewModelTest {
             for(table in tableList) {
                 assertEquals(
                     result[cont++],
-                    ItemDataLocalState(
+                    ItemDataLocalStateUpdate(
                         id = 1,
-                        status = UpdateStatusState(
+                        status = UiStatusStateUpdate(
                             flagProgress = true,
                             levelUpdate = LevelUpdate.RECOVERY,
                             tableUpdate = table,
@@ -549,9 +549,9 @@ class ItemDataLocalViewModelTest {
                 )
                 assertEquals(
                     result[cont++],
-                    ItemDataLocalState(
+                    ItemDataLocalStateUpdate(
                         id = 1,
-                        status = UpdateStatusState(
+                        status = UiStatusStateUpdate(
                             flagProgress = true,
                             levelUpdate = LevelUpdate.CLEAN,
                             tableUpdate = table,
@@ -561,9 +561,9 @@ class ItemDataLocalViewModelTest {
                 )
                 assertEquals(
                     result[cont++],
-                    ItemDataLocalState(
+                    ItemDataLocalStateUpdate(
                         id = 1,
-                        status = UpdateStatusState(
+                        status = UiStatusStateUpdate(
                             flagProgress = true,
                             levelUpdate = LevelUpdate.SAVE,
                             tableUpdate = table,

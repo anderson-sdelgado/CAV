@@ -9,6 +9,7 @@ import br.com.usinasantafe.cav.infra.models.retrofit.variable.retrofitToEntity
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.entityToSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.sharedPreferencesModelToEntity
 import br.com.usinasantafe.cav.lib.FlagUpdate
+import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.StatusSend
 import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.call
@@ -63,5 +64,9 @@ class IConfigRepository @Inject constructor(
         call(getClassAndMethod()) {
             configSharedPreferencesDatasource.getStatusSend().getOrThrow()
         }
+
+    override suspend fun setOption(option: Option): EmptyResult {
+        TODO("Not yet implemented")
+    }
 
 }

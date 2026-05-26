@@ -11,7 +11,8 @@ import androidx.navigation.navArgument
 import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.Type
 import br.com.usinasantafe.cav.lib.TypeDetail
-import br.com.usinasantafe.cav.presenter.Args.ID_ARG
+import br.com.usinasantafe.cav.presenter.Args.ID_MAIN_ARG
+import br.com.usinasantafe.cav.presenter.Args.ID_SECONDARY_ARG
 import br.com.usinasantafe.cav.presenter.Args.OPTION_ARG
 import br.com.usinasantafe.cav.presenter.Args.TYPE_ARG
 import br.com.usinasantafe.cav.presenter.Args.TYPE_DETAIL_ARG
@@ -215,7 +216,7 @@ fun NavigationGraph(
         composable(
             ITEM_DATA_LOCAL_ROUTE,
             arguments = listOf(
-                navArgument(ID_ARG) { type = NavType.IntType }
+                navArgument(ID_MAIN_ARG) { type = NavType.IntType }
             )
         ) {
             ItemDataLocalScreen(
@@ -237,7 +238,9 @@ fun NavigationGraph(
             EQUIP_ROUTE,
             arguments = listOf(
                 navArgument(OPTION_ARG) { type = NavType.IntType },
-                navArgument(TYPE_ARG) { type = NavType.IntType }
+                navArgument(TYPE_ARG) { type = NavType.IntType },
+                navArgument(ID_MAIN_ARG) { type = NavType.IntType },
+                navArgument(ID_SECONDARY_ARG) { type = NavType.IntType }
             )
         ) { entry ->
             EquipScreen(
@@ -245,11 +248,14 @@ fun NavigationGraph(
                     navActions.navigateToCarFull()
                 },
                 onNavData = {
-                    navActions.navigateToDataVehicleOwn()
+                    navActions.navigateToDataVehicleOwn(
+                        id = entry.arguments?.getInt(ID_MAIN_ARG)!!
+                    )
                 },
                 onNavEquipSecList = {
                     navActions.navigateToEquipSecListVehicleOwn(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
                     )
                 },
                 onNavDetail = {
@@ -261,7 +267,9 @@ fun NavigationGraph(
                     }
                     navActions.navigateToDetailVehicleOwn(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        typeDetail = typeDetail.ordinal
+                        typeDetail = typeDetail.ordinal,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 },
             )
@@ -271,57 +279,77 @@ fun NavigationGraph(
             COLAB_ROUTE,
             arguments = listOf(
                 navArgument(OPTION_ARG) { type = NavType.IntType },
-                navArgument(TYPE_ARG) { type = NavType.IntType }
+                navArgument(TYPE_ARG) { type = NavType.IntType },
+                navArgument(ID_MAIN_ARG) { type = NavType.IntType },
+                navArgument(ID_SECONDARY_ARG) { type = NavType.IntType }
             )
         ) { entry ->
             ColabScreen(
                 onNavPassengerList = {
                     navActions.navigateToPassengerListVehicleOwn(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
                     )
                 },
                 onNavEquipSecList = {
                     navActions.navigateToEquipSecListVehicleOwn(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
                     )
                 },
                 onNavState = {
                     navActions.navigateToStateVehicleOwn(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        type = entry.arguments?.getInt(TYPE_ARG)!!
+                        type = entry.arguments?.getInt(TYPE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 },
                 onNavData = {
-                    navActions.navigateToDataVehicleOwn()
+                    navActions.navigateToDataVehicleOwn(
+                        id = entry.arguments?.getInt(ID_MAIN_ARG)!!
+                    )
                 }
             )
         }
 
         composable(
-            DATA_VEHICLE_OWN_ROUTE
-        ) {
+            DATA_VEHICLE_OWN_ROUTE,
+            arguments = listOf(
+                navArgument(ID_MAIN_ARG) { type = NavType.IntType },
+            )
+        ) { entry ->
             DataVehicleOwnScreen(
                 onNavColab = {
                     navActions.navigateToColabVehicleOwn(
                         option = Option.EDIT.ordinal,
-                        type = Type.MAIN.ordinal
+                        type = Type.MAIN.ordinal,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = 0
                     )
                 },
                 onNavEquip = {
                     navActions.navigateToEquipVehicleOwn(
                         option = Option.EDIT.ordinal,
-                        type = Type.MAIN.ordinal
+                        type = Type.MAIN.ordinal,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = 0
                     )
                 },
                 onNavEquipSecList = {
                     navActions.navigateToEquipSecListVehicleOwn(
-                        option = Option.EDIT.ordinal
+                        option = Option.EDIT.ordinal,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                     )
                 },
                 onNavPassengerList = {
                     navActions.navigateToEquipSecListVehicleOwn(
-                        option = Option.EDIT.ordinal
+                        option = Option.EDIT.ordinal,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                     )
+                },
+                onNavMenu = {
+                    navActions.navigateToCarFull()
                 }
             )
         }
@@ -330,7 +358,9 @@ fun NavigationGraph(
             DETAIL_VEHICLE_OWN_ROUTE,
             arguments = listOf(
                 navArgument(OPTION_ARG) { type = NavType.IntType },
-                navArgument(TYPE_DETAIL_ARG) { type = NavType.IntType }
+                navArgument(TYPE_DETAIL_ARG) { type = NavType.IntType },
+                navArgument(ID_MAIN_ARG) { type = NavType.IntType },
+                navArgument(ID_SECONDARY_ARG) { type = NavType.IntType }
             )
         ) { entry ->
             val index = entry.arguments?.getInt(TYPE_DETAIL_ARG)!!
@@ -343,28 +373,36 @@ fun NavigationGraph(
             }
             DetailVehicleOwnScreen(
                 onNavData = {
-                    navActions.navigateToDataVehicleOwn()
+                    navActions.navigateToDataVehicleOwn(
+                        id = entry.arguments?.getInt(ID_MAIN_ARG)!!
+                    )
                 },
                 onNavEquip = {
                     navActions.navigateToEquipVehicleOwn(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        type = type.ordinal
+                        type = type.ordinal,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 },
                 onNavState = {
                     navActions.navigateToStateVehicleOwn(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        type = type.ordinal
+                        type = type.ordinal,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 },
                 onNavEquipSecList = {
                     navActions.navigateToPassengerListVehicleOwn(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
                     )
                 },
                 onNavPassengerList = {
                     navActions.navigateToEquipSecListVehicleOwn(
-                        option = entry.arguments?.getInt(OPTION_ARG)!!
+                        option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
                     )
                 }
             )
@@ -373,29 +411,38 @@ fun NavigationGraph(
         composable(
             EQUIP_SEC_LIST_VEHICLE_OWN_ROUTE,
             arguments = listOf(
-                navArgument(OPTION_ARG) { type = NavType.IntType }
+                navArgument(OPTION_ARG) { type = NavType.IntType },
+                navArgument(ID_MAIN_ARG) { type = NavType.IntType },
             )
         ){ entry ->
             EquipSecListScreen(
                 onNavDetail = {
                     navActions.navigateToDetailVehicleOwn(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        typeDetail = TypeDetail.EQUIP_VEHICLE.ordinal
+                        typeDetail = TypeDetail.EQUIP_VEHICLE.ordinal,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = 0
                     )
                 },
                 onNavEquip = {
                     navActions.navigateToEquipVehicleOwn(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        type = Type.SECONDARY.ordinal
+                        type = Type.SECONDARY.ordinal,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = it
                     )
                 },
                 onNavData = {
-                    navActions.navigateToDataVehicleOwn()
+                    navActions.navigateToDataVehicleOwn(
+                        id = entry.arguments?.getInt(ID_MAIN_ARG)!!
+                    )
                 },
                 onNavColab = {
                     navActions.navigateToColabVehicleOwn(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        type = Type.MAIN.ordinal
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        type = Type.MAIN.ordinal,
+                        idSecondary = 0
                     )
                 }
             )
@@ -404,24 +451,31 @@ fun NavigationGraph(
         composable(
             PASSENGER_LIST_VEHICLE_OWN_ROUTE,
             arguments = listOf(
-                navArgument(OPTION_ARG) { type = NavType.IntType }
+                navArgument(OPTION_ARG) { type = NavType.IntType },
+                navArgument(ID_MAIN_ARG) { type = NavType.IntType },
             )
         ) { entry ->
             PassengerListScreen(
                 onNavColab = {
                     navActions.navigateToColabVehicleOwn(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        type = Type.SECONDARY.ordinal
+                        type = Type.SECONDARY.ordinal,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = it
                     )
                 },
                 onNavDetail = {
                     navActions.navigateToDetailVehicleOwn(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        typeDetail = TypeDetail.DRIVER.ordinal
+                        typeDetail = TypeDetail.DRIVER.ordinal,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = 0
                     )
                 },
                 onNavData = {
-                    navActions.navigateToDataVehicleOwn()
+                    navActions.navigateToDataVehicleOwn(
+                        id = entry.arguments?.getInt(ID_MAIN_ARG)!!
+                    )
                 },
                 onNavMenu = {
                     navActions.navigateToCarFull()
@@ -433,14 +487,17 @@ fun NavigationGraph(
             STATE_VEHICLE_OWN_ROUTE,
             arguments = listOf(
                 navArgument(OPTION_ARG) { type = NavType.IntType },
-                navArgument(TYPE_ARG) { type = NavType.IntType }
+                navArgument(TYPE_ARG) { type = NavType.IntType },
+                navArgument(ID_MAIN_ARG) { type = NavType.IntType }
             )
         ) { entry ->
             StateColabScreen(
                 onNavColab = {
                     navActions.navigateToColabVehicleOwn(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        type = entry.arguments?.getInt(TYPE_ARG)!!
+                        type = entry.arguments?.getInt(TYPE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 },
                 onNavDetail = {
@@ -452,7 +509,9 @@ fun NavigationGraph(
                     }
                     navActions.navigateToDetailVehicleOwn(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        typeDetail = typeDetail.ordinal
+                        typeDetail = typeDetail.ordinal,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 }
             )
@@ -518,11 +577,15 @@ fun NavigationGraph(
                 onNavEquip = {
                     navActions.navigateToEquipVehicleOwn(
                         option = Option.INSERT.ordinal,
-                        type = Type.SECONDARY.ordinal
+                        type = Type.MAIN.ordinal,
+                        idMain = 0,
+                        idSecondary = 0
                     )
                 },
                 onNavDataVehicleOwn = {
-                    navActions.navigateToDataVehicleOwn()
+                    navActions.navigateToDataVehicleOwn(
+                        id = it
+                    )
                 }
             )
         }

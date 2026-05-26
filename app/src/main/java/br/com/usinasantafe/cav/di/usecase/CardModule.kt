@@ -93,11 +93,66 @@ interface CardModule {
 
     @Binds
     @Singleton
+    fun bindGetNroEquip(usecase: IGetNroEquip): GetNroEquip
+
+    @Binds
+    @Singleton
+    fun bindSetIdEquip(usecase: ISetEquip): SetEquip
+
+    @Binds
+    @Singleton
+    fun bindGetDetailVehicleOwn(usecase: IGetDetailVehicleOwn): GetDetailVehicleOwn
+
+    @Binds
+    @Singleton
+    fun bindSetDetailVehicleOwn(usecase: ISetDetailVehicleOwn): SetDetailVehicleOwn
+
+    @Binds
+    @Singleton
+    fun bindGetRegColab(usecase: IGetRegColab): GetRegColab
+
+    @Binds
+    @Singleton
+    fun bindSetColab(usecase: ISetColab): SetColab
+
+    @Binds
+    @Singleton
+    fun bindGetStateColab(usecase: IGetStateColab): GetStateColab
+
+    @Binds
+    @Singleton
+    fun bindSetStateColab(usecase: ISetStateColab): SetStateColab
+
+    @Binds
+    @Singleton
+    fun bindListEquipSec(usecase: IListEquipSec): ListEquipSec
+
+    @Binds
+    @Singleton
+    fun bindDeleteEquipSec(usecase: IDeleteEquipSec): DeleteEquipSec
+
+    @Binds
+    @Singleton
+    fun bindListPassenger(usecase: IListPassenger): ListPassenger
+
+    @Binds
+    @Singleton
+    fun bindDeletePassenger(usecase: IDeletePassenger): DeletePassenger
+
+    @Binds
+    @Singleton
     fun bindGetEquip(usecase: IGetEquip): GetEquip
 
     @Binds
     @Singleton
-    fun bindSetIdEquip(usecase: ISetIdEquip): SetIdEquip
+    fun bindGetEquipSec(usecase: IGetEquipSec): GetEquipSec
 
+    @Binds
+    @Singleton
+    fun bindGetColab(usecase: IGetDriver): GetDriver
+
+    @Binds
+    @Singleton
+    fun bindGetPassengers(usecase: IGetPassengers): GetPassengers
 
 }

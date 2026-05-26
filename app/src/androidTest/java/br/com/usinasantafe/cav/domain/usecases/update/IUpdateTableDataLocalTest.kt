@@ -6,7 +6,7 @@ import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.ConfigSharedPr
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.ConfigSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.LevelUpdate
-import br.com.usinasantafe.cav.utils.UpdateStatusState
+import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 import br.com.usinasantafe.cav.utils.updatePercentage
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -51,7 +51,7 @@ class IUpdateTableDataLocalTest {
             )
             assertEquals(
                 list[0],
-                UpdateStatusState(
+                UiStatusStateUpdate(
                     flagProgress = true,
                     levelUpdate = LevelUpdate.RECOVERY,
                     tableUpdate = "tb_r_option_item_data_local",
@@ -60,7 +60,7 @@ class IUpdateTableDataLocalTest {
             )
             assertEquals(
                 list[1],
-                UpdateStatusState(
+                UiStatusStateUpdate(
                     errors = Errors.UPDATE,
                     flagDialog = true,
                     flagFailure = true,
@@ -90,7 +90,7 @@ class IUpdateTableDataLocalTest {
             )
             assertEquals(
                 list[0],
-                UpdateStatusState(
+                UiStatusStateUpdate(
                     flagProgress = true,
                     levelUpdate = LevelUpdate.RECOVERY,
                     tableUpdate = "tb_r_option_item_data_local",
@@ -99,7 +99,7 @@ class IUpdateTableDataLocalTest {
             )
             assertEquals(
                 list[1],
-                UpdateStatusState(
+                UiStatusStateUpdate(
                     errors = Errors.UPDATE,
                     flagDialog = true,
                     flagFailure = true,
@@ -136,7 +136,7 @@ class IUpdateTableDataLocalTest {
             )
             assertEquals(
                 list[0],
-                UpdateStatusState(
+                UiStatusStateUpdate(
                     flagProgress = true,
                     levelUpdate = LevelUpdate.RECOVERY,
                     tableUpdate = "tb_r_option_item_data_local",
@@ -145,7 +145,7 @@ class IUpdateTableDataLocalTest {
             )
             assertEquals(
                 list[1],
-                UpdateStatusState(
+                UiStatusStateUpdate(
                     errors = Errors.UPDATE,
                     flagDialog = true,
                     flagFailure = true,
@@ -182,7 +182,7 @@ class IUpdateTableDataLocalTest {
             )
             assertEquals(
                 list[0],
-                UpdateStatusState(
+                UiStatusStateUpdate(
                     flagProgress = true,
                     levelUpdate = LevelUpdate.RECOVERY,
                     tableUpdate = "tb_r_option_item_data_local",
@@ -191,7 +191,7 @@ class IUpdateTableDataLocalTest {
             )
             assertEquals(
                 list[1],
-                UpdateStatusState(
+                UiStatusStateUpdate(
                     errors = Errors.UPDATE,
                     flagDialog = true,
                     flagFailure = true,
@@ -233,7 +233,7 @@ class IUpdateTableDataLocalTest {
             )
             assertEquals(
                 list[0],
-                UpdateStatusState(
+                UiStatusStateUpdate(
                     flagProgress = true,
                     levelUpdate = LevelUpdate.RECOVERY,
                     tableUpdate = "tb_r_option_item_data_local",
@@ -242,7 +242,7 @@ class IUpdateTableDataLocalTest {
             )
             assertEquals(
                 list[1],
-                UpdateStatusState(
+                UiStatusStateUpdate(
                     flagProgress = true,
                     levelUpdate = LevelUpdate.CLEAN,
                     tableUpdate = "tb_r_option_item_data_local",
@@ -251,7 +251,7 @@ class IUpdateTableDataLocalTest {
             )
             assertEquals(
                 list[2],
-                UpdateStatusState(
+                UiStatusStateUpdate(
                     flagProgress = true,
                     levelUpdate = LevelUpdate.SAVE,
                     tableUpdate = "tb_r_option_item_data_local",
@@ -260,7 +260,7 @@ class IUpdateTableDataLocalTest {
             )
             assertEquals(
                 list[3],
-                UpdateStatusState(
+                UiStatusStateUpdate(
                     errors = Errors.UPDATE,
                     flagDialog = true,
                     flagFailure = true,
@@ -305,7 +305,7 @@ class IUpdateTableDataLocalTest {
             )
             assertEquals(
                 list[0],
-                UpdateStatusState(
+                UiStatusStateUpdate(
                     flagProgress = true,
                     levelUpdate = LevelUpdate.RECOVERY,
                     tableUpdate = "tb_r_option_item_data_local",
@@ -314,7 +314,7 @@ class IUpdateTableDataLocalTest {
             )
             assertEquals(
                 list[1],
-                UpdateStatusState(
+                UiStatusStateUpdate(
                     flagProgress = true,
                     levelUpdate = LevelUpdate.CLEAN,
                     tableUpdate = "tb_r_option_item_data_local",
@@ -323,7 +323,7 @@ class IUpdateTableDataLocalTest {
             )
             assertEquals(
                 list[2],
-                UpdateStatusState(
+                UiStatusStateUpdate(
                     flagProgress = true,
                     levelUpdate = LevelUpdate.SAVE,
                     tableUpdate = "tb_r_option_item_data_local",
