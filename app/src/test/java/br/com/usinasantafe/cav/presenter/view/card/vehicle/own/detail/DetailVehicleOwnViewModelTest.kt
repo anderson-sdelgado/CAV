@@ -9,6 +9,7 @@ import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.TypeDetail
 import br.com.usinasantafe.cav.presenter.Args.OPTION_ARG
 import br.com.usinasantafe.cav.presenter.Args.TYPE_DETAIL_ARG
+import br.com.usinasantafe.cav.presenter.view.card.detail.DetailVehicleOwnViewModel
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -33,7 +34,7 @@ class DetailVehicleOwnViewModelTest {
         savedStateHandle = SavedStateHandle(
             mapOf(
                 OPTION_ARG to Option.INSERT.ordinal,
-                TYPE_DETAIL_ARG to TypeDetail.EQUIP_VEHICLE.ordinal
+                TYPE_DETAIL_ARG to TypeDetail.VEHICLE.ordinal
             )
         ),
         getDetailVehicleOwn = getDetailVehicleOwn,
@@ -46,7 +47,7 @@ class DetailVehicleOwnViewModelTest {
             whenever(
                 getDetailVehicleOwn(
                     option = Option.INSERT,
-                    typeDetail = TypeDetail.EQUIP_VEHICLE
+                    typeDetail = TypeDetail.VEHICLE
                 )
             ).thenReturn(
                 resultFailure(
@@ -80,7 +81,7 @@ class DetailVehicleOwnViewModelTest {
             whenever(
                 getDetailVehicleOwn(
                     option = Option.INSERT,
-                    typeDetail = TypeDetail.EQUIP_VEHICLE
+                    typeDetail = TypeDetail.VEHICLE
                 )
             ).thenReturn(
                 Result.success("Test")
@@ -98,7 +99,7 @@ class DetailVehicleOwnViewModelTest {
             whenever(
                 setDetailVehicleOwn(
                     option = Option.INSERT,
-                    typeDetail = TypeDetail.EQUIP_VEHICLE,
+                    typeDetail = TypeDetail.VEHICLE,
                     text = "Test"
                 )
             ).thenReturn(
@@ -142,7 +143,7 @@ class DetailVehicleOwnViewModelTest {
                 atLeastOnce()
             ).invoke(
                 option = Option.INSERT,
-                typeDetail = TypeDetail.EQUIP_VEHICLE,
+                typeDetail = TypeDetail.VEHICLE,
                 text = "Test"
             )
             assertEquals(

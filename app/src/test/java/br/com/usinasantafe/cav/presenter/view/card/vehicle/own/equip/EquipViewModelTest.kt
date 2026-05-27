@@ -12,6 +12,8 @@ import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.Type
 import br.com.usinasantafe.cav.lib.TypeButton
 import br.com.usinasantafe.cav.presenter.Args
+import br.com.usinasantafe.cav.presenter.view.card.equip.equip.EquipStateUpdate
+import br.com.usinasantafe.cav.presenter.view.card.equip.equip.EquipViewModel
 import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 import br.com.usinasantafe.cav.utils.percentage
 import br.com.usinasantafe.cav.utils.resultFailure

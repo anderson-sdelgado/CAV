@@ -1,9 +1,8 @@
-package br.com.usinasantafe.cav.presenter.view.card.vehicle.foreign.detail
+package br.com.usinasantafe.cav.presenter.view.card.vehicle.brand
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.usinasantafe.cav.lib.Option
-import br.com.usinasantafe.cav.lib.TypeDetail
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
 import br.com.usinasantafe.cav.utils.UiStatusState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,28 +12,27 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class DetailVehicleForeignState(
+data class BrandVehicleState(
     val option: Option = Option.INSERT,
-    val typeDetail: TypeDetail = TypeDetail.VEHICLE,
     val text: String = "",
     override val status: UiStatusState = UiStatusState()
-) : UiStateWithStatus<DetailVehicleForeignState> {
+) : UiStateWithStatus<BrandVehicleState> {
 
-    override fun copyWithStatus(status: UiStatusState): DetailVehicleForeignState =
+    override fun copyWithStatus(status: UiStatusState): BrandVehicleState =
         copy(status = status)
 
 }
 
 @HiltViewModel
-class DetailVehicleForeignViewModel @Inject constructor(
+class BrandVehicleViewModel @Inject constructor(
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(DetailVehicleForeignState())
+    private val _uiState = MutableStateFlow(BrandVehicleState())
     val uiState = _uiState.asStateFlow()
 
     private val state get() = uiState.value
 
-    private fun updateState(block: DetailVehicleForeignState.() -> DetailVehicleForeignState) {
+    private fun updateState(block: BrandVehicleState.() -> BrandVehicleState) {
         _uiState.update(block)
     }
 

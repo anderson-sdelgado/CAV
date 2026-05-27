@@ -1,4 +1,4 @@
-package br.com.usinasantafe.cav.presenter.view.card.vehicle.foreign.detail
+package br.com.usinasantafe.cav.presenter.view.card.involved.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -18,16 +18,13 @@ fun addTextField(text: String, char: String): String {
 }
 
 fun addTextFieldComma(text: String, digit: String): String {
-
     val cleanText = text.filter { it.isDigit() } + digit
     val valueInTenths = cleanText.toLongOrNull() ?: 0L
     val value = valueInTenths / 10.0
-
     val format = DecimalFormat("#,##0.0")
     format.decimalFormatSymbols = DecimalFormatSymbols(Locale.Builder().setLanguage("pt").setRegion("BR").build())
     return format.format(value)
 }
-
 
 fun clearTextField(text: String): String {
     return if (text.length > 1) text.substring(0, text.length - 1) else ""
@@ -38,7 +35,6 @@ fun clearTextFieldComma(text: String): String {
     val reducedText = if (cleanText.length > 1) cleanText.dropLast(1) else ""
     val valueInTenths = reducedText.toLongOrNull() ?: 0L
     val value = valueInTenths / 10.0
-
     val format = DecimalFormat("#,##0.0")
     format.decimalFormatSymbols = DecimalFormatSymbols(Locale.Builder().setLanguage("pt").setRegion("BR").build())
     return format.format(value)

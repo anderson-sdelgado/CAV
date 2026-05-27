@@ -12,6 +12,8 @@ import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.Type
 import br.com.usinasantafe.cav.lib.TypeButton
 import br.com.usinasantafe.cav.presenter.Args
+import br.com.usinasantafe.cav.presenter.view.card.colab.colab.ColabStateUpdate
+import br.com.usinasantafe.cav.presenter.view.card.colab.colab.ColabViewModel
 import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 import br.com.usinasantafe.cav.utils.percentage
 import br.com.usinasantafe.cav.utils.resultFailure
@@ -103,54 +105,54 @@ class ColabViewModelTest {
                 false
             )
             assertEquals(
-                viewModel.uiState.value.regColab,
+                viewModel.uiState.value.text,
                 "2200"
             )
         }
 
     @Test
     fun `setTextField - Check add char`() {
-        viewModel.setTextField(
+        viewModel.onTextField(
             "1",
             TypeButton.NUMERIC
         )
         assertEquals(
             "1",
-            viewModel.uiState.value.regColab
+            viewModel.uiState.value.text
         )
     }
 
     @Test
     fun `setTextField - Check remover char`() {
-        viewModel.setTextField(
+        viewModel.onTextField(
             "19759",
             TypeButton.NUMERIC
         )
-        viewModel.setTextField(
+        viewModel.onTextField(
             "APAGAR",
             TypeButton.CLEAN
         )
-        viewModel.setTextField(
+        viewModel.onTextField(
             "APAGAR",
             TypeButton.CLEAN
         )
-        viewModel.setTextField(
+        viewModel.onTextField(
             "APAGAR",
             TypeButton.CLEAN
         )
-        viewModel.setTextField(
+        viewModel.onTextField(
             "1",
             TypeButton.NUMERIC
         )
         assertEquals(
-            viewModel.uiState.value.regColab,
+            viewModel.uiState.value.text,
             "191"
         )
     }
 
     @Test
     fun `setTextField - Check msg of empty field`() {
-        viewModel.setTextField(
+        viewModel.onTextField(
             "OK",
             TypeButton.OK
         )
@@ -216,7 +218,7 @@ class ColabViewModelTest {
                     )
                 )
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "ATUALIZAR DADOS",
                 TypeButton.UPDATE
             )
@@ -311,7 +313,7 @@ class ColabViewModelTest {
                     )
                 )
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "ATUALIZAR DADOS",
                 TypeButton.UPDATE
             )
@@ -324,7 +326,7 @@ class ColabViewModelTest {
     @Test
     fun `setTextField - Check return failure if field is empty`() =
         runTest {
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "OK",
                 TypeButton.OK
             )
@@ -366,11 +368,11 @@ class ColabViewModelTest {
                     cause = Exception()
                 )
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "200",
                 TypeButton.NUMERIC
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "OK",
                 TypeButton.OK
             )
@@ -408,11 +410,11 @@ class ColabViewModelTest {
             ).thenReturn(
                 Result.success(false)
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "200",
                 TypeButton.NUMERIC
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "OK",
                 TypeButton.OK
             )
@@ -456,11 +458,11 @@ class ColabViewModelTest {
                     cause = Exception()
                 )
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "200",
                 TypeButton.NUMERIC
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "OK",
                 TypeButton.OK
             )
@@ -498,11 +500,11 @@ class ColabViewModelTest {
             ).thenReturn(
                 Result.success(true)
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "200",
                 TypeButton.NUMERIC
             )
-            viewModel.setTextField(
+            viewModel.onTextField(
                 "OK",
                 TypeButton.OK
             )

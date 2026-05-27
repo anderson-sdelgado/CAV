@@ -51,13 +51,13 @@ import br.com.usinasantafe.cav.presenter.view.card.menu.LocalSupportScreen
 import br.com.usinasantafe.cav.presenter.view.card.nature.NatureScreen
 import br.com.usinasantafe.cav.presenter.view.card.supportTeams.SupportTeamsScreen
 import br.com.usinasantafe.cav.presenter.view.card.typeAccident.TypeAccidentScreen
-import br.com.usinasantafe.cav.presenter.view.card.vehicle.own.colab.ColabScreen
-import br.com.usinasantafe.cav.presenter.view.card.vehicle.own.data.DataVehicleOwnScreen
-import br.com.usinasantafe.cav.presenter.view.card.vehicle.own.detail.DetailVehicleOwnScreen
-import br.com.usinasantafe.cav.presenter.view.card.vehicle.own.equip.EquipScreen
-import br.com.usinasantafe.cav.presenter.view.card.vehicle.own.equipSecList.EquipSecListScreen
-import br.com.usinasantafe.cav.presenter.view.card.vehicle.own.passengerList.PassengerListScreen
-import br.com.usinasantafe.cav.presenter.view.card.vehicle.own.state.StateColabScreen
+import br.com.usinasantafe.cav.presenter.view.card.colab.colab.ColabScreen
+import br.com.usinasantafe.cav.presenter.view.card.vehicleFull.VehicleOwnDataScreen
+import br.com.usinasantafe.cav.presenter.view.card.detail.DetailVehicleOwnScreen
+import br.com.usinasantafe.cav.presenter.view.card.equip.equip.EquipScreen
+import br.com.usinasantafe.cav.presenter.view.card.equip.equipSecList.EquipSecListScreen
+import br.com.usinasantafe.cav.presenter.view.card.colab.passengerList.PassengerListOwnScreen
+import br.com.usinasantafe.cav.presenter.view.card.state.StateColabOwnScreen
 import br.com.usinasantafe.cav.presenter.view.configuration.config.ConfigScreen
 import br.com.usinasantafe.cav.presenter.view.configuration.initial.InitialMenuScreen
 import br.com.usinasantafe.cav.presenter.view.configuration.password.PasswordScreen
@@ -262,8 +262,8 @@ fun NavigationGraph(
                     val index = entry.arguments?.getInt(TYPE_ARG)!!
                     val type = Type.entries[index]
                     val typeDetail = when(type){
-                        Type.MAIN -> TypeDetail.EQUIP_VEHICLE
-                        Type.SECONDARY -> TypeDetail.EQUIP_VEHICLE_SEC
+                        Type.MAIN -> TypeDetail.VEHICLE
+                        Type.SECONDARY -> TypeDetail.VEHICLE_SEC
                     }
                     navActions.navigateToDetailVehicleOwn(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
@@ -319,7 +319,7 @@ fun NavigationGraph(
                 navArgument(ID_MAIN_ARG) { type = NavType.IntType },
             )
         ) { entry ->
-            DataVehicleOwnScreen(
+            VehicleOwnDataScreen(
                 onNavColab = {
                     navActions.navigateToColabVehicleOwn(
                         option = Option.EDIT.ordinal,
@@ -366,9 +366,9 @@ fun NavigationGraph(
             val index = entry.arguments?.getInt(TYPE_DETAIL_ARG)!!
             val typeDetail = TypeDetail.entries[index]
             val type = when(typeDetail){
-                TypeDetail.EQUIP_VEHICLE -> Type.MAIN
-                TypeDetail.EQUIP_VEHICLE_SEC -> Type.SECONDARY
-                TypeDetail.DRIVER -> Type.MAIN
+                TypeDetail.VEHICLE -> Type.MAIN
+                TypeDetail.VEHICLE_SEC -> Type.SECONDARY
+                TypeDetail.PEOPLE -> Type.MAIN
                 TypeDetail.PASSENGER -> Type.SECONDARY
             }
             DetailVehicleOwnScreen(
@@ -419,7 +419,7 @@ fun NavigationGraph(
                 onNavDetail = {
                     navActions.navigateToDetailVehicleOwn(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        typeDetail = TypeDetail.EQUIP_VEHICLE.ordinal,
+                        typeDetail = TypeDetail.VEHICLE.ordinal,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = 0
                     )
@@ -455,7 +455,7 @@ fun NavigationGraph(
                 navArgument(ID_MAIN_ARG) { type = NavType.IntType },
             )
         ) { entry ->
-            PassengerListScreen(
+            PassengerListOwnScreen(
                 onNavColab = {
                     navActions.navigateToColabVehicleOwn(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
@@ -467,7 +467,7 @@ fun NavigationGraph(
                 onNavDetail = {
                     navActions.navigateToDetailVehicleOwn(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        typeDetail = TypeDetail.DRIVER.ordinal,
+                        typeDetail = TypeDetail.PEOPLE.ordinal,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = 0
                     )
@@ -491,7 +491,7 @@ fun NavigationGraph(
                 navArgument(ID_MAIN_ARG) { type = NavType.IntType }
             )
         ) { entry ->
-            StateColabScreen(
+            StateColabOwnScreen(
                 onNavColab = {
                     navActions.navigateToColabVehicleOwn(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
@@ -504,7 +504,7 @@ fun NavigationGraph(
                     val index = entry.arguments?.getInt(TYPE_ARG)!!
                     val type = Type.entries[index]
                     val typeDetail = when(type){
-                        Type.MAIN -> TypeDetail.DRIVER
+                        Type.MAIN -> TypeDetail.PEOPLE
                         Type.SECONDARY -> TypeDetail.PASSENGER
                     }
                     navActions.navigateToDetailVehicleOwn(

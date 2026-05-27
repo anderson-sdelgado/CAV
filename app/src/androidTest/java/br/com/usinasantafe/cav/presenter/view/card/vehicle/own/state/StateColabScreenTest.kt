@@ -2,6 +2,7 @@ package br.com.usinasantafe.cav.presenter.view.card.vehicle.own.state
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import br.com.usinasantafe.cav.HiltTestActivity
+import br.com.usinasantafe.cav.presenter.view.card.state.StateColabOwnScreen
 import br.com.usinasantafe.cav.utils.waitUntilTimeout
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -35,7 +36,7 @@ class StateColabScreenTest {
 
     private fun setContent(){
         composeTestRule.setContent {
-            StateColabScreen(
+            StateColabOwnScreen(
                 onNavDetail = {},
                 onNavColab = {}
             )

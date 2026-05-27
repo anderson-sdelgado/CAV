@@ -95,5 +95,11 @@
     <string name="text_item_injured">FERIDO</string>
     <string name="text_item_unharmed">ILESO</string>
     <string name="text_title_data_vehicle_own">DADOS VEÍCULO PRÓPRIO</string>
-    <string name="text_driver_colab">MOTORISTA</string>
+    <string name="text_title_address">ENDEREÇO</string>
+    <string name="text_title_plate">PLACA</string>
+    <string name="text_title_brand_desc">MARCA - DESCRIÇÃO</string>
+    <string name="text_title_document">CPF</string>
+    <string name="text_title_name">NOME</string>
+    <string name="text_title_phone">TELEFONE</string>
+    <string name="text_title_data_vehicle_foreign">DADOS VEÍCULO ENVOLVIDO</string>
 </resources>

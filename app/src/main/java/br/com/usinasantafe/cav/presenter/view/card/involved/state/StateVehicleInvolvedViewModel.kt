@@ -1,9 +1,7 @@
-package br.com.usinasantafe.cav.presenter.view.card.vehicle.foreign.detail
+package br.com.usinasantafe.cav.presenter.view.card.involved.state
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.usinasantafe.cav.lib.Option
-import br.com.usinasantafe.cav.lib.TypeDetail
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
 import br.com.usinasantafe.cav.utils.UiStatusState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,38 +11,32 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class DetailVehicleForeignState(
-    val option: Option = Option.INSERT,
-    val typeDetail: TypeDetail = TypeDetail.VEHICLE,
-    val text: String = "",
+data class StateVehicleInvolvedState(
+    val idSelection: Int = 1,
     override val status: UiStatusState = UiStatusState()
-) : UiStateWithStatus<DetailVehicleForeignState> {
+) : UiStateWithStatus<StateVehicleInvolvedState> {
 
-    override fun copyWithStatus(status: UiStatusState): DetailVehicleForeignState =
+    override fun copyWithStatus(status: UiStatusState): StateVehicleInvolvedState =
         copy(status = status)
 
 }
 
 @HiltViewModel
-class DetailVehicleForeignViewModel @Inject constructor(
+class StateVehicleInvolvedViewModel @Inject constructor(
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(DetailVehicleForeignState())
+    private val _uiState = MutableStateFlow(StateVehicleInvolvedState())
     val uiState = _uiState.asStateFlow()
 
     private val state get() = uiState.value
 
-    private fun updateState(block: DetailVehicleForeignState.() -> DetailVehicleForeignState) {
+    private fun updateState(block: StateVehicleInvolvedState.() -> StateVehicleInvolvedState) {
         _uiState.update(block)
     }
 
     fun onCloseDialog() = updateState { copy(status = status.copy(flagDialog = false, flagFailure = false)) }
 
-    fun onTextChanged(text: String) {
-        _uiState.update {
-            it.copy(text = text)
-        }
-    }
+    fun onSelection(id: Int) = updateState { copy(idSelection = id) }
 
     fun recoverData() = viewModelScope.launch {
 

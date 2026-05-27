@@ -1,4 +1,4 @@
-package br.com.usinasantafe.cav.presenter.view.card.vehicle.foreign.detail
+package br.com.usinasantafe.cav.presenter.view.card.involved.detail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -35,7 +35,7 @@ import br.com.usinasantafe.cav.utils.UiStatusState
 const val TAG_DETAIL_VEHICLE_FOREIGN_TEXT_FIELD = "tag_detail_vehicle_foreign_text_field"
 
 @Composable
-fun DetailVehicleForeignScreen(
+fun DetailVehicleInvolvedScreen(
     viewModel: DetailVehicleForeignViewModel = hiltViewModel(),
     onNavBrand: () -> Unit,
     onNavState: () -> Unit,
@@ -51,7 +51,7 @@ fun DetailVehicleForeignScreen(
                 viewModel.recoverData()
             }
 
-            DetailVehicleForeignContent(
+            DetailVehicleInvolvedContent(
                 option = uiState.option,
                 typeDetail = uiState.typeDetail,
                 text = uiState.text,
@@ -71,7 +71,7 @@ fun DetailVehicleForeignScreen(
 }
 
 @Composable
-fun DetailVehicleForeignContent(
+fun DetailVehicleInvolvedContent(
     option: Option,
     typeDetail: TypeDetail,
     text: String,
@@ -165,10 +165,10 @@ fun DetailVehicleForeignContent(
 
 @Preview(showBackground = true)
 @Composable
-fun DetailVehicleForeignPagePreview() {
+fun DetailVehicleInvolvedPagePreview() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            DetailVehicleForeignContent(
+            DetailVehicleInvolvedContent(
                 option = Option.INSERT,
                 typeDetail = TypeDetail.VEHICLE,
                 text = "Text",

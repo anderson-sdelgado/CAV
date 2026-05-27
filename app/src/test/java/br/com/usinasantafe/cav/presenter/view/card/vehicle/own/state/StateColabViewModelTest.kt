@@ -8,6 +8,7 @@ import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.Type
 import br.com.usinasantafe.cav.presenter.Args
+import br.com.usinasantafe.cav.presenter.view.card.state.StateColabOwnViewModel
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -28,7 +29,7 @@ class StateColabViewModelTest {
 
     private val getStateColab = mock<GetStateColab>()
     private val setStateColab = mock<SetStateColab>()
-    private val viewModel = StateColabViewModel(
+    private val viewModel = StateColabOwnViewModel(
         saveStateHandle = SavedStateHandle(
             mapOf(
                 Args.OPTION_ARG to Option.INSERT.ordinal,

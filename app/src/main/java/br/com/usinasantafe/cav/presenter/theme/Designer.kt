@@ -46,6 +46,7 @@ import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.errors
 import br.com.usinasantafe.cav.lib.msg
 import br.com.usinasantafe.cav.presenter.view.card.menu.TAG_ATTENDANT_EDIT_BUTTON
+import br.com.usinasantafe.cav.presenter.view.card.vehicleFull.TAG_VEHICLE_OWN_EDIT_BUTTON
 import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 
 @Composable
@@ -487,6 +488,42 @@ fun ItemDefaultEditDelListScreenModel(
                 imageVector = Icons.Default.Delete,
                 contentDescription = stringResource(id = R.string.text_pattern_delete),
                 tint = Color.Red
+            )
+        }
+    }
+}
+
+@Composable
+fun ItemDefaultEditListScreenModel(
+    id: Int,
+    desc: String,
+    tag: String,
+    onClickEdit: () -> Unit,
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(
+            modifier = Modifier
+                .weight(1f)
+        ) {
+            Text(
+                text = stringResource(
+                    id = id
+                ),
+                fontWeight = FontWeight.Bold
+            )
+            Text(text = desc)
+        }
+        Button(
+            onClick = onClickEdit,
+            Modifier
+                .testTag(tag)
+        ) {
+            Text(
+                text = stringResource(
+                    id = R.string.text_pattern_edit
+                ),
             )
         }
     }

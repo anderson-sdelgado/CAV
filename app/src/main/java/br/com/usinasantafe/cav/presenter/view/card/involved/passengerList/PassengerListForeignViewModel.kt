@@ -1,9 +1,9 @@
-package br.com.usinasantafe.cav.presenter.view.card.vehicle.foreign.detail
+package br.com.usinasantafe.cav.presenter.view.card.involved.passengerList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.usinasantafe.cav.lib.Option
-import br.com.usinasantafe.cav.lib.TypeDetail
+import br.com.usinasantafe.cav.presenter.model.ItemListScreenModel
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
 import br.com.usinasantafe.cav.utils.UiStatusState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,45 +13,43 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class DetailVehicleForeignState(
+data class PassengerListState(
     val option: Option = Option.INSERT,
-    val typeDetail: TypeDetail = TypeDetail.VEHICLE,
-    val text: String = "",
+    val list: List<ItemListScreenModel> = emptyList(),
+    val idSelection: Int = 0,
+    val flagDialogCheck: Boolean = false,
     override val status: UiStatusState = UiStatusState()
-) : UiStateWithStatus<DetailVehicleForeignState> {
+) : UiStateWithStatus<PassengerListState> {
 
-    override fun copyWithStatus(status: UiStatusState): DetailVehicleForeignState =
+    override fun copyWithStatus(status: UiStatusState): PassengerListState =
         copy(status = status)
 
 }
 
 @HiltViewModel
-class DetailVehicleForeignViewModel @Inject constructor(
+class PassengerListViewModel @Inject constructor(
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(DetailVehicleForeignState())
+    private val _uiState = MutableStateFlow(PassengerListState())
     val uiState = _uiState.asStateFlow()
 
     private val state get() = uiState.value
 
-    private fun updateState(block: DetailVehicleForeignState.() -> DetailVehicleForeignState) {
+    private fun updateState(block: PassengerListState.() -> PassengerListState) {
         _uiState.update(block)
     }
 
     fun onCloseDialog() = updateState { copy(status = status.copy(flagDialog = false, flagFailure = false)) }
 
-    fun onTextChanged(text: String) {
-        _uiState.update {
-            it.copy(text = text)
-        }
-    }
+    fun onDialogCheck(flag: Boolean) = updateState { copy(flagDialogCheck = flag) }
+
+    fun onSelectionDelete(id: Int) = updateState { copy(flagDialogCheck = true, idSelection = id) }
 
     fun recoverData() = viewModelScope.launch {
 
     }
 
-    fun set() = viewModelScope.launch {
+    fun delete() = viewModelScope.launch {
 
     }
-
 }

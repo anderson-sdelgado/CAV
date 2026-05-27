@@ -1,4 +1,4 @@
-package br.com.usinasantafe.cav.presenter.view.card.vehicle.foreign.detail
+package br.com.usinasantafe.cav.presenter.view.card.detail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -32,16 +32,16 @@ import br.com.usinasantafe.cav.presenter.theme.MsgErrors
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
 import br.com.usinasantafe.cav.utils.UiStatusState
 
-const val TAG_DETAIL_VEHICLE_FOREIGN_TEXT_FIELD = "tag_detail_vehicle_foreign_text_field"
+const val TAG_DETAIL_VEHICLE_OWN_TEXT_FIELD = "tag_detail_vehicle_own_text_field"
 
 @Composable
-fun DetailVehicleForeignScreen(
-    viewModel: DetailVehicleForeignViewModel = hiltViewModel(),
-    onNavBrand: () -> Unit,
+fun DetailVehicleOwnScreen(
+    viewModel: DetailVehicleOwnViewModel = hiltViewModel(),
     onNavState: () -> Unit,
-    onNavData: () -> Unit,
-    onNavDocument: () -> Unit,
+    onNavEquip: () -> Unit,
     onNavPassengerList: () -> Unit,
+    onNavEquipSecList: () -> Unit,
+    onNavData: () -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -51,7 +51,7 @@ fun DetailVehicleForeignScreen(
                 viewModel.recoverData()
             }
 
-            DetailVehicleForeignContent(
+            DetailVehicleOwnContent(
                 option = uiState.option,
                 typeDetail = uiState.typeDetail,
                 text = uiState.text,
@@ -59,19 +59,20 @@ fun DetailVehicleForeignScreen(
                 set = viewModel::set,
                 onCloseDialog = viewModel::onCloseDialog,
                 status = uiState.status,
-                onNavBrand = onNavBrand,
                 onNavState = onNavState,
-                onNavData = onNavData,
-                onNavDocument = onNavDocument,
+                onNavEquip = onNavEquip,
                 onNavPassengerList = onNavPassengerList,
+                onNavEquipSecList = onNavEquipSecList,
+                onNavData = onNavData,
                 modifier = Modifier.padding(innerPadding)
             )
+
         }
     }
 }
 
 @Composable
-fun DetailVehicleForeignContent(
+fun DetailVehicleOwnContent(
     option: Option,
     typeDetail: TypeDetail,
     text: String,
@@ -79,11 +80,11 @@ fun DetailVehicleForeignContent(
     set: () -> Unit,
     onCloseDialog: () -> Unit,
     status: UiStatusState,
-    onNavBrand: () -> Unit,
     onNavState: () -> Unit,
-    onNavData: () -> Unit,
-    onNavDocument: () -> Unit,
+    onNavEquip: () -> Unit,
     onNavPassengerList: () -> Unit,
+    onNavEquipSecList: () -> Unit,
+    onNavData: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -102,7 +103,7 @@ fun DetailVehicleForeignContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .testTag(TAG_DETAIL_VEHICLE_FOREIGN_TEXT_FIELD),
+                .testTag(TAG_DETAIL_VEHICLE_OWN_TEXT_FIELD),
             textStyle = TextStyle(
                 textAlign = TextAlign.Center,
                 fontSize = 28.sp
@@ -118,7 +119,7 @@ fun DetailVehicleForeignContent(
                 onClick = {
                     when(typeDetail){
                         TypeDetail.VEHICLE,
-                        TypeDetail.VEHICLE_SEC -> onNavBrand()
+                        TypeDetail.VEHICLE_SEC -> onNavEquip()
                         TypeDetail.PEOPLE,
                         TypeDetail.PASSENGER -> onNavState()
                     }
@@ -144,13 +145,13 @@ fun DetailVehicleForeignContent(
     LaunchedEffect(status.flagAccess) {
         if (status.flagAccess) {
             when(typeDetail){
-                TypeDetail.VEHICLE,
-                TypeDetail.VEHICLE_SEC -> {
+                TypeDetail.VEHICLE -> {
                     when(option){
-                        Option.INSERT -> onNavDocument()
+                        Option.INSERT -> onNavEquipSecList()
                         Option.EDIT -> onNavData()
                     }
                 }
+                TypeDetail.VEHICLE_SEC -> onNavEquipSecList()
                 TypeDetail.PEOPLE -> {
                     when(option){
                         Option.INSERT -> onNavPassengerList()
@@ -161,14 +162,15 @@ fun DetailVehicleForeignContent(
             }
         }
     }
+
 }
 
 @Preview(showBackground = true)
 @Composable
-fun DetailVehicleForeignPagePreview() {
+fun DetailVehicleOwnPagePreview() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            DetailVehicleForeignContent(
+            DetailVehicleOwnContent(
                 option = Option.INSERT,
                 typeDetail = TypeDetail.VEHICLE,
                 text = "Text",
@@ -176,11 +178,11 @@ fun DetailVehicleForeignPagePreview() {
                 set = {},
                 onCloseDialog = {},
                 status = UiStatusState(),
-                onNavBrand = {},
                 onNavState = {},
-                onNavData = {},
-                onNavDocument = {},
+                onNavEquip = {},
                 onNavPassengerList = {},
+                onNavEquipSecList = {},
+                onNavData = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
