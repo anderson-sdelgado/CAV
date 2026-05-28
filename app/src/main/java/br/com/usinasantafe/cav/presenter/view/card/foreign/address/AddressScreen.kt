@@ -1,4 +1,4 @@
-package br.com.usinasantafe.cav.presenter.view.card.local
+package br.com.usinasantafe.cav.presenter.view.card.foreign.address
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,30 +24,36 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
-import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.MsgErrors
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
 import br.com.usinasantafe.cav.utils.UiStatusState
 
-const val TAG_LOCAL_TEXT_FIELD = "tag_local_text_field"
+const val TAG_ADDRESS_FOREIGN_TEXT_FIELD = "tag_address_foreign_text_field"
 
 @Composable
-fun InputLocalScreen(
-    viewModel: InputLocalViewModel = hiltViewModel(),
-    onNavCard: () -> Unit,
+fun AddressScreen(
+    viewModel: AddressViewModel = hiltViewModel(),
+    onNavPhone: () -> Unit,
+    onNavDetail: () -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-            InputLocalContent(
-                address = uiState.address,
-                onAddressChanged = viewModel::onAddressChanged,
-                setCloseDialog = viewModel::onCloseDialog,
+
+            LaunchedEffect(Unit) {
+                viewModel.recoverData()
+            }
+
+            AddressContent(
+                text = uiState.text,
+                onTextChanged = viewModel::onTextChanged,
                 set = viewModel::set,
+                onCloseDialog = viewModel::onCloseDialog,
                 status = uiState.status,
-                onNavCard = onNavCard,
+                onNavDetail = onNavDetail,
+                onNavPhone = onNavPhone,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -55,13 +61,14 @@ fun InputLocalScreen(
 }
 
 @Composable
-fun InputLocalContent(
-    address: String,
-    onAddressChanged: (String) -> Unit,
-    setCloseDialog: () -> Unit,
+fun AddressContent(
+    text: String,
+    onTextChanged: (String) -> Unit,
     set: () -> Unit,
+    onCloseDialog: () -> Unit,
     status: UiStatusState,
-    onNavCard: () -> Unit,
+    onNavPhone: () -> Unit,
+    onNavDetail: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -70,17 +77,17 @@ fun InputLocalContent(
     ) {
         TitleDesign(
             text = stringResource(
-                id = R.string.text_local
+                id = R.string.text_address
             )
         )
         Spacer(modifier = Modifier.padding(vertical = 4.dp))
         OutlinedTextField(
-            value = address,
-            onValueChange = onAddressChanged,
+            value = text,
+            onValueChange = onTextChanged,
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .testTag(TAG_LOCAL_TEXT_FIELD),
+                .testTag(TAG_ADDRESS_FOREIGN_TEXT_FIELD),
             textStyle = TextStyle(
                 textAlign = TextAlign.Center,
                 fontSize = 28.sp
@@ -93,7 +100,7 @@ fun InputLocalContent(
             horizontalArrangement = Arrangement.Center,
         ) {
             Button(
-                onClick = onNavCard,
+                onClick = onNavPhone,
                 modifier = Modifier.weight(1f)
             ) {
                 TextButtonDesign(text = stringResource(id = R.string.text_pattern_cancel))
@@ -102,19 +109,19 @@ fun InputLocalContent(
                 onClick = set,
                 modifier = Modifier.weight(1f),
             ) {
-                TextButtonDesign(text = stringResource(id = R.string.text_pattern_ok))
+                TextButtonDesign(text = stringResource(id = R.string.text_pattern_save))
             }
         }
 
         if(status.flagDialog) {
-            MsgErrors(status.errors, setCloseDialog, status.failure)
+            MsgErrors(status.errors, onCloseDialog, status.failure)
         }
 
     }
 
     LaunchedEffect(status.flagAccess) {
-        if(status.flagAccess) {
-            onNavCard()
+        if (status.flagAccess) {
+            onNavDetail()
         }
     }
 
@@ -122,21 +129,17 @@ fun InputLocalContent(
 
 @Preview(showBackground = true)
 @Composable
-fun InputLocalPagePreview() {
+fun AddressPagePreview() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            InputLocalContent(
-                address = "Local",
-                onAddressChanged = {},
-                setCloseDialog = {},
+            AddressContent(
+                text = "Text",
+                onTextChanged = {},
                 set = {},
-                status = UiStatusState(
-                    flagAccess = false,
-                    flagDialog = false,
-                    failure = "",
-                    errors = Errors.FIELD_EMPTY,
-                ),
-                onNavCard = {},
+                onCloseDialog = {},
+                status = UiStatusState(),
+                onNavPhone = {},
+                onNavDetail = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

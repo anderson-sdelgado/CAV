@@ -9,4 +9,6 @@ enum class LevelUpdate { RECOVERY, CLEAN, SAVE, GET_TOKEN, SAVE_TOKEN, FINISH_UP
 enum class Option { INSERT, EDIT }
 
 enum class Type { MAIN, SECONDARY }
-enum class TypeDetail { VEHICLE, VEHICLE_SEC, PEOPLE, PASSENGER }
+enum class TypeDetail { EQUIP, EQUIP_SEC, COLAB, PASSENGER_COLAB }
+enum class TypePeople { DRIVER, PASSENGER, INVOLVED, PEDESTRIAN }
+enum class TypeVehicle { OWN, FOREIGN }

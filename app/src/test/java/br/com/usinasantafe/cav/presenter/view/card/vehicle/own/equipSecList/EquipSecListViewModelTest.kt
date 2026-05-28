@@ -5,7 +5,7 @@ import br.com.usinasantafe.cav.domain.usecases.card.DeleteEquipSec
 import br.com.usinasantafe.cav.domain.usecases.card.ListEquipSec
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.presenter.model.ItemListScreenModel
-import br.com.usinasantafe.cav.presenter.view.card.equip.equipSecList.EquipSecListOwnViewModel
+import br.com.usinasantafe.cav.presenter.view.card.equipSecList.EquipSecListOwnViewModel
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest

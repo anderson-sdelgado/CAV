@@ -32,7 +32,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.lib.Errors
-import br.com.usinasantafe.cav.presenter.theme.AlertDialogCheckDesign
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.MsgErrors
@@ -101,7 +100,7 @@ fun LocalSupportContent(
     ) {
         TitleDesign(
             text = stringResource(
-                id = R.string.text_title_card
+                id = R.string.text_card
             )
         )
         LazyColumn(
@@ -122,7 +121,7 @@ fun LocalSupportContent(
                     ) {
                         Text(
                             text = stringResource(
-                                id = R.string.text_item_local
+                                id = R.string.text_local
                             ),
                             fontWeight = FontWeight.Bold,
                             fontSize = 20.sp
@@ -199,7 +198,7 @@ fun LocalSupportContent(
                     ) {
                         Text(
                             text = stringResource(
-                                id = R.string.text_title_data_local
+                                id = R.string.text_data_local
                             ),
                             fontWeight = FontWeight.Bold,
                             fontSize = 20.sp

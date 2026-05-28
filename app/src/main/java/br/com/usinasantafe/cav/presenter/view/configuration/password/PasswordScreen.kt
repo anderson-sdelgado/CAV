@@ -68,7 +68,7 @@ fun PasswordContent(
     ) {
         TitleDesign(
             text = stringResource(
-                id = R.string.text_title_password
+                id = R.string.text_password
             )
         )
         TextFieldPasswordDesign(

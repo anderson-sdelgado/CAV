@@ -100,7 +100,7 @@ fun ConfigContent(
         )
         Spacer(modifier = Modifier.padding(vertical = 8.dp))
         TitleDesign(
-            text = stringResource(id = R.string.text_title_password)
+            text = stringResource(id = R.string.text_password)
         )
         TextFieldPasswordDesign(
             value = password,

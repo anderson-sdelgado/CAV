@@ -77,7 +77,7 @@ fun InitialMenuContent(
     ) {
         TitleDesign(
             text = stringResource(
-                id = R.string.text_title_initial_menu,
+                id = R.string.text_initial_menu,
                 BuildConfig.VERSION_NAME
             )
         )

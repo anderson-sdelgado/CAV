@@ -52,7 +52,7 @@ fun InvolvedWitnessContent(
     ) {
         TitleDesign(
             text = stringResource(
-                id = R.string.text_title_card
+                id = R.string.text_card
             )
         )
         LazyColumn(

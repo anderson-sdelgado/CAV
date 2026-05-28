@@ -5,7 +5,7 @@ import br.com.usinasantafe.cav.domain.usecases.card.DeletePassenger
 import br.com.usinasantafe.cav.domain.usecases.card.ListPassenger
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.presenter.model.ItemListScreenModel
-import br.com.usinasantafe.cav.presenter.view.card.colab.passengerList.PassengerListOwnViewModel
+import br.com.usinasantafe.cav.presenter.view.card.passengerList.PassengerListViewModel
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -26,7 +26,7 @@ class PassengerListViewModelTest {
 
     private val listPassenger = mock<ListPassenger>()
     private val deletePassenger = mock<DeletePassenger>()
-    private val viewModel = PassengerListOwnViewModel(
+    private val viewModel = PassengerListViewModel(
         listPassenger = listPassenger,
         deletePassenger = deletePassenger
     )

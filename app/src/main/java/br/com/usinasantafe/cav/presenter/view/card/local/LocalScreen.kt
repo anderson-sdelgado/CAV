@@ -226,7 +226,7 @@ fun LocalScreenContent(
         if(flagDialogCheck){
             AlertDialogCheckDesign(
                 text = stringResource(
-                    id = R.string.text_local,
+                    id = R.string.text_desc_local,
                     address, latitude?: 0.0, longitude?: 0.0
                 ),
                 onClickDismiss = { onDialogCheck(false) },

@@ -107,7 +107,7 @@ fun DataInitialContent(
     ) {
         TitleDesign(
             text = stringResource(
-                id = R.string.text_title_card
+                id = R.string.text_card
             )
         )
         LazyColumn(
@@ -128,7 +128,7 @@ fun DataInitialContent(
                     ) {
                         Text(
                             text = stringResource(
-                                id = R.string.text_item_attendant
+                                id = R.string.text_attendant
                             ),
                             fontWeight = FontWeight.Bold
                         )

@@ -1,56 +1,57 @@
-package br.com.usinasantafe.cav.presenter.view.card.vehicle.own.state
+package br.com.usinasantafe.cav.presenter.view.card.vehicle.own.detail
 
 import androidx.lifecycle.SavedStateHandle
 import br.com.usinasantafe.cav.MainCoroutineRule
-import br.com.usinasantafe.cav.domain.usecases.card.GetStateColab
-import br.com.usinasantafe.cav.domain.usecases.card.SetStateColab
+import br.com.usinasantafe.cav.domain.usecases.card.GetDetailVehicleOwn
+import br.com.usinasantafe.cav.domain.usecases.card.SetDetailVehicleOwn
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.Option
-import br.com.usinasantafe.cav.lib.Type
-import br.com.usinasantafe.cav.presenter.Args
-import br.com.usinasantafe.cav.presenter.view.card.state.StateViewModel
+import br.com.usinasantafe.cav.lib.TypeDetail
+import br.com.usinasantafe.cav.presenter.Args.OPTION_ARG
+import br.com.usinasantafe.cav.presenter.Args.TYPE_DETAIL_ARG
+import br.com.usinasantafe.cav.presenter.view.card.detail.DetailViewModel
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
-import org.mockito.Mockito.mock
 import org.mockito.kotlin.atLeastOnce
+import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @ExperimentalCoroutinesApi
-class StateColabViewModelTest {
+class DetailViewModelTest {
 
     @ExperimentalCoroutinesApi
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
-    private val getStateColab = mock<GetStateColab>()
-    private val setStateColab = mock<SetStateColab>()
-    private val viewModel = StateViewModel(
-        saveStateHandle = SavedStateHandle(
+    private val getDetailVehicleOwn = mock<GetDetailVehicleOwn>()
+    private val setDetailVehicleOwn = mock<SetDetailVehicleOwn>()
+    private val viewModel = DetailViewModel(
+        savedStateHandle = SavedStateHandle(
             mapOf(
-                Args.OPTION_ARG to Option.INSERT.ordinal,
-                Args.TYPE_ARG to Type.MAIN.ordinal
+                OPTION_ARG to Option.INSERT.ordinal,
+                TYPE_DETAIL_ARG to TypeDetail.EQUIP.ordinal
             )
         ),
-        getStateColab = getStateColab,
-        setStateColab = setStateColab
+        getDetailVehicleOwn = getDetailVehicleOwn,
+        setDetailVehicleOwn = setDetailVehicleOwn
     )
 
     @Test
-    fun `recoverData - Check return failure if have error in GetStateColab`() =
+    fun `recoverData - Check return failure if have error in GetDetailVehicleOwn`() =
         runTest {
             whenever(
-                getStateColab(
+                getDetailVehicleOwn(
                     option = Option.INSERT,
-                    type = Type.MAIN
+                    typeDetail = TypeDetail.EQUIP
                 )
             ).thenReturn(
                 resultFailure(
-                    context = "GetStateColab",
+                    context = "GetDetailVehicleOwn",
                     message = "-",
                     cause = Exception()
                 )
@@ -62,7 +63,7 @@ class StateColabViewModelTest {
             )
             assertEquals(
                 viewModel.uiState.value.status.failure,
-                "StateColabViewModel.recoverData -> GetStateColab -> java.lang.Exception"
+                "DetailVehicleOwnViewModel.recoverData -> GetDetailVehicleOwn -> java.lang.Exception"
             )
             assertEquals(
                 viewModel.uiState.value.status.errors,
@@ -78,41 +79,37 @@ class StateColabViewModelTest {
     fun `recoverData - Check return true if process execute successfully`() =
         runTest {
             whenever(
-                getStateColab(
+                getDetailVehicleOwn(
                     option = Option.INSERT,
-                    type = Type.MAIN
+                    typeDetail = TypeDetail.EQUIP
                 )
             ).thenReturn(
-                Result.success(2)
+                Result.success("Test")
             )
             viewModel.recoverData()
             assertEquals(
-                viewModel.uiState.value.status.flagAccess,
-                false
-            )
-            assertEquals(
-                viewModel.uiState.value.idSelection,
-                2
+                viewModel.uiState.value.text,
+                "Test"
             )
         }
 
     @Test
-    fun `set - Check return failure if have error in SetStateColab`() =
+    fun `set - Check return failure if have error in SetDetailVehicleOwn`() =
         runTest {
             whenever(
-                setStateColab(
+                setDetailVehicleOwn(
                     option = Option.INSERT,
-                    type = Type.MAIN,
-                    id = 2
+                    typeDetail = TypeDetail.EQUIP,
+                    text = "Test"
                 )
             ).thenReturn(
                 resultFailure(
-                    context = "SetStateColab",
+                    context = "SetDetailVehicleOwn",
                     message = "-",
                     cause = Exception()
                 )
             )
-            viewModel.onSelection(2)
+            viewModel.onTextChanged("Test")
             viewModel.set()
             assertEquals(
                 viewModel.uiState.value.status.flagDialog,
@@ -120,7 +117,7 @@ class StateColabViewModelTest {
             )
             assertEquals(
                 viewModel.uiState.value.status.failure,
-                "StateColabViewModel.set -> SetStateColab -> java.lang.Exception"
+                "DetailVehicleOwnViewModel.set -> SetDetailVehicleOwn -> java.lang.Exception"
             )
             assertEquals(
                 viewModel.uiState.value.status.errors,
@@ -139,28 +136,23 @@ class StateColabViewModelTest {
     @Test
     fun `set - Check return true if process execute successfully`() =
         runTest {
-            whenever(
-                setStateColab(
-                    option = Option.INSERT,
-                    type = Type.MAIN,
-                    id = 2
-                )
-            ).thenReturn(
-                Result.success(Unit)
-            )
-            viewModel.onSelection(2)
+            viewModel.onTextChanged("Test")
             viewModel.set()
             verify(
-                setStateColab,
+                setDetailVehicleOwn,
                 atLeastOnce()
             ).invoke(
                 option = Option.INSERT,
-                type = Type.MAIN,
-                id = 2
+                typeDetail = TypeDetail.EQUIP,
+                text = "Test"
             )
             assertEquals(
                 viewModel.uiState.value.status.flagAccess,
                 true
+            )
+            assertEquals(
+                viewModel.uiState.value.status.flagFailure,
+                false
             )
         }
 

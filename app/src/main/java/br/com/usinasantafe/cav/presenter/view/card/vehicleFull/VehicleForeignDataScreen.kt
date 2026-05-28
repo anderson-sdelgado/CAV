@@ -23,17 +23,15 @@ import br.com.usinasantafe.cav.presenter.theme.ItemDefaultEditListScreenModel
 import br.com.usinasantafe.cav.presenter.theme.MsgErrors
 import br.com.usinasantafe.cav.utils.UiStatusState
 
-const val TAG_VEHICLE_OWN_EDIT_BUTTON = "tag_vehicle_own_edit_button"
-const val TAG_VEHICLE_SEC_OWN_EDIT_BUTTON = "tag_vehicle_sec_own_edit_button"
-const val TAG_DRIVER_OWN_EDIT_BUTTON = "tag_driver_own_edit_button"
-const val TAG_PASSENGERS_OWN_EDIT_BUTTON = "tag_passengers_own_edit_button"
+const val TAG_VEHICLE_FOREIGN_EDIT_BUTTON = "tag_vehicle_foreign_edit_button"
+const val TAG_DRIVER_FOREIGN_EDIT_BUTTON = "tag_driver_foreign_edit_button"
+const val TAG_PASSENGERS_FOREIGN_EDIT_BUTTON = "tag_passengers_foreign_edit_button"
 
 @Composable
-fun VehicleOwnDataScreen(
-    viewModel: VehicleOwnDataViewModel = hiltViewModel(),
-    onNavDataEquip: () -> Unit,
-    onNavDataColab: () -> Unit,
-    onNavEquipSecList: () -> Unit,
+fun VehicleForeignDataScreen(
+    viewModel: VehicleInvolvedDataViewModel = hiltViewModel(),
+    onNavDataVehicle: () -> Unit,
+    onNavDataForeign: () -> Unit,
     onNavPassengerList: () -> Unit,
     onNavMenu: () -> Unit,
 ) {
@@ -45,17 +43,15 @@ fun VehicleOwnDataScreen(
                 viewModel.recoverData()
             }
 
-            VehicleOwnDataContent(
-                equip = uiState.equip,
-                equipSec = uiState.equipSec,
+            VehicleForeignDataContent(
+                vehicle = uiState.vehicle,
                 driver = uiState.driver,
                 passengers = uiState.passengers,
                 onCloseDialog = viewModel::onCloseDialog,
                 status = uiState.status,
-                onNavDataColab = onNavDataColab,
-                onNavDataEquip = onNavDataEquip,
+                onNavDataVehicle = onNavDataVehicle,
+                onNavDataForeign = onNavDataForeign,
                 onNavPassengerList = onNavPassengerList,
-                onNavEquipSecList = onNavEquipSecList,
                 onNavMenu = onNavMenu,
                 modifier = Modifier.padding(innerPadding)
             )
@@ -64,16 +60,14 @@ fun VehicleOwnDataScreen(
 }
 
 @Composable
-fun VehicleOwnDataContent(
-    equip: String,
-    equipSec: String,
+fun VehicleForeignDataContent(
+    vehicle: String,
     driver: String,
     passengers: String,
     onCloseDialog: () -> Unit,
     status: UiStatusState,
-    onNavDataEquip: () -> Unit,
-    onNavDataColab: () -> Unit,
-    onNavEquipSecList: () -> Unit,
+    onNavDataVehicle: () -> Unit,
+    onNavDataForeign: () -> Unit,
     onNavPassengerList: () -> Unit,
     onNavMenu: () -> Unit,
     modifier: Modifier = Modifier
@@ -84,7 +78,7 @@ fun VehicleOwnDataContent(
     ) {
         TitleDesign(
             text = stringResource(
-                id = R.string.text_data_vehicle_own
+                id = R.string.text_data_vehicle_foreign
             )
         )
         LazyColumn(
@@ -93,33 +87,25 @@ fun VehicleOwnDataContent(
         ) {
             item {
                 ItemDefaultEditListScreenModel(
-                    id = R.string.text_equip,
-                    desc = equip,
-                    tag = TAG_VEHICLE_OWN_EDIT_BUTTON,
-                    onClickEdit = onNavDataEquip
-                )
-            }
-            item {
-                ItemDefaultEditListScreenModel(
-                    id = R.string.text_equip_sec,
-                    desc = equipSec,
-                    tag = TAG_VEHICLE_SEC_OWN_EDIT_BUTTON,
-                    onClickEdit = onNavEquipSecList
+                    id = R.string.text_vehicle,
+                    desc = vehicle,
+                    tag = TAG_VEHICLE_FOREIGN_EDIT_BUTTON,
+                    onClickEdit = onNavDataVehicle
                 )
             }
             item {
                 ItemDefaultEditListScreenModel(
                     id = R.string.text_driver,
                     desc = driver,
-                    tag = TAG_DRIVER_OWN_EDIT_BUTTON,
-                    onClickEdit = onNavDataColab
+                    tag = TAG_DRIVER_FOREIGN_EDIT_BUTTON,
+                    onClickEdit = onNavDataForeign
                 )
             }
             item {
                 ItemDefaultEditListScreenModel(
                     id = R.string.text_passenger,
                     desc = passengers,
-                    tag = TAG_PASSENGERS_OWN_EDIT_BUTTON,
+                    tag = TAG_PASSENGERS_FOREIGN_EDIT_BUTTON,
                     onClickEdit = onNavPassengerList
                 )
             }
@@ -131,23 +117,22 @@ fun VehicleOwnDataContent(
         }
 
     }
+
 }
 
 @Preview(showBackground = true)
 @Composable
-fun VehicleOwnDataPagePreview() {
+fun VehicleForeignDataPagePreview() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            VehicleOwnDataContent(
-                equip = "2200 - CAMINHAO",
-                equipSec = "200 - CARRETA\n201 - CARRETA",
-                driver = "19759 - ANDERSON DA SILVA DELGADO",
-                passengers = "18019 - RONALDO GOMES\n123457 - JOSE PAULO",
+            VehicleForeignDataContent(
+                vehicle = "ABC1234 - GOL",
+                driver = "123.468.789-00 - ANDERSON DA SILVA DELGADO",
+                passengers = "123.456.789-00 - JOÃO HENRIQUE DA SILVA\n123.456.789-00 - PAULO GUSTAVO DA SILVA",
                 onCloseDialog = {},
                 status = UiStatusState(),
-                onNavDataEquip = {},
-                onNavEquipSecList = {},
-                onNavDataColab = {},
+                onNavDataVehicle = {},
+                onNavDataForeign = {},
                 onNavPassengerList = {},
                 onNavMenu = {},
                 modifier = Modifier.padding(innerPadding)

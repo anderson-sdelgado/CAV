@@ -33,8 +33,8 @@ fun EquipScreen(
     viewModel: EquipViewModel = hiltViewModel(),
     onNavMenu:  () -> Unit,
     onNavDetail: () -> Unit,
-    onNavData: () -> Unit,
     onNavEquipSecList: () -> Unit,
+    onNavDataEquip: () -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -53,8 +53,8 @@ fun EquipScreen(
                 status = uiState.status,
                 onNavMenu = onNavMenu,
                 onNavDetail = onNavDetail,
-                onNavData = onNavData,
                 onNavEquipSecList = onNavEquipSecList,
+                onNavDataEquip = onNavDataEquip,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -71,8 +71,8 @@ fun EquipContent(
     status: UiStatusStateUpdate,
     onNavMenu:  () -> Unit,
     onNavDetail: () -> Unit,
-    onNavData: () -> Unit,
     onNavEquipSecList: () -> Unit,
+    onNavDataEquip: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -81,7 +81,7 @@ fun EquipContent(
     ) {
         TitleDesign(
             text = stringResource(
-                id = R.string.text_title_equip
+                id = R.string.text_edit_equip
             )
         )
         TextFieldDesign(
@@ -92,19 +92,19 @@ fun EquipContent(
             onTextField = onTextField
         )
         BackHandler {
-            when(type) {
-                Type.MAIN -> {
-                    when(option) {
-                        Option.INSERT -> onNavMenu()
-                        Option.EDIT -> onNavData()
+            when(option) {
+                Option.INSERT -> {
+                    when(type) {
+                        Type.MAIN -> onNavMenu()
+                        Type.SECONDARY -> onNavEquipSecList()
                     }
                 }
-                Type.SECONDARY -> onNavEquipSecList()
+                Option.EDIT -> onNavDataEquip()
             }
         }
 
         if (status.flagDialog) {
-            MsgUpdate(status = status, onClickOk = onCloseDialog, value = stringResource(id = R.string.text_title_car))
+            MsgUpdate(status = status, onClickOk = onCloseDialog, value = stringResource(id = R.string.text_edit_car))
         }
 
         if (status.flagProgress) {
@@ -114,7 +114,10 @@ fun EquipContent(
 
     LaunchedEffect(status.flagAccess) {
         if(status.flagAccess) {
-            onNavDetail()
+            when(option){
+                Option.INSERT -> onNavDetail()
+                Option.EDIT -> onNavDataEquip()
+            }
         }
     }
 }
@@ -142,8 +145,8 @@ fun EquipPagePreview() {
                 ),
                 onNavMenu = {},
                 onNavDetail = {},
-                onNavData = {},
                 onNavEquipSecList = {},
+                onNavDataEquip = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

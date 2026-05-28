@@ -23,7 +23,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -45,8 +44,6 @@ import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.errors
 import br.com.usinasantafe.cav.lib.msg
-import br.com.usinasantafe.cav.presenter.view.card.menu.TAG_ATTENDANT_EDIT_BUTTON
-import br.com.usinasantafe.cav.presenter.view.card.vehicleFull.TAG_VEHICLE_OWN_EDIT_BUTTON
 import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 
 @Composable
@@ -327,10 +324,10 @@ fun ButtonMaxWidth(
     id: Int,
     font: Int = 20,
     padding: Int = 12,
-    set: () -> Unit
+    onClick: () -> Unit
 ) {
     return Button(
-        onClick = { set() },
+        onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
     ) {
         TextButtonDesign(

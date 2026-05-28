@@ -68,7 +68,7 @@ fun CarContent(
     ) {
         TitleDesign(
             text = stringResource(
-                id = R.string.text_title_car
+                id = R.string.text_edit_car
             )
         )
         TextFieldDesign(
@@ -86,7 +86,7 @@ fun CarContent(
         }
 
         if (status.flagDialog) {
-            MsgUpdate(status = status, onClickOk = setCloseDialog, value = stringResource(id = R.string.text_title_car))
+            MsgUpdate(status = status, onClickOk = setCloseDialog, value = stringResource(id = R.string.text_edit_car))
         }
 
         if (status.flagProgress) {

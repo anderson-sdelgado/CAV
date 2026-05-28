@@ -1,11 +1,10 @@
-package br.com.usinasantafe.cav.presenter.view.card.equip.data
+package br.com.usinasantafe.cav.presenter.view.card.foreign.document
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,24 +16,23 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
+import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.Type
-import br.com.usinasantafe.cav.presenter.theme.ButtonMaxWidth
+import br.com.usinasantafe.cav.lib.TypeButton
+import br.com.usinasantafe.cav.presenter.theme.ButtonsGenericNumeric
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
-import br.com.usinasantafe.cav.presenter.theme.ItemDefaultEditListScreenModel
 import br.com.usinasantafe.cav.presenter.theme.MsgErrors
+import br.com.usinasantafe.cav.presenter.theme.TextFieldDesign
 import br.com.usinasantafe.cav.utils.UiStatusState
 
-const val TAG_EQUIP_DATA_EQUIP_EDIT_BUTTON = "tag_equip_data_equip_edit_button"
-const val TAG_DETAIL_DATA_EQUIP_EDIT_BUTTON = "tag_detail_data_equip_edit_button"
-
 @Composable
-fun EquipDataScreen(
-    viewModel: EquipDataViewModel = hiltViewModel(),
-    onNavEquip: () -> Unit,
+fun DocumentScreen(
+    viewModel: DocumentViewModel = hiltViewModel(),
     onNavDetail: () -> Unit,
-    onNavDataVehicleOwn: () -> Unit,
-    onNavEquipSecList: () -> Unit,
+    onNavData: () -> Unit,
+    onNavPassengerList: () -> Unit,
+    onNavName: () -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -44,16 +42,17 @@ fun EquipDataScreen(
                 viewModel.recoverData()
             }
 
-            EquipDataContent(
+            DocumentContent(
+                option = uiState.option,
                 type = uiState.type,
-                equip = uiState.equip,
-                detail = uiState.detail,
+                text = uiState.text,
+                onTextField = viewModel::onTextField,
                 onCloseDialog = viewModel::onCloseDialog,
                 status = uiState.status,
-                onNavEquip = onNavEquip,
-                onNavDetail= onNavDetail,
-                onNavDataVehicleOwn = onNavDataVehicleOwn,
-                onNavEquipSecList = onNavEquipSecList,
+                onNavDetail = onNavDetail,
+                onNavData = onNavData,
+                onNavPassengerList = onNavPassengerList,
+                onNavName = onNavName,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -61,16 +60,17 @@ fun EquipDataScreen(
 }
 
 @Composable
-fun EquipDataContent(
+fun DocumentContent(
+    option: Option,
     type: Type,
-    equip: String,
-    detail: String,
+    text: String,
+    onTextField: (String, TypeButton) -> Unit,
     onCloseDialog: () -> Unit,
     status: UiStatusState,
-    onNavEquip: () -> Unit,
     onNavDetail: () -> Unit,
-    onNavDataVehicleOwn: () -> Unit,
-    onNavEquipSecList: () -> Unit,
+    onNavData: () -> Unit,
+    onNavPassengerList: () -> Unit,
+    onNavName: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -79,60 +79,57 @@ fun EquipDataContent(
     ) {
         TitleDesign(
             text = stringResource(
-                id = R.string.text_data_equip
+                id = R.string.text_title_document
             )
         )
-        LazyColumn(
-            modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            item {
-                ItemDefaultEditListScreenModel(
-                    id = R.string.text_equip,
-                    desc = equip,
-                    tag = TAG_EQUIP_DATA_EQUIP_EDIT_BUTTON,
-                    onClickEdit = onNavEquip
-                )
-            }
-            item {
-                ItemDefaultEditListScreenModel(
-                    id = R.string.text_detail,
-                    desc = detail,
-                    tag = TAG_DETAIL_DATA_EQUIP_EDIT_BUTTON,
-                    onClickEdit = onNavDetail
-                )
-            }
-        }
-        ButtonMaxWidth(R.string.text_pattern_return) {
+        TextFieldDesign(
+            value = text
+        )
+        Spacer(modifier = Modifier.padding(vertical = 8.dp))
+        ButtonsGenericNumeric(
+            onTextField = onTextField
+        )
+        BackHandler {
             when(type) {
-                Type.MAIN -> onNavDataVehicleOwn()
-                Type.SECONDARY -> onNavEquipSecList()
+                Type.MAIN -> {
+                    when(option){
+                        Option.INSERT -> onNavDetail()
+                        Option.EDIT -> onNavData()
+                    }
+                }
+                Type.SECONDARY -> onNavPassengerList()
             }
         }
-        BackHandler {}
 
         if(status.flagDialog) {
             MsgErrors(status.errors, onCloseDialog, status.failure)
         }
 
     }
+
+    LaunchedEffect(status.flagAccess) {
+        if(status.flagAccess) {
+            onNavName()
+        }
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun EquipDataPagePreview() {
+fun DocumentPagePreview() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            EquipDataContent(
+            DocumentContent(
+                option = Option.INSERT,
                 type = Type.MAIN,
-                equip = "2200 - CAMINHAO",
-                detail = "-",
+                text = "",
+                onTextField = { _, _ -> },
                 onCloseDialog = {},
                 status = UiStatusState(),
-                onNavEquip = {},
                 onNavDetail = {},
-                onNavDataVehicleOwn = {},
-                onNavEquipSecList = {},
+                onNavData = {},
+                onNavPassengerList = {},
+                onNavName = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

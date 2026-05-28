@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
+import br.com.usinasantafe.cav.lib.TypeVehicle
 import br.com.usinasantafe.cav.presenter.model.VehicleScreenModel
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
@@ -42,6 +43,8 @@ fun VehicleFullScreen(
     onNavInvolvedWitness: () -> Unit,
     onNavEquip: () -> Unit,
     onNavDataVehicleOwn: (Int) -> Unit,
+    onNavPlate: () -> Unit,
+    onNavDataVehicleForeign: (Int) -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -54,6 +57,8 @@ fun VehicleFullScreen(
                 onNavInvolvedWitness = onNavInvolvedWitness,
                 onNavEquip = onNavEquip,
                 onNavDataVehicleOwn = onNavDataVehicleOwn,
+                onNavPlate = onNavPlate,
+                onNavDataVehicleForeign = onNavDataVehicleForeign,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -68,6 +73,8 @@ fun VehicleFullContent(
     onNavInvolvedWitness: () -> Unit,
     onNavEquip: () -> Unit,
     onNavDataVehicleOwn: (Int) -> Unit,
+    onNavPlate: () -> Unit,
+    onNavDataVehicleForeign: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -76,7 +83,7 @@ fun VehicleFullContent(
     ) {
         TitleDesign(
             text = stringResource(
-                id = R.string.text_title_card
+                id = R.string.text_card
             )
         )
         LazyColumn(
@@ -92,7 +99,11 @@ fun VehicleFullContent(
                 )
             }
             item {
-                VehicleForeignSection(vehicleForeignList)
+                VehicleForeignSection(
+                    vehicleList = vehicleForeignList,
+                    onNavPlate = onNavPlate,
+                    onNavDataVehicleForeign = onNavDataVehicleForeign
+                )
             }
         }
         Row(
@@ -153,12 +164,19 @@ fun VehicleOwnSection(
             Text("-")
         } else {
             vehicleList.forEach {
-                CarItem(true, it)
+                CarItem(
+                    type = TypeVehicle.OWN,
+                    model = it,
+                    onClickEdit = {
+                        onNavDataVehicleOwn(it.id)
+                    },
+                    onClickDel = {}
+                )
             }
         }
 
         Button(
-            onClick = {},
+            onClick = onNavEquip,
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
@@ -171,7 +189,9 @@ fun VehicleOwnSection(
 
 @Composable
 fun VehicleForeignSection(
-    vehicleList: List<VehicleScreenModel>
+    vehicleList: List<VehicleScreenModel>,
+    onNavPlate: () -> Unit,
+    onNavDataVehicleForeign: (Int) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -192,12 +212,17 @@ fun VehicleForeignSection(
             Text("-")
         } else {
             vehicleList.forEach {
-                CarItem(false, it)
+                CarItem(
+                    type = TypeVehicle.FOREIGN,
+                    model = it,
+                    onClickEdit = { onNavDataVehicleForeign(it.id) },
+                    onClickDel = {}
+                )
             }
         }
 
         Button(
-            onClick = {},
+            onClick = onNavPlate,
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
@@ -210,8 +235,10 @@ fun VehicleForeignSection(
 
 @Composable
 fun CarItem(
-    type: Boolean,
-    model: VehicleScreenModel
+    type: TypeVehicle,
+    model: VehicleScreenModel,
+    onClickEdit: () -> Unit,
+    onClickDel: () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -221,10 +248,10 @@ fun CarItem(
         ,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        val title = if(type)
-            stringResource(id = R.string.text_equip)
-        else
-            stringResource(id = R.string.text_vehicle)
+        val title = when(type){
+            TypeVehicle.OWN -> stringResource(id = R.string.text_equip)
+            TypeVehicle.FOREIGN -> stringResource(id = R.string.text_vehicle)
+        }
         Column(modifier = Modifier.weight(1f)) {
             Text(text = title, fontWeight = FontWeight.Bold)
             Text(model.vehicle)
@@ -235,10 +262,10 @@ fun CarItem(
         Column(
             modifier = Modifier.width(IntrinsicSize.Max),
         ) {
-            Button(onClick = {}, modifier = Modifier.fillMaxWidth().padding(1.dp)) {
+            Button(onClick = onClickEdit, modifier = Modifier.fillMaxWidth().padding(1.dp)) {
                 Text(text = stringResource(id = R.string.text_pattern_edit))
             }
-            Button(onClick = {}, modifier = Modifier.fillMaxWidth().padding(1.dp)) {
+            Button(onClick = onClickDel, modifier = Modifier.fillMaxWidth().padding(1.dp)) {
                 Text(text = stringResource(id = R.string.text_pattern_delete))
             }
         }
@@ -255,8 +282,10 @@ fun VehicleFullPagePreview() {
                 vehicleForeignList = emptyList(),
                 onNavLocalSupport = {},
                 onNavInvolvedWitness = {},
-                onNavDataVehicleOwn = {},
                 onNavEquip = {},
+                onNavDataVehicleOwn = {},
+                onNavPlate = {},
+                onNavDataVehicleForeign = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -285,8 +314,10 @@ fun VehicleFullPagePreviewWithData() {
                 ),
                 onNavLocalSupport = {},
                 onNavInvolvedWitness = {},
-                onNavDataVehicleOwn = {},
                 onNavEquip = {},
+                onNavDataVehicleOwn = {},
+                onNavPlate = {},
+                onNavDataVehicleForeign = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
