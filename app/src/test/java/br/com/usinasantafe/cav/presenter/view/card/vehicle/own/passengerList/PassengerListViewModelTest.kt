@@ -1,9 +1,12 @@
 package br.com.usinasantafe.cav.presenter.view.card.vehicle.own.passengerList
 
+import androidx.lifecycle.SavedStateHandle
 import br.com.usinasantafe.cav.MainCoroutineRule
 import br.com.usinasantafe.cav.domain.usecases.card.DeletePassenger
 import br.com.usinasantafe.cav.domain.usecases.card.ListPassenger
 import br.com.usinasantafe.cav.lib.Errors
+import br.com.usinasantafe.cav.lib.FlowNote
+import br.com.usinasantafe.cav.presenter.Args
 import br.com.usinasantafe.cav.presenter.model.ItemListScreenModel
 import br.com.usinasantafe.cav.presenter.view.card.passengerList.PassengerListViewModel
 import br.com.usinasantafe.cav.utils.resultFailure
@@ -27,6 +30,12 @@ class PassengerListViewModelTest {
     private val listPassenger = mock<ListPassenger>()
     private val deletePassenger = mock<DeletePassenger>()
     private val viewModel = PassengerListViewModel(
+        savedStateHandle = SavedStateHandle(
+            mapOf(
+                Args.FLOW_NOTE_ARG to FlowNote.COLAB.ordinal,
+                Args.ID_MAIN_ARG to  0
+            )
+        ),
         listPassenger = listPassenger,
         deletePassenger = deletePassenger
     )
@@ -35,7 +44,10 @@ class PassengerListViewModelTest {
     fun `recoverData - Check return failure if have error in ListPassenger`() =
         runTest {
             whenever(
-                listPassenger()
+                listPassenger(
+                    flowNote = FlowNote.COLAB,
+                    idMain = 0
+                )
             ).thenReturn(
                 resultFailure(
                     context = "ListPassenger",
@@ -66,7 +78,10 @@ class PassengerListViewModelTest {
     fun `recoverData - Check return true if process execute successfully`() =
         runTest {
             whenever(
-                listPassenger()
+                listPassenger(
+                    flowNote = FlowNote.COLAB,
+                    idMain = 0
+                )
             ).thenReturn(
                 Result.success(
                     listOf(
@@ -93,7 +108,11 @@ class PassengerListViewModelTest {
     fun `delete - Check return failure if have error in DeletePassenger`() =
         runTest {
             whenever(
-                deletePassenger(2)
+                deletePassenger(
+                    idSelection = 2,
+                    flowNote = FlowNote.COLAB,
+                    idMain = 0
+                )
             ).thenReturn(
                 resultFailure(
                     context = "DeletePassenger",
@@ -125,7 +144,10 @@ class PassengerListViewModelTest {
     fun `delete - Check return true if process execute successfully`() =
         runTest {
             whenever(
-                listPassenger()
+                listPassenger(
+                    flowNote = FlowNote.COLAB,
+                    idMain = 0
+                )
             ).thenReturn(
                 Result.success(
                     emptyList()
@@ -133,7 +155,11 @@ class PassengerListViewModelTest {
             )
             viewModel.onSelectionDelete(2)
             viewModel.delete()
-            verify(deletePassenger, atLeastOnce()).invoke(2)
+            verify(deletePassenger, atLeastOnce()).invoke(
+                idSelection = 2,
+                flowNote = FlowNote.COLAB,
+                idMain = 0
+            )
             assertEquals(
                 viewModel.uiState.value.list,
                 emptyList()

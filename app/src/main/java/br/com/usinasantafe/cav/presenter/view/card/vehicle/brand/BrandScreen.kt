@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
+import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.MsgErrors
@@ -37,6 +38,7 @@ fun BrandScreen(
     viewModel: BrandViewModel = hiltViewModel(),
     onNavPlate: () -> Unit,
     onNavDetail: () -> Unit,
+    onNavDataVehicle: () -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -47,6 +49,7 @@ fun BrandScreen(
             }
 
             BrandContent(
+                option = uiState.option,
                 text = uiState.text,
                 onTextChanged = viewModel::onTextChanged,
                 set = viewModel::set,
@@ -54,6 +57,7 @@ fun BrandScreen(
                 status = uiState.status,
                 onNavPlate = onNavPlate,
                 onNavDetail = onNavDetail,
+                onNavDataVehicle = onNavDataVehicle,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -62,6 +66,7 @@ fun BrandScreen(
 
 @Composable
 fun BrandContent(
+    option: Option,
     text: String,
     onTextChanged: (String) -> Unit,
     set: () -> Unit,
@@ -69,6 +74,7 @@ fun BrandContent(
     status: UiStatusState,
     onNavPlate: () -> Unit,
     onNavDetail: () -> Unit,
+    onNavDataVehicle: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -100,7 +106,12 @@ fun BrandContent(
             horizontalArrangement = Arrangement.Center,
         ) {
             Button(
-                onClick = onNavPlate,
+                onClick = {
+                    when(option) {
+                        Option.INSERT -> onNavPlate()
+                        Option.EDIT -> onNavDataVehicle()
+                    }
+                },
                 modifier = Modifier.weight(1f)
             ) {
                 TextButtonDesign(text = stringResource(id = R.string.text_pattern_cancel))
@@ -132,6 +143,7 @@ fun BrandPagePreview() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             BrandContent(
+                option = Option.INSERT,
                 text = "Text",
                 onTextChanged = {},
                 set = {},
@@ -139,6 +151,7 @@ fun BrandPagePreview() {
                 status = UiStatusState(),
                 onNavDetail = {},
                 onNavPlate = {},
+                onNavDataVehicle = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

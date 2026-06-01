@@ -3,12 +3,14 @@ package br.com.usinasantafe.cav.presenter.view.card.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.usinasantafe.cav.domain.usecases.card.GetDetailVehicleOwn
-import br.com.usinasantafe.cav.domain.usecases.card.SetDetailVehicleOwn
+import br.com.usinasantafe.cav.domain.usecases.card.GetDetail
+import br.com.usinasantafe.cav.domain.usecases.card.SetDetail
+import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
-import br.com.usinasantafe.cav.lib.TypeDetail
+import br.com.usinasantafe.cav.presenter.Args.FLOW_NOTE_ARG
+import br.com.usinasantafe.cav.presenter.Args.ID_MAIN_ARG
+import br.com.usinasantafe.cav.presenter.Args.ID_SECONDARY_ARG
 import br.com.usinasantafe.cav.presenter.Args.OPTION_ARG
-import br.com.usinasantafe.cav.presenter.Args.TYPE_DETAIL_ARG
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
 import br.com.usinasantafe.cav.utils.UiStatusState
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -24,7 +26,9 @@ import kotlin.onSuccess
 
 data class DetailState(
     val option: Option = Option.INSERT,
-    val typeDetail: TypeDetail = TypeDetail.EQUIP,
+    val flowNote: FlowNote = FlowNote.EQUIP,
+    val idMain: Int = 0,
+    val idSecondary: Int = 0,
     val text: String = "",
     override val status: UiStatusState = UiStatusState()
 ) : UiStateWithStatus<DetailState> {
@@ -37,12 +41,15 @@ data class DetailState(
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val getDetailVehicleOwn: GetDetailVehicleOwn,
-    private val setDetailVehicleOwn: SetDetailVehicleOwn
+    private val getDetail: GetDetail,
+    private val setDetail: SetDetail
 ) : ViewModel() {
 
     private val option: Int = savedStateHandle[OPTION_ARG]!!
-    private val typeDetail: Int = savedStateHandle[TYPE_DETAIL_ARG]!!
+    private val flowNote: Int = savedStateHandle[FLOW_NOTE_ARG]!!
+    private val idMain: Int = savedStateHandle[ID_MAIN_ARG]!!
+    private val idSecondary: Int = savedStateHandle[ID_SECONDARY_ARG]!!
+
     private val _uiState = MutableStateFlow(DetailState())
     val uiState = _uiState.asStateFlow()
 
@@ -58,7 +65,9 @@ class DetailViewModel @Inject constructor(
         updateState {
             copy(
                 option = Option.entries[this@DetailViewModel.option],
-                typeDetail = TypeDetail.entries[this@DetailViewModel.typeDetail]
+                flowNote = FlowNote.entries[this@DetailViewModel.flowNote],
+                idMain = this@DetailViewModel.idMain,
+                idSecondary = this@DetailViewModel.idSecondary
             )
         }
     }
@@ -71,7 +80,7 @@ class DetailViewModel @Inject constructor(
 
     fun recoverData() = viewModelScope.launch {
         runCatching {
-            getDetailVehicleOwn(state.option, state.typeDetail).getOrThrow()
+            getDetail(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
         }
             .onSuccess { updateState { copy(text = it) } }
             .onFailureState(getClassAndMethod(), ::updateState)
@@ -79,7 +88,7 @@ class DetailViewModel @Inject constructor(
 
     fun set() = viewModelScope.launch {
         runCatching {
-            setDetailVehicleOwn(state.option, state.typeDetail, state.text).getOrThrow()
+            setDetail(state.text, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
         }
             .onSuccessState(::updateState)
             .onFailureState(getClassAndMethod(), ::updateState)

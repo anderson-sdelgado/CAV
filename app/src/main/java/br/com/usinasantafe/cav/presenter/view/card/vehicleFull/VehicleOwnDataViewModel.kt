@@ -3,10 +3,11 @@ package br.com.usinasantafe.cav.presenter.view.card.vehicleFull
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.usinasantafe.cav.domain.usecases.card.GetDriver
-import br.com.usinasantafe.cav.domain.usecases.card.GetEquip
-import br.com.usinasantafe.cav.domain.usecases.card.GetEquipSec
-import br.com.usinasantafe.cav.domain.usecases.card.GetPassengers
+import br.com.usinasantafe.cav.domain.usecases.card.GetDescColab
+import br.com.usinasantafe.cav.domain.usecases.card.GetDescEquip
+import br.com.usinasantafe.cav.domain.usecases.card.GetDescEquipSec
+import br.com.usinasantafe.cav.domain.usecases.card.GetDescPassengers
+import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.presenter.Args.ID_MAIN_ARG
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
 import br.com.usinasantafe.cav.utils.UiStatusState
@@ -36,14 +37,14 @@ data class VehicleOwnDataState(
 
 @HiltViewModel
 class VehicleOwnDataViewModel @Inject constructor(
-    saveStateHandle: SavedStateHandle,
-    private val getEquip: GetEquip,
-    private val getEquipSec: GetEquipSec,
-    private val getDriver: GetDriver,
-    private val getPassengers: GetPassengers
+    savedStateHandle: SavedStateHandle,
+    private val getDescEquip: GetDescEquip,
+    private val getDescEquipSec: GetDescEquipSec,
+    private val getDescColab: GetDescColab,
+    private val getDescPassengers: GetDescPassengers
 ) : ViewModel() {
 
-    private val idMain: Int = saveStateHandle[ID_MAIN_ARG]!!
+    private val idMain: Int = savedStateHandle[ID_MAIN_ARG]!!
 
     private val _uiState = MutableStateFlow(VehicleOwnDataState())
     val uiState = _uiState.asStateFlow()
@@ -66,10 +67,10 @@ class VehicleOwnDataViewModel @Inject constructor(
 
     fun recoverData() = viewModelScope.launch {
         runCatching {
-            val equip = getEquip(state.idMain).getOrThrow()
-            val equipSec = getEquipSec(state.idMain).getOrThrow()
-            val driver = getDriver(state.idMain).getOrThrow()
-            val passengers = getPassengers(state.idMain).getOrThrow()
+            val equip = getDescEquip(FlowNote.EQUIP, state.idMain).getOrThrow()
+            val equipSec = getDescEquipSec(state.idMain).getOrThrow()
+            val driver = getDescColab(FlowNote.COLAB, state.idMain).getOrThrow()
+            val passengers = getDescPassengers(FlowNote.PASSENGER_COLAB, state.idMain).getOrThrow()
             VehicleOwnDataState(
                 idMain = state.idMain,
                 equip = equip,

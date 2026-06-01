@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
-import br.com.usinasantafe.cav.lib.Type
+import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.presenter.theme.ButtonMaxWidth
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
@@ -45,7 +45,7 @@ fun EquipDataScreen(
             }
 
             EquipDataContent(
-                type = uiState.type,
+                flowNote = uiState.flowNote,
                 equip = uiState.equip,
                 detail = uiState.detail,
                 onCloseDialog = viewModel::onCloseDialog,
@@ -62,7 +62,7 @@ fun EquipDataScreen(
 
 @Composable
 fun EquipDataContent(
-    type: Type,
+    flowNote: FlowNote,
     equip: String,
     detail: String,
     onCloseDialog: () -> Unit,
@@ -104,9 +104,10 @@ fun EquipDataContent(
             }
         }
         ButtonMaxWidth(R.string.text_pattern_return) {
-            when(type) {
-                Type.MAIN -> onNavDataVehicleOwn()
-                Type.SECONDARY -> onNavEquipSecList()
+            when(flowNote) {
+                FlowNote.EQUIP -> onNavDataVehicleOwn()
+                FlowNote.EQUIP_SEC -> onNavEquipSecList()
+                else -> {}
             }
         }
         BackHandler {}
@@ -124,7 +125,7 @@ fun EquipDataPagePreview() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             EquipDataContent(
-                type = Type.MAIN,
+                flowNote = FlowNote.EQUIP,
                 equip = "2200 - CAMINHAO",
                 detail = "-",
                 onCloseDialog = {},

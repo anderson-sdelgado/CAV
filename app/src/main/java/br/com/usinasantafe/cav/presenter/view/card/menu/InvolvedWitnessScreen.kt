@@ -134,8 +134,6 @@ fun InvolvedItem() {
         Column(modifier = Modifier.weight(1f)) {
             Text(text = stringResource(id = R.string.text_involved), fontWeight = FontWeight.Bold)
             Text("123.456.789-88 - ANDERSON DA SILVA DELGADO")
-            Text(text = stringResource(id = R.string.text_treatment), fontWeight = FontWeight.Bold)
-            Text("PRONTO SOCORRO")
         }
 
         Column(

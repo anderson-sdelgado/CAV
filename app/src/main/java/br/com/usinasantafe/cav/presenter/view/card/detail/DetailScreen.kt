@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
+import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
-import br.com.usinasantafe.cav.lib.TypeDetail
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.MsgErrors
@@ -45,6 +45,10 @@ fun DetailScreen(
     onNavDataColab: () -> Unit,
     onNavEquipSecList: () -> Unit,
     onNavPassengerList: () -> Unit,
+    onNavBrand: () -> Unit,
+    onNavDataVehicleInvolved: () -> Unit,
+    onNavDataInvolved: () -> Unit,
+    onNavDocument: () -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -56,7 +60,7 @@ fun DetailScreen(
 
             DetailContent(
                 option = uiState.option,
-                typeDetail = uiState.typeDetail,
+                flowNote = uiState.flowNote,
                 text = uiState.text,
                 onTextChanged = viewModel::onTextChanged,
                 set = viewModel::set,
@@ -70,6 +74,10 @@ fun DetailScreen(
                 onNavDataColab = onNavDataColab,
                 onNavEquipSecList = onNavEquipSecList,
                 onNavPassengerList = onNavPassengerList,
+                onNavBrand = onNavBrand,
+                onNavDataVehicleForeign = onNavDataVehicleInvolved,
+                onNavDataForeign = onNavDataInvolved,
+                onNavDocument = onNavDocument,
                 modifier = Modifier.padding(innerPadding)
             )
 
@@ -80,7 +88,7 @@ fun DetailScreen(
 @Composable
 fun DetailContent(
     option: Option,
-    typeDetail: TypeDetail,
+    flowNote: FlowNote,
     text: String,
     onTextChanged: (String) -> Unit,
     set: () -> Unit,
@@ -94,6 +102,10 @@ fun DetailContent(
     onNavDataColab: () -> Unit,
     onNavEquipSecList: () -> Unit,
     onNavPassengerList: () -> Unit,
+    onNavBrand: () -> Unit,
+    onNavDataVehicleForeign: () -> Unit,
+    onNavDataForeign: () -> Unit,
+    onNavDocument: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -126,19 +138,31 @@ fun DetailContent(
         ) {
             Button(
                 onClick = {
-                    when(typeDetail) {
-                        TypeDetail.EQUIP,
-                        TypeDetail.EQUIP_SEC -> {
-                            when(option) {
-                                Option.INSERT -> onNavEquip()
-                                Option.EDIT -> onNavDataEquip()
+                    when(option){
+                        Option.INSERT -> {
+                            when(flowNote) {
+                                FlowNote.EQUIP,
+                                FlowNote.EQUIP_SEC -> onNavEquip()
+                                FlowNote.VEHICLE -> onNavBrand()
+                                FlowNote.COLAB,
+                                FlowNote.PASSENGER_COLAB,
+                                FlowNote.DRIVER,
+                                FlowNote.PASSENGER_INVOLVED,
+                                FlowNote.INVOLVED,
+                                FlowNote.WITNESS -> onNavState()
                             }
                         }
-                        TypeDetail.COLAB,
-                        TypeDetail.PASSENGER_COLAB -> {
-                            when(option) {
-                                Option.INSERT -> onNavState()
-                                Option.EDIT -> onNavDataColab()
+                        Option.EDIT -> {
+                            when(flowNote) {
+                                FlowNote.EQUIP,
+                                FlowNote.EQUIP_SEC -> onNavDataEquip()
+                                FlowNote.VEHICLE -> onNavDataVehicleForeign()
+                                FlowNote.COLAB,
+                                FlowNote.PASSENGER_COLAB -> onNavDataColab()
+                                FlowNote.DRIVER,
+                                FlowNote.PASSENGER_INVOLVED,
+                                FlowNote.INVOLVED,
+                                FlowNote.WITNESS -> onNavDataForeign()
                             }
                         }
                     }
@@ -165,19 +189,29 @@ fun DetailContent(
         if (status.flagAccess) {
             when(option){
                 Option.INSERT -> {
-                    when(typeDetail) {
-                        TypeDetail.EQUIP -> onNavColab()
-                        TypeDetail.COLAB -> onNavDataVehicleOwn()
-                        TypeDetail.EQUIP_SEC -> onNavEquipSecList()
-                        TypeDetail.PASSENGER_COLAB -> onNavPassengerList()
+                    when(flowNote) {
+                        FlowNote.EQUIP -> onNavColab()
+                        FlowNote.EQUIP_SEC -> onNavEquipSecList()
+                        FlowNote.VEHICLE -> onNavDocument()
+                        FlowNote.COLAB -> onNavDataVehicleOwn()
+                        FlowNote.INVOLVED,
+                        FlowNote.WITNESS,
+                        FlowNote.DRIVER -> onNavDataVehicleForeign()
+                        FlowNote.PASSENGER_COLAB,
+                        FlowNote.PASSENGER_INVOLVED -> onNavPassengerList()
                     }
                 }
                 Option.EDIT -> {
-                    when(typeDetail) {
-                        TypeDetail.EQUIP,
-                        TypeDetail.EQUIP_SEC -> onNavDataEquip()
-                        TypeDetail.COLAB,
-                        TypeDetail.PASSENGER_COLAB -> onNavDataColab()
+                    when(flowNote) {
+                        FlowNote.EQUIP,
+                        FlowNote.EQUIP_SEC -> onNavDataEquip()
+                        FlowNote.COLAB,
+                        FlowNote.PASSENGER_COLAB -> onNavDataColab()
+                        FlowNote.VEHICLE -> onNavDataVehicleForeign()
+                        FlowNote.DRIVER,
+                        FlowNote.PASSENGER_INVOLVED,
+                        FlowNote.INVOLVED,
+                        FlowNote.WITNESS -> onNavDataForeign()
                     }
                 }
             }
@@ -193,7 +227,7 @@ fun DetailPagePreview() {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             DetailContent(
                 option = Option.INSERT,
-                typeDetail = TypeDetail.EQUIP,
+                flowNote = FlowNote.EQUIP,
                 text = "Text",
                 onTextChanged = {},
                 set = {},
@@ -207,6 +241,10 @@ fun DetailPagePreview() {
                 onNavDataColab = {},
                 onNavEquipSecList = {},
                 onNavPassengerList = {},
+                onNavBrand = {},
+                onNavDataVehicleForeign = {},
+                onNavDataForeign = {},
+                onNavDocument = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

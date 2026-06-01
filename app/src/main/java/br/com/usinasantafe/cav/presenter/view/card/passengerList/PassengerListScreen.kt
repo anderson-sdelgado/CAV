@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
-import br.com.usinasantafe.cav.lib.TypeVehicle
+import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.presenter.model.ItemListScreenModel
 import br.com.usinasantafe.cav.presenter.theme.AlertDialogCheckDesign
 import br.com.usinasantafe.cav.presenter.theme.ButtonMaxWidth
@@ -33,7 +33,7 @@ import br.com.usinasantafe.cav.utils.UiStatusState
 fun PassengerListScreen(
     viewModel: PassengerListViewModel = hiltViewModel(),
     onNavDataVehicleOwn: () -> Unit,
-    onNavDataVehicleForeign: () -> Unit,
+    onNavDataVehicleInvolved: () -> Unit,
     onNavDataColab: (Int) -> Unit,
     onNavColab: () -> Unit
 ) {
@@ -46,7 +46,7 @@ fun PassengerListScreen(
             }
 
             PassengerListContent(
-                typeVehicle = uiState.typeVehicle,
+                flowNote = uiState.flowNote,
                 list = uiState.list,
                 idSelection = uiState.idSelection,
                 onSelectionDelete = viewModel::onSelectionDelete,
@@ -56,7 +56,7 @@ fun PassengerListScreen(
                 delete = viewModel::delete,
                 status = uiState.status,
                 onNavDataVehicleOwn = onNavDataVehicleOwn,
-                onNavDataVehicleInvolved = onNavDataVehicleForeign,
+                onNavDataVehicleInvolved = onNavDataVehicleInvolved,
                 onNavDataColab = onNavDataColab,
                 onNavColab = onNavColab,
                 modifier = Modifier.padding(innerPadding)
@@ -67,7 +67,7 @@ fun PassengerListScreen(
 
 @Composable
 fun PassengerListContent(
-    typeVehicle: TypeVehicle,
+    flowNote: FlowNote,
     list: List<ItemListScreenModel>,
     idSelection: Int,
     onSelectionDelete: (Int) -> Unit,
@@ -111,9 +111,10 @@ fun PassengerListContent(
         ButtonMaxWidth(R.string.text_pattern_insert, onClick = onNavColab)
         Spacer(modifier = Modifier.padding(vertical = 8.dp))
         ButtonMaxWidth(R.string.text_pattern_return) {
-            when(typeVehicle){
-                TypeVehicle.OWN -> onNavDataVehicleOwn()
-                TypeVehicle.FOREIGN -> onNavDataVehicleInvolved()
+            when(flowNote){
+                FlowNote.PASSENGER_COLAB -> onNavDataVehicleOwn()
+                FlowNote.PASSENGER_INVOLVED -> onNavDataVehicleInvolved()
+                else -> {}
             }
         }
         BackHandler {}
@@ -144,7 +145,7 @@ fun PassengerListPagePreview() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             PassengerListContent(
-                typeVehicle = TypeVehicle.OWN,
+                flowNote = FlowNote.EQUIP,
                 list = emptyList(),
                 idSelection = 0,
                 onSelectionDelete = {},

@@ -17,8 +17,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.lib.Errors
+import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
-import br.com.usinasantafe.cav.lib.Type
 import br.com.usinasantafe.cav.lib.TypeButton
 import br.com.usinasantafe.cav.presenter.theme.ButtonsGenericNumeric
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
@@ -46,7 +46,7 @@ fun EquipScreen(
 
             EquipContent(
                 option = uiState.option,
-                type = uiState.type,
+                flowNote = uiState.flowNote,
                 nroEquip = uiState.nroEquip,
                 onTextField = viewModel::onTextField,
                 onCloseDialog = viewModel::onCloseDialog,
@@ -64,7 +64,7 @@ fun EquipScreen(
 @Composable
 fun EquipContent(
     option: Option,
-    type: Type,
+    flowNote: FlowNote,
     nroEquip: String,
     onTextField: (String, TypeButton) -> Unit,
     onCloseDialog: () -> Unit,
@@ -94,9 +94,10 @@ fun EquipContent(
         BackHandler {
             when(option) {
                 Option.INSERT -> {
-                    when(type) {
-                        Type.MAIN -> onNavMenu()
-                        Type.SECONDARY -> onNavEquipSecList()
+                    when(flowNote) {
+                        FlowNote.EQUIP -> onNavMenu()
+                        FlowNote.EQUIP_SEC -> onNavEquipSecList()
+                        else -> {}
                     }
                 }
                 Option.EDIT -> onNavDataEquip()
@@ -129,7 +130,7 @@ fun EquipPagePreview() {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             EquipContent(
                 option = Option.INSERT,
-                type = Type.MAIN,
+                flowNote = FlowNote.EQUIP,
                 nroEquip = "",
                 onTextField = { _, _ -> },
                 onCloseDialog = {},

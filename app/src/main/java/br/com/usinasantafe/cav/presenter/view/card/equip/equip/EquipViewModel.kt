@@ -8,11 +8,13 @@ import br.com.usinasantafe.cav.domain.usecases.card.SetEquip
 import br.com.usinasantafe.cav.domain.usecases.common.HasNroEquip
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableEquip
 import br.com.usinasantafe.cav.lib.Errors
+import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
-import br.com.usinasantafe.cav.lib.Type
 import br.com.usinasantafe.cav.lib.TypeButton
+import br.com.usinasantafe.cav.presenter.Args.FLOW_NOTE_ARG
+import br.com.usinasantafe.cav.presenter.Args.ID_MAIN_ARG
+import br.com.usinasantafe.cav.presenter.Args.ID_SECONDARY_ARG
 import br.com.usinasantafe.cav.presenter.Args.OPTION_ARG
-import br.com.usinasantafe.cav.presenter.Args.TYPE_ARG
 import br.com.usinasantafe.cav.presenter.theme.addTextField
 import br.com.usinasantafe.cav.presenter.theme.clearTextField
 import br.com.usinasantafe.cav.utils.UiStateWithStatusUpdate
@@ -33,7 +35,9 @@ import javax.inject.Inject
 
 data class EquipStateUpdate(
     val option: Option = Option.INSERT,
-    val type: Type = Type.MAIN,
+    val flowNote: FlowNote = FlowNote.EQUIP,
+    val idMain: Int = 0,
+    val idSecondary: Int = 0,
     val nroEquip: String = "",
     override val status: UiStatusStateUpdate = UiStatusStateUpdate()
 ) : UiStateWithStatusUpdate<EquipStateUpdate> {
@@ -45,15 +49,17 @@ data class EquipStateUpdate(
 
 @HiltViewModel
 class EquipViewModel @Inject constructor(
-    saveStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
     private val getNroEquip: GetNroEquip,
     private val updateTableEquip: UpdateTableEquip,
     private val hasNroEquip: HasNroEquip,
     private val setEquip: SetEquip
 ) : ViewModel() {
 
-    private val option: Int = saveStateHandle[OPTION_ARG]!!
-    private val type: Int = saveStateHandle[TYPE_ARG]!!
+    private val option: Int = savedStateHandle[OPTION_ARG]!!
+    private val flow: Int = savedStateHandle[FLOW_NOTE_ARG]!!
+    private val idMain: Int = savedStateHandle[ID_MAIN_ARG]!!
+    private val idSecondary: Int = savedStateHandle[ID_SECONDARY_ARG]!!
 
     private val _uiState = MutableStateFlow(EquipStateUpdate())
     val uiState = _uiState.asStateFlow()
@@ -70,14 +76,16 @@ class EquipViewModel @Inject constructor(
         updateState {
             copy(
                 option = Option.entries[this@EquipViewModel.option],
-                type = Type.entries[this@EquipViewModel.type]
+                flowNote = FlowNote.entries[this@EquipViewModel.flow],
+                idMain = this@EquipViewModel.idMain,
+                idSecondary = this@EquipViewModel.idSecondary
             )
         }
     }
 
     fun recoverData() = viewModelScope.launch {
         runCatching {
-            getNroEquip(state.option, state.type).getOrThrow()
+            getNroEquip(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
         }
             .onSuccess { updateState { copy(nroEquip = it) } }
             .onFailureUpdate(getClassAndMethod(), ::updateState)
@@ -101,7 +109,7 @@ class EquipViewModel @Inject constructor(
                 return@launch
             }
             val check = hasNroEquip(state.nroEquip).getOrThrow()
-            if (check) setEquip(state.option, state.type, state.nroEquip).getOrThrow()
+            if (check) setEquip(state.nroEquip, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
             check
         }
             .onSuccessUpdateCheckAccess(::updateState)

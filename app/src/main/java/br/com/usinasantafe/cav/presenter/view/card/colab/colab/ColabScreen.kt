@@ -17,8 +17,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.lib.Errors
+import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
-import br.com.usinasantafe.cav.lib.Type
 import br.com.usinasantafe.cav.lib.TypeButton
 import br.com.usinasantafe.cav.presenter.theme.ButtonsGenericNumeric
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
@@ -31,7 +31,6 @@ import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 @Composable
 fun ColabScreen(
     viewModel: ColabViewModel = hiltViewModel(),
-    onNavDetail:  () -> Unit,
     onNavPassengerList:  () -> Unit,
     onNavState: () -> Unit,
     onNavDataColab: () -> Unit,
@@ -46,12 +45,11 @@ fun ColabScreen(
 
             ColabContent(
                 option = uiState.option,
-                type = uiState.type,
+                flowNote = uiState.flowNote,
                 text = uiState.text,
                 onTextField = viewModel::onTextField,
                 onCloseDialog = viewModel::onCloseDialog,
                 status = uiState.status,
-                onNavDetail = onNavDetail,
                 onNavPassengerList = onNavPassengerList,
                 onNavState = onNavState,
                 onNavDataColab = onNavDataColab,
@@ -64,12 +62,11 @@ fun ColabScreen(
 @Composable
 fun ColabContent(
     option: Option,
-    type: Type,
+    flowNote: FlowNote,
     text: String,
     onTextField: (String, TypeButton) -> Unit,
     onCloseDialog: () -> Unit,
     status: UiStatusStateUpdate,
-    onNavDetail:  () -> Unit,
     onNavPassengerList:  () -> Unit,
     onNavState:  () -> Unit,
     onNavDataColab: () -> Unit,
@@ -94,9 +91,10 @@ fun ColabContent(
         BackHandler {
             when(option) {
                 Option.INSERT -> {
-                    when(type) {
-                        Type.MAIN -> onNavDetail()
-                        Type.SECONDARY -> onNavPassengerList()
+                    when(flowNote){
+                        FlowNote.COLAB -> onNavState()
+                        FlowNote.PASSENGER_COLAB -> onNavPassengerList()
+                        else -> {}
                     }
                 }
                 Option.EDIT -> onNavDataColab()
@@ -129,7 +127,7 @@ fun ColabPagePreview() {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             ColabContent(
                 option = Option.INSERT,
-                type = Type.MAIN,
+                flowNote = FlowNote.COLAB,
                 text = "",
                 onTextField = { _, _ -> },
                 onCloseDialog = {},
@@ -144,7 +142,6 @@ fun ColabPagePreview() {
                     tableUpdate = "",
                     currentProgress = 0f,
                 ),
-                onNavDetail = {},
                 onNavPassengerList = {},
                 onNavState = {},
                 onNavDataColab = {},

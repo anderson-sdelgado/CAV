@@ -6,9 +6,7 @@ enum class TypeButton { NUMERIC, CLEAN, OK, UPDATE }
 enum class FlagUpdate { OUTDATED, UPDATED }
 enum class Status { OPEN, CLOSE, FINISH }
 enum class LevelUpdate { RECOVERY, CLEAN, SAVE, GET_TOKEN, SAVE_TOKEN, FINISH_UPDATE_INITIAL, FINISH_UPDATE_COMPLETED }
-enum class Option { INSERT, EDIT }
 
-enum class Type { MAIN, SECONDARY }
-enum class TypeDetail { EQUIP, EQUIP_SEC, COLAB, PASSENGER_COLAB }
-enum class TypePeople { DRIVER, PASSENGER, INVOLVED, PEDESTRIAN }
-enum class TypeVehicle { OWN, FOREIGN }
+enum class Option { INSERT, EDIT }
+enum class FlowNote { EQUIP, EQUIP_SEC, COLAB, PASSENGER_COLAB, VEHICLE, DRIVER, PASSENGER_INVOLVED, INVOLVED, WITNESS }
+enum class TypeVehicle { OWN, INVOLVED }

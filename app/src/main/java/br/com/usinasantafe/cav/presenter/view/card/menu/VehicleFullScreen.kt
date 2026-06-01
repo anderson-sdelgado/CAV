@@ -16,6 +16,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,9 +51,13 @@ fun VehicleFullScreen(
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
+            LaunchedEffect(Unit) {
+                viewModel.recoverData()
+            }
+
             VehicleFullContent(
                 vehicleOwnList = uiState.vehicleOwnList,
-                vehicleForeignList = uiState.vehicleForeignList,
+                vehicleInvolvedList = uiState.vehicleInvolvedList,
                 onNavLocalSupport = onNavLocalSupport,
                 onNavInvolvedWitness = onNavInvolvedWitness,
                 onNavEquip = onNavEquip,
@@ -68,7 +73,7 @@ fun VehicleFullScreen(
 @Composable
 fun VehicleFullContent(
     vehicleOwnList: List<VehicleScreenModel>,
-    vehicleForeignList: List<VehicleScreenModel>,
+    vehicleInvolvedList: List<VehicleScreenModel>,
     onNavLocalSupport: () -> Unit,
     onNavInvolvedWitness: () -> Unit,
     onNavEquip: () -> Unit,
@@ -99,8 +104,8 @@ fun VehicleFullContent(
                 )
             }
             item {
-                VehicleForeignSection(
-                    vehicleList = vehicleForeignList,
+                VehicleInvolvedSection(
+                    vehicleList = vehicleInvolvedList,
                     onNavPlate = onNavPlate,
                     onNavDataVehicleForeign = onNavDataVehicleForeign
                 )
@@ -188,7 +193,7 @@ fun VehicleOwnSection(
 }
 
 @Composable
-fun VehicleForeignSection(
+fun VehicleInvolvedSection(
     vehicleList: List<VehicleScreenModel>,
     onNavPlate: () -> Unit,
     onNavDataVehicleForeign: (Int) -> Unit,
@@ -213,7 +218,7 @@ fun VehicleForeignSection(
         } else {
             vehicleList.forEach {
                 CarItem(
-                    type = TypeVehicle.FOREIGN,
+                    type = TypeVehicle.INVOLVED,
                     model = it,
                     onClickEdit = { onNavDataVehicleForeign(it.id) },
                     onClickDel = {}
@@ -250,7 +255,7 @@ fun CarItem(
     ) {
         val title = when(type){
             TypeVehicle.OWN -> stringResource(id = R.string.text_equip)
-            TypeVehicle.FOREIGN -> stringResource(id = R.string.text_vehicle)
+            TypeVehicle.INVOLVED -> stringResource(id = R.string.text_vehicle)
         }
         Column(modifier = Modifier.weight(1f)) {
             Text(text = title, fontWeight = FontWeight.Bold)
@@ -279,7 +284,7 @@ fun VehicleFullPagePreview() {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             VehicleFullContent(
                 vehicleOwnList = emptyList(),
-                vehicleForeignList = emptyList(),
+                vehicleInvolvedList = emptyList(),
                 onNavLocalSupport = {},
                 onNavInvolvedWitness = {},
                 onNavEquip = {},
@@ -305,7 +310,7 @@ fun VehicleFullPagePreviewWithData() {
                         driver = "19759 - ANDERSON DA SILVA DELGADO"
                     )
                 ),
-                vehicleForeignList = listOf(
+                vehicleInvolvedList = listOf(
                     VehicleScreenModel(
                         id = 1,
                         vehicle = "ABC1234 - GOL",

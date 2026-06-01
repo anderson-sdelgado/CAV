@@ -101,11 +101,11 @@ interface CardModule {
 
     @Binds
     @Singleton
-    fun bindGetDetailVehicleOwn(usecase: IGetDetailVehicleOwn): GetDetailVehicleOwn
+    fun bindGetDetailVehicleOwn(usecase: IGetDetail): GetDetail
 
     @Binds
     @Singleton
-    fun bindSetDetailVehicleOwn(usecase: ISetDetailVehicleOwn): SetDetailVehicleOwn
+    fun bindSetDetailVehicleOwn(usecase: ISetDetail): SetDetail
 
     @Binds
     @Singleton
@@ -117,11 +117,11 @@ interface CardModule {
 
     @Binds
     @Singleton
-    fun bindGetStateColab(usecase: IGetStateColab): GetStateColab
+    fun bindGetStateColab(usecase: IGetIdState): GetIdState
 
     @Binds
     @Singleton
-    fun bindSetStateColab(usecase: ISetStateColab): SetStateColab
+    fun bindSetStateColab(usecase: ISetState): SetState
 
     @Binds
     @Singleton
@@ -141,18 +141,38 @@ interface CardModule {
 
     @Binds
     @Singleton
-    fun bindGetEquip(usecase: IGetEquip): GetEquip
+    fun bindGetDescEquip(usecase: IGetDescEquip): GetDescEquip
 
     @Binds
     @Singleton
-    fun bindGetEquipSec(usecase: IGetEquipSec): GetEquipSec
+    fun bindGetEquipSec(usecase: IGetDescEquipSec): GetDescEquipSec
 
     @Binds
     @Singleton
-    fun bindGetColab(usecase: IGetDriver): GetDriver
+    fun bindGetColab(usecase: IGetDescColab): GetDescColab
 
     @Binds
     @Singleton
-    fun bindGetPassengers(usecase: IGetPassengers): GetPassengers
+    fun bindGetPassengers(usecase: IGetDescPassengers): GetDescPassengers
+
+    @Binds
+    @Singleton
+    fun bindListVehicleOwn(usecase: IListVehicleOwn): ListVehicleOwn
+
+    @Binds
+    @Singleton
+    fun bindListVehicleInvolved(usecase: IListVehicleInvolved): ListVehicleInvolved
+
+    @Binds
+    @Singleton
+    fun bindGetDescState(usecase: IGetDescState): GetDescState
+
+    @Binds
+    @Singleton
+    fun bindGetDescVehicle(usecase: IGetDescVehicle): GetDescVehicle
+
+    @Binds
+    @Singleton
+    fun bindGetDescDriver(usecase: IGetDescDriver): GetDescDriver
 
 }

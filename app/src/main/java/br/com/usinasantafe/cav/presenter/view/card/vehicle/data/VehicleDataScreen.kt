@@ -16,13 +16,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
-import br.com.usinasantafe.cav.lib.Type
 import br.com.usinasantafe.cav.presenter.theme.ButtonMaxWidth
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.ItemDefaultEditListScreenModel
 import br.com.usinasantafe.cav.presenter.theme.MsgErrors
-import br.com.usinasantafe.cav.presenter.view.card.equip.data.TAG_EQUIP_DATA_EQUIP_EDIT_BUTTON
 import br.com.usinasantafe.cav.utils.UiStatusState
 
 const val TAG_PLATE_DATA_VEHICLE_EDIT_BUTTON = "tag_plate_data_vehicle_edit_button"
@@ -35,7 +33,7 @@ fun VehicleDataScreen(
     onNavPlate: () -> Unit,
     onNavBrand: () -> Unit,
     onNavDetail: () -> Unit,
-    onNavData: () -> Unit,
+    onNavDataVehicleInvolved: () -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -54,7 +52,7 @@ fun VehicleDataScreen(
                 onNavPlate = onNavPlate,
                 onNavBrand = onNavBrand,
                 onNavDetail = onNavDetail,
-                onNavData = onNavData,
+                onNavData = onNavDataVehicleInvolved,
                 modifier = Modifier.padding(innerPadding)
             )
         }

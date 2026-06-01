@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
-import br.com.usinasantafe.cav.lib.Type
+import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.presenter.theme.ButtonMaxWidth
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
@@ -46,7 +46,7 @@ fun ColabDataScreen(
             }
 
             ColabDataContent(
-                type = uiState.type,
+                flowNote = uiState.flowNote,
                 colab = uiState.colab,
                 state = uiState.state,
                 detail = uiState.detail,
@@ -65,7 +65,7 @@ fun ColabDataScreen(
 
 @Composable
 fun ColabDataContent(
-    type: Type,
+    flowNote: FlowNote,
     colab: String,
     state: String,
     detail: String,
@@ -117,10 +117,10 @@ fun ColabDataContent(
             }
         }
         ButtonMaxWidth(R.string.text_pattern_return) {
-            when(type) {
-                Type.MAIN -> onNavDataVehicleOwn()
-                Type.SECONDARY -> onNavPassengerList()
-            }
+//            when(type) {
+//                Type.MAIN -> onNavDataVehicleOwn()
+//                Type.SECONDARY -> onNavPassengerList()
+//            }
         }
 
     }
@@ -132,7 +132,7 @@ fun ColabDataPagePreview() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             ColabDataContent(
-                type = Type.MAIN,
+                flowNote = FlowNote.EQUIP,
                 colab = "19759 - ANDERSON DA SILVA DELGADO",
                 state = "FERIDO",
                 detail = "PERNA MACHUCADA",

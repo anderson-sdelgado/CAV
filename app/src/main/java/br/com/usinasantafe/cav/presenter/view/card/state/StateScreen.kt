@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
+import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
@@ -37,8 +38,10 @@ import br.com.usinasantafe.cav.utils.UiStatusState
 fun StateScreen(
     viewModel: StateViewModel = hiltViewModel(),
     onNavColab: () -> Unit,
+    onNavName: () -> Unit,
     onNavDetail: () -> Unit,
     onNavDataColab: () -> Unit,
+    onNavDataInvolved: () -> Unit
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -50,14 +53,17 @@ fun StateScreen(
 
             StateContent(
                 option = uiState.option,
+                flowNote = uiState.flowNote,
                 idSelection = uiState.idSelection,
                 onSelection = viewModel::onSelection,
                 onCloseDialog = viewModel::onCloseDialog,
                 set = viewModel::set,
                 status = uiState.status,
                 onNavColab = onNavColab,
+                onNavName = onNavName,
                 onNavDetail = onNavDetail,
                 onNavDataColab = onNavDataColab,
+                onNavDataForeign = onNavDataInvolved,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -67,14 +73,17 @@ fun StateScreen(
 @Composable
 fun StateContent(
     option: Option,
+    flowNote: FlowNote,
     idSelection: Int,
     onSelection: (Int) -> Unit,
     onCloseDialog: () -> Unit,
     set: () -> Unit,
     status: UiStatusState,
     onNavColab: () -> Unit,
+    onNavName: () -> Unit,
     onNavDetail: () -> Unit,
     onNavDataColab: () -> Unit,
+    onNavDataForeign: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -178,9 +187,34 @@ fun StateContent(
         ) {
             Button(
                 onClick = {
-                    when(option) {
-                        Option.INSERT -> onNavColab()
-                        Option.EDIT -> onNavDataColab()
+                    when(option){
+                        Option.INSERT -> {
+                            when(flowNote) {
+                                FlowNote.COLAB,
+                                FlowNote.PASSENGER_COLAB -> onNavColab()
+                                FlowNote.DRIVER,
+                                FlowNote.PASSENGER_INVOLVED,
+                                FlowNote.WITNESS,
+                                FlowNote.INVOLVED -> onNavName()
+                                FlowNote.EQUIP,
+                                FlowNote.EQUIP_SEC,
+                                FlowNote.VEHICLE -> {}
+
+                            }
+                        }
+                        Option.EDIT -> {
+                            when(flowNote){
+                                FlowNote.COLAB,
+                                FlowNote.PASSENGER_COLAB -> onNavDataColab()
+                                FlowNote.DRIVER,
+                                FlowNote.PASSENGER_INVOLVED,
+                                FlowNote.INVOLVED,
+                                FlowNote.WITNESS -> onNavDataForeign()
+                                FlowNote.EQUIP,
+                                FlowNote.EQUIP_SEC,
+                                FlowNote.VEHICLE -> {}
+                            }
+                        }
                     }
                 },
                 modifier = Modifier.weight(1f)
@@ -209,9 +243,21 @@ fun StateContent(
 
     LaunchedEffect(status.flagAccess) {
         if(status.flagAccess) {
-            when(option) {
+            when(option){
                 Option.INSERT -> onNavDetail()
-                Option.EDIT -> onNavDataColab()
+                Option.EDIT -> {
+                    when(flowNote){
+                        FlowNote.COLAB,
+                        FlowNote.PASSENGER_COLAB -> onNavDataColab()
+                        FlowNote.DRIVER,
+                        FlowNote.PASSENGER_INVOLVED,
+                        FlowNote.INVOLVED,
+                        FlowNote.WITNESS -> onNavDataForeign()
+                        FlowNote.EQUIP,
+                        FlowNote.EQUIP_SEC,
+                        FlowNote.VEHICLE -> {}
+                    }
+                }
             }
         }
     }
@@ -225,6 +271,7 @@ fun StatePagePreview() {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             StateContent(
                 option = Option.INSERT,
+                flowNote = FlowNote.DRIVER,
                 idSelection = 1,
                 onSelection = {},
                 onCloseDialog = {},
@@ -233,6 +280,8 @@ fun StatePagePreview() {
                 onNavColab = {},
                 onNavDetail = {},
                 onNavDataColab = {},
+                onNavName = {},
+                onNavDataForeign = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

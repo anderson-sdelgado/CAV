@@ -1,11 +1,11 @@
 package br.com.usinasantafe.cav.presenter
 
 import androidx.navigation.NavHostController
+import br.com.usinasantafe.cav.presenter.Args.FLOW_NOTE_ARG
 import br.com.usinasantafe.cav.presenter.Args.ID_MAIN_ARG
 import br.com.usinasantafe.cav.presenter.Args.ID_SECONDARY_ARG
 import br.com.usinasantafe.cav.presenter.Args.OPTION_ARG
-import br.com.usinasantafe.cav.presenter.Args.TYPE_ARG
-import br.com.usinasantafe.cav.presenter.Args.TYPE_DETAIL_ARG
+import br.com.usinasantafe.cav.presenter.Screens.ADDRESS_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.ATTENDANT_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.CAR_FULL_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.CAR_SCREEN
@@ -13,9 +13,9 @@ import br.com.usinasantafe.cav.presenter.Screens.COLAB_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.CONFIG_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.DATA_COLAB_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.DATA_EQUIP_SCREEN
-import br.com.usinasantafe.cav.presenter.Screens.DATA_FOREIGN_SCREEN
+import br.com.usinasantafe.cav.presenter.Screens.DATA_INVOLVED_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.DATA_INITIAL_SCREEN
-import br.com.usinasantafe.cav.presenter.Screens.DATA_VEHICLE_FOREIGN_SCREEN
+import br.com.usinasantafe.cav.presenter.Screens.DATA_VEHICLE_INVOLVED_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.DATA_VEHICLE_OWN_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.DATA_VEHICLE_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.DETAIL_SCREEN
@@ -35,6 +35,10 @@ import br.com.usinasantafe.cav.presenter.Screens.SPLASH_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.STATE_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.SUPPORT_TEAMS_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.TYPE_ACCIDENT_SCREEN
+import br.com.usinasantafe.cav.presenter.Screens.BRAND_SCREEN
+import br.com.usinasantafe.cav.presenter.Screens.DOCUMENT_SCREEN
+import br.com.usinasantafe.cav.presenter.Screens.NAME_SCREEN
+import br.com.usinasantafe.cav.presenter.Screens.PHONE_SCREEN
 
 object Screens {
     const val SPLASH_SCREEN = "splashScreen"
@@ -62,20 +66,22 @@ object Screens {
     const val STATE_SCREEN = "stateScreen"
     const val DATA_EQUIP_SCREEN = "dataEquipScreen"
     const val DATA_COLAB_SCREEN = "dataColabScreen"
-    const val DATA_VEHICLE_FOREIGN_SCREEN = "dataVehicleForeignScreen"
+    const val DATA_VEHICLE_INVOLVED_SCREEN = "dataVehicleInvolvedScreen"
     const val PLATE_SCREEN = "plateScreen"
     const val DATA_VEHICLE_SCREEN = "dataVehicleScreen"
-    const val DATA_FOREIGN_SCREEN = "dataForeignScreen"
+    const val DATA_INVOLVED_SCREEN = "dataInvolvedScreen"
+    const val BRAND_SCREEN = "brandScreen"
+    const val DOCUMENT_SCREEN = "documentScreen"
+    const val NAME_SCREEN = "nameScreen"
+    const val PHONE_SCREEN = "phoneScreen"
+    const val ADDRESS_SCREEN = "addressScreen"
 }
 
 object Args {
     const val OPTION_ARG = "option"
+    const val FLOW_NOTE_ARG = "flowNote"
     const val ID_MAIN_ARG = "idMain"
     const val ID_SECONDARY_ARG = "idSecondary"
-    const val TYPE_ARG = "type"
-    const val TYPE_DETAIL_ARG = "typeDetail"
-    const val TYPE_PEOPLE_ARG = "typePeople"
-    const val TYPE_VEHICLE_ARG = "typeVehicle"
 }
 
 object Routes {
@@ -95,19 +101,24 @@ object Routes {
     const val ITEM_DATA_LOCAL_ROUTE = "$ITEM_DATA_LOCAL_SCREEN/{$ID_MAIN_ARG}"
     const val SUPPORT_TEAMS_ROUTE = SUPPORT_TEAMS_SCREEN
     const val CAR_FULL_ROUTE = CAR_FULL_SCREEN
-    const val COLAB_ROUTE = "$COLAB_SCREEN/{$OPTION_ARG}/{$TYPE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
-    const val EQUIP_ROUTE = "$EQUIP_SCREEN/{$OPTION_ARG}/{$TYPE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
     const val DATA_VEHICLE_OWN_ROUTE = "$DATA_VEHICLE_OWN_SCREEN/{$ID_MAIN_ARG}"
-    const val DETAIL_ROUTE = "$DETAIL_SCREEN/{$OPTION_ARG}/{$TYPE_DETAIL_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
-    const val EQUIP_SEC_LIST_ROUTE = "$EQUIP_SEC_LIST_SCREEN/{$OPTION_ARG}/{$ID_MAIN_ARG}"
-    const val PASSENGER_LIST_ROUTE = "$PASSENGER_LIST_SCREEN/{$OPTION_ARG}/{$ID_MAIN_ARG}"
-    const val STATE_ROUTE = "$STATE_SCREEN/{$OPTION_ARG}/{$TYPE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
-    const val DATA_EQUIP_ROUTE = "$DATA_EQUIP_SCREEN/{$ID_MAIN_ARG}"
-    const val DATA_COLAB_ROUTE = "$DATA_COLAB_SCREEN/{$ID_MAIN_ARG}"
-    const val DATA_VEHICLE_FOREIGN_ROUTE = "$DATA_VEHICLE_FOREIGN_SCREEN/{$ID_MAIN_ARG}"
-    const val PLATE_ROUTE = "$PLATE_SCREEN/{$OPTION_ARG}/{$TYPE_ARG}/{$ID_MAIN_ARG}"
+    const val DATA_VEHICLE_INVOLVED_ROUTE = "$DATA_VEHICLE_INVOLVED_SCREEN/{$ID_MAIN_ARG}"
+    const val COLAB_ROUTE = "$COLAB_SCREEN/{$OPTION_ARG}/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
+    const val EQUIP_ROUTE = "$EQUIP_SCREEN/{$OPTION_ARG}/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
+    const val DETAIL_ROUTE = "$DETAIL_SCREEN/{$OPTION_ARG}/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
+    const val EQUIP_SEC_LIST_ROUTE = "$EQUIP_SEC_LIST_SCREEN/{$ID_MAIN_ARG}"
+    const val PASSENGER_LIST_ROUTE = "$PASSENGER_LIST_SCREEN/{$ID_MAIN_ARG}"
+    const val STATE_ROUTE = "$STATE_SCREEN/{$OPTION_ARG}/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
+    const val DATA_EQUIP_ROUTE = "$DATA_EQUIP_SCREEN/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}"
+    const val DATA_COLAB_ROUTE = "$DATA_COLAB_SCREEN/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}"
+    const val PLATE_ROUTE = "$PLATE_SCREEN/{$ID_MAIN_ARG}"
     const val DATA_VEHICLE_ROUTE = "$DATA_VEHICLE_SCREEN/{$ID_MAIN_ARG}"
-    const val DATA_FOREIGN_ROUTE = "$DATA_FOREIGN_SCREEN/{$TYPE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
+    const val DATA_INVOLVED_ROUTE = "$DATA_INVOLVED_SCREEN/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
+    const val BRAND_ROUTE = "$BRAND_SCREEN/{$ID_MAIN_ARG}"
+    const val DOCUMENT_ROUTE = "$DOCUMENT_SCREEN/{$OPTION_ARG}/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
+    const val NAME_ROUTE = "$NAME_SCREEN/{$OPTION_ARG}/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
+    const val PHONE_ROUTE = "$PHONE_SCREEN/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
+    const val ADDRESS_ROUTE = "$ADDRESS_SCREEN/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
 }
 
 class NavigationActions(private val navController: NavHostController) {
@@ -182,20 +193,20 @@ class NavigationActions(private val navController: NavHostController) {
 
     fun navigateToEquip(
         option: Int,
-        type: Int,
+        flowNote: Int,
         idMain: Int,
         idSecondary: Int,
     ){
-        navController.navigate("$EQUIP_SCREEN/$option/$type/$idMain/$idSecondary")
+        navController.navigate("$EQUIP_SCREEN/$option/$flowNote/$idMain/$idSecondary")
     }
 
     fun navigateToColab(
         option: Int,
-        type: Int,
+        flowNote: Int,
         idMain: Int,
         idSecondary: Int,
     ){
-        navController.navigate("$COLAB_SCREEN/$option/$type/$idMain/$idSecondary")
+        navController.navigate("$COLAB_SCREEN/$option/$flowNote/$idMain/$idSecondary")
     }
 
     fun navigateToDataVehicleOwn(
@@ -206,85 +217,116 @@ class NavigationActions(private val navController: NavHostController) {
 
     fun navigateToDetail(
         option: Int,
-        typeDetail: Int,
+        flowNote: Int,
         idMain: Int,
         idSecondary: Int,
     ){
-        navController.navigate("$DETAIL_SCREEN/$option/$typeDetail/$idMain/$idSecondary")
+        navController.navigate("$DETAIL_SCREEN/$option/$flowNote/$idMain/$idSecondary")
     }
 
     fun navigateToEquipSecList(
-        option: Int,
         idMain: Int,
     ){
-        navController.navigate("$EQUIP_SEC_LIST_SCREEN/$option/$idMain")
+        navController.navigate("$EQUIP_SEC_LIST_SCREEN/$idMain")
     }
 
     fun navigateToPassengerList(
-        option: Int,
-        typeVehicle: Int,
+        flow: Int,
         idMain: Int,
     ){
-        navController.navigate("$PASSENGER_LIST_SCREEN/$option/$typeVehicle/$idMain")
+        navController.navigate("$PASSENGER_LIST_SCREEN/$flow/$idMain")
     }
 
     fun navigateToState(
         option: Int,
-        typePeople: Int,
+        flowNote: Int,
         idMain: Int,
         idSecondary: Int,
     ){
-        navController.navigate("$STATE_SCREEN/$option/$typePeople/$idMain/$idSecondary")
+        navController.navigate("$STATE_SCREEN/$option/$flowNote/$idMain/$idSecondary")
     }
 
     fun navigateToDataEquip(
-        type: Int,
+        flowNote: Int,
         idMain: Int,
         idSecondary: Int,
     ) {
-        navController.navigate("$DATA_EQUIP_SCREEN/$type/$idMain/$idSecondary")
+        navController.navigate("$DATA_EQUIP_SCREEN/$flowNote/$idMain/$idSecondary")
     }
 
     fun navigateToDataColab(
-        type: Int,
+        flowNote: Int,
         idMain: Int,
         idSecondary: Int,
     ) {
-        navController.navigate("$DATA_COLAB_SCREEN/$type/$idMain/$idSecondary")
+        navController.navigate("$DATA_COLAB_SCREEN/$flowNote/$idMain/$idSecondary")
     }
 
-    fun navigateToDataVehicleForeign(
+    fun navigateToDataVehicleInvolved(
         idMain: Int,
     ){
-        navController.navigate("$DATA_VEHICLE_FOREIGN_SCREEN/$idMain")
+        navController.navigate("$DATA_VEHICLE_INVOLVED_SCREEN/$idMain")
     }
 
     fun navigateToPlate(
-        option: Int,
         idMain: Int,
     ){
-        navController.navigate("$DATA_VEHICLE_FOREIGN_SCREEN/$option/$idMain")
+        navController.navigate("$PLATE_SCREEN/$idMain")
     }
 
     fun navigateToBrand(
-        option: Int,
         idMain: Int,
     ){
-        navController.navigate("$DATA_VEHICLE_FOREIGN_SCREEN/$option/$idMain")
+        navController.navigate("$BRAND_SCREEN/$idMain")
     }
 
     fun navigateToDataVehicle(
         idMain: Int,
     ) {
-        navController.navigate("$DATA_COLAB_SCREEN/$idMain")
+        navController.navigate("$DATA_VEHICLE_SCREEN/$idMain")
     }
 
-    fun navigateToDataForeign(
-        type: Int,
+
+    fun navigateToDocument(
+        option: Int,
+        flowNote: Int,
         idMain: Int,
         idSecondary: Int,
     ) {
-        navController.navigate("$DATA_FOREIGN_SCREEN/$type/$idMain/$idSecondary")
+        navController.navigate("$DOCUMENT_SCREEN/$option/$flowNote/$idMain/$idSecondary")
+    }
+
+    fun navigateToName(
+        option: Int,
+        flowNote: Int,
+        idMain: Int,
+        idSecondary: Int,
+    ) {
+        navController.navigate("$NAME_SCREEN/$option/$flowNote/$idMain/$idSecondary")
+    }
+
+    fun navigateToDataInvolved(
+        flowNote: Int,
+        idMain: Int,
+        idSecondary: Int,
+    ) {
+        navController.navigate("$DATA_INVOLVED_SCREEN/$flowNote/$idMain/$idSecondary")
+    }
+
+    fun navigateToPhone(
+        flowNote: Int,
+        idMain: Int,
+        idSecondary: Int,
+    ) {
+        navController.navigate("$PHONE_SCREEN/$flowNote/$idMain/$idSecondary")
+    }
+
+    fun navigateToAddress(
+        flowNote: Int,
+        idMain: Int,
+        idSecondary: Int,
+    ) {
+        navController.navigate("$ADDRESS_SCREEN/$flowNote/$idMain/$idSecondary")
     }
 
     //////////////////////////////////////////////////////////////////////
@@ -299,7 +341,7 @@ class NavigationActions(private val navController: NavHostController) {
         navController.navigate(LOCAL_SUPPORT_SCREEN)
     }
 
-    fun navigateToCarFull() {
+    fun navigateToVehicleFull() {
         navController.navigate(CAR_FULL_SCREEN)
     }
 

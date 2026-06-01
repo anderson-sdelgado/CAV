@@ -6,13 +6,13 @@ import br.com.usinasantafe.cav.utils.getClassAndMethod
 import javax.inject.Inject
 
 interface ListEquipSec {
-    suspend operator fun invoke(): Result<List<ItemListScreenModel>>
+    suspend operator fun invoke(id: Int): Result<List<ItemListScreenModel>>
 }
 
 class IListEquipSec @Inject constructor(
 ): ListEquipSec {
 
-    override suspend fun invoke(): Result<List<ItemListScreenModel>> =
+    override suspend fun invoke(id: Int): Result<List<ItemListScreenModel>> =
         call(getClassAndMethod()) {
             TODO("Not yet implemented")
         }

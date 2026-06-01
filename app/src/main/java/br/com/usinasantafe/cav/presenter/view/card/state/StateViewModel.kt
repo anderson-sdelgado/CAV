@@ -3,12 +3,14 @@ package br.com.usinasantafe.cav.presenter.view.card.state
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.usinasantafe.cav.domain.usecases.card.GetStateColab
-import br.com.usinasantafe.cav.domain.usecases.card.SetStateColab
+import br.com.usinasantafe.cav.domain.usecases.card.GetIdState
+import br.com.usinasantafe.cav.domain.usecases.card.SetState
+import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
-import br.com.usinasantafe.cav.lib.Type
+import br.com.usinasantafe.cav.presenter.Args.FLOW_NOTE_ARG
+import br.com.usinasantafe.cav.presenter.Args.ID_MAIN_ARG
+import br.com.usinasantafe.cav.presenter.Args.ID_SECONDARY_ARG
 import br.com.usinasantafe.cav.presenter.Args.OPTION_ARG
-import br.com.usinasantafe.cav.presenter.Args.TYPE_ARG
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
 import br.com.usinasantafe.cav.utils.UiStatusState
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -23,8 +25,10 @@ import javax.inject.Inject
 
 data class StateState(
     val option: Option = Option.INSERT,
-    val type: Type = Type.MAIN,
-    val idSelection: Int = 1,
+    val flowNote: FlowNote = FlowNote.COLAB,
+    val idSelection: Int = 0,
+    val idMain: Int = 0,
+    val idSecondary: Int = 0,
     override val status: UiStatusState = UiStatusState()
 ) : UiStateWithStatus<StateState> {
 
@@ -35,13 +39,15 @@ data class StateState(
 
 @HiltViewModel
 class StateViewModel @Inject constructor(
-    saveStateHandle: SavedStateHandle,
-    private val getStateColab: GetStateColab,
-    private val setStateColab: SetStateColab
+    savedStateHandle: SavedStateHandle,
+    private val getIdState: GetIdState,
+    private val setState: SetState
 ) : ViewModel() {
 
-    private val option: Int = saveStateHandle[OPTION_ARG]!!
-    private val type: Int = saveStateHandle[TYPE_ARG]!!
+    private val option: Int = savedStateHandle[OPTION_ARG]!!
+    private val flowNote: Int = savedStateHandle[FLOW_NOTE_ARG]!!
+    private val idMain: Int = savedStateHandle[ID_MAIN_ARG]!!
+    private val idSecondary: Int = savedStateHandle[ID_SECONDARY_ARG]!!
 
     private val _uiState = MutableStateFlow(StateState())
     val uiState = _uiState.asStateFlow()
@@ -58,7 +64,9 @@ class StateViewModel @Inject constructor(
         updateState {
             copy(
                 option = Option.entries[this@StateViewModel.option],
-                type = Type.entries[this@StateViewModel.type]
+                flowNote = FlowNote.entries[this@StateViewModel.flowNote],
+                idMain = this@StateViewModel.idMain,
+                idSecondary = this@StateViewModel.idSecondary,
             )
         }
     }
@@ -67,7 +75,7 @@ class StateViewModel @Inject constructor(
 
     fun recoverData() = viewModelScope.launch {
         runCatching {
-            getStateColab(state.option, state.type).getOrThrow()
+            getIdState(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
         }
             .onSuccess { updateState { copy(idSelection = it) } }
             .onFailureState(getClassAndMethod(), ::updateState)
@@ -75,7 +83,7 @@ class StateViewModel @Inject constructor(
 
     fun set() = viewModelScope.launch {
         runCatching {
-            setStateColab(state.option, state.type, state.idSelection).getOrThrow()
+            setState(state.idSelection, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
         }
             .onSuccessState(::updateState)
             .onFailureState(getClassAndMethod(), ::updateState)

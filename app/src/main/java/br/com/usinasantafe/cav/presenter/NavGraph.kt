@@ -8,19 +8,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
-import br.com.usinasantafe.cav.lib.Type
-import br.com.usinasantafe.cav.lib.TypeDetail
-import br.com.usinasantafe.cav.lib.TypePeople
-import br.com.usinasantafe.cav.lib.TypeVehicle
+import br.com.usinasantafe.cav.presenter.Args.FLOW_NOTE_ARG
 import br.com.usinasantafe.cav.presenter.Args.ID_MAIN_ARG
 import br.com.usinasantafe.cav.presenter.Args.ID_SECONDARY_ARG
 import br.com.usinasantafe.cav.presenter.Args.OPTION_ARG
-import br.com.usinasantafe.cav.presenter.Args.TYPE_ARG
-import br.com.usinasantafe.cav.presenter.Args.TYPE_DETAIL_ARG
-import br.com.usinasantafe.cav.presenter.Args.TYPE_PEOPLE_ARG
-import br.com.usinasantafe.cav.presenter.Args.TYPE_VEHICLE_ARG
+import br.com.usinasantafe.cav.presenter.Routes.ADDRESS_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.ATTENDANT_ROUTE
+import br.com.usinasantafe.cav.presenter.Routes.BRAND_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.CAR_FULL_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.CAR_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.COLAB_ROUTE
@@ -28,9 +24,12 @@ import br.com.usinasantafe.cav.presenter.Routes.CONFIG_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.DATA_COLAB_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.DATA_EQUIP_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.DATA_INITIAL_ROUTE
-import br.com.usinasantafe.cav.presenter.Routes.DATA_VEHICLE_FOREIGN_ROUTE
+import br.com.usinasantafe.cav.presenter.Routes.DATA_INVOLVED_ROUTE
+import br.com.usinasantafe.cav.presenter.Routes.DATA_VEHICLE_INVOLVED_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.DATA_VEHICLE_OWN_ROUTE
+import br.com.usinasantafe.cav.presenter.Routes.DATA_VEHICLE_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.DETAIL_ROUTE
+import br.com.usinasantafe.cav.presenter.Routes.DOCUMENT_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.EQUIP_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.EQUIP_SEC_LIST_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.INITIAL_MENU_ROUTE
@@ -38,10 +37,12 @@ import br.com.usinasantafe.cav.presenter.Routes.INPUT_LOCAL_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.ITEM_DATA_LOCAL_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.LOCAL_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.LOCAL_SUPPORT_ROUTE
+import br.com.usinasantafe.cav.presenter.Routes.NAME_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.NATURE_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.OPTION_DATA_LOCAL_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.PASSENGER_LIST_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.PASSWORD_ROUTE
+import br.com.usinasantafe.cav.presenter.Routes.PHONE_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.PLATE_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.SPLASH_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.STATE_ROUTE
@@ -66,10 +67,17 @@ import br.com.usinasantafe.cav.presenter.view.card.detail.DetailScreen
 import br.com.usinasantafe.cav.presenter.view.card.equip.data.EquipDataScreen
 import br.com.usinasantafe.cav.presenter.view.card.equip.equip.EquipScreen
 import br.com.usinasantafe.cav.presenter.view.card.equipSecList.EquipSecListScreen
+import br.com.usinasantafe.cav.presenter.view.card.involved.address.AddressScreen
+import br.com.usinasantafe.cav.presenter.view.card.involved.data.InvolvedDataScreen
+import br.com.usinasantafe.cav.presenter.view.card.involved.document.DocumentScreen
+import br.com.usinasantafe.cav.presenter.view.card.involved.name.NameScreen
+import br.com.usinasantafe.cav.presenter.view.card.involved.phone.PhoneScreen
 import br.com.usinasantafe.cav.presenter.view.card.passengerList.PassengerListScreen
 import br.com.usinasantafe.cav.presenter.view.card.state.StateScreen
+import br.com.usinasantafe.cav.presenter.view.card.vehicle.brand.BrandScreen
+import br.com.usinasantafe.cav.presenter.view.card.vehicle.data.VehicleDataScreen
 import br.com.usinasantafe.cav.presenter.view.card.vehicle.plate.PlateScreen
-import br.com.usinasantafe.cav.presenter.view.card.vehicleFull.VehicleForeignDataScreen
+import br.com.usinasantafe.cav.presenter.view.card.vehicleFull.VehicleInvolvedDataScreen
 import br.com.usinasantafe.cav.presenter.view.configuration.config.ConfigScreen
 import br.com.usinasantafe.cav.presenter.view.configuration.initial.InitialMenuScreen
 import br.com.usinasantafe.cav.presenter.view.configuration.password.PasswordScreen
@@ -253,35 +261,33 @@ fun NavigationGraph(
             )
         ) { entry ->
             VehicleOwnDataScreen(
-                onNavDataColab = {
-                    navActions.navigateToDataColab(
-                        type = Type.MAIN.ordinal,
-                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
-                        idSecondary = 0
-                    )
-                },
                 onNavDataEquip = {
                     navActions.navigateToDataEquip(
-                        type = Type.MAIN.ordinal,
+                        flowNote = FlowNote.EQUIP.ordinal,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = 0
                     )
                 },
                 onNavEquipSecList = {
                     navActions.navigateToEquipSecList(
-                        option = Option.EDIT.ordinal,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                    )
+                },
+                onNavDataColab = {
+                    navActions.navigateToDataColab(
+                        flowNote =  FlowNote.COLAB.ordinal,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = 0
                     )
                 },
                 onNavPassengerList = {
                     navActions.navigateToPassengerList(
-                        option = Option.EDIT.ordinal,
-                        typeVehicle = TypeVehicle.OWN.ordinal,
+                        flow = FlowNote.PASSENGER_COLAB.ordinal,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                     )
                 },
                 onNavMenu = {
-                    navActions.navigateToCarFull()
+                    navActions.navigateToVehicleFull()
                 }
             )
         }
@@ -290,38 +296,31 @@ fun NavigationGraph(
             EQUIP_ROUTE,
             arguments = listOf(
                 navArgument(OPTION_ARG) { type = NavType.IntType },
-                navArgument(TYPE_ARG) { type = NavType.IntType },
+                navArgument(FLOW_NOTE_ARG) { type = NavType.IntType },
                 navArgument(ID_MAIN_ARG) { type = NavType.IntType },
                 navArgument(ID_SECONDARY_ARG) { type = NavType.IntType }
             )
         ) { entry ->
-            val index = entry.arguments?.getInt(TYPE_ARG)!!
-            val type = Type.entries[index]
-            val typeDetail = when(type){
-                Type.MAIN -> TypeDetail.EQUIP
-                Type.SECONDARY -> TypeDetail.EQUIP_SEC
-            }
             EquipScreen(
                 onNavMenu = {
-                    navActions.navigateToCarFull()
+                    navActions.navigateToVehicleFull()
                 },
                 onNavEquipSecList = {
                     navActions.navigateToEquipSecList(
-                        option = entry.arguments?.getInt(OPTION_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
                     )
                 },
                 onNavDetail = {
                     navActions.navigateToDetail(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        typeDetail = typeDetail.ordinal,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 },
                 onNavDataEquip = {
                     navActions.navigateToDataEquip(
-                        type = entry.arguments?.getInt(TYPE_ARG)!!,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
@@ -332,29 +331,22 @@ fun NavigationGraph(
         composable(
             DATA_EQUIP_ROUTE,
             arguments = listOf(
-                navArgument(TYPE_ARG) { type = NavType.IntType },
+                navArgument(FLOW_NOTE_ARG) { type = NavType.IntType },
                 navArgument(ID_MAIN_ARG) { type = NavType.IntType },
                 navArgument(ID_SECONDARY_ARG) { type = NavType.IntType }
             )
         ) { entry ->
-            val index = entry.arguments?.getInt(TYPE_ARG)!!
-            val type = Type.entries[index]
-            val typeDetail = when(type){
-                Type.MAIN -> TypeDetail.EQUIP
-                Type.SECONDARY -> TypeDetail.EQUIP_SEC
-            }
             EquipDataScreen(
                 onNavEquip = {
                     navActions.navigateToEquip(
                         option = Option.EDIT.ordinal,
-                        type = entry.arguments?.getInt(TYPE_ARG)!!,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 },
                 onNavEquipSecList = {
                     navActions.navigateToEquipSecList(
-                        option = Option.EDIT.ordinal,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                     )
                 },
@@ -366,7 +358,7 @@ fun NavigationGraph(
                 onNavDetail = {
                     navActions.navigateToDetail(
                         option = Option.EDIT.ordinal,
-                        typeDetail = typeDetail.ordinal,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
@@ -378,35 +370,22 @@ fun NavigationGraph(
             COLAB_ROUTE,
             arguments = listOf(
                 navArgument(OPTION_ARG) { type = NavType.IntType },
-                navArgument(TYPE_ARG) { type = NavType.IntType },
+                navArgument(FLOW_NOTE_ARG) { type = NavType.IntType },
                 navArgument(ID_MAIN_ARG) { type = NavType.IntType },
                 navArgument(ID_SECONDARY_ARG) { type = NavType.IntType }
             )
         ) { entry ->
-            val index = entry.arguments?.getInt(TYPE_ARG)!!
-            val type = Type.entries[index]
-            val typePeople = when(type){
-                Type.MAIN -> TypePeople.DRIVER
-                Type.SECONDARY -> TypePeople.PASSENGER
-            }
             ColabScreen(
                 onNavPassengerList = {
                     navActions.navigateToPassengerList(
-                        option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        flow = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
-                        typeVehicle = TypeVehicle.OWN.ordinal
-                    )
-                },
-                onNavDetail = {
-                    navActions.navigateToEquipSecList(
-                        option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
                     )
                 },
                 onNavState = {
                     navActions.navigateToState(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        typePeople = typePeople.ordinal,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
@@ -422,43 +401,40 @@ fun NavigationGraph(
         composable(
             DATA_COLAB_ROUTE,
             arguments = listOf(
-                navArgument(TYPE_ARG) { type = NavType.IntType },
+                navArgument(FLOW_NOTE_ARG) { type = NavType.IntType },
                 navArgument(ID_MAIN_ARG) { type = NavType.IntType },
                 navArgument(ID_SECONDARY_ARG) { type = NavType.IntType }
             )
         ) { entry ->
-            val index = entry.arguments?.getInt(TYPE_ARG)!!
-            val type = Type.entries[index]
-            val typeDetail = when(type){
-                Type.MAIN -> TypeDetail.COLAB
-                Type.SECONDARY -> TypeDetail.PASSENGER_COLAB
-            }
-            val typePeople = when(type){
-                Type.MAIN -> TypePeople.DRIVER
-                Type.SECONDARY -> TypePeople.PASSENGER
-            }
             ColabDataScreen(
                 onNavColab = {
                     navActions.navigateToEquip(
                         option = Option.EDIT.ordinal,
-                        type = entry.arguments?.getInt(TYPE_ARG)!!,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 },
                 onNavState = {
                     navActions.navigateToState(
-                        option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        typePeople = typePeople.ordinal,
+                        option = Option.EDIT.ordinal,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
+                    )
+                },
+                onNavDetail = {
+                    navActions.navigateToDetail(
+                        option = Option.EDIT.ordinal,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 },
                 onNavPassengerList = {
                     navActions.navigateToPassengerList(
-                        option = Option.EDIT.ordinal,
+                        flow = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
-                        typeVehicle = TypeVehicle.OWN.ordinal
                     )
                 },
                 onNavDataVehicleOwn = {
@@ -466,14 +442,6 @@ fun NavigationGraph(
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                     )
                 },
-                onNavDetail = {
-                    navActions.navigateToDetail(
-                        option = Option.EDIT.ordinal,
-                        typeDetail = typeDetail.ordinal,
-                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
-                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
-                    )
-                }
             )
         }
 
@@ -481,31 +449,11 @@ fun NavigationGraph(
             DETAIL_ROUTE,
             arguments = listOf(
                 navArgument(OPTION_ARG) { type = NavType.IntType },
-                navArgument(TYPE_DETAIL_ARG) { type = NavType.IntType },
+                navArgument(FLOW_NOTE_ARG) { type = NavType.IntType },
                 navArgument(ID_MAIN_ARG) { type = NavType.IntType },
                 navArgument(ID_SECONDARY_ARG) { type = NavType.IntType }
             )
         ) { entry ->
-            val index = entry.arguments?.getInt(TYPE_DETAIL_ARG)!!
-            val typeDetail = TypeDetail.entries[index]
-            val type = when(typeDetail){
-                TypeDetail.EQUIP -> Type.MAIN
-                TypeDetail.EQUIP_SEC -> Type.SECONDARY
-                TypeDetail.COLAB -> Type.MAIN
-                TypeDetail.PASSENGER_COLAB -> Type.SECONDARY
-            }
-            val typePeople = when(typeDetail){
-                TypeDetail.EQUIP,
-                TypeDetail.EQUIP_SEC,
-                TypeDetail.COLAB -> TypePeople.DRIVER
-                TypeDetail.PASSENGER_COLAB -> TypePeople.PASSENGER
-            }
-            val typeVehicle = when(typeDetail){
-                TypeDetail.EQUIP,
-                TypeDetail.EQUIP_SEC,
-                TypeDetail.COLAB,
-                TypeDetail.PASSENGER_COLAB -> TypeVehicle.OWN
-            }
             DetailScreen(
                 onNavDataVehicleOwn = {
                     navActions.navigateToDataVehicleOwn(
@@ -515,7 +463,7 @@ fun NavigationGraph(
                 onNavEquip = {
                     navActions.navigateToEquip(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        type = type.ordinal,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
@@ -523,42 +471,67 @@ fun NavigationGraph(
                 onNavState = {
                     navActions.navigateToState(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        typePeople = typePeople.ordinal,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 },
                 onNavEquipSecList = {
                     navActions.navigateToEquipSecList(
-                        option = entry.arguments?.getInt(OPTION_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
                     )
                 },
                 onNavColab = {
-                    navActions.navigateToEquipSecList(
+                    navActions.navigateToColab(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 },
                 onNavPassengerList = {
                     navActions.navigateToPassengerList(
-                        option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        flow = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
-                        typeVehicle = typeVehicle.ordinal
                     )
                 },
                 onNavDataColab = {
-                    navActions.navigateToColab(
+                    navActions.navigateToState(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        type = type.ordinal,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 },
                 onNavDataEquip = {
-                    navActions.navigateToColab(
+                    navActions.navigateToEquip(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        type = type.ordinal,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
+                    )
+                },
+                onNavBrand = {
+                    navActions.navigateToBrand(
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                    )
+                },
+                onNavDocument = {
+                    navActions.navigateToDocument(
+                        option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
+                    )
+                },
+                onNavDataVehicleInvolved = {
+                    navActions.navigateToDataVehicleInvolved(
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
+                    )
+                },
+                onNavDataInvolved = {
+                    navActions.navigateToDataInvolved(
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
@@ -569,15 +542,14 @@ fun NavigationGraph(
         composable(
             EQUIP_SEC_LIST_ROUTE,
             arguments = listOf(
-                navArgument(OPTION_ARG) { type = NavType.IntType },
                 navArgument(ID_MAIN_ARG) { type = NavType.IntType },
             )
         ){ entry ->
             EquipSecListScreen(
                 onNavEquip = {
                     navActions.navigateToEquip(
-                        option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        type = Type.SECONDARY.ordinal,
+                        option = Option.INSERT.ordinal,
+                        flowNote = FlowNote.EQUIP_SEC.ordinal,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = 0
                     )
@@ -588,9 +560,8 @@ fun NavigationGraph(
                     )
                 },
                 onNavDataEquip = {
-                    navActions.navigateToColab(
-                        option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        type = Type.SECONDARY.ordinal,
+                    navActions.navigateToDataEquip(
+                        flowNote = FlowNote.EQUIP_SEC.ordinal,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = it
                     )
@@ -601,23 +572,22 @@ fun NavigationGraph(
         composable(
             PASSENGER_LIST_ROUTE,
             arguments = listOf(
-                navArgument(OPTION_ARG) { type = NavType.IntType },
-                navArgument(TYPE_VEHICLE_ARG) { type = NavType.IntType },
+                navArgument(FLOW_NOTE_ARG) { type = NavType.IntType },
                 navArgument(ID_MAIN_ARG) { type = NavType.IntType },
             )
         ) { entry ->
             PassengerListScreen(
                 onNavColab = {
                     navActions.navigateToColab(
-                        option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        type = Type.SECONDARY.ordinal,
+                        option = Option.INSERT.ordinal,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = 0
                     )
                 },
                 onNavDataColab = {
                     navActions.navigateToDataColab(
-                        type = Type.SECONDARY.ordinal,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = it
                     )
@@ -627,7 +597,11 @@ fun NavigationGraph(
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                     )
                 },
-                onNavDataVehicleForeign = {}
+                onNavDataVehicleInvolved = {
+                    navActions.navigateToDataVehicleInvolved(
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                    )
+                }
             )
         }
 
@@ -635,29 +609,16 @@ fun NavigationGraph(
             STATE_ROUTE,
             arguments = listOf(
                 navArgument(OPTION_ARG) { type = NavType.IntType },
-                navArgument(TYPE_PEOPLE_ARG) { type = NavType.IntType },
-                navArgument(ID_MAIN_ARG) { type = NavType.IntType }
+                navArgument(FLOW_NOTE_ARG) { type = NavType.IntType },
+                navArgument(ID_MAIN_ARG) { type = NavType.IntType },
+                navArgument(ID_SECONDARY_ARG) { type = NavType.IntType }
             )
         ) { entry ->
-            val index = entry.arguments?.getInt(TYPE_PEOPLE_ARG)!!
-            val typePeople = TypePeople.entries[index]
-            val typeDetail = when(typePeople){
-                TypePeople.INVOLVED,
-                TypePeople.PEDESTRIAN,
-                TypePeople.DRIVER -> TypeDetail.COLAB
-                TypePeople.PASSENGER -> TypeDetail.PASSENGER_COLAB
-            }
-            val type = when(typePeople){
-                TypePeople.INVOLVED,
-                TypePeople.PEDESTRIAN,
-                TypePeople.DRIVER -> Type.MAIN
-                TypePeople.PASSENGER -> Type.SECONDARY
-            }
             StateScreen(
                 onNavColab = {
                     navActions.navigateToColab(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        type = type.ordinal,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
@@ -665,50 +626,32 @@ fun NavigationGraph(
                 onNavDetail = {
                     navActions.navigateToDetail(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        typeDetail = typeDetail.ordinal,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 },
                 onNavDataColab = {
                     navActions.navigateToDataColab(
-                        type = type.ordinal,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
-                }
-            )
-        }
-
-        composable(
-            DATA_VEHICLE_FOREIGN_ROUTE,
-            arguments = listOf(
-                navArgument(ID_MAIN_ARG) { type = NavType.IntType },
-            )
-        ) { entry ->
-            VehicleForeignDataScreen(
-                onNavDataVehicle = {
-                    navActions.navigateToDataVehicle(
+                },
+                onNavDataInvolved = {
+                    navActions.navigateToDataInvolved(
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 },
-                onNavDataForeign = {
-//                    navActions.navigateToEquip(
-//                        option = Option.EDIT.ordinal,
-//                        type = Type.MAIN.ordinal,
-//                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
-//                        idSecondary = 0
-//                    )
-                },
-                onNavPassengerList = {
-                    navActions.navigateToPassengerList(
-                        option = Option.EDIT.ordinal,
-                        typeVehicle = TypeVehicle.OWN.ordinal,
+                onNavName = {
+                    navActions.navigateToName(
+                        option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
-                },
-                onNavMenu = {
-                    navActions.navigateToCarFull()
                 }
             )
         }
@@ -716,23 +659,297 @@ fun NavigationGraph(
         composable(
             PLATE_ROUTE,
             arguments = listOf(
-                navArgument(OPTION_ARG) { type = NavType.IntType },
                 navArgument(ID_MAIN_ARG) { type = NavType.IntType },
             )
         ) { entry ->
             PlateScreen(
                 onNavMenu = {
-                    navActions.navigateToCarFull()
+                    navActions.navigateToVehicleFull()
                 },
                 onNavBrand = {
                     navActions.navigateToBrand(
-                        option = entry.arguments?.getInt(OPTION_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                     )
                 },
                 onNavDataVehicle = {
-                    navActions.navigateToDataVehicleForeign(
+                    navActions.navigateToDataVehicleInvolved(
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                    )
+                }
+            )
+        }
+
+        composable(
+            BRAND_ROUTE,
+            arguments = listOf(
+                navArgument(ID_MAIN_ARG) { type = NavType.IntType },
+            )
+        ) { entry ->
+            BrandScreen(
+                onNavPlate = {
+                    navActions.navigateToBrand(
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                    )
+                },
+                onNavDetail = {
+                    navActions.navigateToDetail(
+                        option = Option.INSERT.ordinal,
+                        flowNote = FlowNote.VEHICLE.ordinal,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = 0
+                    )
+                },
+                onNavDataVehicle = {
+                    navActions.navigateToDataVehicleOwn(
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
+                    )
+                }
+            )
+        }
+
+        composable(
+            DOCUMENT_ROUTE,
+            arguments = listOf(
+                navArgument(OPTION_ARG) { type = NavType.IntType },
+                navArgument(FLOW_NOTE_ARG) { type = NavType.IntType },
+                navArgument(ID_MAIN_ARG) { type = NavType.IntType },
+                navArgument(ID_SECONDARY_ARG) { type = NavType.IntType }
+            )
+        ) { entry ->
+            DocumentScreen(
+                onNavDetail = {
+                    navActions.navigateToDetail(
+                        option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
+                    )
+                },
+                onNavDataForeign = {
+                    navActions.navigateToDataVehicle(
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                    )
+                },
+                onNavName = {
+                    navActions.navigateToName(
+                        option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
+                    )
+                },
+                onNavPassengerList = {
+                    navActions.navigateToPassengerList(
+                        flow = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                    )
+                }
+            )
+        }
+
+        composable(
+            NAME_ROUTE,
+            arguments = listOf(
+                navArgument(OPTION_ARG) { type = NavType.IntType },
+                navArgument(FLOW_NOTE_ARG) { type = NavType.IntType },
+                navArgument(ID_MAIN_ARG) { type = NavType.IntType },
+                navArgument(ID_SECONDARY_ARG) { type = NavType.IntType }
+            )
+        ) { entry ->
+            NameScreen(
+                onNavDocument = {
+                    navActions.navigateToDocument(
+                        option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
+                    )
+                },
+                onNavState = {
+                    navActions.navigateToState(
+                        option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
+                    )
+                },
+                onNavDataInvolved = {
+                    navActions.navigateToDataInvolved(
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
+                    )
+                }
+            )
+        }
+
+        composable(
+            DATA_VEHICLE_INVOLVED_ROUTE,
+            arguments = listOf(
+                navArgument(ID_MAIN_ARG) { type = NavType.IntType },
+            )
+        ) { entry ->
+            VehicleInvolvedDataScreen(
+                onNavDataVehicle = {
+                    navActions.navigateToDataVehicle(
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                    )
+                },
+                onNavDataInvolved = {
+                    navActions.navigateToDataInvolved(
+                        flowNote = FlowNote.DRIVER.ordinal,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = 0
+                    )
+                },
+                onNavPassengerList = {
+                    navActions.navigateToPassengerList(
+                        flow = FlowNote.PASSENGER_INVOLVED.ordinal,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                    )
+                },
+                onNavMenu = {
+                    navActions.navigateToVehicleFull()
+                }
+            )
+        }
+
+        composable(
+            DATA_VEHICLE_ROUTE,
+            arguments = listOf(
+                navArgument(ID_MAIN_ARG) { type = NavType.IntType }
+            )
+        ) { entry ->
+            VehicleDataScreen(
+                onNavPlate = {
+                    navActions.navigateToPlate(
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                    )
+                },
+                onNavBrand = {
+                    navActions.navigateToBrand(
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                    )
+                },
+                onNavDetail = {
+                    navActions.navigateToDetail(
+                        option = Option.EDIT.ordinal,
+                        flowNote = FlowNote.VEHICLE.ordinal,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = 0
+                    )
+                },
+                onNavDataVehicleInvolved = {
+                    navActions.navigateToDataVehicleInvolved(
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                    )
+                }
+            )
+        }
+
+        composable(
+            DATA_INVOLVED_ROUTE,
+            arguments = listOf(
+                navArgument(FLOW_NOTE_ARG) { type = NavType.IntType },
+                navArgument(ID_MAIN_ARG) { type = NavType.IntType },
+                navArgument(ID_SECONDARY_ARG) { type = NavType.IntType }
+            )
+        ) { entry ->
+            InvolvedDataScreen(
+                onNavDocument = {
+                    navActions.navigateToDocument(
+                        option = Option.EDIT.ordinal,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
+                    )
+                },
+                onNavName = {
+                    navActions.navigateToName(
+                        option = Option.EDIT.ordinal,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
+                    )
+                },
+                onNavState = {
+                    navActions.navigateToState(
+                        option = Option.EDIT.ordinal,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
+                    )
+                },
+                onNavPhone = {
+                    navActions.navigateToPhone(
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
+                    )
+                },
+                onNavAddress = {
+                    navActions.navigateToAddress(
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
+                    )
+                },
+                onNavDetail = {
+                    navActions.navigateToDetail(
+                        option = Option.EDIT.ordinal,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
+                    )
+                },
+                onNavDataVehicleInvolved = {
+                    navActions.navigateToDataVehicleInvolved(
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                    )
+                },
+                onNavMenu = {},
+                onNavPassengerList = {
+                    navActions.navigateToPassengerList(
+                        flow = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                    )
+                }
+            )
+        }
+
+        composable(
+            PHONE_ROUTE,
+            arguments = listOf(
+                navArgument(FLOW_NOTE_ARG) { type = NavType.IntType },
+                navArgument(ID_MAIN_ARG) { type = NavType.IntType },
+                navArgument(ID_SECONDARY_ARG) { type = NavType.IntType }
+            )
+        ) { entry ->
+            PhoneScreen(
+                onNavDataInvolved = {
+                    navActions.navigateToDataInvolved(
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
+                    )
+                }
+            )
+        }
+
+        composable(
+            ADDRESS_ROUTE,
+            arguments = listOf(
+                navArgument(FLOW_NOTE_ARG) { type = NavType.IntType },
+                navArgument(ID_MAIN_ARG) { type = NavType.IntType },
+                navArgument(ID_SECONDARY_ARG) { type = NavType.IntType }
+            )
+        ) { entry ->
+            AddressScreen(
+                onNavDataInvolved = {
+                    navActions.navigateToDataInvolved(
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 }
             )
@@ -784,7 +1001,7 @@ fun NavigationGraph(
                     navActions.navigateToSupportTeams()
                 },
                 onNavCarFull = {
-                    navActions.navigateToCarFull()
+                    navActions.navigateToVehicleFull()
                 }
             )
         }
@@ -798,7 +1015,7 @@ fun NavigationGraph(
                 onNavEquip = {
                     navActions.navigateToEquip(
                         option = Option.INSERT.ordinal,
-                        type = Type.MAIN.ordinal,
+                        flowNote = FlowNote.EQUIP.ordinal,
                         idMain = 0,
                         idSecondary = 0
                     )
@@ -810,11 +1027,14 @@ fun NavigationGraph(
                 },
                 onNavPlate = {
                     navActions.navigateToPlate(
-                        option = Option.INSERT.ordinal,
                         idMain = 0,
                     )
                 },
-                onNavDataVehicleForeign = {}
+                onNavDataVehicleForeign = {
+                    navActions.navigateToDataVehicleInvolved(
+                        idMain = it
+                    )
+                }
             )
         }
 

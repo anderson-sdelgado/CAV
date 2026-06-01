@@ -1,10 +1,13 @@
 package br.com.usinasantafe.cav.presenter.view.card.equipSecList
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.usinasantafe.cav.domain.usecases.card.DeleteEquipSec
 import br.com.usinasantafe.cav.domain.usecases.card.ListEquipSec
+import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
+import br.com.usinasantafe.cav.presenter.Args.ID_MAIN_ARG
 import br.com.usinasantafe.cav.presenter.model.ItemListScreenModel
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
 import br.com.usinasantafe.cav.utils.UiStatusState
@@ -17,34 +20,45 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class EquipSecListOwnState(
+data class EquipSecListState(
     val list: List<ItemListScreenModel> = emptyList(),
+    val idMain: Int = 0,
     val idSelection: Int = 0,
     val flagDialogCheck: Boolean = false,
     override val status: UiStatusState = UiStatusState()
-) : UiStateWithStatus<EquipSecListOwnState> {
+) : UiStateWithStatus<EquipSecListState> {
 
-    override fun copyWithStatus(status: UiStatusState): EquipSecListOwnState =
+    override fun copyWithStatus(status: UiStatusState): EquipSecListState =
         copy(status = status)
 
 }
 
 @HiltViewModel
-class EquipSecListOwnViewModel @Inject constructor(
+class EquipSecListViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val listEquipSec: ListEquipSec,
     private val deleteEquipSec: DeleteEquipSec
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(EquipSecListOwnState())
+    private val idMain: Int = savedStateHandle[ID_MAIN_ARG]!!
+    private val _uiState = MutableStateFlow(EquipSecListState())
     val uiState = _uiState.asStateFlow()
 
     private val state get() = uiState.value
 
-    private fun updateState(block: EquipSecListOwnState.() -> EquipSecListOwnState) {
+    private fun updateState(block: EquipSecListState.() -> EquipSecListState) {
         _uiState.update(block)
     }
 
     fun onCloseDialog() = updateState { copy(status = status.copy(flagDialog = false, flagFailure = false)) }
+
+    init {
+        updateState {
+            copy(
+                idMain = this@EquipSecListViewModel.idMain,
+            )
+        }
+    }
 
     fun onDialogCheck(flag: Boolean) = updateState { copy(flagDialogCheck = flag) }
 
@@ -52,7 +66,7 @@ class EquipSecListOwnViewModel @Inject constructor(
 
     fun recoverData() = viewModelScope.launch {
         runCatching {
-            listEquipSec().getOrThrow()
+            listEquipSec(idMain).getOrThrow()
         }
             .onSuccess { updateState { copy(list = it) } }
             .onFailureState(getClassAndMethod(), ::updateState)
@@ -60,7 +74,7 @@ class EquipSecListOwnViewModel @Inject constructor(
 
     fun delete() = viewModelScope.launch {
         runCatching {
-            deleteEquipSec(state.idSelection).getOrThrow()
+            deleteEquipSec(state.idSelection, state.idMain).getOrThrow()
         }
             .onSuccess { recoverData() }
             .onFailureState(getClassAndMethod(), ::updateState)

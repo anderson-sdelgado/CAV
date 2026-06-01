@@ -1,10 +1,19 @@
 package br.com.usinasantafe.cav.presenter.view.card.equip.data
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.usinasantafe.cav.lib.Type
+import br.com.usinasantafe.cav.domain.usecases.card.GetDescEquip
+import br.com.usinasantafe.cav.domain.usecases.card.GetDetail
+import br.com.usinasantafe.cav.lib.FlowNote
+import br.com.usinasantafe.cav.lib.Option
+import br.com.usinasantafe.cav.presenter.Args.FLOW_NOTE_ARG
+import br.com.usinasantafe.cav.presenter.Args.ID_MAIN_ARG
+import br.com.usinasantafe.cav.presenter.Args.ID_SECONDARY_ARG
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
 import br.com.usinasantafe.cav.utils.UiStatusState
+import br.com.usinasantafe.cav.utils.getClassAndMethod
+import br.com.usinasantafe.cav.utils.onFailureState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +22,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class EquipDataState(
-    val type: Type = Type.MAIN,
+    val flowNote: FlowNote = FlowNote.EQUIP,
+    val idMain: Int = 0,
+    val idSecondary: Int = 0,
     val equip: String = "",
     val detail: String = "",
     override val status: UiStatusState = UiStatusState()
@@ -26,7 +37,14 @@ data class EquipDataState(
 
 @HiltViewModel
 class EquipDataViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
+    private val getDescEquip: GetDescEquip,
+    private val getDetail: GetDetail
 ) : ViewModel() {
+
+    private val flowNote: Int = savedStateHandle[FLOW_NOTE_ARG]!!
+    private val idMain: Int = savedStateHandle[ID_MAIN_ARG]!!
+    private val idSecondary: Int = savedStateHandle[ID_SECONDARY_ARG]!!
 
     private val _uiState = MutableStateFlow(EquipDataState())
     val uiState = _uiState.asStateFlow()
@@ -39,8 +57,32 @@ class EquipDataViewModel @Inject constructor(
 
     fun onCloseDialog() = updateState { copy(status = status.copy(flagDialog = false, flagFailure = false)) }
 
-    fun recoverData() = viewModelScope.launch {
-
+    init {
+        updateState {
+            copy(
+                flowNote = FlowNote.entries[this@EquipDataViewModel.flowNote],
+                idMain = this@EquipDataViewModel.idMain,
+                idSecondary = this@EquipDataViewModel.idSecondary
+            )
+        }
     }
+
+    fun recoverData() = viewModelScope.launch {
+        runCatching {
+            val descEquip = getDescEquip(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            val detail = getDetail(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            EquipDataState(
+                equip = descEquip,
+                detail = detail
+            )
+        }
+            .onSuccess { newState ->
+                updateState {
+                    newState.copy(status = status.copy(flagFailure = false))
+                }
+            }
+            .onFailureState(getClassAndMethod(), ::updateState)
+    }
+
 
 }
