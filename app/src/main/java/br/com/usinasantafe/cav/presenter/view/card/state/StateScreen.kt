@@ -63,7 +63,7 @@ fun StateScreen(
                 onNavName = onNavName,
                 onNavDetail = onNavDetail,
                 onNavDataColab = onNavDataColab,
-                onNavDataForeign = onNavDataInvolved,
+                onNavDataInvolved = onNavDataInvolved,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -83,7 +83,7 @@ fun StateContent(
     onNavName: () -> Unit,
     onNavDetail: () -> Unit,
     onNavDataColab: () -> Unit,
-    onNavDataForeign: () -> Unit,
+    onNavDataInvolved: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -209,7 +209,7 @@ fun StateContent(
                                 FlowNote.DRIVER,
                                 FlowNote.PASSENGER_INVOLVED,
                                 FlowNote.INVOLVED,
-                                FlowNote.WITNESS -> onNavDataForeign()
+                                FlowNote.WITNESS -> onNavDataInvolved()
                                 FlowNote.EQUIP,
                                 FlowNote.EQUIP_SEC,
                                 FlowNote.VEHICLE -> {}
@@ -252,7 +252,7 @@ fun StateContent(
                         FlowNote.DRIVER,
                         FlowNote.PASSENGER_INVOLVED,
                         FlowNote.INVOLVED,
-                        FlowNote.WITNESS -> onNavDataForeign()
+                        FlowNote.WITNESS -> onNavDataInvolved()
                         FlowNote.EQUIP,
                         FlowNote.EQUIP_SEC,
                         FlowNote.VEHICLE -> {}
@@ -281,7 +281,7 @@ fun StatePagePreview() {
                 onNavDetail = {},
                 onNavDataColab = {},
                 onNavName = {},
-                onNavDataForeign = {},
+                onNavDataInvolved = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

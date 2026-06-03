@@ -12,8 +12,6 @@ import br.com.usinasantafe.cav.lib.LevelUpdate
 import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.TypeButton
 import br.com.usinasantafe.cav.presenter.Args
-import br.com.usinasantafe.cav.presenter.view.card.equip.equip.EquipStateUpdate
-import br.com.usinasantafe.cav.presenter.view.card.equip.equip.EquipViewModel
 import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 import br.com.usinasantafe.cav.utils.percentage
 import br.com.usinasantafe.cav.utils.resultFailure
@@ -108,7 +106,7 @@ class EquipViewModelTest {
                 false
             )
             assertEquals(
-                viewModel.uiState.value.nroEquip,
+                viewModel.uiState.value.text,
                 "2200"
             )
         }
@@ -121,7 +119,7 @@ class EquipViewModelTest {
         )
         assertEquals(
             "1",
-            viewModel.uiState.value.nroEquip
+            viewModel.uiState.value.text
         )
     }
 
@@ -148,7 +146,7 @@ class EquipViewModelTest {
             TypeButton.NUMERIC
         )
         assertEquals(
-            viewModel.uiState.value.nroEquip,
+            viewModel.uiState.value.text,
             "191"
         )
     }
@@ -444,6 +442,7 @@ class EquipViewModelTest {
             whenever(
                 setEquip(
                     nroEquip = "200",
+                    option = Option.INSERT,
                     flowNote = FlowNote.EQUIP,
                     idMain = 0,
                     idSecondary = 0
@@ -507,6 +506,7 @@ class EquipViewModelTest {
             )
             verify(setEquip, atLeastOnce()).invoke(
                 nroEquip = "200",
+                option = Option.INSERT,
                 flowNote = FlowNote.EQUIP,
                 idMain = 0,
                 idSecondary = 0

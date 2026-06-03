@@ -1,6 +1,5 @@
 package br.com.usinasantafe.cav.infra.datasource.sharedpreferences
 
-import br.com.usinasantafe.cav.domain.entities.variable.Local
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.LocalSharedPreferencesModel
 import br.com.usinasantafe.cav.utils.EmptyResult
 

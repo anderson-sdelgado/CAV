@@ -65,7 +65,7 @@ fun UiStatusState.withFailure(
     )
 }
 
-fun <T : UiStateWithStatus<T>> Result<*>.onSuccessState(
+fun <T : UiStateWithStatus<T>> Result<*>.onSuccessStateAccess(
     updateState: ((T.() -> T)) -> Unit
 ): Result<*> =
     onSuccess {

@@ -187,7 +187,7 @@ class VehicleOwnDataViewModelTest {
     fun `recoverData - Check return failure if have error in GetDescPassengersColab`() =
         runTest {
             whenever(
-                getDescPassengers(2)
+                getDescPassengers(FlowNote.PASSENGER_COLAB, 2)
             ).thenReturn(
                 resultFailure(
                     context = "GetDescPassengersColab",
@@ -292,7 +292,7 @@ class VehicleOwnDataViewModelTest {
                 Result.success("Driver")
             )
             whenever(
-                getDescPassengers(2)
+                getDescPassengers(FlowNote.PASSENGER_COLAB,2)
             ).thenReturn(
                 Result.success("Passenger")
             )

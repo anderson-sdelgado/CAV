@@ -15,7 +15,7 @@ import br.com.usinasantafe.cav.utils.UiStateWithStatus
 import br.com.usinasantafe.cav.utils.UiStatusState
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import br.com.usinasantafe.cav.utils.onFailureState
-import br.com.usinasantafe.cav.utils.onSuccessState
+import br.com.usinasantafe.cav.utils.onSuccessStateAccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -90,7 +90,7 @@ class DetailViewModel @Inject constructor(
         runCatching {
             setDetail(state.text, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
         }
-            .onSuccessState(::updateState)
+            .onSuccessStateAccess(::updateState)
             .onFailureState(getClassAndMethod(), ::updateState)
     }
 

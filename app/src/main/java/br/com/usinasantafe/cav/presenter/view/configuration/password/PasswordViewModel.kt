@@ -3,13 +3,11 @@ package br.com.usinasantafe.cav.presenter.view.configuration.password
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.usinasantafe.cav.domain.usecases.config.CheckPassword
-import br.com.usinasantafe.cav.presenter.view.card.local.InputLocalState
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
 import br.com.usinasantafe.cav.utils.UiStatusState
 import br.com.usinasantafe.cav.utils.getClassAndMethod
-import br.com.usinasantafe.cav.utils.onFailureHandled
 import br.com.usinasantafe.cav.utils.onFailureState
-import br.com.usinasantafe.cav.utils.onSuccessState
+import br.com.usinasantafe.cav.utils.onSuccessStateAccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -50,7 +48,7 @@ class PasswordViewModel @Inject constructor(
             runCatching {
                 checkPassword(state.password).getOrThrow()
             }
-                .onSuccessState(::updateState)
+                .onSuccessStateAccess(::updateState)
                 .onFailureState(getClassAndMethod(), ::updateState)
         }
 

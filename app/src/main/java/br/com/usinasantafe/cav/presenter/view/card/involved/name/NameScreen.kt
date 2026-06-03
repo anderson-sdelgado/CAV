@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
+import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.MsgErrors
@@ -48,6 +49,7 @@ fun NameScreen(
             }
 
             NameContent(
+                option = uiState.option,
                 text = uiState.text,
                 onTextChanged = viewModel::onTextChanged,
                 set = viewModel::set,
@@ -55,6 +57,7 @@ fun NameScreen(
                 status = uiState.status,
                 onNavDocument = onNavDocument,
                 onNavState = onNavState,
+                onNavDataInvolved = onNavDataInvolved,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -63,6 +66,7 @@ fun NameScreen(
 
 @Composable
 fun NameContent(
+    option: Option,
     text: String,
     onTextChanged: (String) -> Unit,
     set: () -> Unit,
@@ -70,6 +74,7 @@ fun NameContent(
     status: UiStatusState,
     onNavDocument: () -> Unit,
     onNavState: () -> Unit,
+    onNavDataInvolved: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -101,7 +106,12 @@ fun NameContent(
             horizontalArrangement = Arrangement.Center,
         ) {
             Button(
-                onClick = onNavDocument,
+                onClick = {
+                    when(option) {
+                        Option.INSERT -> onNavDocument()
+                        Option.EDIT -> onNavDataInvolved()
+                    }
+                },
                 modifier = Modifier.weight(1f)
             ) {
                 TextButtonDesign(text = stringResource(id = R.string.text_pattern_cancel))
@@ -122,7 +132,10 @@ fun NameContent(
 
     LaunchedEffect(status.flagAccess) {
         if (status.flagAccess) {
-            onNavState()
+            when(option) {
+                Option.INSERT -> onNavState()
+                Option.EDIT -> onNavDataInvolved()
+            }
         }
     }
 }
@@ -133,6 +146,7 @@ fun NamePagePreview() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             NameContent(
+                option = Option.INSERT,
                 text = "Text",
                 onTextChanged = {},
                 set = {},
@@ -140,6 +154,7 @@ fun NamePagePreview() {
                 status = UiStatusState(),
                 onNavDocument = {},
                 onNavState = {},
+                onNavDataInvolved = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

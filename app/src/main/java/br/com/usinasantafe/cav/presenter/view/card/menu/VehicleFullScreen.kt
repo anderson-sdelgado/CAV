@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.presenter.view.card.menu
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -31,11 +32,15 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
+import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.TypeVehicle
 import br.com.usinasantafe.cav.presenter.model.VehicleScreenModel
+import br.com.usinasantafe.cav.presenter.theme.AlertDialogCheckDesign
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
+import br.com.usinasantafe.cav.presenter.theme.MsgErrors
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
+import br.com.usinasantafe.cav.utils.UiStatusState
 
 @Composable
 fun VehicleFullScreen(
@@ -45,7 +50,7 @@ fun VehicleFullScreen(
     onNavEquip: () -> Unit,
     onNavDataVehicleOwn: (Int) -> Unit,
     onNavPlate: () -> Unit,
-    onNavDataVehicleForeign: (Int) -> Unit,
+    onNavDataVehicleInvolved: (Int) -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -56,14 +61,22 @@ fun VehicleFullScreen(
             }
 
             VehicleFullContent(
+                typeVehicle = uiState.typeVehicle,
                 vehicleOwnList = uiState.vehicleOwnList,
                 vehicleInvolvedList = uiState.vehicleInvolvedList,
+                idSelection = uiState.idSelection,
+                onSelectionDelete = viewModel::onSelectionDelete,
+                flagDialogCheck = uiState.flagDialogCheck,
+                onDialogCheck = viewModel::onDialogCheck,
+                delete = viewModel::delete,
+                onCloseDialog = viewModel::onCloseDialog,
+                status = uiState.status,
                 onNavLocalSupport = onNavLocalSupport,
                 onNavInvolvedWitness = onNavInvolvedWitness,
                 onNavEquip = onNavEquip,
                 onNavDataVehicleOwn = onNavDataVehicleOwn,
                 onNavPlate = onNavPlate,
-                onNavDataVehicleForeign = onNavDataVehicleForeign,
+                onNavDataVehicleInvolved = onNavDataVehicleInvolved,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -72,14 +85,22 @@ fun VehicleFullScreen(
 
 @Composable
 fun VehicleFullContent(
+    typeVehicle: TypeVehicle,
     vehicleOwnList: List<VehicleScreenModel>,
     vehicleInvolvedList: List<VehicleScreenModel>,
+    idSelection: Int,
+    onSelectionDelete: (Int, TypeVehicle) -> Unit,
+    flagDialogCheck: Boolean,
+    onDialogCheck: (Boolean) -> Unit,
+    delete: () -> Unit,
+    onCloseDialog: () -> Unit,
+    status: UiStatusState,
     onNavLocalSupport: () -> Unit,
     onNavInvolvedWitness: () -> Unit,
     onNavEquip: () -> Unit,
     onNavDataVehicleOwn: (Int) -> Unit,
     onNavPlate: () -> Unit,
-    onNavDataVehicleForeign: (Int) -> Unit,
+    onNavDataVehicleInvolved: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -99,6 +120,7 @@ fun VehicleFullContent(
             item {
                 VehicleOwnSection(
                     vehicleList = vehicleOwnList,
+                    onSelectionDelete = onSelectionDelete,
                     onNavEquip = onNavEquip,
                     onNavDataVehicleOwn = onNavDataVehicleOwn,
                 )
@@ -106,8 +128,9 @@ fun VehicleFullContent(
             item {
                 VehicleInvolvedSection(
                     vehicleList = vehicleInvolvedList,
+                    onSelectionDelete = onSelectionDelete,
                     onNavPlate = onNavPlate,
-                    onNavDataVehicleForeign = onNavDataVehicleForeign
+                    onNavDataVehicleInvolved = onNavDataVehicleInvolved
                 )
             }
         }
@@ -140,6 +163,37 @@ fun VehicleFullContent(
                 )
             }
         }
+        BackHandler {}
+
+        if(flagDialogCheck){
+            var list: List<VehicleScreenModel>
+            var id: Int
+            when(typeVehicle){
+                TypeVehicle.OWN -> {
+                    list = vehicleOwnList
+                    id = R.string.text_check_delete_equip
+                }
+
+                TypeVehicle.INVOLVED -> {
+                    list = vehicleInvolvedList
+                    id = R.string.text_check_delete_vehicle
+                }
+            }
+            val desc = list.first{ it.id == idSelection }.vehicle
+            AlertDialogCheckDesign(
+                text = stringResource(
+                    id = id,
+                    desc
+                ),
+                onClickDismiss = { onDialogCheck(false) },
+                onClickYes = delete
+            )
+        }
+
+        if(status.flagDialog) {
+            MsgErrors(status.errors, onCloseDialog, status.failure)
+        }
+
     }
 }
 
@@ -147,6 +201,7 @@ fun VehicleFullContent(
 @Composable
 fun VehicleOwnSection(
     vehicleList: List<VehicleScreenModel>,
+    onSelectionDelete: (Int, TypeVehicle) -> Unit,
     onNavEquip: () -> Unit,
     onNavDataVehicleOwn: (Int) -> Unit,
 ) {
@@ -175,7 +230,7 @@ fun VehicleOwnSection(
                     onClickEdit = {
                         onNavDataVehicleOwn(it.id)
                     },
-                    onClickDel = {}
+                    onClickDel = { onSelectionDelete(it.id, TypeVehicle.OWN) }
                 )
             }
         }
@@ -195,8 +250,9 @@ fun VehicleOwnSection(
 @Composable
 fun VehicleInvolvedSection(
     vehicleList: List<VehicleScreenModel>,
+    onSelectionDelete: (Int, TypeVehicle) -> Unit,
     onNavPlate: () -> Unit,
-    onNavDataVehicleForeign: (Int) -> Unit,
+    onNavDataVehicleInvolved: (Int) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -220,8 +276,8 @@ fun VehicleInvolvedSection(
                 CarItem(
                     type = TypeVehicle.INVOLVED,
                     model = it,
-                    onClickEdit = { onNavDataVehicleForeign(it.id) },
-                    onClickDel = {}
+                    onClickEdit = { onNavDataVehicleInvolved(it.id) },
+                    onClickDel = { onSelectionDelete(it.id, TypeVehicle.INVOLVED) }
                 )
             }
         }
@@ -283,14 +339,22 @@ fun VehicleFullPagePreview() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             VehicleFullContent(
+                typeVehicle = TypeVehicle.OWN,
                 vehicleOwnList = emptyList(),
                 vehicleInvolvedList = emptyList(),
+                idSelection = 0,
+                onSelectionDelete = { _, _ -> },
+                flagDialogCheck = true,
+                onDialogCheck = {},
+                delete = {},
+                onCloseDialog = {},
+                status = UiStatusState(),
                 onNavLocalSupport = {},
                 onNavInvolvedWitness = {},
                 onNavEquip = {},
                 onNavDataVehicleOwn = {},
                 onNavPlate = {},
-                onNavDataVehicleForeign = {},
+                onNavDataVehicleInvolved = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -303,6 +367,7 @@ fun VehicleFullPagePreviewWithData() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             VehicleFullContent(
+                typeVehicle = TypeVehicle.OWN,
                 vehicleOwnList = listOf(
                     VehicleScreenModel(
                         id = 1,
@@ -317,12 +382,19 @@ fun VehicleFullPagePreviewWithData() {
                         driver = "123.456.789-00 - ANDERSON DA SILVA DELGADO"
                     )
                 ),
+                idSelection = 0,
+                onSelectionDelete = { _, _ -> },
+                flagDialogCheck = true,
+                onDialogCheck = {},
+                delete = {},
+                onCloseDialog = {},
+                status = UiStatusState(),
                 onNavLocalSupport = {},
                 onNavInvolvedWitness = {},
                 onNavEquip = {},
                 onNavDataVehicleOwn = {},
                 onNavPlate = {},
-                onNavDataVehicleForeign = {},
+                onNavDataVehicleInvolved = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

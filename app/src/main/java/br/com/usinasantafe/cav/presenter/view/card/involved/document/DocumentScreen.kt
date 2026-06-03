@@ -30,8 +30,7 @@ import br.com.usinasantafe.cav.utils.UiStatusState
 fun DocumentScreen(
     viewModel: DocumentViewModel = hiltViewModel(),
     onNavDetail: () -> Unit,
-    onNavDataForeign: () -> Unit,
-    onNavPassengerList: () -> Unit,
+    onNavDataInvolved: () -> Unit,
     onNavName: () -> Unit,
 ) {
     CAVTheme {
@@ -44,14 +43,12 @@ fun DocumentScreen(
 
             DocumentContent(
                 option = uiState.option,
-                flowNote = uiState.flowNote,
                 text = uiState.text,
                 onTextField = viewModel::onTextField,
                 onCloseDialog = viewModel::onCloseDialog,
                 status = uiState.status,
                 onNavDetail = onNavDetail,
-                onNavDataForeign = onNavDataForeign,
-                onNavPassengerList = onNavPassengerList,
+                onNavDataInvolved = onNavDataInvolved,
                 onNavName = onNavName,
                 modifier = Modifier.padding(innerPadding)
             )
@@ -62,14 +59,12 @@ fun DocumentScreen(
 @Composable
 fun DocumentContent(
     option: Option,
-    flowNote: FlowNote,
     text: String,
     onTextField: (String, TypeButton) -> Unit,
     onCloseDialog: () -> Unit,
     status: UiStatusState,
     onNavDetail: () -> Unit,
-    onNavDataForeign: () -> Unit,
-    onNavPassengerList: () -> Unit,
+    onNavDataInvolved: () -> Unit,
     onNavName: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -91,17 +86,8 @@ fun DocumentContent(
         )
         BackHandler {
             when(option) {
-                Option.INSERT -> {
-                    when(flowNote){
-                        FlowNote.VEHICLE -> onNavDetail()
-                        FlowNote.DRIVER -> TODO()
-                        FlowNote.PASSENGER_INVOLVED -> TODO()
-                        FlowNote.INVOLVED -> TODO()
-                        FlowNote.WITNESS -> TODO()
-                        else -> {}
-                    }
-                }
-                Option.EDIT -> onNavDataForeign()
+                Option.INSERT -> onNavDetail()
+                Option.EDIT -> onNavDataInvolved()
             }
         }
 
@@ -125,14 +111,12 @@ fun DocumentPagePreview() {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             DocumentContent(
                 option = Option.INSERT,
-                flowNote = FlowNote.EQUIP,
                 text = "",
                 onTextField = { _, _ -> },
                 onCloseDialog = {},
                 status = UiStatusState(),
                 onNavDetail = {},
-                onNavDataForeign = {},
-                onNavPassengerList = {},
+                onNavDataInvolved = {},
                 onNavName = {},
                 modifier = Modifier.padding(innerPadding)
             )

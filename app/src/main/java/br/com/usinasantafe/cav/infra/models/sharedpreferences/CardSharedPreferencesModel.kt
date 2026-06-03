@@ -9,9 +9,13 @@ data class CardSharedPreferencesModel(
     var idNatureList: List<Int> = emptyList(),
     var idTypeAccidentList: List<Int> = emptyList(),
     var idDataLocalList: List<Int> = emptyList(),
-    var idSupportTeamsList: List<Int> = emptyList()
+    var idSupportTeamsList: List<Int> = emptyList(),
+    var vehicleOwnList: List<VehicleOwnSharedPreferencesModel> = emptyList(),
+    var vehicleInvolvedList: List<VehicleInvolvedSharedPreferencesModel> = emptyList(),
+    var involvedList: List<InvolvedSharedPreferencesModel> = emptyList(),
+    var witnessList: List<InvolvedSharedPreferencesModel> = emptyList(),
+    var obs: String? = null,
 )
-
 
 
 fun CardSharedPreferencesModel.sharedPreferencesModelToEntity(): Card {
@@ -23,7 +27,12 @@ fun CardSharedPreferencesModel.sharedPreferencesModelToEntity(): Card {
             idNatureList = idNatureList,
             idTypeAccidentList = idTypeAccidentList,
             idDataLocalList = idDataLocalList,
-            idSupportTeamsList = idSupportTeamsList
+            idSupportTeamsList = idSupportTeamsList,
+            vehicleOwnList = vehicleOwnList.map { it.sharedPreferencesModelToEntity() },
+            vehicleInvolvedList = vehicleInvolvedList.map { it.sharedPreferencesModelToEntity() },
+            involvedList = involvedList.map { it.sharedPreferencesModelToEntity() },
+            witnessList = witnessList.map { it.sharedPreferencesModelToEntity() },
+            obs = obs
         )
     }
 }
@@ -36,7 +45,12 @@ fun Card.entityToSharedPreferencesModel(): CardSharedPreferencesModel {
             idNatureList = idNatureList,
             idTypeAccidentList = idTypeAccidentList,
             idDataLocalList = idDataLocalList,
-            idSupportTeamsList = idSupportTeamsList
+            idSupportTeamsList = idSupportTeamsList,
+            vehicleOwnList = vehicleOwnList.map { it.entityToSharedPreferencesModel() },
+            vehicleInvolvedList = vehicleInvolvedList.map { it.entityToSharedPreferencesModel() },
+            involvedList = involvedList.map { it.entityToSharedPreferencesModel() },
+            witnessList = witnessList.map { it.entityToSharedPreferencesModel() },
+            obs = obs
         )
     }
 }

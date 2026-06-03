@@ -7,7 +7,7 @@ import br.com.usinasantafe.cav.presenter.Args.ID_SECONDARY_ARG
 import br.com.usinasantafe.cav.presenter.Args.OPTION_ARG
 import br.com.usinasantafe.cav.presenter.Screens.ADDRESS_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.ATTENDANT_SCREEN
-import br.com.usinasantafe.cav.presenter.Screens.CAR_FULL_SCREEN
+import br.com.usinasantafe.cav.presenter.Screens.VEHICLE_FULL_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.CAR_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.COLAB_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.CONFIG_SCREEN
@@ -37,6 +37,7 @@ import br.com.usinasantafe.cav.presenter.Screens.SUPPORT_TEAMS_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.TYPE_ACCIDENT_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.BRAND_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.DOCUMENT_SCREEN
+import br.com.usinasantafe.cav.presenter.Screens.INVOLVED_WITNESS_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.NAME_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.PHONE_SCREEN
 
@@ -56,7 +57,7 @@ object Screens {
     const val OPTION_DATA_LOCAL_SCREEN = "optionDataLocalScreen"
     const val ITEM_DATA_LOCAL_SCREEN = "itemDataLocalScreen"
     const val SUPPORT_TEAMS_SCREEN = "supportTeamsScreen"
-    const val CAR_FULL_SCREEN = "carFullScreen"
+    const val VEHICLE_FULL_SCREEN = "vehicleFullScreen"
     const val COLAB_SCREEN = "colabScreen"
     const val EQUIP_SCREEN = "equipVehicleOwnScreen"
     const val DATA_VEHICLE_OWN_SCREEN = "dataVehicleOwnScreen"
@@ -75,6 +76,7 @@ object Screens {
     const val NAME_SCREEN = "nameScreen"
     const val PHONE_SCREEN = "phoneScreen"
     const val ADDRESS_SCREEN = "addressScreen"
+    const val INVOLVED_WITNESS_SCREEN = "InvolvedScreen"
 }
 
 object Args {
@@ -100,7 +102,7 @@ object Routes {
     const val OPTION_DATA_LOCAL_ROUTE = OPTION_DATA_LOCAL_SCREEN
     const val ITEM_DATA_LOCAL_ROUTE = "$ITEM_DATA_LOCAL_SCREEN/{$ID_MAIN_ARG}"
     const val SUPPORT_TEAMS_ROUTE = SUPPORT_TEAMS_SCREEN
-    const val CAR_FULL_ROUTE = CAR_FULL_SCREEN
+    const val VEHICLE_FULL_ROUTE = VEHICLE_FULL_SCREEN
     const val DATA_VEHICLE_OWN_ROUTE = "$DATA_VEHICLE_OWN_SCREEN/{$ID_MAIN_ARG}"
     const val DATA_VEHICLE_INVOLVED_ROUTE = "$DATA_VEHICLE_INVOLVED_SCREEN/{$ID_MAIN_ARG}"
     const val COLAB_ROUTE = "$COLAB_SCREEN/{$OPTION_ARG}/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
@@ -111,14 +113,15 @@ object Routes {
     const val STATE_ROUTE = "$STATE_SCREEN/{$OPTION_ARG}/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
     const val DATA_EQUIP_ROUTE = "$DATA_EQUIP_SCREEN/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}"
     const val DATA_COLAB_ROUTE = "$DATA_COLAB_SCREEN/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}"
-    const val PLATE_ROUTE = "$PLATE_SCREEN/{$ID_MAIN_ARG}"
+    const val PLATE_ROUTE = "$PLATE_SCREEN/{$OPTION_ARG}/{$ID_MAIN_ARG}"
     const val DATA_VEHICLE_ROUTE = "$DATA_VEHICLE_SCREEN/{$ID_MAIN_ARG}"
     const val DATA_INVOLVED_ROUTE = "$DATA_INVOLVED_SCREEN/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
-    const val BRAND_ROUTE = "$BRAND_SCREEN/{$ID_MAIN_ARG}"
+    const val BRAND_ROUTE = "$BRAND_SCREEN/{$OPTION_ARG}/{$ID_MAIN_ARG}"
     const val DOCUMENT_ROUTE = "$DOCUMENT_SCREEN/{$OPTION_ARG}/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
     const val NAME_ROUTE = "$NAME_SCREEN/{$OPTION_ARG}/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
     const val PHONE_ROUTE = "$PHONE_SCREEN/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
     const val ADDRESS_ROUTE = "$ADDRESS_SCREEN/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
+    const val INVOLVED_WITNESS_ROUTE = INVOLVED_WITNESS_SCREEN
 }
 
 class NavigationActions(private val navController: NavHostController) {
@@ -269,15 +272,17 @@ class NavigationActions(private val navController: NavHostController) {
     }
 
     fun navigateToPlate(
+        option: Int,
         idMain: Int,
     ){
-        navController.navigate("$PLATE_SCREEN/$idMain")
+        navController.navigate("$PLATE_SCREEN/$option/$idMain")
     }
 
     fun navigateToBrand(
+        option: Int,
         idMain: Int,
     ){
-        navController.navigate("$BRAND_SCREEN/$idMain")
+        navController.navigate("$BRAND_SCREEN/$option/$idMain")
     }
 
     fun navigateToDataVehicle(
@@ -342,7 +347,11 @@ class NavigationActions(private val navController: NavHostController) {
     }
 
     fun navigateToVehicleFull() {
-        navController.navigate(CAR_FULL_SCREEN)
+        navController.navigate(VEHICLE_FULL_SCREEN)
+    }
+
+    fun navigateToInvolvedWitness() {
+        navController.navigate(INVOLVED_WITNESS_SCREEN)
     }
 
     //////////////////////////////////////////////////////////////////////

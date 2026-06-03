@@ -1,9 +1,12 @@
 package br.com.usinasantafe.cav.presenter.view.card.menu
 
 import br.com.usinasantafe.cav.MainCoroutineRule
+import br.com.usinasantafe.cav.domain.usecases.card.DeleteEquip
+import br.com.usinasantafe.cav.domain.usecases.card.DeleteVehicle
 import br.com.usinasantafe.cav.domain.usecases.card.ListVehicleInvolved
 import br.com.usinasantafe.cav.domain.usecases.card.ListVehicleOwn
 import br.com.usinasantafe.cav.lib.Errors
+import br.com.usinasantafe.cav.lib.TypeVehicle
 import br.com.usinasantafe.cav.presenter.model.VehicleScreenModel
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -23,9 +26,13 @@ class VehicleFullViewModelTest {
 
     private val listVehicleOwn = mock<ListVehicleOwn>()
     private val listVehicleInvolved = mock<ListVehicleInvolved>()
+    private val deleteEquip = mock<DeleteEquip>()
+    private val deleteVehicle = mock<DeleteVehicle>()
     private val viewModel = VehicleFullViewModel(
         listVehicleOwn = listVehicleOwn,
-        listVehicleInvolved = listVehicleInvolved
+        listVehicleInvolved = listVehicleInvolved,
+        deleteEquip = deleteEquip,
+        deleteVehicle = deleteVehicle
     )
 
     @Test
@@ -177,6 +184,111 @@ class VehicleFullViewModelTest {
             )
             assertEquals(
                 viewModel.uiState.value.status.flagFailure,
+                false
+            )
+        }
+
+    @Test
+    fun `delete - Check return failure if have error in DeleteEquip`() =
+        runTest {
+            whenever(
+                deleteEquip(1)
+            ).thenReturn(
+                resultFailure(
+                    context = "DeleteEquip",
+                    message = "-",
+                    cause = Exception()
+                )
+            )
+            viewModel.onSelectionDelete(1 , TypeVehicle.OWN)
+            viewModel.delete()
+            assertEquals(
+                viewModel.uiState.value.status.flagDialog,
+                true
+            )
+            assertEquals(
+                viewModel.uiState.value.status.failure,
+                "VehicleFullViewModel.delete -> DeleteEquip -> java.lang.Exception"
+            )
+            assertEquals(
+                viewModel.uiState.value.status.errors,
+                Errors.EXCEPTION
+            )
+            assertEquals(
+                viewModel.uiState.value.status.flagFailure,
+                true
+            )
+        }
+
+    @Test
+    fun `delete - Check return failure if have error in DeleteVehicle`() =
+        runTest {
+            whenever(
+                deleteVehicle(2)
+            ).thenReturn(
+                resultFailure(
+                    context = "DeleteVehicle",
+                    message = "-",
+                    cause = Exception()
+                )
+            )
+            viewModel.onSelectionDelete(2 , TypeVehicle.INVOLVED)
+            viewModel.delete()
+            assertEquals(
+                viewModel.uiState.value.status.flagDialog,
+                true
+            )
+            assertEquals(
+                viewModel.uiState.value.status.failure,
+                "VehicleFullViewModel.delete -> DeleteVehicle -> java.lang.Exception"
+            )
+            assertEquals(
+                viewModel.uiState.value.status.errors,
+                Errors.EXCEPTION
+            )
+            assertEquals(
+                viewModel.uiState.value.status.flagFailure,
+                true
+            )
+        }
+
+    @Test
+    fun `delete - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                listVehicleOwn()
+            ).thenReturn(
+                Result.success(emptyList())
+            )
+            whenever(
+                listVehicleInvolved()
+            ).thenReturn(
+                Result.success(emptyList())
+            )
+            viewModel.onSelectionDelete(2 , TypeVehicle.INVOLVED)
+            viewModel.delete()
+            assertEquals(
+                viewModel.uiState.value.status.flagAccess,
+                false
+            )
+            assertEquals(
+                viewModel.uiState.value.vehicleOwnList,
+                emptyList()
+            )
+            assertEquals(
+                viewModel.uiState.value.vehicleInvolvedList,
+                emptyList()
+            )
+            assertEquals(
+                viewModel.uiState.value.status.flagFailure,
+                false
+            )
+            assertEquals(
+                viewModel.uiState.value.flagDialogCheck,
+                false
+            )
+            assertEquals(
+                viewModel.uiState.value.status.flagDialog,
                 false
             )
         }

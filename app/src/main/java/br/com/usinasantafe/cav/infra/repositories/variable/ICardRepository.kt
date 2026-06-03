@@ -3,15 +3,18 @@ package br.com.usinasantafe.cav.infra.repositories.variable
 import br.com.usinasantafe.cav.domain.entities.variable.Local
 import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
+import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.EquipSharedPreferencesDatasource
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.entityToSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.sharedPreferencesModelToEntity
+import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import javax.inject.Inject
 
 class ICardRepository @Inject constructor(
-    private val cardSharedPreferencesDatasource: CardSharedPreferencesDatasource
+    private val cardSharedPreferencesDatasource: CardSharedPreferencesDatasource,
 ): CardRepository {
 
     override suspend fun setRegAttendant(regColab: Long): EmptyResult =
@@ -89,5 +92,11 @@ class ICardRepository @Inject constructor(
         call(getClassAndMethod()) {
             cardSharedPreferencesDatasource.setIdSupportTeamsList(idList).getOrThrow()
         }
+
+    override suspend fun setIdEquip(
+        id: Int,
+    ): EmptyResult {
+        TODO("Not yet implemented")
+    }
 
 }

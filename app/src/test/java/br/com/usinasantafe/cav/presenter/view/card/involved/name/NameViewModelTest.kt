@@ -1,14 +1,13 @@
-package br.com.usinasantafe.cav.presenter.view.card.vehicle.own.passengerList
+package br.com.usinasantafe.cav.presenter.view.card.involved.name
 
 import androidx.lifecycle.SavedStateHandle
 import br.com.usinasantafe.cav.MainCoroutineRule
-import br.com.usinasantafe.cav.domain.usecases.card.DeletePassenger
-import br.com.usinasantafe.cav.domain.usecases.card.ListPassenger
+import br.com.usinasantafe.cav.domain.usecases.card.GetName
+import br.com.usinasantafe.cav.domain.usecases.card.SetName
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.FlowNote
+import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.presenter.Args
-import br.com.usinasantafe.cav.presenter.model.ItemListScreenModel
-import br.com.usinasantafe.cav.presenter.view.card.passengerList.PassengerListViewModel
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -21,36 +20,39 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @ExperimentalCoroutinesApi
-class PassengerListViewModelTest {
+class NameViewModelTest {
 
     @ExperimentalCoroutinesApi
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
-    private val listPassenger = mock<ListPassenger>()
-    private val deletePassenger = mock<DeletePassenger>()
-    private val viewModel = PassengerListViewModel(
+    private val getName = mock<GetName>()
+    private val setName = mock<SetName>()
+    private val viewModel = NameViewModel(
         savedStateHandle = SavedStateHandle(
             mapOf(
+                Args.OPTION_ARG to Option.INSERT.ordinal,
                 Args.FLOW_NOTE_ARG to FlowNote.COLAB.ordinal,
-                Args.ID_MAIN_ARG to  0
+                Args.ID_MAIN_ARG to 0,
+                Args.ID_SECONDARY_ARG to 0
             )
         ),
-        listPassenger = listPassenger,
-        deletePassenger = deletePassenger
+        getName = getName,
+        setName = setName
     )
 
     @Test
-    fun `recoverData - Check return failure if have error in ListPassenger`() =
+    fun `recoverData - Check return failure if have error in GetState`() =
         runTest {
             whenever(
-                listPassenger(
+                getName(
                     flowNote = FlowNote.COLAB,
-                    idMain = 0
+                    idMain = 0,
+                    idSecondary = 0
                 )
             ).thenReturn(
                 resultFailure(
-                    context = "ListPassenger",
+                    context = "GetState",
                     message = "-",
                     cause = Exception()
                 )
@@ -62,7 +64,7 @@ class PassengerListViewModelTest {
             )
             assertEquals(
                 viewModel.uiState.value.status.failure,
-                "PassengerListViewModel.recoverData -> ListPassenger -> java.lang.Exception"
+                "NameViewModel.recoverData -> GetState -> java.lang.Exception"
             )
             assertEquals(
                 viewModel.uiState.value.status.errors,
@@ -78,57 +80,51 @@ class PassengerListViewModelTest {
     fun `recoverData - Check return true if process execute successfully`() =
         runTest {
             whenever(
-                listPassenger(
+                getName(
                     flowNote = FlowNote.COLAB,
-                    idMain = 0
+                    idMain = 0,
+                    idSecondary = 0
                 )
             ).thenReturn(
-                Result.success(
-                    listOf(
-                        ItemListScreenModel(
-                            id = 1,
-                            desc = "Test"
-                        )
-                    )
-                )
+                Result.success("Test")
             )
             viewModel.recoverData()
             assertEquals(
-                viewModel.uiState.value.list,
-                listOf(
-                    ItemListScreenModel(
-                        id = 1,
-                        desc = "Test"
-                    )
-                )
+                viewModel.uiState.value.status.flagAccess,
+                false
+            )
+            assertEquals(
+                viewModel.uiState.value.text,
+                "Test"
             )
         }
 
     @Test
-    fun `delete - Check return failure if have error in DeletePassenger`() =
+    fun `set - Check return failure if have error in SetName`() =
         runTest {
             whenever(
-                deletePassenger(
-                    idSelection = 2,
+                setName(
+                    name = "Test",
                     flowNote = FlowNote.COLAB,
-                    idMain = 0
+                    idMain = 0,
+                    idSecondary = 0
                 )
             ).thenReturn(
                 resultFailure(
-                    context = "DeletePassenger",
+                    context = "SetName",
                     message = "-",
                     cause = Exception()
                 )
             )
-            viewModel.onSelectionDelete(2)
-            viewModel.delete()
+            viewModel.onTextChanged("Test")
+            viewModel.set()
             assertEquals(
                 viewModel.uiState.value.status.flagDialog,
                 true
             )
             assertEquals(
                 viewModel.uiState.value.status.failure,
-                "PassengerListViewModel.delete -> DeletePassenger -> java.lang.Exception"
+                "NameViewModel.set -> SetName -> java.lang.Exception"
             )
             assertEquals(
                 viewModel.uiState.value.status.errors,
@@ -138,31 +134,29 @@ class PassengerListViewModelTest {
                 viewModel.uiState.value.status.flagFailure,
                 true
             )
+            assertEquals(
+                viewModel.uiState.value.status.flagAccess,
+                false
+            )
         }
 
     @Test
-    fun `delete - Check return true if process execute successfully`() =
+    fun `set - Check return true if process execute successfully`() =
         runTest {
-            whenever(
-                listPassenger(
-                    flowNote = FlowNote.COLAB,
-                    idMain = 0
-                )
-            ).thenReturn(
-                Result.success(
-                    emptyList()
-                )
-            )
-            viewModel.onSelectionDelete(2)
-            viewModel.delete()
-            verify(deletePassenger, atLeastOnce()).invoke(
-                idSelection = 2,
+            viewModel.onTextChanged("Test")
+            viewModel.set()
+            verify(
+                setName,
+                atLeastOnce()
+            ).invoke(
+                name = "Test",
                 flowNote = FlowNote.COLAB,
-                idMain = 0
+                idMain = 0,
+                idSecondary = 0
             )
             assertEquals(
-                viewModel.uiState.value.list,
-                emptyList()
+                viewModel.uiState.value.status.flagAccess,
+                true
             )
         }
 

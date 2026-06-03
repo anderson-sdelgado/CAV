@@ -75,8 +75,8 @@ fun DetailScreen(
                 onNavEquipSecList = onNavEquipSecList,
                 onNavPassengerList = onNavPassengerList,
                 onNavBrand = onNavBrand,
-                onNavDataVehicleForeign = onNavDataVehicleInvolved,
-                onNavDataForeign = onNavDataInvolved,
+                onNavDataVehicleInvolved = onNavDataVehicleInvolved,
+                onNavDataInvolved = onNavDataInvolved,
                 onNavDocument = onNavDocument,
                 modifier = Modifier.padding(innerPadding)
             )
@@ -103,8 +103,8 @@ fun DetailContent(
     onNavEquipSecList: () -> Unit,
     onNavPassengerList: () -> Unit,
     onNavBrand: () -> Unit,
-    onNavDataVehicleForeign: () -> Unit,
-    onNavDataForeign: () -> Unit,
+    onNavDataVehicleInvolved: () -> Unit,
+    onNavDataInvolved: () -> Unit,
     onNavDocument: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -156,13 +156,13 @@ fun DetailContent(
                             when(flowNote) {
                                 FlowNote.EQUIP,
                                 FlowNote.EQUIP_SEC -> onNavDataEquip()
-                                FlowNote.VEHICLE -> onNavDataVehicleForeign()
+                                FlowNote.VEHICLE -> onNavDataVehicleInvolved()
                                 FlowNote.COLAB,
                                 FlowNote.PASSENGER_COLAB -> onNavDataColab()
                                 FlowNote.DRIVER,
                                 FlowNote.PASSENGER_INVOLVED,
                                 FlowNote.INVOLVED,
-                                FlowNote.WITNESS -> onNavDataForeign()
+                                FlowNote.WITNESS -> onNavDataInvolved()
                             }
                         }
                     }
@@ -196,7 +196,7 @@ fun DetailContent(
                         FlowNote.COLAB -> onNavDataVehicleOwn()
                         FlowNote.INVOLVED,
                         FlowNote.WITNESS,
-                        FlowNote.DRIVER -> onNavDataVehicleForeign()
+                        FlowNote.DRIVER -> onNavDataVehicleInvolved()
                         FlowNote.PASSENGER_COLAB,
                         FlowNote.PASSENGER_INVOLVED -> onNavPassengerList()
                     }
@@ -207,11 +207,11 @@ fun DetailContent(
                         FlowNote.EQUIP_SEC -> onNavDataEquip()
                         FlowNote.COLAB,
                         FlowNote.PASSENGER_COLAB -> onNavDataColab()
-                        FlowNote.VEHICLE -> onNavDataVehicleForeign()
+                        FlowNote.VEHICLE -> onNavDataVehicleInvolved()
                         FlowNote.DRIVER,
                         FlowNote.PASSENGER_INVOLVED,
                         FlowNote.INVOLVED,
-                        FlowNote.WITNESS -> onNavDataForeign()
+                        FlowNote.WITNESS -> onNavDataInvolved()
                     }
                 }
             }
@@ -242,8 +242,8 @@ fun DetailPagePreview() {
                 onNavEquipSecList = {},
                 onNavPassengerList = {},
                 onNavBrand = {},
-                onNavDataVehicleForeign = {},
-                onNavDataForeign = {},
+                onNavDataVehicleInvolved = {},
+                onNavDataInvolved = {},
                 onNavDocument = {},
                 modifier = Modifier.padding(innerPadding)
             )

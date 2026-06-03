@@ -47,7 +47,7 @@ fun EquipScreen(
             EquipContent(
                 option = uiState.option,
                 flowNote = uiState.flowNote,
-                nroEquip = uiState.nroEquip,
+                nroEquip = uiState.text,
                 onTextField = viewModel::onTextField,
                 onCloseDialog = viewModel::onCloseDialog,
                 status = uiState.status,

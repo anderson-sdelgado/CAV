@@ -2,8 +2,12 @@ package br.com.usinasantafe.cav.presenter.view.card.menu
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.usinasantafe.cav.domain.usecases.card.DeleteEquip
+import br.com.usinasantafe.cav.domain.usecases.card.DeleteVehicle
 import br.com.usinasantafe.cav.domain.usecases.card.ListVehicleInvolved
 import br.com.usinasantafe.cav.domain.usecases.card.ListVehicleOwn
+import br.com.usinasantafe.cav.lib.FlowNote
+import br.com.usinasantafe.cav.lib.TypeVehicle
 import br.com.usinasantafe.cav.presenter.model.VehicleScreenModel
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
 import br.com.usinasantafe.cav.utils.UiStatusState
@@ -17,8 +21,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class VehicleFullState(
+    val typeVehicle: TypeVehicle = TypeVehicle.OWN,
     val vehicleOwnList: List<VehicleScreenModel> = emptyList(),
     val vehicleInvolvedList: List<VehicleScreenModel> = emptyList(),
+    val idSelection: Int = 0,
+    val flagDialogCheck: Boolean = false,
     override val status: UiStatusState = UiStatusState()
 ) : UiStateWithStatus<VehicleFullState> {
 
@@ -31,16 +38,24 @@ data class VehicleFullState(
 class VehicleFullViewModel @Inject constructor(
     private val listVehicleOwn: ListVehicleOwn,
     private val listVehicleInvolved: ListVehicleInvolved,
+    private val deleteVehicle: DeleteVehicle,
+    private val deleteEquip: DeleteEquip
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(VehicleFullState())
     val uiState = _uiState.asStateFlow()
+
+    private val state get() = uiState.value
 
     private fun updateState(block: VehicleFullState.() -> VehicleFullState) {
         _uiState.update(block)
     }
 
     fun onCloseDialog() = updateState { copy(status = status.copy(flagDialog = false)) }
+
+    fun onDialogCheck(flag: Boolean) = updateState { copy(flagDialogCheck = flag) }
+
+    fun onSelectionDelete(id: Int, typeVehicle: TypeVehicle) = updateState { copy(flagDialogCheck = true, idSelection = id, typeVehicle = typeVehicle) }
 
     fun recoverData() = viewModelScope.launch {
         runCatching {
@@ -59,5 +74,14 @@ class VehicleFullViewModel @Inject constructor(
             .onFailureState(getClassAndMethod(), ::updateState)
     }
 
-
+    fun delete() = viewModelScope.launch {
+        runCatching {
+            when(state.typeVehicle){
+                TypeVehicle.OWN -> deleteEquip(state.idSelection).getOrThrow()
+                TypeVehicle.INVOLVED -> deleteVehicle(state.idSelection).getOrThrow()
+            }
+        }
+            .onSuccess { recoverData() }
+            .onFailureState(getClassAndMethod(), ::updateState)
+    }
 }

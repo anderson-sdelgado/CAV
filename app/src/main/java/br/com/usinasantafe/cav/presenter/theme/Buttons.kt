@@ -27,7 +27,19 @@ fun addTextFieldComma(text: String, digit: String): String {
 }
 
 fun clearTextField(text: String): String {
-    return if (text.length > 1) text.substring(0, text.length - 1) else ""
+// 1. Remove o último caractere (sempre será um número na nossa nova lógica)
+    val reduced = text.dropLast(1)
+
+// 2. Se o que sobrou termina em pontuação (máscara), remove a pontuação também
+    val maskChars = listOf('.', '-', ')', ' ')
+
+// Se terminar em ") ", removemos os dois (espaço e parêntese)
+    var finalResult = reduced
+    while (finalResult.isNotEmpty() && finalResult.last() in maskChars) {
+        finalResult = finalResult.dropLast(1)
+    }
+
+    return finalResult
 }
 
 fun clearTextFieldComma(text: String): String {

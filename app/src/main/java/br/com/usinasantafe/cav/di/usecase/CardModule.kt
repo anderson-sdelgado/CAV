@@ -175,4 +175,76 @@ interface CardModule {
     @Singleton
     fun bindGetDescDriver(usecase: IGetDescDriver): GetDescDriver
 
+    @Binds
+    @Singleton
+    fun bindGetPlate(usecase: IGetPlate): GetPlate
+
+    @Binds
+    @Singleton
+    fun bindSetPlate(usecase: ISetPlate): SetPlate
+
+    @Binds
+    @Singleton
+    fun bindGetBrand(usecase: IGetBrand): GetBrand
+
+    @Binds
+    @Singleton
+    fun bindSetBrand(usecase: ISetBrand): SetBrand
+
+    @Binds
+    @Singleton
+    fun bindGetDocument(usecase: IGetDocument): GetDocument
+
+    @Binds
+    @Singleton
+    fun bindSetDocument(usecase: ISetDocument): SetDocument
+
+    @Binds
+    @Singleton
+    fun bindGetName(usecase: IGetName): GetName
+
+    @Binds
+    @Singleton
+    fun bindSetName(usecase: ISetName): SetName
+
+    @Binds
+    @Singleton
+    fun bindGetAddress(usecase: IGetAddress): GetAddress
+
+    @Binds
+    @Singleton
+    fun bindSetAddress(usecase: ISetAddress): SetAddress
+
+    @Binds
+    @Singleton
+    fun bindSetPhone(usecase: ISetPhone): SetPhone
+
+    @Binds
+    @Singleton
+    fun bindGetPhone(usecase: IGetPhone): GetPhone
+
+    @Binds
+    @Singleton
+    fun bindDeleteEquip(usecase: IDeleteEquip): DeleteEquip
+
+    @Binds
+    @Singleton
+    fun bindDeleteVehicle(usecase: IDeleteVehicle): DeleteVehicle
+
+    @Binds
+    @Singleton
+    fun bindDeleteInvolved(usecase: IDeleteInvolved): DeleteInvolved
+
+    @Binds
+    @Singleton
+    fun bindDeleteWitness(usecase: IDeleteWitness): DeleteWitness
+
+    @Binds
+    @Singleton
+    fun bindListInvolved(usecase: IListInvolved): ListInvolved
+
+    @Binds
+    @Singleton
+    fun bindListWitness(usecase: IListWitness): ListWitness
+
 }

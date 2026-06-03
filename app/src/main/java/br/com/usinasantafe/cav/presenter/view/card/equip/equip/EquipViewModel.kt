@@ -38,7 +38,7 @@ data class EquipStateUpdate(
     val flowNote: FlowNote = FlowNote.EQUIP,
     val idMain: Int = 0,
     val idSecondary: Int = 0,
-    val nroEquip: String = "",
+    val text: String = "",
     override val status: UiStatusStateUpdate = UiStatusStateUpdate()
 ) : UiStateWithStatusUpdate<EquipStateUpdate> {
 
@@ -87,14 +87,14 @@ class EquipViewModel @Inject constructor(
         runCatching {
             getNroEquip(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
         }
-            .onSuccess { updateState { copy(nroEquip = it) } }
+            .onSuccess { updateState { copy(text = it) } }
             .onFailureUpdate(getClassAndMethod(), ::updateState)
     }
 
     fun onTextField(text: String, typeButton: TypeButton) {
         when (typeButton) {
-            TypeButton.NUMERIC -> updateState { copy(nroEquip = addTextField(nroEquip, text)) }
-            TypeButton.CLEAN -> updateState { copy(nroEquip = clearTextField(nroEquip)) }
+            TypeButton.NUMERIC -> updateState { copy(text = addTextField(this.text, text)) }
+            TypeButton.CLEAN -> updateState { copy(text = clearTextField(this.text)) }
             TypeButton.OK -> set()
             TypeButton.UPDATE -> {
                 viewModelScope.launch { updateAllDatabase().collect { _uiState.value = it } }
@@ -104,12 +104,12 @@ class EquipViewModel @Inject constructor(
 
     private fun set() = viewModelScope.launch {
         runCatching {
-            if (state.nroEquip.isBlank()) {
+            if (state.text.isBlank()) {
                 updateState { withFailure(getClassAndMethod(), Errors.FIELD_EMPTY) }
                 return@launch
             }
-            val check = hasNroEquip(state.nroEquip).getOrThrow()
-            if (check) setEquip(state.nroEquip, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            val check = hasNroEquip(state.text).getOrThrow()
+            if (check) setEquip(state.text, state.option, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
             check
         }
             .onSuccessUpdateCheckAccess(::updateState)

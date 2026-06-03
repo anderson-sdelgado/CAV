@@ -1,6 +1,7 @@
 package br.com.usinasantafe.cav.domain.repositories.variable
 
 import br.com.usinasantafe.cav.domain.entities.variable.Local
+import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.utils.EmptyResult
 
 interface CardRepository {
@@ -19,4 +20,7 @@ interface CardRepository {
     suspend fun setIdDataLocalList(idList: List<Int>): EmptyResult
     suspend fun listIdSupportTeams(): Result<List<Int>>
     suspend fun setIdSupportTeamsList(idList: List<Int>): EmptyResult
+    suspend fun setIdEquip(
+        id: Int,
+    ): EmptyResult
 }

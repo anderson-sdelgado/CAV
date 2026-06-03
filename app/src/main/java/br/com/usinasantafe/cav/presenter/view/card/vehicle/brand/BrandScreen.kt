@@ -132,7 +132,10 @@ fun BrandContent(
 
     LaunchedEffect(status.flagAccess) {
         if (status.flagAccess) {
-            onNavDetail()
+            when(option) {
+                Option.INSERT -> onNavDetail()
+                Option.EDIT -> onNavDataVehicle()
+            }
         }
     }
 }

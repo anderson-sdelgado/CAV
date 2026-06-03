@@ -104,4 +104,8 @@
     <string name="text_data_vehicle">DADOS VEÍCULO</string>
     <string name="text_data_people">DADOS PESSOAIS</string>
     <string name="text_document">DOCUMENTO</string>
+    <string name="text_check_delete_equip">DESEJA REALMENTE EXCLUIR O EQUIPAMENTO \"%1$s\"?</string>
+    <string name="text_check_delete_vehicle">DESEJA REALMENTE EXCLUIR O VEÍCULO \"%1$s\"?</string>
+    <string name="text_check_delete_involved">DESEJA REALMENTE EXCLUIR O ENVOLVIDO \"%1$s\"?</string>
+    <string name="text_check_delete_witness">DESEJA REALMENTE EXCLUIR A TESTEMUNHA \"%1$s\"?</string>
 </resources>
