@@ -1,7 +1,7 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.domain.repositories.stable.DataLocalRepository
-import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
+import br.com.usinasantafe.cav.domain.repositories.variable.*
 import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxScreenModel
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod

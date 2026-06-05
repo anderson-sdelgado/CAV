@@ -26,7 +26,7 @@ import javax.inject.Inject
 data class StateState(
     val option: Option = Option.INSERT,
     val flowNote: FlowNote = FlowNote.COLAB,
-    val idSelection: Int = 0,
+    val idSelection: Int = 1,
     val idMain: Int = 0,
     val idSecondary: Int = 0,
     override val status: UiStatusState = UiStatusState()
@@ -75,6 +75,7 @@ class StateViewModel @Inject constructor(
 
     fun recoverData() = viewModelScope.launch {
         runCatching {
+            if (state.option == Option.INSERT) return@launch
             getIdState(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
         }
             .onSuccess { updateState { copy(idSelection = it) } }
@@ -83,7 +84,7 @@ class StateViewModel @Inject constructor(
 
     fun set() = viewModelScope.launch {
         runCatching {
-            setState(state.idSelection, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            setState(state.idSelection, state.option, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
         }
             .onSuccessStateAccess(::updateState)
             .onFailureState(getClassAndMethod(), ::updateState)

@@ -1,7 +1,7 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.domain.entities.variable.Local
-import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
+import br.com.usinasantafe.cav.domain.repositories.variable.*
 import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -16,7 +16,7 @@ interface SetLocal {
 }
 
 class ISetLocal @Inject constructor(
-    private val cardRepository: CardRepository
+    private val cardRepository: BasicCardRepository
 ): SetLocal {
 
     override suspend fun invoke(

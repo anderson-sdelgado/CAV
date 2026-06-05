@@ -1,6 +1,6 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
-import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
+import br.com.usinasantafe.cav.domain.repositories.variable.*
 import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -13,7 +13,7 @@ interface SetRegAttendant {
 }
 
 class ISetRegAttendant @Inject constructor(
-    private val cardRepository: CardRepository
+    private val cardRepository: BasicCardRepository
 ): SetRegAttendant {
 
     override suspend fun invoke(regColab: String): EmptyResult =

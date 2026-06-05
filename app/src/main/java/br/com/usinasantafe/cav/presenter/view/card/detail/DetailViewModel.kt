@@ -27,6 +27,7 @@ import kotlin.onSuccess
 data class DetailState(
     val option: Option = Option.INSERT,
     val flowNote: FlowNote = FlowNote.EQUIP,
+    val id: Int = 0,
     val idMain: Int = 0,
     val idSecondary: Int = 0,
     val text: String = "",
@@ -80,6 +81,7 @@ class DetailViewModel @Inject constructor(
 
     fun recoverData() = viewModelScope.launch {
         runCatching {
+            if(state.option == Option.INSERT) return@launch
             getDetail(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
         }
             .onSuccess { updateState { copy(text = it) } }
@@ -88,9 +90,9 @@ class DetailViewModel @Inject constructor(
 
     fun set() = viewModelScope.launch {
         runCatching {
-            setDetail(state.text, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            setDetail(state.text, state.option, state.flowNote, state.idMain, state.idSecondary).getOrThrow() ?: 0
         }
-            .onSuccessStateAccess(::updateState)
+            .onSuccess { updateState { copy(id = it) } }
             .onFailureState(getClassAndMethod(), ::updateState)
     }
 

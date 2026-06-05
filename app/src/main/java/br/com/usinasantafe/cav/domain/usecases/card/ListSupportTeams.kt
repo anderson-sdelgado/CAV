@@ -1,7 +1,7 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.domain.repositories.stable.SupportTeamsRepository
-import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
+import br.com.usinasantafe.cav.domain.repositories.variable.*
 import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxScreenModel
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -13,7 +13,7 @@ interface ListSupportTeams {
 
 class IListSupportTeams @Inject constructor(
     private val supportTeamsRepository: SupportTeamsRepository,
-    private val cardRepository: CardRepository
+    private val cardRepository: BasicCardRepository
 ): ListSupportTeams {
 
     override suspend fun invoke(): Result<List<ItemCheckBoxScreenModel>> =

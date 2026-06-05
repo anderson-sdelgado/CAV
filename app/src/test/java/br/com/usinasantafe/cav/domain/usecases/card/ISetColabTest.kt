@@ -1,6 +1,5 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
-import br.com.usinasantafe.cav.domain.repositories.stable.EquipRepository
 import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
@@ -14,12 +13,10 @@ import org.mockito.kotlin.whenever
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class ISetEquipTest {
+class ISetColabTest {
 
-    private val equipRepository = mock<EquipRepository>()
     private val cardRepository = mock<CardRepository>()
-    private val usecase = ISetEquip(
-        equipRepository = equipRepository,
+    private val usecase = ISetColab(
         cardRepository = cardRepository
     )
 
@@ -27,9 +24,9 @@ class ISetEquipTest {
     fun `Check return failure if value of field is incorrect`() =
         runTest {
             val result = usecase(
-                nroEquip = "de25",
+                regColab = "de25",
                 option = Option.INSERT,
-                flowNote = FlowNote.EQUIP,
+                flowNote = FlowNote.COLAB,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -39,7 +36,7 @@ class ISetEquipTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "ISetEquip -> toLong"
+                "ISetColab -> toLong"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -48,172 +45,60 @@ class ISetEquipTest {
         }
 
     @Test
-    fun `Check return failure if have error in EquipRepository getIdByNro`() =
+    fun `Check return failure if have error in CardRepository setRegColab`() =
         runTest {
             whenever(
-                equipRepository.getIdByNro(100L)
+                cardRepository.setRegColab(123456)
             ).thenReturn(
                 resultFailure(
-                    "IEquipRepository.getIdByNro",
+                    "ICardRepository.setRegColab",
                     "-",
                     Exception()
                 )
             )
             val result = usecase(
-                nroEquip = "100",
+                regColab = "123456",
                 option = Option.INSERT,
-                flowNote = FlowNote.EQUIP,
+                flowNote = FlowNote.COLAB,
                 idMain = 0,
                 idSecondary = 0
             )
-            assertEquals(
-                result.isFailure,
-                true
-            )
-            assertEquals(
-                result.exceptionOrNull()!!.message,
-                "ISetEquip -> IEquipRepository.getIdByNro"
-            )
-            assertEquals(
-                result.exceptionOrNull()!!.cause.toString(),
-                "java.lang.Exception"
-            )
-        }
-
-    @Test
-    fun `Check return failure if have error in CardRepository setIdEquip`() =
-        runTest {
-            whenever(
-                equipRepository.getIdByNro(100L)
-            ).thenReturn(
-                Result.success(10)
-            )
-            whenever(
-                cardRepository.setIdEquip(10)
-            ).thenReturn(
-                resultFailure(
-                    "ICardRepository.setIdEquip",
-                    "-",
-                    Exception()
-                )
-            )
-            val result = usecase(
-                nroEquip = "100",
-                option = Option.INSERT,
-                flowNote = FlowNote.EQUIP,
-                idMain = 0,
-                idSecondary = 0
-            )
-            verify(cardRepository, never())
-                .updateIdEquip(10, 0)
-            verify(cardRepository, never())
-                .updateIdEquipSecondary(10, 0, 0)
-            assertEquals(
-                result.isFailure,
-                true
-            )
-            assertEquals(
-                result.exceptionOrNull()!!.message,
-                "ISetEquip -> ICardRepository.setIdEquip"
-            )
-            assertEquals(
-                result.exceptionOrNull()!!.cause.toString(),
-                "java.lang.Exception"
-            )
-        }
-
-    @Test
-    fun `Check return correct if CardRepository setIdEquip execute successfully`() =
-        runTest {
-            whenever(
-                equipRepository.getIdByNro(100L)
-            ).thenReturn(
-                Result.success(10)
-            )
-            val result = usecase(
-                nroEquip = "100",
-                option = Option.INSERT,
-                flowNote = FlowNote.EQUIP,
-                idMain = 0,
-                idSecondary = 0
-            )
-            verify(cardRepository, atLeastOnce()).setIdEquip(10)
-            verify(cardRepository, never())
-                .updateIdEquip(10, 0)
-            verify(cardRepository, never())
-                .updateIdEquipSecondary(10, 0, 0)
-            assertEquals(
-                result.isSuccess,
-                true
-            )
-        }
-
-    @Test
-    fun `Check return failure if have error in CardRepository updateIdEquipMain`() =
-        runTest {
-            whenever(
-                equipRepository.getIdByNro(100L)
-            ).thenReturn(
-                Result.success(10)
-            )
-            whenever(
-                cardRepository.updateIdEquip(
-                    idEquip = 10,
-                    id = 1
-                )
-            ).thenReturn(
-                resultFailure(
-                    "ICardRepository.updateIdEquipMain",
-                    "-",
-                    Exception()
-                )
-            )
-            val result = usecase(
-                nroEquip = "100",
-                option = Option.EDIT,
-                flowNote = FlowNote.EQUIP,
-                idMain = 1,
-                idSecondary = 0
-            )
-            verify(cardRepository, never())
-                .setIdEquip(10)
-            verify(cardRepository, never())
-                .updateIdEquipSecondary(10, 0, 0)
-            assertEquals(
-                result.isFailure,
-                true
-            )
-            assertEquals(
-                result.exceptionOrNull()!!.message,
-                "ISetEquip -> ICardRepository.updateIdEquipMain"
-            )
-            assertEquals(
-                result.exceptionOrNull()!!.cause.toString(),
-                "java.lang.Exception"
-            )
-        }
-
-    @Test
-    fun `Check return correct if CardRepository updateIdEquipMain execute successfully`() =
-        runTest {
-            whenever(
-                equipRepository.getIdByNro(100L)
-            ).thenReturn(
-                Result.success(10)
-            )
-            val result = usecase(
-                nroEquip = "100",
-                option = Option.EDIT,
-                flowNote = FlowNote.EQUIP,
-                idMain = 1,
-                idSecondary = 0
-            )
-            verify(cardRepository, never())
-                .setIdEquip(10)
             verify(cardRepository, atLeastOnce())
-                .updateIdEquip(10, 1)
+                .setRegColab(123456)
             verify(cardRepository, never())
-                .updateIdEquipSecondary(10, 0, 0)
+                .updateRegColab(123456, 0)
+            verify(cardRepository, never())
+                .updateRegPassengerColab(123456, 0, 0)
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "ISetColab -> ICardRepository.setRegColab"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+    
+    @Test
+    fun `Check return correct if CardRepository setRegColab execute successfully`() =
+        runTest {
+            val result = usecase(
+                regColab = "123456",
+                option = Option.INSERT,
+                flowNote = FlowNote.COLAB,
+                idMain = 0,
+                idSecondary = 0
+            )
+            verify(cardRepository, atLeastOnce())
+                .setRegColab(123456)
+            verify(cardRepository, never())
+                .updateRegColab(123456, 0)
+            verify(cardRepository, never())
+                .updateRegPassengerColab(123456, 0, 0)
             assertEquals(
                 result.isSuccess,
                 true
@@ -221,44 +106,98 @@ class ISetEquipTest {
         }
 
     @Test
-    fun `Check return failure if have error in CardRepository updateIdEquipSecondary`() =
+    fun `Check return failure if have error in CardRepository updateRegColab`() =
         runTest {
             whenever(
-                equipRepository.getIdByNro(100L)
-            ).thenReturn(
-                Result.success(10)
-            )
-            whenever(
-                cardRepository.updateIdEquipSecondary(
-                    idEquip = 10,
-                    idMain = 1,
-                    idSecondary = 2
-                )
+                cardRepository.updateRegColab(123456, 1)
             ).thenReturn(
                 resultFailure(
-                    "ICardRepository.updateIdEquipSecondary",
+                    "ICardRepository.updateRegColab",
                     "-",
                     Exception()
                 )
             )
             val result = usecase(
-                nroEquip = "100",
+                regColab = "123456",
                 option = Option.EDIT,
-                flowNote = FlowNote.EQUIP_SEC,
+                flowNote = FlowNote.COLAB,
+                idMain = 1,
+                idSecondary = 0
+            )
+            verify(cardRepository, never())
+                .setRegColab(123456)
+            verify(cardRepository, atLeastOnce())
+                .updateRegColab(123456, 1)
+            verify(cardRepository, never())
+                .updateRegPassengerColab(123456, 1, 0)
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "ISetColab -> ICardRepository.updateRegColab"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `Check return correct if CardRepository updateRegColab execute successfully`() =
+        runTest {
+            val result = usecase(
+                regColab = "123456",
+                option = Option.EDIT,
+                flowNote = FlowNote.COLAB,
+                idMain = 1,
+                idSecondary = 0
+            )
+            verify(cardRepository, never())
+                .setRegColab(123456)
+            verify(cardRepository, atLeastOnce())
+                .updateRegColab(123456, 1)
+            verify(cardRepository, never())
+                .updateRegPassengerColab(123456, 1, 0)
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+        }
+
+    @Test
+    fun `Check return failure if have error in CardRepository updateRegPassengerColab`() =
+        runTest {
+            whenever(
+                cardRepository.updateRegPassengerColab(123456, 1, 2)
+            ).thenReturn(
+                resultFailure(
+                    "ICardRepository.updateRegPassengerColab",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = usecase(
+                regColab = "123456",
+                option = Option.EDIT,
+                flowNote = FlowNote.PASSENGER_COLAB,
                 idMain = 1,
                 idSecondary = 2
             )
             verify(cardRepository, never())
-                .setIdEquip(10)
+                .setRegColab(123456)
             verify(cardRepository, never())
-                .updateIdEquip(10, 1)
+                .updateRegColab(123456, 1)
+            verify(cardRepository, atLeastOnce())
+                .updateRegPassengerColab(123456, 1, 2)
             assertEquals(
                 result.isFailure,
                 true
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "ISetEquip -> ICardRepository.updateIdEquipSecondary"
+                "ISetColab -> ICardRepository.updateRegPassengerColab"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -269,29 +208,23 @@ class ISetEquipTest {
     @Test
     fun `Check return correct if function execute successfully`() =
         runTest {
-            whenever(
-                equipRepository.getIdByNro(100L)
-            ).thenReturn(
-                Result.success(10)
-            )
             val result = usecase(
-                nroEquip = "100",
+                regColab = "123456",
                 option = Option.EDIT,
-                flowNote = FlowNote.EQUIP_SEC,
+                flowNote = FlowNote.PASSENGER_COLAB,
                 idMain = 1,
                 idSecondary = 2
             )
             verify(cardRepository, never())
-                .setIdEquip(10)
+                .setRegColab(123456)
             verify(cardRepository, never())
-                .updateIdEquip(10, 1)
+                .updateRegColab(123456, 1)
             verify(cardRepository, atLeastOnce())
-                .updateIdEquipSecondary(10, 1, 2)
+                .updateRegPassengerColab(123456, 1, 2)
             assertEquals(
                 result.isSuccess,
                 true
             )
         }
-
 
 }

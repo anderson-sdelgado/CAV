@@ -38,13 +38,18 @@ class EquipViewModelTest {
     private val updateTableEquip = mock<UpdateTableEquip>()
     private val hasNroEquip = mock<HasNroEquip>()
     private val setEquip = mock<SetEquip>()
-    private val viewModel = EquipViewModel(
+    private fun createViewModel(
+        option: Option = Option.INSERT,
+        flowNote: FlowNote = FlowNote.EQUIP,
+        idMain: Int = 0,
+        idSecondary: Int = 0
+    ) = EquipViewModel(
         savedStateHandle = SavedStateHandle(
             mapOf(
-                Args.OPTION_ARG to Option.INSERT.ordinal,
-                Args.FLOW_NOTE_ARG to FlowNote.EQUIP.ordinal,
-                Args.ID_MAIN_ARG to  0,
-                Args.ID_SECONDARY_ARG to 0
+                Args.OPTION_ARG to option.ordinal,
+                Args.FLOW_NOTE_ARG to flowNote.ordinal,
+                Args.ID_MAIN_ARG to  idMain,
+                Args.ID_SECONDARY_ARG to idSecondary
             )
         ),
         getNroEquip = getNroEquip,
@@ -54,7 +59,18 @@ class EquipViewModelTest {
     )
 
     @Test
-    fun `recoverData - Check return failure if have error in GetEquip`() =
+    fun `recoverData - Check return correct if function execute successfully and option is Option INSERT`() =
+        runTest {
+            val viewModel = createViewModel()
+            viewModel.recoverData()
+            assertEquals(
+                viewModel.uiState.value.text,
+                ""
+            )
+        }
+
+    @Test
+    fun `recoverData - Check return failure if have error in GetNroEquip`() =
         runTest {
             whenever(
                 getNroEquip(
@@ -69,6 +85,7 @@ class EquipViewModelTest {
                     cause = Exception()
                 )
             )
+            val viewModel = createViewModel(Option.EDIT)
             viewModel.recoverData()
             assertEquals(
                 viewModel.uiState.value.status.flagDialog,
@@ -89,7 +106,7 @@ class EquipViewModelTest {
         }
 
     @Test
-    fun `recoverData - Check return true if process execute successfully`() =
+    fun `recoverData - Check return correct if process execute successfully and option is Option EDIT`() =
         runTest {
             whenever(
                 getNroEquip(
@@ -100,6 +117,7 @@ class EquipViewModelTest {
             ).thenReturn(
                 Result.success("2200")
             )
+            val viewModel = createViewModel(Option.EDIT)
             viewModel.recoverData()
             assertEquals(
                 viewModel.uiState.value.status.flagAccess,
@@ -113,6 +131,7 @@ class EquipViewModelTest {
 
     @Test
     fun `setTextField - Check add char`() {
+        val viewModel = createViewModel()
         viewModel.onTextField(
             "1",
             TypeButton.NUMERIC
@@ -125,6 +144,7 @@ class EquipViewModelTest {
 
     @Test
     fun `setTextField - Check remover char`() {
+        val viewModel = createViewModel()
         viewModel.onTextField(
             "19759",
             TypeButton.NUMERIC
@@ -153,6 +173,7 @@ class EquipViewModelTest {
 
     @Test
     fun `setTextField - Check msg of empty field`() {
+        val viewModel = createViewModel()
         viewModel.onTextField(
             "OK",
             TypeButton.OK
@@ -192,6 +213,7 @@ class EquipViewModelTest {
                     )
                 )
             )
+            val viewModel = createViewModel()
             val result = viewModel.updateAllDatabase().toList()
             assertEquals(result.count(), 2)
             assertEquals(
@@ -261,6 +283,7 @@ class EquipViewModelTest {
                     ),
                 )
             )
+            val viewModel = createViewModel()
             val result = viewModel.updateAllDatabase().toList()
             assertEquals(result.count(), 4)
             assertEquals(
@@ -321,6 +344,7 @@ class EquipViewModelTest {
     @Test
     fun `setTextField - Check return failure if field is empty`() =
         runTest {
+            val viewModel = createViewModel()
             viewModel.onTextField(
                 "OK",
                 TypeButton.OK
@@ -363,6 +387,7 @@ class EquipViewModelTest {
                     cause = Exception()
                 )
             )
+            val viewModel = createViewModel()
             viewModel.onTextField(
                 "200",
                 TypeButton.NUMERIC
@@ -405,6 +430,7 @@ class EquipViewModelTest {
             ).thenReturn(
                 Result.success(false)
             )
+            val viewModel = createViewModel()
             viewModel.onTextField(
                 "200",
                 TypeButton.NUMERIC
@@ -454,6 +480,7 @@ class EquipViewModelTest {
                     cause = Exception()
                 )
             )
+            val viewModel = createViewModel()
             viewModel.onTextField(
                 "200",
                 TypeButton.NUMERIC
@@ -496,6 +523,7 @@ class EquipViewModelTest {
             ).thenReturn(
                 Result.success(true)
             )
+            val viewModel = createViewModel()
             viewModel.onTextField(
                 "200",
                 TypeButton.NUMERIC

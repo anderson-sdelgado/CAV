@@ -1,7 +1,7 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.domain.repositories.stable.TypeAccidentRepository
-import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
+import br.com.usinasantafe.cav.domain.repositories.variable.*
 import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxScreenModel
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -13,7 +13,7 @@ interface ListTypeAccident {
 
 class IListTypeAccident @Inject constructor(
     private val typeAccidentRepository: TypeAccidentRepository,
-    private val cardRepository: CardRepository
+    private val cardRepository: BasicCardRepository
 ): ListTypeAccident {
 
     override suspend fun invoke(): Result<List<ItemCheckBoxScreenModel>> =

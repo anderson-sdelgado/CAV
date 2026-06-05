@@ -1,7 +1,7 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.domain.repositories.stable.EquipRepository
-import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
+import br.com.usinasantafe.cav.domain.repositories.variable.*
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import br.com.usinasantafe.cav.utils.tryCatch
@@ -14,7 +14,7 @@ interface SetIdCar {
 
 class ISetIdCar @Inject constructor(
     private val equipRepository: EquipRepository,
-    private val cardRepository: CardRepository
+    private val cardRepository: BasicCardRepository
 ): SetIdCar {
 
     override suspend fun invoke(nroEquip: String): Result<Unit> =

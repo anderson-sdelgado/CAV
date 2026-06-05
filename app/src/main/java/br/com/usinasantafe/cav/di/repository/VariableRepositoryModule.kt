@@ -20,4 +20,20 @@ interface VariableRepositoryModule {
     @Singleton
     fun bindCardRepository(repository: ICardRepository): CardRepository
 
+    @Binds
+    @Singleton
+    fun bindBasicCardRepository(repository: IBasicCardRepository): BasicCardRepository
+
+    @Binds
+    @Singleton
+    fun bindInsertCardRepository(repository: IInsertCardRepository): InsertCardRepository
+
+    @Binds
+    @Singleton
+    fun bindRecoverDataCardRepository(repository: IRecoverDataCardRepository): RecoverDataCardRepository
+
+    @Binds
+    @Singleton
+    fun bindUpdateCardRepository(repository: IUpdateCardRepository): UpdateCardRepository
+
 }

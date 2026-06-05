@@ -1,6 +1,7 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.lib.FlowNote
+import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import javax.inject.Inject
@@ -8,6 +9,7 @@ import javax.inject.Inject
 interface SetState {
     suspend operator fun invoke(
         idSelection: Int,
+        option: Option,
         flowNote: FlowNote,
         idMain: Int,
         idSecondary: Int,
@@ -19,6 +21,7 @@ class ISetState @Inject constructor(
 
     override suspend fun invoke(
         idSelection: Int,
+        option: Option,
         flowNote: FlowNote,
         idMain: Int,
         idSecondary: Int,

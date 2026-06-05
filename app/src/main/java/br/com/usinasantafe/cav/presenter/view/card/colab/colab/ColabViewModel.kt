@@ -85,7 +85,8 @@ class ColabViewModel @Inject constructor(
 
     fun recoverData() = viewModelScope.launch {
         runCatching {
-            getRegColab(state.option, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            if(state.option == Option.INSERT) return@launch
+            getRegColab(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
         }
             .onSuccess { updateState { copy(text = it) } }
             .onFailureUpdate(getClassAndMethod(), ::updateState)
@@ -103,15 +104,15 @@ class ColabViewModel @Inject constructor(
     }
 
     private fun set() = viewModelScope.launch {
-        runCatching {
-            if (state.text.isBlank()) {
-                updateState { withFailure(getClassAndMethod(), Errors.FIELD_EMPTY) }
-                return@launch
-            }
-            val check = hasRegColab(state.text).getOrThrow()
-            if (check) setColab(state.text, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
-            check
+        if (state.text.isBlank()) {
+            updateState { withFailure(getClassAndMethod(), Errors.FIELD_EMPTY) }
+            return@launch
         }
+        hasRegColab(state.text)
+            .mapCatching { check ->
+                if (check) setColab(state.text, state.option, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+                check
+            }
             .onSuccessUpdateCheckAccess(::updateState)
             .onFailureUpdate(getClassAndMethod(), ::updateState)
     }

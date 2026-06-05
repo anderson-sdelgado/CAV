@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
+import br.com.usinasantafe.cav.domain.repositories.variable.*
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -14,6 +15,7 @@ interface GetIdState {
 }
 
 class IGetIdState @Inject constructor(
+    private val cardRepository: BasicCardRepository
 ): GetIdState {
 
     override suspend fun invoke(

@@ -1,6 +1,6 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
-import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
+import br.com.usinasantafe.cav.domain.repositories.variable.*
 import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxScreenModel
 import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.call
@@ -12,7 +12,7 @@ interface SetNatureList {
 }
 
 class ISetNatureList @Inject constructor(
-    private val cardRepository: CardRepository
+    private val cardRepository: BasicCardRepository
 ): SetNatureList {
 
     override suspend fun invoke(list: List<ItemCheckBoxScreenModel>): EmptyResult =

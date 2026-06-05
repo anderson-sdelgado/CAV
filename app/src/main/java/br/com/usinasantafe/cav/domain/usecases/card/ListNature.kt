@@ -1,7 +1,7 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.domain.repositories.stable.NatureRepository
-import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
+import br.com.usinasantafe.cav.domain.repositories.variable.*
 import br.com.usinasantafe.cav.presenter.model.ItemCheckBoxScreenModel
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -14,7 +14,7 @@ interface ListNature {
 
 class IListNature @Inject constructor(
     private val natureRepository: NatureRepository,
-    private val cardRepository: CardRepository
+    private val cardRepository: BasicCardRepository
 ): ListNature {
 
     override suspend fun invoke(): Result<List<ItemCheckBoxScreenModel>> =

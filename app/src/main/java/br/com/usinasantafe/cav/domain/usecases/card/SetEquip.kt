@@ -1,13 +1,12 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.domain.repositories.stable.EquipRepository
-import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
+import br.com.usinasantafe.cav.domain.repositories.variable.*
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import br.com.usinasantafe.cav.utils.tryCatch
-import com.google.common.primitives.UnsignedInts.toLong
 import javax.inject.Inject
 
 interface SetEquip {
@@ -33,14 +32,13 @@ class ISetEquip @Inject constructor(
         idSecondary: Int
     ): Result<Unit> =
         call(getClassAndMethod()) {
-            val nroEquipLong = tryCatch(::toLong.name) {
-                nroEquip.toLong()
-            }
+            val nroEquipLong = tryCatch("toLong") { nroEquip.toLong() }
             val idEquip = equipRepository.getIdByNro(nroEquipLong).getOrThrow()
-            if(option == Option.INSERT){
-                cardRepository.setIdEquip(idEquip)
-                return@call
-            }
+            when {
+                option == Option.INSERT -> cardRepository.setIdEquip(idEquip)
+                flowNote == FlowNote.EQUIP -> cardRepository.updateIdEquip(idEquip, idMain)
+                else -> cardRepository.updateIdEquipSecondary(idEquip, idMain, idSecondary)
+            }.getOrThrow()
         }
 
 }

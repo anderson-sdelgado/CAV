@@ -101,6 +101,7 @@ class DetailViewModelTest {
             whenever(
                 setDetail(
                     text = "Test",
+                    option = Option.INSERT,
                     flowNote = FlowNote.EQUIP,
                     idMain = 0,
                     idSecondary = 0
@@ -146,6 +147,7 @@ class DetailViewModelTest {
                 atLeastOnce()
             ).invoke(
                 text = "Test",
+                option = Option.INSERT,
                 flowNote = FlowNote.EQUIP,
                 idMain = 0,
                 idSecondary = 0

@@ -457,11 +457,6 @@ fun NavigationGraph(
             )
         ) { entry ->
             DetailScreen(
-                onNavDataVehicleOwn = {
-                    navActions.navigateToDataVehicleOwn(
-                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
-                    )
-                },
                 onNavEquip = {
                     navActions.navigateToEquip(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
@@ -527,16 +522,41 @@ fun NavigationGraph(
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 },
-                onNavDataVehicleInvolved = {
+                onNavDataVehicle = {
                     navActions.navigateToDataVehicleInvolved(
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
                     )
                 },
-                onNavDataInvolved = {
+                onNavDataInvolvedEdit = {
                     navActions.navigateToDataInvolved(
                         flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
+                    )
+                },
+                onNavDataInvolvedInsert = {
+                    val ordinal = entry.arguments?.getInt(FLOW_NOTE_ARG)!!
+                    val flowNote = FlowNote.entries[ordinal]
+                    var idMain = it
+                    var idSecondary = 0
+                    if(flowNote == FlowNote.PASSENGER_INVOLVED) {
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
+                        idSecondary = it
+                    }
+                    navActions.navigateToDataInvolved(
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = idMain,
+                        idSecondary = idSecondary
+                    )
+                },
+                onNavDataVehicleOwnInsert = {
+                    navActions.navigateToDataVehicleOwn(
+                        idMain = it
+                    )
+                },
+                onNavDataVehicleInvolvedInsert = {
+                    navActions.navigateToDataVehicleInvolved(
+                        idMain = it
                     )
                 }
             )

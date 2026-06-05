@@ -12,8 +12,6 @@ import br.com.usinasantafe.cav.lib.LevelUpdate
 import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.TypeButton
 import br.com.usinasantafe.cav.presenter.Args
-import br.com.usinasantafe.cav.presenter.view.card.colab.colab.ColabStateUpdate
-import br.com.usinasantafe.cav.presenter.view.card.colab.colab.ColabViewModel
 import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 import br.com.usinasantafe.cav.utils.percentage
 import br.com.usinasantafe.cav.utils.resultFailure
@@ -40,13 +38,18 @@ class ColabViewModelTest {
     private val updateTableColab = mock<UpdateTableColab>()
     private val hasRegColab = mock<HasRegColab>()
     private val setColab = mock<SetColab>()
-    private val viewModel = ColabViewModel(
+    private fun createViewModel(
+        option: Option = Option.INSERT,
+        flowNote: FlowNote = FlowNote.COLAB,
+        idMain: Int = 0,
+        idSecondary: Int = 0
+    ) = ColabViewModel(
         savedStateHandle = SavedStateHandle(
             mapOf(
-                Args.OPTION_ARG to Option.INSERT.ordinal,
-                Args.FLOW_NOTE_ARG to FlowNote.COLAB.ordinal,
-                Args.ID_MAIN_ARG to 0,
-                Args.ID_SECONDARY_ARG to 0
+                Args.OPTION_ARG to option.ordinal,
+                Args.FLOW_NOTE_ARG to flowNote.ordinal,
+                Args.ID_MAIN_ARG to  idMain,
+                Args.ID_SECONDARY_ARG to idSecondary
             )
         ),
         getRegColab = getRegColab,
@@ -60,7 +63,6 @@ class ColabViewModelTest {
         runTest {
             whenever(
                 getRegColab(
-                    option = Option.INSERT,
                     flowNote = FlowNote.COLAB,
                     idMain = 0,
                     idSecondary = 0
@@ -72,6 +74,7 @@ class ColabViewModelTest {
                     cause = Exception()
                 )
             )
+            val viewModel = createViewModel(Option.EDIT)
             viewModel.recoverData()
             assertEquals(
                 viewModel.uiState.value.status.flagDialog,
@@ -96,7 +99,6 @@ class ColabViewModelTest {
         runTest {
             whenever(
                 getRegColab(
-                    option = Option.INSERT,
                     flowNote = FlowNote.COLAB,
                     idMain = 0,
                     idSecondary = 0
@@ -104,6 +106,7 @@ class ColabViewModelTest {
             ).thenReturn(
                 Result.success("2200")
             )
+            val viewModel = createViewModel(Option.EDIT)
             viewModel.recoverData()
             assertEquals(
                 viewModel.uiState.value.status.flagAccess,
@@ -117,6 +120,7 @@ class ColabViewModelTest {
 
     @Test
     fun `setTextField - Check add char`() {
+        val viewModel = createViewModel()
         viewModel.onTextField(
             "1",
             TypeButton.NUMERIC
@@ -129,6 +133,7 @@ class ColabViewModelTest {
 
     @Test
     fun `setTextField - Check remover char`() {
+        val viewModel = createViewModel()
         viewModel.onTextField(
             "19759",
             TypeButton.NUMERIC
@@ -157,6 +162,7 @@ class ColabViewModelTest {
 
     @Test
     fun `setTextField - Check msg of empty field`() {
+        val viewModel = createViewModel()
         viewModel.onTextField(
             "OK",
             TypeButton.OK
@@ -196,6 +202,7 @@ class ColabViewModelTest {
                     )
                 )
             )
+            val viewModel = createViewModel()
             val result = viewModel.updateAllDatabase().toList()
             assertEquals(result.count(), 2)
             assertEquals(
@@ -265,6 +272,7 @@ class ColabViewModelTest {
                     ),
                 )
             )
+            val viewModel = createViewModel()
             val result = viewModel.updateAllDatabase().toList()
             assertEquals(result.count(), 4)
             assertEquals(
@@ -325,6 +333,7 @@ class ColabViewModelTest {
     @Test
     fun `setTextField - Check return failure if field is empty`() =
         runTest {
+            val viewModel = createViewModel()
             viewModel.onTextField(
                 "OK",
                 TypeButton.OK
@@ -367,6 +376,7 @@ class ColabViewModelTest {
                     cause = Exception()
                 )
             )
+            val viewModel = createViewModel()
             viewModel.onTextField(
                 "200",
                 TypeButton.NUMERIC
@@ -409,6 +419,7 @@ class ColabViewModelTest {
             ).thenReturn(
                 Result.success(false)
             )
+            val viewModel = createViewModel()
             viewModel.onTextField(
                 "200",
                 TypeButton.NUMERIC
@@ -445,7 +456,8 @@ class ColabViewModelTest {
             )
             whenever(
                 setColab(
-                    text = "200",
+                    regColab = "200",
+                    option = Option.INSERT,
                     flowNote = FlowNote.COLAB,
                     idMain = 0,
                     idSecondary = 0
@@ -457,6 +469,7 @@ class ColabViewModelTest {
                     cause = Exception()
                 )
             )
+            val viewModel = createViewModel()
             viewModel.onTextField(
                 "200",
                 TypeButton.NUMERIC
@@ -499,6 +512,7 @@ class ColabViewModelTest {
             ).thenReturn(
                 Result.success(true)
             )
+            val viewModel = createViewModel()
             viewModel.onTextField(
                 "200",
                 TypeButton.NUMERIC
@@ -508,7 +522,8 @@ class ColabViewModelTest {
                 TypeButton.OK
             )
             verify(setColab, atLeastOnce()).invoke(
-                text = "200",
+                regColab = "200",
+                option = Option.INSERT,
                 flowNote = FlowNote.COLAB,
                 idMain = 0,
                 idSecondary = 0

@@ -28,13 +28,18 @@ class StateViewModelTest {
 
     private val getIdState = mock<GetIdState>()
     private val setState = mock<SetState>()
-    private val viewModel = StateViewModel(
+    private fun createViewModel(
+        option: Option = Option.INSERT,
+        flowNote: FlowNote = FlowNote.COLAB,
+        idMain: Int = 0,
+        idSecondary: Int = 0
+    ) = StateViewModel(
         savedStateHandle = SavedStateHandle(
             mapOf(
-                Args.OPTION_ARG to Option.INSERT.ordinal,
-                Args.FLOW_NOTE_ARG to FlowNote.COLAB.ordinal,
-                Args.ID_MAIN_ARG to 0,
-                Args.ID_SECONDARY_ARG to 0
+                Args.OPTION_ARG to option.ordinal,
+                Args.FLOW_NOTE_ARG to flowNote.ordinal,
+                Args.ID_MAIN_ARG to  idMain,
+                Args.ID_SECONDARY_ARG to idSecondary
             )
         ),
         getIdState = getIdState,
@@ -57,6 +62,7 @@ class StateViewModelTest {
                     cause = Exception()
                 )
             )
+            val viewModel = createViewModel(Option.EDIT)
             viewModel.recoverData()
             assertEquals(
                 viewModel.uiState.value.status.flagDialog,
@@ -88,6 +94,7 @@ class StateViewModelTest {
             ).thenReturn(
                 Result.success(2)
             )
+            val viewModel = createViewModel(Option.EDIT)
             viewModel.recoverData()
             assertEquals(
                 viewModel.uiState.value.status.flagAccess,
@@ -105,6 +112,7 @@ class StateViewModelTest {
             whenever(
                 setState(
                     idSelection = 2,
+                    option = Option.INSERT,
                     flowNote = FlowNote.COLAB,
                     idMain = 0,
                     idSecondary = 0
@@ -116,6 +124,7 @@ class StateViewModelTest {
                     cause = Exception()
                 )
             )
+            val viewModel = createViewModel()
             viewModel.onSelection(2)
             viewModel.set()
             assertEquals(
@@ -143,6 +152,7 @@ class StateViewModelTest {
     @Test
     fun `set - Check return true if process execute successfully`() =
         runTest {
+            val viewModel = createViewModel()
             viewModel.onSelection(2)
             viewModel.set()
             verify(
@@ -150,6 +160,7 @@ class StateViewModelTest {
                 atLeastOnce()
             ).invoke(
                 idSelection = 2,
+                option = Option.INSERT,
                 flowNote = FlowNote.COLAB,
                 idMain = 0,
                 idSecondary = 0

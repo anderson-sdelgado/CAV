@@ -1,0 +1,84 @@
+package br.com.usinasantafe.cav.infra.repositories.variable
+
+import br.com.usinasantafe.cav.domain.repositories.variable.UpdateCardRepository
+import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
+import br.com.usinasantafe.cav.utils.EmptyResult
+import javax.inject.Inject
+
+class IUpdateCardRepository @Inject constructor(
+    private val cardSharedPreferencesDatasource: CardSharedPreferencesDatasource,
+): UpdateCardRepository {
+
+    override suspend fun updateIdEquip(idEquip: Int, id: Int): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateIdEquipSecondary(
+        idEquip: Int,
+        idMain: Int,
+        idSecondary: Int
+    ): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateDetailEquip(text: String, id: Int): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateDetailEquipSecondary(
+        text: String,
+        idMain: Int,
+        idSecondary: Int
+    ): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateDetailColab(text: String, id: Int): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateDetailDriver(text: String, id: Int): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateDetailPassengerColab(
+        text: String,
+        idMain: Int,
+        idSecondary: Int
+    ): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateDetailVehicle(text: String, id: Int): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateDetailPassengerInvolved(
+        text: String,
+        idMain: Int,
+        idSecondary: Int
+    ): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateDetailInvolved(text: String, id: Int): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateDetailWitness(text: String, id: Int): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateRegColab(regColab: Long, idMain: Int): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateRegPassengerColab(
+        regColab: Long,
+        idMain: Int,
+        idSecondary: Int
+    ): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+}
