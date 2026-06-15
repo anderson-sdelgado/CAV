@@ -1,6 +1,6 @@
 package br.com.usinasantafe.cav.infra.models.sharedpreferences
 
-import br.com.usinasantafe.cav.domain.entities.variable.Colab
+import br.com.usinasantafe.cav.domain.entities.variable.ColabCard
 import br.com.usinasantafe.cav.lib.State
 
 data class ColabSharedPreferencesModel(
@@ -10,9 +10,9 @@ data class ColabSharedPreferencesModel(
     var detail: String? = null
 )
 
-fun ColabSharedPreferencesModel.sharedPreferencesModelToEntity(): Colab {
+fun ColabSharedPreferencesModel.sharedPreferencesModelToEntity(): ColabCard {
     return with(this) {
-        Colab(
+        ColabCard(
             id = id,
             reg = reg,
             state = state,
@@ -21,7 +21,7 @@ fun ColabSharedPreferencesModel.sharedPreferencesModelToEntity(): Colab {
     }
 }
 
-fun Colab.entityToSharedPreferencesModel(): ColabSharedPreferencesModel {
+fun ColabCard.entityToSharedPreferencesModel(): ColabSharedPreferencesModel {
     return with(this) {
         ColabSharedPreferencesModel(
             id = id,

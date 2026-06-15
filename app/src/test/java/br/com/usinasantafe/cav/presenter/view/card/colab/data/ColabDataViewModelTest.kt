@@ -3,10 +3,11 @@ package br.com.usinasantafe.cav.presenter.view.card.colab.data
 import androidx.lifecycle.SavedStateHandle
 import br.com.usinasantafe.cav.MainCoroutineRule
 import br.com.usinasantafe.cav.domain.usecases.card.GetDescColab
-import br.com.usinasantafe.cav.domain.usecases.card.GetDescState
 import br.com.usinasantafe.cav.domain.usecases.card.GetDetail
+import br.com.usinasantafe.cav.domain.usecases.card.GetState
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.FlowNote
+import br.com.usinasantafe.cav.lib.State
 import br.com.usinasantafe.cav.presenter.Args
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -25,7 +26,7 @@ class ColabDataViewModelTest {
     val mainCoroutineRule = MainCoroutineRule()
 
     private val getDescColab = mock<GetDescColab>()
-    private val getDescState = mock<GetDescState>()
+    private val getState = mock<GetState>()
     private val getDetail = mock<GetDetail>()
     private val viewModel = ColabDataViewModel(
         savedStateHandle = SavedStateHandle(
@@ -36,7 +37,7 @@ class ColabDataViewModelTest {
             )
         ),
         getDescColab = getDescColab,
-        getDescState = getDescState,
+        getState = getState,
         getDetail = getDetail
     )
 
@@ -119,7 +120,7 @@ class ColabDataViewModelTest {
                 Result.success("123456 - Teste")
             )
             whenever(
-                getDescState(
+                getState(
                     flowNote = FlowNote.COLAB,
                     idMain = 0,
                     idSecondary = 0
@@ -163,13 +164,13 @@ class ColabDataViewModelTest {
                 Result.success("123456 - Teste")
             )
             whenever(
-                getDescState(
+                getState(
                     flowNote = FlowNote.COLAB,
                     idMain = 0,
                     idSecondary = 0
                 )
             ).thenReturn(
-                Result.success("ILESO")
+                Result.success(State.UNHARMED)
             )
             whenever(
                 getDetail(
@@ -216,13 +217,13 @@ class ColabDataViewModelTest {
                 Result.success("123456 - Teste")
             )
             whenever(
-                getDescState(
+                getState(
                     flowNote = FlowNote.COLAB,
                     idMain = 0,
                     idSecondary = 0
                 )
             ).thenReturn(
-                Result.success("ILESO")
+                Result.success(State.UNHARMED)
             )
             whenever(
                 getDetail(
@@ -248,7 +249,7 @@ class ColabDataViewModelTest {
             )
             assertEquals(
                 viewModel.uiState.value.state,
-                "ILESO"
+                State.UNHARMED
             )
             assertEquals(
                 viewModel.uiState.value.detail,

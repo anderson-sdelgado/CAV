@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
+import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import javax.inject.Inject
@@ -11,13 +12,16 @@ interface GetDescVehicle {
 }
 
 class IGetDescVehicle @Inject constructor(
+    private val cardRepository: CardRepository
 ): GetDescVehicle {
 
     override suspend fun invoke(
         idMain: Int
     ): Result<String> =
         call(getClassAndMethod()) {
-            TODO("Not yet implemented")
+            val plate = cardRepository.getPlate(idMain).getOrThrow() ?: "-"
+            val brand = cardRepository.getBrand(idMain).getOrThrow() ?: "-"
+            "$plate - $brand"
         }
 
 }

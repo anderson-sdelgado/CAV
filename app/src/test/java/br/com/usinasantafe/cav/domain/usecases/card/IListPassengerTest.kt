@@ -6,6 +6,7 @@ import br.com.usinasantafe.cav.domain.entities.variable.Involved
 import br.com.usinasantafe.cav.domain.repositories.stable.ColabRepository
 import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.lib.FlowNote
+import br.com.usinasantafe.cav.presenter.model.ItemListScreenModel
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.test.runTest
 import org.mockito.Mockito.mock
@@ -13,23 +14,23 @@ import org.mockito.kotlin.whenever
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class IGetDescPassengersTest {
+class IListPassengerTest {
 
     private val cardRepository = mock<CardRepository>()
     private val colabRepository = mock<ColabRepository>()
-    private val usecase = IGetDescPassengers(
+    private val usecase = IListPassenger(
         cardRepository = cardRepository,
         colabRepository = colabRepository
     )
 
     @Test
-    fun `Check return failure if have error in CardRepository listRegPassengerColab - FlowNote PASSENGER_COLAB`() =
+    fun `Check return failure if have error in CardRepository listPassengerColab - FlowNote PASSENGER_COLAB`() =
         runTest {
             whenever(
                 cardRepository.listPassengerColab(1)
             ).thenReturn(
                 resultFailure(
-                    "ICardRepository.listRegPassengerColab",
+                    "ICardRepository.listPassengerColab",
                     "-",
                     Exception()
                 )
@@ -44,7 +45,7 @@ class IGetDescPassengersTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IGetDescPassengers -> ICardRepository.listRegPassengerColab"
+                "IListPassenger -> ICardRepository.listPassengerColab"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -60,14 +61,8 @@ class IGetDescPassengersTest {
             ).thenReturn(
                 Result.success(
                     listOf(
-                        ColabCard(
-                            id = 1,
-                            reg = 123456L,
-                        ),
-                        ColabCard(
-                            id = 2,
-                            reg = 456789L,
-                        )
+                        ColabCard(id = 1, reg = 123456L),
+                        ColabCard(id = 2, reg = 456789L)
                     )
                 )
             )
@@ -90,7 +85,7 @@ class IGetDescPassengersTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IGetDescPassengers -> IColabRepository.listColabByRegList"
+                "IListPassenger -> IColabRepository.listColabByRegList"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -99,7 +94,7 @@ class IGetDescPassengersTest {
         }
 
     @Test
-    fun `Check return empty string if function execute successfully with empty list - FlowNote PASSENGER_COLAB`() =
+    fun `Check return emptyList if function execute successfully with empty list - FlowNote PASSENGER_COLAB`() =
         runTest {
             whenever(
                 cardRepository.listPassengerColab(1)
@@ -121,26 +116,20 @@ class IGetDescPassengersTest {
             )
             assertEquals(
                 result.getOrNull()!!,
-                ""
+                emptyList()
             )
         }
 
     @Test
-    fun `Check return correct formatted string if function execute successfully - FlowNote PASSENGER_COLAB`() =
+    fun `Check return correct if function execute successfully - FlowNote PASSENGER_COLAB`() =
         runTest {
             whenever(
                 cardRepository.listPassengerColab(1)
             ).thenReturn(
                 Result.success(
                     listOf(
-                        ColabCard(
-                            id = 1,
-                            reg = 123456L,
-                        ),
-                        ColabCard(
-                            id = 2,
-                            reg = 456789L,
-                        )
+                        ColabCard(id = 1, reg = 123456L),
+                        ColabCard(id = 2, reg = 456789L)
                     )
                 )
             )
@@ -164,7 +153,16 @@ class IGetDescPassengersTest {
             )
             assertEquals(
                 result.getOrNull()!!,
-                "123456 - COLAB 1\n456789 - COLAB 2"
+                listOf(
+                    ItemListScreenModel(
+                        id = 1,
+                        desc = "123456 - COLAB 1"
+                    ),
+                    ItemListScreenModel(
+                        id = 2,
+                        desc = "456789 - COLAB 2"
+                    )
+                )
             )
         }
 
@@ -192,7 +190,7 @@ class IGetDescPassengersTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IGetDescPassengers -> ICardRepository.listPassengerInvolved"
+                "IListPassenger -> ICardRepository.listPassengerInvolved"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -201,7 +199,7 @@ class IGetDescPassengersTest {
         }
 
     @Test
-    fun `Check return empty string if function execute successfully with empty list - FlowNote PASSENGER_INVOLVED`() =
+    fun `Check return emptyList if function execute successfully with empty list - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
                 cardRepository.listPassengerInvolved(1)
@@ -218,19 +216,19 @@ class IGetDescPassengersTest {
             )
             assertEquals(
                 result.getOrNull()!!,
-                ""
+                emptyList()
             )
         }
 
     @Test
-    fun `Check return correct formatted string if function execute successfully - FlowNote PASSENGER_INVOLVED`() =
+    fun `Check return correct if function execute successfully - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
                 cardRepository.listPassengerInvolved(1)
             ).thenReturn(
                 Result.success(
                     listOf(
-                        Involved(id = 1, document = "123", name = "INVOLVED 1"),
+                        Involved(id = 1, document = "123", name = null),
                         Involved(id = 2, document = null, name = "INVOLVED 2")
                     )
                 )
@@ -245,7 +243,16 @@ class IGetDescPassengersTest {
             )
             assertEquals(
                 result.getOrNull()!!,
-                "123 - INVOLVED 1\n- - INVOLVED 2"
+                listOf(
+                    ItemListScreenModel(
+                        id = 1,
+                        desc = "123 - -"
+                    ),
+                    ItemListScreenModel(
+                        id = 2,
+                        desc = "- - INVOLVED 2"
+                    )
+                )
             )
         }
 

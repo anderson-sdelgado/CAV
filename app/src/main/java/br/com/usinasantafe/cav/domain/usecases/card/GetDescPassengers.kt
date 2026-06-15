@@ -26,7 +26,8 @@ class IGetDescPassengers @Inject constructor(
         call(getClassAndMethod()) {
             when(flowNote){
                 FlowNote.PASSENGER_COLAB -> {
-                    val regList = cardRepository.listRegPassengerColab(idMain).getOrThrow()
+                    val colabList = cardRepository.listPassengerColab(idMain).getOrThrow()
+                    val regList = colabList.map { it.reg!! }
                     val entityList = colabRepository.listColabByRegList(regList).getOrThrow()
                     val descList = entityList.map { "${it.reg} - ${it.name}" }
                     descList.joinToString(separator = "\n")

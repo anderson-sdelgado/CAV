@@ -1,7 +1,10 @@
 package br.com.usinasantafe.cav.domain.repositories.variable
 
+import br.com.usinasantafe.cav.domain.entities.variable.ColabCard
 import br.com.usinasantafe.cav.domain.entities.variable.Involved
 import br.com.usinasantafe.cav.domain.entities.variable.Local
+import br.com.usinasantafe.cav.domain.entities.variable.VehicleInvolved
+import br.com.usinasantafe.cav.domain.entities.variable.VehicleOwn
 import br.com.usinasantafe.cav.lib.State
 import br.com.usinasantafe.cav.utils.EmptyResult
 
@@ -74,15 +77,26 @@ interface RecoverDataCardRepository {
     suspend fun getAddressDriver(idMain: Int): Result<String?>
     suspend fun getAddressInvolved(idMain: Int): Result<String?>
     suspend fun getBrand(idMain: Int): Result<String?>
+    suspend fun getPlate(idMain: Int): Result<String?>
     suspend fun getDocumentDriver(idMain: Int): Result<String?>
     suspend fun getDocumentPassengerInvolved(idMain: Int, idSecondary: Int): Result<String?>
-    suspend fun getNameDriver(idMain: Int): Result<String>
-    suspend fun getNamePassengerInvolved(idMain: Int, idSecondary: Int): Result<String>
+    suspend fun getNameDriver(idMain: Int): Result<String?>
+    suspend fun getNamePassengerInvolved(idMain: Int, idSecondary: Int): Result<String?>
     suspend fun listIdEquipSecondary(idMain: Int): Result<List<Int>>
-    suspend fun listRegPassengerColab(idMain: Int): Result<List<Long>>
+    suspend fun listPassengerColab(idMain: Int): Result<List<ColabCard>>
     suspend fun listPassengerInvolved(idMain: Int): Result<List<Involved>>
     suspend fun listInvolved(): Result<List<Involved>>
     suspend fun listWitness(): Result<List<Involved>>
+    suspend fun getDocumentInvolved(idMain: Int): Result<String?>
+    suspend fun getDocumentWitness(idMain: Int): Result<String?>
+    suspend fun getNameInvolved(idMain: Int): Result<String?>
+    suspend fun getNameWitness(idMain: Int): Result<String?>
+    suspend fun getPhoneDriver(idMain: Int): Result<String?>
+    suspend fun getPhoneInvolved(idMain: Int): Result<String?>
+    suspend fun getPhoneWitness(idMain: Int): Result<String?>
+    suspend fun getPhonePassengerInvolved(idMain: Int, idSecondary: Int): Result<String?>
+    suspend fun listVehicleOwn(): Result<List<VehicleOwn>>
+    suspend fun listVehicleInvolved(): Result<List<VehicleInvolved>>
 }
 
 interface UpdateCardRepository {

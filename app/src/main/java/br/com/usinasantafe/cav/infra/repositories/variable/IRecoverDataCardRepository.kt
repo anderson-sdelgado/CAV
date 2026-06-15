@@ -1,6 +1,9 @@
 package br.com.usinasantafe.cav.infra.repositories.variable
 
+import br.com.usinasantafe.cav.domain.entities.variable.ColabCard
 import br.com.usinasantafe.cav.domain.entities.variable.Involved
+import br.com.usinasantafe.cav.domain.entities.variable.VehicleInvolved
+import br.com.usinasantafe.cav.domain.entities.variable.VehicleOwn
 import br.com.usinasantafe.cav.domain.repositories.variable.RecoverDataCardRepository
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.lib.State
@@ -111,6 +114,10 @@ class IRecoverDataCardRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    override suspend fun getPlate(idMain: Int): Result<String?> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getDocumentDriver(idMain: Int): Result<String?> {
         TODO("Not yet implemented")
     }
@@ -122,14 +129,14 @@ class IRecoverDataCardRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getNameDriver(idMain: Int): Result<String> {
+    override suspend fun getNameDriver(idMain: Int): Result<String?> {
         TODO("Not yet implemented")
     }
 
     override suspend fun getNamePassengerInvolved(
         idMain: Int,
         idSecondary: Int
-    ): Result<String> {
+    ): Result<String?> {
         TODO("Not yet implemented")
     }
 
@@ -137,7 +144,7 @@ class IRecoverDataCardRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun listRegPassengerColab(idMain: Int): Result<List<Long>> {
+    override suspend fun listPassengerColab(idMain: Int): Result<List<ColabCard>> {
         TODO("Not yet implemented")
     }
 
@@ -152,5 +159,49 @@ class IRecoverDataCardRepository @Inject constructor(
     override suspend fun listWitness(): Result<List<Involved>> {
         TODO("Not yet implemented")
     }
+
+    override suspend fun getDocumentInvolved(idMain: Int): Result<String?> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getDocumentWitness(idMain: Int): Result<String?> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getNameInvolved(idMain: Int): Result<String?> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getNameWitness(idMain: Int): Result<String?> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getPhoneDriver(idMain: Int): Result<String?> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getPhoneInvolved(idMain: Int): Result<String?> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getPhoneWitness(idMain: Int): Result<String?> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getPhonePassengerInvolved(
+        idMain: Int,
+        idSecondary: Int
+    ): Result<String?> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun listVehicleOwn(): Result<List<VehicleOwn>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun listVehicleInvolved(): Result<List<VehicleInvolved>> {
+        TODO("Not yet implemented")
+    }
+
 
 }

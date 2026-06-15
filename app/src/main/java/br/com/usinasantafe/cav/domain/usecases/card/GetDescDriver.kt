@@ -23,7 +23,7 @@ class IGetDescDriver @Inject constructor(
     ): Result<String> =
         call(getClassAndMethod()) {
             val document = cardRepository.getDocumentDriver(idMain).getOrThrow() ?: "-"
-            val name = cardRepository.getNameDriver(idMain).getOrThrow()
+            val name = cardRepository.getNameDriver(idMain).getOrThrow() ?: "-"
             "$document - $name"
         }
 

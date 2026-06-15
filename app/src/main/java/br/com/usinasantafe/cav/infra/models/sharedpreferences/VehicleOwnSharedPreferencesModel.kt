@@ -14,10 +14,10 @@ fun VehicleOwnSharedPreferencesModel.sharedPreferencesModelToEntity(): VehicleOw
     return with(this) {
         VehicleOwn(
             id = id,
-            equip = equip.sharedPreferencesModelToEntity(),
-            equipSecList = equipSecList.map { it.sharedPreferencesModelToEntity() },
-            colab = colab.sharedPreferencesModelToEntity(),
-            passengerColabList = passengerColabList.map { it.sharedPreferencesModelToEntity() }
+            equipCard = equip.sharedPreferencesModelToEntity(),
+            equipCardSecList = equipSecList.map { it.sharedPreferencesModelToEntity() },
+            colabCard = colab.sharedPreferencesModelToEntity(),
+            passengerColabCardList = passengerColabList.map { it.sharedPreferencesModelToEntity() }
         )
     }
 }
@@ -26,10 +26,10 @@ fun VehicleOwn.entityToSharedPreferencesModel(): VehicleOwnSharedPreferencesMode
     return with(this) {
         VehicleOwnSharedPreferencesModel(
             id = id,
-            equip = equip.entityToSharedPreferencesModel(),
-            equipSecList = equipSecList.map{ it.entityToSharedPreferencesModel() },
-            colab = colab.entityToSharedPreferencesModel(),
-            passengerColabList = passengerColabList.map { it.entityToSharedPreferencesModel() }
+            equip = equipCard.entityToSharedPreferencesModel(),
+            equipSecList = equipCardSecList.map{ it.entityToSharedPreferencesModel() },
+            colab = colabCard.entityToSharedPreferencesModel(),
+            passengerColabList = passengerColabCardList.map { it.entityToSharedPreferencesModel() }
         )
     }
 }
