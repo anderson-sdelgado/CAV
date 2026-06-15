@@ -16,7 +16,7 @@ interface SetLocal {
 }
 
 class ISetLocal @Inject constructor(
-    private val cardRepository: BasicCardRepository
+    private val cardRepository: CardRepository
 ): SetLocal {
 
     override suspend fun invoke(

@@ -44,4 +44,8 @@ class IColabRepository @Inject constructor(
             colabRoomDatasource.getNameByReg(reg).getOrThrow()
         }
 
+    override suspend fun listColabByRegList(regList: List<Long>): Result<List<Colab>> {
+        TODO("Not yet implemented")
+    }
+
 }

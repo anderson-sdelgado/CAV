@@ -24,7 +24,7 @@ class IListDataLocalTest {
     val hiltRule = HiltAndroidRule(this)
 
     @Inject
-    lateinit var usecase: ListDataLocal
+    lateinit var usecase: SetDataLocalList
 
     @Inject
     lateinit var cardSharedPreferencesDatasource: ICardSharedPreferencesDatasource

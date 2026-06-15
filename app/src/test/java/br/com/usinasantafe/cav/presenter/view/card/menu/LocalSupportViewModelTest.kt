@@ -4,6 +4,7 @@ import br.com.usinasantafe.cav.MainCoroutineRule
 import br.com.usinasantafe.cav.domain.usecases.card.GetLocal
 import br.com.usinasantafe.cav.domain.usecases.card.GetSupportTeams
 import br.com.usinasantafe.cav.domain.usecases.card.ListDataLocal
+import br.com.usinasantafe.cav.domain.usecases.card.SetDataLocalList
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.presenter.model.LocalScreenModel
 import br.com.usinasantafe.cav.utils.resultFailure

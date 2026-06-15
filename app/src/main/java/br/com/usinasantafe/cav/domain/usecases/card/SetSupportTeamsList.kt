@@ -11,7 +11,7 @@ interface SetSupportTeamsList {
 }
 
 class ISetSupportTeamsList @Inject constructor(
-    private val cardRepository: BasicCardRepository
+    private val cardRepository: CardRepository
 ): SetSupportTeamsList {
 
     override suspend fun invoke(list: List<ItemCheckBoxScreenModel>): Result<Unit> =

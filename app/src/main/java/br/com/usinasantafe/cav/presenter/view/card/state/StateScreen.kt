@@ -28,6 +28,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
+import br.com.usinasantafe.cav.lib.State
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.MsgErrors
@@ -54,7 +55,7 @@ fun StateScreen(
             StateContent(
                 option = uiState.option,
                 flowNote = uiState.flowNote,
-                idSelection = uiState.idSelection,
+                state = uiState.stateSelection,
                 onSelection = viewModel::onSelection,
                 onCloseDialog = viewModel::onCloseDialog,
                 set = viewModel::set,
@@ -74,8 +75,8 @@ fun StateScreen(
 fun StateContent(
     option: Option,
     flowNote: FlowNote,
-    idSelection: Int,
-    onSelection: (Int) -> Unit,
+    state: State,
+    onSelection: (State) -> Unit,
     onCloseDialog: () -> Unit,
     set: () -> Unit,
     status: UiStatusState,
@@ -107,13 +108,13 @@ fun StateContent(
                         .fillMaxWidth()
                         .padding(12.dp)
                         .selectable(
-                            selected = (idSelection == 1),
-                            onClick = { onSelection(1) },
+                            selected = (state == State.UNHARMED),
+                            onClick = { onSelection(State.UNHARMED) },
                             role = Role.RadioButton
                         )
                 ) {
                     RadioButton(
-                        selected = (idSelection == 1),
+                        selected = (state == State.UNHARMED),
                         onClick = null,
                         modifier = Modifier
                             .padding(end = 10.dp)
@@ -133,13 +134,13 @@ fun StateContent(
                         .fillMaxWidth()
                         .padding(12.dp)
                         .selectable(
-                            selected = (idSelection == 2),
-                            onClick = { onSelection(2) },
+                            selected = (state == State.INJURED),
+                            onClick = { onSelection(State.INJURED) },
                             role = Role.RadioButton
                         )
                 ) {
                     RadioButton(
-                        selected = (idSelection == 2),
+                        selected = (state == State.INJURED),
                         onClick = null,
                         modifier = Modifier
                             .padding(end = 10.dp)
@@ -159,13 +160,13 @@ fun StateContent(
                         .fillMaxWidth()
                         .padding(12.dp)
                         .selectable(
-                            selected = (idSelection == 3),
-                            onClick = { onSelection(3) },
+                            selected = (state == State.DEAD),
+                            onClick = { onSelection(State.DEAD) },
                             role = Role.RadioButton
                         )
                 ) {
                     RadioButton(
-                        selected = (idSelection == 3),
+                        selected = (state == State.DEAD),
                         onClick = null,
                         modifier = Modifier
                             .padding(end = 10.dp)
@@ -272,7 +273,7 @@ fun StatePagePreview() {
             StateContent(
                 option = Option.INSERT,
                 flowNote = FlowNote.DRIVER,
-                idSelection = 1,
+                state = State.DEAD,
                 onSelection = {},
                 onCloseDialog = {},
                 set = {},

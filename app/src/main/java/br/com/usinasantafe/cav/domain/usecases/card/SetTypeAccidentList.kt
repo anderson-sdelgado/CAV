@@ -11,7 +11,7 @@ interface SetTypeAccidentList {
 }
 
 class ISetTypeAccidentList @Inject constructor(
-    private val cardRepository: BasicCardRepository
+    private val cardRepository: CardRepository
 ): SetTypeAccidentList {
 
     override suspend fun invoke(list: List<ItemCheckBoxScreenModel>): Result<Unit> =

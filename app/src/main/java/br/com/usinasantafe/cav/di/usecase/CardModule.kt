@@ -117,7 +117,7 @@ interface CardModule {
 
     @Binds
     @Singleton
-    fun bindGetStateColab(usecase: IGetIdState): GetIdState
+    fun bindGetStateColab(usecase: IGetState): GetState
 
     @Binds
     @Singleton
@@ -162,10 +162,6 @@ interface CardModule {
     @Binds
     @Singleton
     fun bindListVehicleInvolved(usecase: IListVehicleInvolved): ListVehicleInvolved
-
-    @Binds
-    @Singleton
-    fun bindGetDescState(usecase: IGetDescState): GetDescState
 
     @Binds
     @Singleton
@@ -225,11 +221,11 @@ interface CardModule {
 
     @Binds
     @Singleton
-    fun bindDeleteEquip(usecase: IDeleteEquip): DeleteEquip
+    fun bindDeleteEquip(usecase: IDeleteVehicleOwn): DeleteVehicleOwn
 
     @Binds
     @Singleton
-    fun bindDeleteVehicle(usecase: IDeleteVehicle): DeleteVehicle
+    fun bindDeleteVehicle(usecase: IDeleteVehicleInvolved): DeleteVehicleInvolved
 
     @Binds
     @Singleton

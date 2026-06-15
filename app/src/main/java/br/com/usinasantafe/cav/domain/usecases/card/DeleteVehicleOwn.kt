@@ -1,19 +1,21 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
+import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import javax.inject.Inject
 
-interface DeleteVehicle {
+interface DeleteVehicleOwn {
     suspend operator fun invoke(id: Int): Result<Unit>
 }
 
-class IDeleteVehicle @Inject constructor(
-): DeleteVehicle {
+class IDeleteVehicleOwn @Inject constructor(
+    private val cardRepository: CardRepository
+): DeleteVehicleOwn {
 
     override suspend fun invoke(id: Int): Result<Unit> =
         call(getClassAndMethod()) {
-            TODO("Not yet implemented")
+            cardRepository.deleteVehicleOwn(id).getOrThrow()
         }
 
 }

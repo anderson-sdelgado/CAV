@@ -11,4 +11,5 @@ interface EquipRepository {
     suspend fun getIdByNro(nro: Long): Result<Int>
     suspend fun getById(id: Int): Result<Equip>
     suspend fun getNroById(id: Int): Result<Long>
+    suspend fun listByIdList(id: List<Int>): Result<List<Equip>>
 }

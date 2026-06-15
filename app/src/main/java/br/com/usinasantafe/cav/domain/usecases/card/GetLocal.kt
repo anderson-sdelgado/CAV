@@ -11,7 +11,7 @@ interface GetLocal {
 }
 
 class IGetLocal @Inject constructor(
-    private val cardRepository: BasicCardRepository
+    private val cardRepository: CardRepository
 ): GetLocal {
 
     override suspend fun invoke(): Result<LocalScreenModel> =

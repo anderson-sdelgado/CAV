@@ -54,4 +54,8 @@ class IEquipRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    override suspend fun listByIdList(id: List<Int>): Result<List<Equip>> {
+        TODO("Not yet implemented")
+    }
+
 }

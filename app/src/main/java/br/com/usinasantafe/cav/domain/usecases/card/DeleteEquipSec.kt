@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
+import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import javax.inject.Inject
@@ -12,6 +13,7 @@ interface DeleteEquipSec {
 }
 
 class IDeleteEquipSec @Inject constructor(
+    private val cardRepository: CardRepository
 ): DeleteEquipSec {
 
     override suspend fun invoke(
@@ -19,7 +21,7 @@ class IDeleteEquipSec @Inject constructor(
         idMain: Int
     ): Result<Unit> =
         call(getClassAndMethod()) {
-            TODO("Not yet implemented")
+            cardRepository.deleteEquipSecondary(idMain, idSelection).getOrThrow()
         }
 
 }

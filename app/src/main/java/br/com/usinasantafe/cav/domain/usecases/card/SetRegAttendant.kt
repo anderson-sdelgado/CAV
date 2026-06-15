@@ -13,7 +13,7 @@ interface SetRegAttendant {
 }
 
 class ISetRegAttendant @Inject constructor(
-    private val cardRepository: BasicCardRepository
+    private val cardRepository: CardRepository
 ): SetRegAttendant {
 
     override suspend fun invoke(regColab: String): EmptyResult =

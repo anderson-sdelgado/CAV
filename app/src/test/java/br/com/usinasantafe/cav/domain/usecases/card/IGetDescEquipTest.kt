@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
+import br.com.usinasantafe.cav.domain.entities.stable.Equip
 import br.com.usinasantafe.cav.domain.repositories.stable.EquipRepository
 import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.lib.FlowNote
@@ -10,11 +11,11 @@ import org.mockito.kotlin.whenever
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class IGetNroEquipTest {
+class IGetDescEquipTest {
 
     private val cardRepository = mock<CardRepository>()
     private val equipRepository = mock<EquipRepository>()
-    private val usecase = IGetNroEquip(
+    private val usecase = IGetDescEquip(
         cardRepository = cardRepository,
         equipRepository = equipRepository
     )
@@ -42,7 +43,7 @@ class IGetNroEquipTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IGetNroEquip -> ICardRepository.getIdEquip"
+                "IGetDescEquip -> ICardRepository.getIdEquip"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -51,7 +52,7 @@ class IGetNroEquipTest {
         }
 
     @Test
-    fun `Check return failure if have error in EquipRepository getNroById - FlowNote EQUIP`() =
+    fun `Check return failure if have error in EquipRepository getById - FlowNote EQUIP`() =
         runTest {
             whenever(
                 cardRepository.getIdEquip(1)
@@ -59,10 +60,10 @@ class IGetNroEquipTest {
                 Result.success(10)
             )
             whenever(
-                equipRepository.getNroById(10)
+                equipRepository.getById(10)
             ).thenReturn(
                 resultFailure(
-                    "IEquipRepository.getNroById",
+                    "IEquipRepository.getById",
                     "-",
                     Exception()
                 )
@@ -78,14 +79,14 @@ class IGetNroEquipTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IGetNroEquip -> IEquipRepository.getNroById"
+                "IGetDescEquip -> IEquipRepository.getById"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
                 "java.lang.Exception"
             )
         }
-    
+
     @Test
     fun `Check return correct if function execute successfully - FlowNote EQUIP`() =
         runTest {
@@ -95,9 +96,15 @@ class IGetNroEquipTest {
                 Result.success(10)
             )
             whenever(
-                equipRepository.getNroById(10)
+                equipRepository.getById(10)
             ).thenReturn(
-                Result.success(2200L)
+                Result.success(
+                    Equip(
+                        id = 10,
+                        nro = 2200,
+                        description = "CAMINHÃO"
+                    )
+                )
             )
             val result = usecase(
                 flowNote = FlowNote.EQUIP,
@@ -110,7 +117,7 @@ class IGetNroEquipTest {
             )
             assertEquals(
                 result.getOrNull()!!,
-                "2200"
+                "2200 - CAMINHÃO"
             )
         }
 
@@ -140,7 +147,7 @@ class IGetNroEquipTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IGetNroEquip -> ICardRepository.getIdEquipSecondary"
+                "IGetDescEquip -> ICardRepository.getIdEquipSecondary"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -149,7 +156,7 @@ class IGetNroEquipTest {
         }
 
     @Test
-    fun `Check return failure if have error in EquipRepository getNroById - FlowNote EQUIP_SEC`() =
+    fun `Check return failure if have error in EquipRepository getById - FlowNote EQUIP_SEC`() =
         runTest {
             whenever(
                 cardRepository.getIdEquipSecondary(
@@ -160,10 +167,10 @@ class IGetNroEquipTest {
                 Result.success(20)
             )
             whenever(
-                equipRepository.getNroById(20)
+                equipRepository.getById(20)
             ).thenReturn(
                 resultFailure(
-                    "IEquipRepository.getNroById",
+                    "IEquipRepository.getById",
                     "-",
                     Exception()
                 )
@@ -179,7 +186,7 @@ class IGetNroEquipTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IGetNroEquip -> IEquipRepository.getNroById"
+                "IGetDescEquip -> IEquipRepository.getById"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -199,9 +206,15 @@ class IGetNroEquipTest {
                 Result.success(20)
             )
             whenever(
-                equipRepository.getNroById(20)
+                equipRepository.getById(20)
             ).thenReturn(
-                Result.success(330L)
+                Result.success(
+                    Equip(
+                        id = 20,
+                        nro = 330,
+                        description = "TRATOR"
+                    )
+                )
             )
             val result = usecase(
                 flowNote = FlowNote.EQUIP_SEC,
@@ -214,7 +227,8 @@ class IGetNroEquipTest {
             )
             assertEquals(
                 result.getOrNull()!!,
-                "330"
+                "330 - TRATOR"
             )
         }
+
 }

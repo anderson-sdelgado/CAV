@@ -9,4 +9,5 @@ interface ColabRepository {
     suspend fun listAll(token: String): Result<List<Colab>>
     suspend fun hasReg(reg: Long): Result<Boolean>
     suspend fun getNameByReg(reg: Long): Result<String>
+    suspend fun listColabByRegList(regList: List<Long>): Result<List<Colab>>
 }

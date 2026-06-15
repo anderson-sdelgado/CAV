@@ -1,13 +1,16 @@
 package br.com.usinasantafe.cav.domain.repositories.variable
 
+import br.com.usinasantafe.cav.domain.entities.variable.Involved
 import br.com.usinasantafe.cav.domain.entities.variable.Local
+import br.com.usinasantafe.cav.lib.State
 import br.com.usinasantafe.cav.utils.EmptyResult
 
 interface CardRepository :
     BasicCardRepository,
     InsertCardRepository,
     RecoverDataCardRepository,
-    UpdateCardRepository
+    UpdateCardRepository,
+    DeleteCardRepository
 
 interface BasicCardRepository{
     suspend fun setRegAttendant(regColab: Long): EmptyResult
@@ -39,6 +42,12 @@ interface InsertCardRepository {
     suspend fun setDetailInvolved(text: String): Result<Int>
     suspend fun setDetailWitness(text: String): Result<Int>
     suspend fun setRegColab(regColab: Long): EmptyResult
+    suspend fun setStateColab(state: State): EmptyResult
+    suspend fun setStatePassengerColab(state: State, idMain: Int): EmptyResult
+    suspend fun setStateDriver(state: State): EmptyResult
+    suspend fun setStateInvolved(state: State): EmptyResult
+    suspend fun setStatePassengerInvolved(state: State, idMain: Int): EmptyResult
+    suspend fun setStateStateWitness(state: State): EmptyResult
 }
 
 interface RecoverDataCardRepository {
@@ -53,8 +62,27 @@ interface RecoverDataCardRepository {
     suspend fun getDetailPassengerInvolved(idMain: Int, idSecondary: Int): Result<String?>
     suspend fun getDetailInvolved(idMain: Int): Result<String?>
     suspend fun getDetailWitness(idMain: Int): Result<String?>
-    suspend fun getRegColab(id: Int): Result<Int>
-    suspend fun getRegPassengerColab(idMain: Int, idSecondary: Int): Result<Int>
+    suspend fun getRegColab(id: Int): Result<Long>
+    suspend fun getRegPassengerColab(idMain: Int, idSecondary: Int): Result<Long>
+    suspend fun getStateColab(id: Int): Result<State>
+    suspend fun getStatePassengerColab(idMain: Int, idSecondary: Int): Result<State>
+    suspend fun getStateWitness(id: Int): Result<State>
+    suspend fun getStatePassengerInvolved(idMain: Int, idSecondary: Int): Result<State>
+    suspend fun getStateInvolved(id: Int): Result<State>
+    suspend fun getStateDriver(id: Int): Result<State>
+    suspend fun getAddressPassengerInvolved(idMain: Int, idSecondary: Int): Result<String?>
+    suspend fun getAddressDriver(idMain: Int): Result<String?>
+    suspend fun getAddressInvolved(idMain: Int): Result<String?>
+    suspend fun getBrand(idMain: Int): Result<String?>
+    suspend fun getDocumentDriver(idMain: Int): Result<String?>
+    suspend fun getDocumentPassengerInvolved(idMain: Int, idSecondary: Int): Result<String?>
+    suspend fun getNameDriver(idMain: Int): Result<String>
+    suspend fun getNamePassengerInvolved(idMain: Int, idSecondary: Int): Result<String>
+    suspend fun listIdEquipSecondary(idMain: Int): Result<List<Int>>
+    suspend fun listRegPassengerColab(idMain: Int): Result<List<Long>>
+    suspend fun listPassengerInvolved(idMain: Int): Result<List<Involved>>
+    suspend fun listInvolved(): Result<List<Involved>>
+    suspend fun listWitness(): Result<List<Involved>>
 }
 
 interface UpdateCardRepository {
@@ -71,4 +99,20 @@ interface UpdateCardRepository {
     suspend fun updateDetailWitness(text: String, id: Int): EmptyResult
     suspend fun updateRegColab(regColab: Long, idMain: Int): EmptyResult
     suspend fun updateRegPassengerColab(regColab: Long, idMain: Int, idSecondary: Int): EmptyResult
+    suspend fun updateStateColab(state: State, idMain: Int): EmptyResult
+    suspend fun updateStatePassengerColab(state: State, idMain: Int, idSecondary: Int): EmptyResult
+    suspend fun updateStateDriver(state: State, idMain: Int): EmptyResult
+    suspend fun updateStatePassengerInvolved(state: State, idMain: Int, idSecondary: Int): EmptyResult
+    suspend fun updateStateInvolved(state: State, idMain: Int): EmptyResult
+    suspend fun updateStateWitness(state: State, idMain: Int): EmptyResult
+}
+
+interface DeleteCardRepository {
+    suspend fun deleteVehicleOwn(id: Int): EmptyResult
+    suspend fun deleteEquipSecondary(idMain: Int, idSecondary: Int): EmptyResult
+    suspend fun deleteVehicleInvolved(id: Int): EmptyResult
+    suspend fun deleteInvolved(id: Int): EmptyResult
+    suspend fun deleteWitness(id: Int): EmptyResult
+    suspend fun deletePassengerColab(idSelection: Int, idMain: Int): EmptyResult
+    suspend fun deletePassengerInvolved(idSelection: Int, idMain: Int): EmptyResult
 }

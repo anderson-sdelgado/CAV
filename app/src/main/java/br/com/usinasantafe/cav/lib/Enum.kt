@@ -11,3 +11,5 @@ enum class Option { INSERT, EDIT }
 enum class FlowNote { EQUIP, EQUIP_SEC, COLAB, PASSENGER_COLAB, VEHICLE, DRIVER, PASSENGER_INVOLVED, INVOLVED, WITNESS }
 enum class TypeVehicle { OWN, INVOLVED }
 enum class TypePeople { INVOLVED, WITNESS }
+
+enum class State { UNHARMED, INJURED, DEAD }

@@ -1,6 +1,6 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
-import br.com.usinasantafe.cav.domain.repositories.stable.EquipRepository
+import br.com.usinasantafe.cav.domain.repositories.stable.ColabRepository
 import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.utils.resultFailure
@@ -10,29 +10,29 @@ import org.mockito.kotlin.whenever
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class IGetNroEquipTest {
+class IGetDescColabTest {
 
     private val cardRepository = mock<CardRepository>()
-    private val equipRepository = mock<EquipRepository>()
-    private val usecase = IGetNroEquip(
+    private val colabRepository = mock<ColabRepository>()
+    private val usecase = IGetDescColab(
         cardRepository = cardRepository,
-        equipRepository = equipRepository
+        colabRepository = colabRepository
     )
 
     @Test
-    fun `Check return failure if have error in CardRepository getIdEquip - FlowNote EQUIP`() =
+    fun `Check return failure if have error in CardRepository getRegColab - FlowNote COLAB`() =
         runTest {
             whenever(
-                cardRepository.getIdEquip(1)
+                cardRepository.getRegColab(1)
             ).thenReturn(
                 resultFailure(
-                    "ICardRepository.getIdEquip",
+                    "ICardRepository.getRegColab",
                     "-",
                     Exception()
                 )
             )
             val result = usecase(
-                flowNote = FlowNote.EQUIP,
+                flowNote = FlowNote.COLAB,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -42,7 +42,7 @@ class IGetNroEquipTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IGetNroEquip -> ICardRepository.getIdEquip"
+                "IGetDescColab -> ICardRepository.getRegColab"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -51,24 +51,24 @@ class IGetNroEquipTest {
         }
 
     @Test
-    fun `Check return failure if have error in EquipRepository getNroById - FlowNote EQUIP`() =
+    fun `Check return failure if have error in ColabRepository getNameByReg - FlowNote COLAB`() =
         runTest {
             whenever(
-                cardRepository.getIdEquip(1)
+                cardRepository.getRegColab(1)
             ).thenReturn(
-                Result.success(10)
+                Result.success(123456L)
             )
             whenever(
-                equipRepository.getNroById(10)
+                colabRepository.getNameByReg(123456L)
             ).thenReturn(
                 resultFailure(
-                    "IEquipRepository.getNroById",
+                    "IColabRepository.getNameByReg",
                     "-",
                     Exception()
                 )
             )
             val result = usecase(
-                flowNote = FlowNote.EQUIP,
+                flowNote = FlowNote.COLAB,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -78,29 +78,29 @@ class IGetNroEquipTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IGetNroEquip -> IEquipRepository.getNroById"
+                "IGetDescColab -> IColabRepository.getNameByReg"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
                 "java.lang.Exception"
             )
         }
-    
+
     @Test
-    fun `Check return correct if function execute successfully - FlowNote EQUIP`() =
+    fun `Check return correct if function execute successfully - FlowNote COLAB`() =
         runTest {
             whenever(
-                cardRepository.getIdEquip(1)
+                cardRepository.getRegColab(1)
             ).thenReturn(
-                Result.success(10)
+                Result.success(123456L)
             )
             whenever(
-                equipRepository.getNroById(10)
+                colabRepository.getNameByReg(123456L)
             ).thenReturn(
-                Result.success(2200L)
+                Result.success("ANDERSON DA SILVA DELGADO")
             )
             val result = usecase(
-                flowNote = FlowNote.EQUIP,
+                flowNote = FlowNote.COLAB,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -110,27 +110,26 @@ class IGetNroEquipTest {
             )
             assertEquals(
                 result.getOrNull()!!,
-                "2200"
+                "123456 - ANDERSON DA SILVA DELGADO"
             )
         }
 
+    //////////////////////////////////////////////////////////////
+
     @Test
-    fun `Check return failure if have error in CardRepository getIdEquipSecondary - FlowNote EQUIP_SEC`() =
+    fun `Check return failure if have error in CardRepository getRegPassengerColab - FlowNote PASSENGER_COLAB`() =
         runTest {
             whenever(
-                cardRepository.getIdEquipSecondary(
-                    idMain = 1,
-                    idSecondary = 2
-                )
+                cardRepository.getRegPassengerColab(1, 2)
             ).thenReturn(
                 resultFailure(
-                    "ICardRepository.getIdEquipSecondary",
+                    "ICardRepository.getRegPassengerColab",
                     "-",
                     Exception()
                 )
             )
             val result = usecase(
-                flowNote = FlowNote.EQUIP_SEC,
+                flowNote = FlowNote.PASSENGER_COLAB,
                 idMain = 1,
                 idSecondary = 2
             )
@@ -140,7 +139,7 @@ class IGetNroEquipTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IGetNroEquip -> ICardRepository.getIdEquipSecondary"
+                "IGetDescColab -> ICardRepository.getRegPassengerColab"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -149,27 +148,24 @@ class IGetNroEquipTest {
         }
 
     @Test
-    fun `Check return failure if have error in EquipRepository getNroById - FlowNote EQUIP_SEC`() =
+    fun `Check return failure if have error in ColabRepository getNameByReg - FlowNote PASSENGER_COLAB`() =
         runTest {
             whenever(
-                cardRepository.getIdEquipSecondary(
-                    idMain = 1,
-                    idSecondary = 2
-                )
+                cardRepository.getRegPassengerColab(1, 2)
             ).thenReturn(
-                Result.success(20)
+                Result.success(456789L)
             )
             whenever(
-                equipRepository.getNroById(20)
+                colabRepository.getNameByReg(456789L)
             ).thenReturn(
                 resultFailure(
-                    "IEquipRepository.getNroById",
+                    "IColabRepository.getNameByReg",
                     "-",
                     Exception()
                 )
             )
             val result = usecase(
-                flowNote = FlowNote.EQUIP_SEC,
+                flowNote = FlowNote.PASSENGER_COLAB,
                 idMain = 1,
                 idSecondary = 2
             )
@@ -179,7 +175,7 @@ class IGetNroEquipTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IGetNroEquip -> IEquipRepository.getNroById"
+                "IGetDescColab -> IColabRepository.getNameByReg"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -188,23 +184,20 @@ class IGetNroEquipTest {
         }
 
     @Test
-    fun `Check return correct if function execute successfully - FlowNote EQUIP_SEC`() =
+    fun `Check return correct if function execute successfully - FlowNote PASSENGER_COLAB`() =
         runTest {
             whenever(
-                cardRepository.getIdEquipSecondary(
-                    idMain = 1,
-                    idSecondary = 2
-                )
+                cardRepository.getRegPassengerColab(1, 2)
             ).thenReturn(
-                Result.success(20)
+                Result.success(456789L)
             )
             whenever(
-                equipRepository.getNroById(20)
+                colabRepository.getNameByReg(456789L)
             ).thenReturn(
-                Result.success(330L)
+                Result.success("JOAO DA SILVA")
             )
             val result = usecase(
-                flowNote = FlowNote.EQUIP_SEC,
+                flowNote = FlowNote.PASSENGER_COLAB,
                 idMain = 1,
                 idSecondary = 2
             )
@@ -214,7 +207,8 @@ class IGetNroEquipTest {
             )
             assertEquals(
                 result.getOrNull()!!,
-                "330"
+                "456789 - JOAO DA SILVA"
             )
         }
+
 }

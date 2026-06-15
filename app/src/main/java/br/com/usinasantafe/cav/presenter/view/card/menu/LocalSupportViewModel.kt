@@ -5,12 +5,10 @@ import androidx.lifecycle.viewModelScope
 import br.com.usinasantafe.cav.domain.usecases.card.GetLocal
 import br.com.usinasantafe.cav.domain.usecases.card.GetSupportTeams
 import br.com.usinasantafe.cav.domain.usecases.card.ListDataLocal
-import br.com.usinasantafe.cav.lib.Errors
-import br.com.usinasantafe.cav.presenter.view.card.local.InputLocalState
+import br.com.usinasantafe.cav.domain.usecases.card.SetDataLocalList
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
 import br.com.usinasantafe.cav.utils.UiStatusState
 import br.com.usinasantafe.cav.utils.getClassAndMethod
-import br.com.usinasantafe.cav.utils.onFailureHandled
 import br.com.usinasantafe.cav.utils.onFailureState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

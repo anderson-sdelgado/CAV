@@ -2,11 +2,12 @@ package br.com.usinasantafe.cav.presenter.view.card.state
 
 import androidx.lifecycle.SavedStateHandle
 import br.com.usinasantafe.cav.MainCoroutineRule
-import br.com.usinasantafe.cav.domain.usecases.card.GetIdState
+import br.com.usinasantafe.cav.domain.usecases.card.GetState
 import br.com.usinasantafe.cav.domain.usecases.card.SetState
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
+import br.com.usinasantafe.cav.lib.State
 import br.com.usinasantafe.cav.presenter.Args
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -26,7 +27,7 @@ class StateViewModelTest {
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
-    private val getIdState = mock<GetIdState>()
+    private val getState = mock<GetState>()
     private val setState = mock<SetState>()
     private fun createViewModel(
         option: Option = Option.INSERT,
@@ -42,7 +43,7 @@ class StateViewModelTest {
                 Args.ID_SECONDARY_ARG to idSecondary
             )
         ),
-        getIdState = getIdState,
+        getState = getState,
         setState = setState
     )
 
@@ -50,7 +51,7 @@ class StateViewModelTest {
     fun `recoverData - Check return failure if have error in GetState`() =
         runTest {
             whenever(
-                getIdState(
+                getState(
                     flowNote = FlowNote.COLAB,
                     idMain = 0,
                     idSecondary = 0
@@ -86,13 +87,13 @@ class StateViewModelTest {
     fun `recoverData - Check return true if process execute successfully`() =
         runTest {
             whenever(
-                getIdState(
+                getState(
                     flowNote = FlowNote.COLAB,
                     idMain = 0,
                     idSecondary = 0
                 )
             ).thenReturn(
-                Result.success(2)
+                Result.success(State.DEAD)
             )
             val viewModel = createViewModel(Option.EDIT)
             viewModel.recoverData()
@@ -101,8 +102,8 @@ class StateViewModelTest {
                 false
             )
             assertEquals(
-                viewModel.uiState.value.idSelection,
-                2
+                viewModel.uiState.value.stateSelection,
+                State.DEAD
             )
         }
 
@@ -111,7 +112,7 @@ class StateViewModelTest {
         runTest {
             whenever(
                 setState(
-                    idSelection = 2,
+                    state = State.DEAD,
                     option = Option.INSERT,
                     flowNote = FlowNote.COLAB,
                     idMain = 0,
@@ -125,7 +126,7 @@ class StateViewModelTest {
                 )
             )
             val viewModel = createViewModel()
-            viewModel.onSelection(2)
+            viewModel.onSelection(State.DEAD)
             viewModel.set()
             assertEquals(
                 viewModel.uiState.value.status.flagDialog,
@@ -153,13 +154,13 @@ class StateViewModelTest {
     fun `set - Check return true if process execute successfully`() =
         runTest {
             val viewModel = createViewModel()
-            viewModel.onSelection(2)
+            viewModel.onSelection(State.DEAD)
             viewModel.set()
             verify(
                 setState,
                 atLeastOnce()
             ).invoke(
-                idSelection = 2,
+                state = State.DEAD,
                 option = Option.INSERT,
                 flowNote = FlowNote.COLAB,
                 idMain = 0,

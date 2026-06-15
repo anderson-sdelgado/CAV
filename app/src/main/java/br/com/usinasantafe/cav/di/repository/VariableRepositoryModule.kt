@@ -36,4 +36,8 @@ interface VariableRepositoryModule {
     @Singleton
     fun bindUpdateCardRepository(repository: IUpdateCardRepository): UpdateCardRepository
 
+    @Binds
+    @Singleton
+    fun bindDeleteCardRepository(repository: IDeleteCardRepository): DeleteCardRepository
+
 }

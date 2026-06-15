@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
+import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -14,6 +15,7 @@ interface DeletePassenger {
 }
 
 class IDeletePassenger @Inject constructor(
+    private val cardRepository: CardRepository
 ): DeletePassenger {
 
     override suspend fun invoke(
@@ -22,7 +24,13 @@ class IDeletePassenger @Inject constructor(
         idMain: Int
     ): Result<Unit> =
         call(getClassAndMethod()) {
-            TODO("Not yet implemented")
+            with(cardRepository){
+                when (flowNote) {
+                    FlowNote.PASSENGER_COLAB -> deletePassengerColab(idSelection, idMain).getOrThrow()
+                    else -> deletePassengerInvolved(idSelection, idMain).getOrThrow()
+                }
+            }
+
         }
 
 }

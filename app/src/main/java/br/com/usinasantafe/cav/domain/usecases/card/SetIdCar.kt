@@ -14,7 +14,7 @@ interface SetIdCar {
 
 class ISetIdCar @Inject constructor(
     private val equipRepository: EquipRepository,
-    private val cardRepository: BasicCardRepository
+    private val cardRepository: CardRepository
 ): SetIdCar {
 
     override suspend fun invoke(nroEquip: String): Result<Unit> =

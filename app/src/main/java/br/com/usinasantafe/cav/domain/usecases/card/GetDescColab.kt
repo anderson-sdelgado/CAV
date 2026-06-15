@@ -1,5 +1,7 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
+import br.com.usinasantafe.cav.domain.repositories.stable.ColabRepository
+import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -14,6 +16,8 @@ interface GetDescColab {
 }
 
 class IGetDescColab @Inject constructor(
+    private val cardRepository: CardRepository,
+    private val colabRepository: ColabRepository
 ): GetDescColab {
 
     override suspend fun invoke(
@@ -22,7 +26,12 @@ class IGetDescColab @Inject constructor(
         idSecondary: Int,
     ): Result<String> =
         call(getClassAndMethod()) {
-            TODO("Not yet implemented")
+            val reg = when (flowNote) {
+                FlowNote.COLAB -> cardRepository.getRegColab(idMain)
+                else -> cardRepository.getRegPassengerColab(idMain, idSecondary)
+            }.getOrThrow()
+            val name = colabRepository.getNameByReg(reg).getOrThrow()
+            "$reg - $name"
         }
 
 }

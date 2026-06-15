@@ -17,7 +17,7 @@ class IGetDetailTest {
     )
 
     @Test
-    fun `Check return failure if have error in CardRepository getDetailEquip - flowNote is EQUIP`() =
+    fun `Check return failure if have error in CardRepository getDetailEquip - FlowNote EQUIP`() =
         runTest {
             whenever(
                 cardRepository.getDetailEquip(1)
@@ -48,7 +48,7 @@ class IGetDetailTest {
         }
 
     @Test
-    fun `Check return empty if function execute successfully and return is null - flowNote is EQUIP`() =
+    fun `Check return empty if function execute successfully and return is null - FlowNote EQUIP`() =
         runTest {
             whenever(
                 cardRepository.getDetailEquip(1)
@@ -71,7 +71,7 @@ class IGetDetailTest {
         }
 
     @Test
-    fun `Check return correct if function execute successfully - flowNote is EQUIP`() =
+    fun `Check return correct if function execute successfully - FlowNote EQUIP`() =
         runTest {
             whenever(
                 cardRepository.getDetailEquip(1)
@@ -96,7 +96,7 @@ class IGetDetailTest {
     //////////////////////////////////////////////////////////////
 
     @Test
-    fun `Check return failure if have error in CardRepository getDetailEquipSecondary - flowNote is EQUIP_SEC`() =
+    fun `Check return failure if have error in CardRepository getDetailEquipSecondary - FlowNote EQUIP_SEC`() =
         runTest {
             whenever(
                 cardRepository.getDetailEquipSecondary(1, 2)
@@ -127,7 +127,7 @@ class IGetDetailTest {
         }
 
     @Test
-    fun `Check return empty if function execute successfully and return is null - flowNote is EQUIP_SEC`() =
+    fun `Check return empty if function execute successfully and return is null - FlowNote EQUIP_SEC`() =
         runTest {
             whenever(
                 cardRepository.getDetailEquipSecondary(1, 2)
@@ -150,7 +150,7 @@ class IGetDetailTest {
         }
 
     @Test
-    fun `Check return correct if function execute successfully - flowNote is EQUIP_SEC`() =
+    fun `Check return correct if function execute successfully - FlowNote EQUIP_SEC`() =
         runTest {
             whenever(
                 cardRepository.getDetailEquipSecondary(1, 2)
@@ -175,7 +175,7 @@ class IGetDetailTest {
     //////////////////////////////////////////////////////////////
 
     @Test
-    fun `Check return failure if have error in CardRepository getDetailColab - flowNote is COLAB`() =
+    fun `Check return failure if have error in CardRepository getDetailColab - FlowNote COLAB`() =
         runTest {
             whenever(
                 cardRepository.getDetailColab(1)
@@ -206,7 +206,7 @@ class IGetDetailTest {
         }
 
     @Test
-    fun `Check return empty if function execute successfully and return is null - flowNote is COLAB`() =
+    fun `Check return empty if function execute successfully and return is null - FlowNote COLAB`() =
         runTest {
             whenever(
                 cardRepository.getDetailColab(1)
@@ -229,7 +229,7 @@ class IGetDetailTest {
         }
 
     @Test
-    fun `Check return correct if function execute successfully - flowNote is COLAB`() =
+    fun `Check return correct if function execute successfully - FlowNote COLAB`() =
         runTest {
             whenever(
                 cardRepository.getDetailColab(1)
@@ -254,7 +254,7 @@ class IGetDetailTest {
     //////////////////////////////////////////////////////////////
 
     @Test
-    fun `Check return failure if have error in CardRepository getDetailPassengerColab - flowNote is PASSENGER_COLAB`() =
+    fun `Check return failure if have error in CardRepository getDetailPassengerColab - FlowNote PASSENGER_COLAB`() =
         runTest {
             whenever(
                 cardRepository.getDetailPassengerColab(1, 2)
@@ -285,7 +285,7 @@ class IGetDetailTest {
         }
 
     @Test
-    fun `Check return empty if function execute successfully and return is null - flowNote is PASSENGER_COLAB`() =
+    fun `Check return empty if function execute successfully and return is null - FlowNote PASSENGER_COLAB`() =
         runTest {
             whenever(
                 cardRepository.getDetailPassengerColab(1, 2)
@@ -308,7 +308,7 @@ class IGetDetailTest {
         }
 
     @Test
-    fun `Check return correct if function execute successfully - flowNote is PASSENGER_COLAB`() =
+    fun `Check return correct if function execute successfully - FlowNote PASSENGER_COLAB`() =
         runTest {
             whenever(
                 cardRepository.getDetailPassengerColab(1, 2)
@@ -333,7 +333,7 @@ class IGetDetailTest {
     //////////////////////////////////////////////////////////////
 
     @Test
-    fun `Check return failure if have error in CardRepository getDetailVehicle - flowNote is VEHICLE`() =
+    fun `Check return failure if have error in CardRepository getDetailVehicle - FlowNote VEHICLE`() =
         runTest {
             whenever(
                 cardRepository.getDetailVehicle(1)
@@ -364,7 +364,7 @@ class IGetDetailTest {
         }
 
     @Test
-    fun `Check return empty if function execute successfully and return is null - flowNote is VEHICLE`() =
+    fun `Check return empty if function execute successfully and return is null - FlowNote VEHICLE`() =
         runTest {
             whenever(
                 cardRepository.getDetailVehicle(1)
@@ -387,7 +387,7 @@ class IGetDetailTest {
         }
 
     @Test
-    fun `Check return correct if function execute successfully - flowNote is VEHICLE`() =
+    fun `Check return correct if function execute successfully - FlowNote VEHICLE`() =
         runTest {
             whenever(
                 cardRepository.getDetailVehicle(1)
@@ -412,7 +412,7 @@ class IGetDetailTest {
     //////////////////////////////////////////////////////////////
 
     @Test
-    fun `Check return failure if have error in CardRepository getDetailDriver - flowNote is DRIVER`() =
+    fun `Check return failure if have error in CardRepository getDetailDriver - FlowNote DRIVER`() =
         runTest {
             whenever(
                 cardRepository.getDetailDriver(1)
@@ -443,7 +443,7 @@ class IGetDetailTest {
         }
 
     @Test
-    fun `Check return empty if function execute successfully and return is null - flowNote is DRIVER`() =
+    fun `Check return empty if function execute successfully and return is null - FlowNote DRIVER`() =
         runTest {
             whenever(
                 cardRepository.getDetailDriver(1)
@@ -466,7 +466,7 @@ class IGetDetailTest {
         }
 
     @Test
-    fun `Check return correct if function execute successfully - flowNote is DRIVER`() =
+    fun `Check return correct if function execute successfully - FlowNote DRIVER`() =
         runTest {
             whenever(
                 cardRepository.getDetailDriver(1)
@@ -491,7 +491,7 @@ class IGetDetailTest {
     //////////////////////////////////////////////////////////////
 
     @Test
-    fun `Check return failure if have error in CardRepository getDetailDriver - flowNote is PASSENGER_INVOLVED`() =
+    fun `Check return failure if have error in CardRepository getDetailDriver - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
                 cardRepository.getDetailPassengerInvolved(1, 2)
@@ -522,7 +522,7 @@ class IGetDetailTest {
         }
 
     @Test
-    fun `Check return empty if function execute successfully and return is null - flowNote is PASSENGER_INVOLVED`() =
+    fun `Check return empty if function execute successfully and return is null - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
                 cardRepository.getDetailPassengerInvolved(1, 2)
@@ -545,7 +545,7 @@ class IGetDetailTest {
         }
 
     @Test
-    fun `Check return correct if function execute successfully - flowNote is PASSENGER_INVOLVED`() =
+    fun `Check return correct if function execute successfully - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
                 cardRepository.getDetailPassengerInvolved(1, 2)
@@ -570,7 +570,7 @@ class IGetDetailTest {
     //////////////////////////////////////////////////////////////
 
     @Test
-    fun `Check return failure if have error in CardRepository getDetailInvolved - flowNote is INVOLVED`() =
+    fun `Check return failure if have error in CardRepository getDetailInvolved - FlowNote INVOLVED`() =
         runTest {
             whenever(
                 cardRepository.getDetailInvolved(1)
@@ -601,7 +601,7 @@ class IGetDetailTest {
         }
 
     @Test
-    fun `Check return empty if function execute successfully and return is null - flowNote is INVOLVED`() =
+    fun `Check return empty if function execute successfully and return is null - FlowNote INVOLVED`() =
         runTest {
             whenever(
                 cardRepository.getDetailInvolved(1)
@@ -624,7 +624,7 @@ class IGetDetailTest {
         }
 
     @Test
-    fun `Check return correct if function execute successfully - flowNote is INVOLVED`() =
+    fun `Check return correct if function execute successfully - FlowNote INVOLVED`() =
         runTest {
             whenever(
                 cardRepository.getDetailInvolved(1)

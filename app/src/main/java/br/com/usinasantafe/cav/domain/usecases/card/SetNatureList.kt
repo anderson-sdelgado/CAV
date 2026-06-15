@@ -12,7 +12,7 @@ interface SetNatureList {
 }
 
 class ISetNatureList @Inject constructor(
-    private val cardRepository: BasicCardRepository
+    private val cardRepository: CardRepository
 ): SetNatureList {
 
     override suspend fun invoke(list: List<ItemCheckBoxScreenModel>): EmptyResult =

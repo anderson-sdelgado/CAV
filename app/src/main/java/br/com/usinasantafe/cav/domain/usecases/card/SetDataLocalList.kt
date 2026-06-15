@@ -16,7 +16,7 @@ interface SetDataLocalList {
 
 class ISetDataLocalList @Inject constructor(
     private val dataLocalRepository: DataLocalRepository,
-    private val cardRepository: BasicCardRepository
+    private val cardRepository: CardRepository
 ): SetDataLocalList {
 
     override suspend fun invoke(

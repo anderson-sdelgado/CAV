@@ -4,9 +4,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.usinasantafe.cav.domain.usecases.card.GetDescColab
-import br.com.usinasantafe.cav.domain.usecases.card.GetDescState
 import br.com.usinasantafe.cav.domain.usecases.card.GetDetail
+import br.com.usinasantafe.cav.domain.usecases.card.GetState
 import br.com.usinasantafe.cav.lib.FlowNote
+import br.com.usinasantafe.cav.lib.State
 import br.com.usinasantafe.cav.presenter.Args.FLOW_NOTE_ARG
 import br.com.usinasantafe.cav.presenter.Args.ID_MAIN_ARG
 import br.com.usinasantafe.cav.presenter.Args.ID_SECONDARY_ARG
@@ -26,7 +27,7 @@ data class ColabDataState(
     val idMain: Int = 0,
     val idSecondary: Int = 0,
     val colab: String = "",
-    val state: String = "",
+    val state: State = State.UNHARMED,
     val detail: String = "",
     override val status: UiStatusState = UiStatusState()
 ) : UiStateWithStatus<ColabDataState> {
@@ -40,7 +41,7 @@ data class ColabDataState(
 class ColabDataViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getDescColab: GetDescColab,
-    private val getDescState: GetDescState,
+    private val getState: GetState,
     private val getDetail: GetDetail
 ) : ViewModel() {
 
@@ -72,11 +73,11 @@ class ColabDataViewModel @Inject constructor(
     fun recoverData() = viewModelScope.launch {
         runCatching {
             val descColab = getDescColab(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
-            val descState = getDescState(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            val stateRet = getState(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
             val detail = getDetail(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
             ColabDataState(
                 colab = descColab,
-                state = descState,
+                state = stateRet,
                 detail = detail
             )
         }

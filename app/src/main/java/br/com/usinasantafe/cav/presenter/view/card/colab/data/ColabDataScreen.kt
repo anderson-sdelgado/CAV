@@ -17,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.lib.FlowNote
+import br.com.usinasantafe.cav.lib.State
 import br.com.usinasantafe.cav.presenter.theme.ButtonMaxWidth
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
@@ -67,7 +68,7 @@ fun ColabDataScreen(
 fun ColabDataContent(
     flowNote: FlowNote,
     colab: String,
-    state: String,
+    state: State,
     detail: String,
     onCloseDialog: () -> Unit,
     status: UiStatusState,
@@ -102,7 +103,18 @@ fun ColabDataContent(
             item {
                 ItemDefaultEditListScreenModel(
                     id = R.string.text_state,
-                    desc = state,
+                    desc = when(state) {
+                        State.UNHARMED -> stringResource(
+                            id = R.string.text_item_unharmed
+                        )
+                        State.INJURED -> stringResource(
+                            id = R.string.text_item_injured
+                        )
+                        State.DEAD -> stringResource(
+                            id = R.string.text_item_dead
+                        )
+                    }
+                    ,
                     tag = TAG_STATE_DATA_COLAB_EDIT_BUTTON,
                     onClickEdit = onNavState
                 )
@@ -134,7 +146,7 @@ fun ColabDataPagePreview() {
             ColabDataContent(
                 flowNote = FlowNote.EQUIP,
                 colab = "19759 - ANDERSON DA SILVA DELGADO",
-                state = "FERIDO",
+                state = State.INJURED,
                 detail = "PERNA MACHUCADA",
                 onCloseDialog = {},
                 status = UiStatusState(),

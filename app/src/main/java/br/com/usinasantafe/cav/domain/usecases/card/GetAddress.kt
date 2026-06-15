@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
+import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -14,6 +15,7 @@ interface GetAddress {
 }
 
 class IGetAddress @Inject constructor(
+    private val cardRepository: CardRepository
 ): GetAddress {
 
     override suspend fun invoke(
@@ -22,7 +24,13 @@ class IGetAddress @Inject constructor(
         idSecondary: Int
     ): Result<String> =
         call(getClassAndMethod()) {
-            TODO("Not yet implemented")
+            with(cardRepository) {
+                when(flowNote){
+                    FlowNote.DRIVER -> getAddressDriver(idMain)
+                    FlowNote.PASSENGER_INVOLVED -> getAddressPassengerInvolved(idMain, idSecondary)
+                    else -> getAddressInvolved(idMain)
+                }.getOrThrow() ?: ""
+            }
         }
 
 }

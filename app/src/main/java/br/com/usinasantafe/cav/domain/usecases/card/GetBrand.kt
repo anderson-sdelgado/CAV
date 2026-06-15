@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
+import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import javax.inject.Inject
@@ -9,11 +10,12 @@ interface GetBrand {
 }
 
 class IGetBrand @Inject constructor(
+    private val cardRepository: CardRepository
 ): GetBrand {
 
     override suspend fun invoke(idMain: Int): Result<String> =
         call(getClassAndMethod()) {
-            TODO("Not yet implemented")
+            cardRepository.getBrand(idMain).getOrThrow() ?: ""
         }
 
 }

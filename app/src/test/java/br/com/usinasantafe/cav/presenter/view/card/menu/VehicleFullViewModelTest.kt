@@ -1,8 +1,8 @@
 package br.com.usinasantafe.cav.presenter.view.card.menu
 
 import br.com.usinasantafe.cav.MainCoroutineRule
-import br.com.usinasantafe.cav.domain.usecases.card.DeleteEquip
-import br.com.usinasantafe.cav.domain.usecases.card.DeleteVehicle
+import br.com.usinasantafe.cav.domain.usecases.card.DeleteVehicleOwn
+import br.com.usinasantafe.cav.domain.usecases.card.DeleteVehicleInvolved
 import br.com.usinasantafe.cav.domain.usecases.card.ListVehicleInvolved
 import br.com.usinasantafe.cav.domain.usecases.card.ListVehicleOwn
 import br.com.usinasantafe.cav.lib.Errors
@@ -26,13 +26,13 @@ class VehicleFullViewModelTest {
 
     private val listVehicleOwn = mock<ListVehicleOwn>()
     private val listVehicleInvolved = mock<ListVehicleInvolved>()
-    private val deleteEquip = mock<DeleteEquip>()
-    private val deleteVehicle = mock<DeleteVehicle>()
+    private val deleteVehicleOwn = mock<DeleteVehicleOwn>()
+    private val deleteVehicleInvolved = mock<DeleteVehicleInvolved>()
     private val viewModel = VehicleFullViewModel(
         listVehicleOwn = listVehicleOwn,
         listVehicleInvolved = listVehicleInvolved,
-        deleteEquip = deleteEquip,
-        deleteVehicle = deleteVehicle
+        deleteVehicleOwn = deleteVehicleOwn,
+        deleteVehicleInvolved = deleteVehicleInvolved
     )
 
     @Test
@@ -192,7 +192,7 @@ class VehicleFullViewModelTest {
     fun `delete - Check return failure if have error in DeleteEquip`() =
         runTest {
             whenever(
-                deleteEquip(1)
+                deleteVehicleOwn(1)
             ).thenReturn(
                 resultFailure(
                     context = "DeleteEquip",
@@ -224,7 +224,7 @@ class VehicleFullViewModelTest {
     fun `delete - Check return failure if have error in DeleteVehicle`() =
         runTest {
             whenever(
-                deleteVehicle(2)
+                deleteVehicleInvolved(2)
             ).thenReturn(
                 resultFailure(
                     context = "DeleteVehicle",

@@ -14,7 +14,7 @@ interface ListNature {
 
 class IListNature @Inject constructor(
     private val natureRepository: NatureRepository,
-    private val cardRepository: BasicCardRepository
+    private val cardRepository: CardRepository
 ): ListNature {
 
     override suspend fun invoke(): Result<List<ItemCheckBoxScreenModel>> =

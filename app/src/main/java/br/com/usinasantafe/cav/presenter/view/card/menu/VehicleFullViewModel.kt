@@ -2,11 +2,10 @@ package br.com.usinasantafe.cav.presenter.view.card.menu
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.usinasantafe.cav.domain.usecases.card.DeleteEquip
-import br.com.usinasantafe.cav.domain.usecases.card.DeleteVehicle
+import br.com.usinasantafe.cav.domain.usecases.card.DeleteVehicleOwn
+import br.com.usinasantafe.cav.domain.usecases.card.DeleteVehicleInvolved
 import br.com.usinasantafe.cav.domain.usecases.card.ListVehicleInvolved
 import br.com.usinasantafe.cav.domain.usecases.card.ListVehicleOwn
-import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.TypeVehicle
 import br.com.usinasantafe.cav.presenter.model.VehicleScreenModel
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
@@ -38,8 +37,8 @@ data class VehicleFullState(
 class VehicleFullViewModel @Inject constructor(
     private val listVehicleOwn: ListVehicleOwn,
     private val listVehicleInvolved: ListVehicleInvolved,
-    private val deleteVehicle: DeleteVehicle,
-    private val deleteEquip: DeleteEquip
+    private val deleteVehicleInvolved: DeleteVehicleInvolved,
+    private val deleteVehicleOwn: DeleteVehicleOwn
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(VehicleFullState())
@@ -77,8 +76,8 @@ class VehicleFullViewModel @Inject constructor(
     fun delete() = viewModelScope.launch {
         runCatching {
             when(state.typeVehicle){
-                TypeVehicle.OWN -> deleteEquip(state.idSelection).getOrThrow()
-                TypeVehicle.INVOLVED -> deleteVehicle(state.idSelection).getOrThrow()
+                TypeVehicle.OWN -> deleteVehicleOwn(state.idSelection).getOrThrow()
+                TypeVehicle.INVOLVED -> deleteVehicleInvolved(state.idSelection).getOrThrow()
             }
         }
             .onSuccess { recoverData() }

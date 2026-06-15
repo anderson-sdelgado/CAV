@@ -2,6 +2,7 @@ package br.com.usinasantafe.cav.infra.repositories.variable
 
 import br.com.usinasantafe.cav.domain.repositories.variable.InsertCardRepository
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
+import br.com.usinasantafe.cav.lib.State
 import br.com.usinasantafe.cav.utils.EmptyResult
 import javax.inject.Inject
 
@@ -52,5 +53,36 @@ class IInsertCardRepository @Inject constructor(
     override suspend fun setRegColab(regColab: Long): EmptyResult {
         TODO("Not yet implemented")
     }
+
+    override suspend fun setStateColab(state: State): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun setStatePassengerColab(
+        state: State,
+        idMain: Int
+    ): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun setStateDriver(state: State): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun setStateInvolved(state: State): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun setStatePassengerInvolved(
+        state: State,
+        idMain: Int
+    ): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun setStateStateWitness(state: State): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
 
 }

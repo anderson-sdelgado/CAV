@@ -13,7 +13,7 @@ interface ListTypeAccident {
 
 class IListTypeAccident @Inject constructor(
     private val typeAccidentRepository: TypeAccidentRepository,
-    private val cardRepository: BasicCardRepository
+    private val cardRepository: CardRepository
 ): ListTypeAccident {
 
     override suspend fun invoke(): Result<List<ItemCheckBoxScreenModel>> =

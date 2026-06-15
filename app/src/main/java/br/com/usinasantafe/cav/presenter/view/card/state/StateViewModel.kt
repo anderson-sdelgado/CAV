@@ -3,10 +3,11 @@ package br.com.usinasantafe.cav.presenter.view.card.state
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.usinasantafe.cav.domain.usecases.card.GetIdState
+import br.com.usinasantafe.cav.domain.usecases.card.GetState
 import br.com.usinasantafe.cav.domain.usecases.card.SetState
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
+import br.com.usinasantafe.cav.lib.State
 import br.com.usinasantafe.cav.presenter.Args.FLOW_NOTE_ARG
 import br.com.usinasantafe.cav.presenter.Args.ID_MAIN_ARG
 import br.com.usinasantafe.cav.presenter.Args.ID_SECONDARY_ARG
@@ -26,7 +27,7 @@ import javax.inject.Inject
 data class StateState(
     val option: Option = Option.INSERT,
     val flowNote: FlowNote = FlowNote.COLAB,
-    val idSelection: Int = 1,
+    val stateSelection: State = State.UNHARMED,
     val idMain: Int = 0,
     val idSecondary: Int = 0,
     override val status: UiStatusState = UiStatusState()
@@ -40,7 +41,7 @@ data class StateState(
 @HiltViewModel
 class StateViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val getIdState: GetIdState,
+    private val getState: GetState,
     private val setState: SetState
 ) : ViewModel() {
 
@@ -71,20 +72,20 @@ class StateViewModel @Inject constructor(
         }
     }
 
-    fun onSelection(id: Int) = updateState { copy(idSelection = id) }
+    fun onSelection(state: State) = updateState { copy(stateSelection = state) }
 
     fun recoverData() = viewModelScope.launch {
         runCatching {
             if (state.option == Option.INSERT) return@launch
-            getIdState(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            getState(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
         }
-            .onSuccess { updateState { copy(idSelection = it) } }
+            .onSuccess { updateState { copy(stateSelection = it) } }
             .onFailureState(getClassAndMethod(), ::updateState)
     }
 
     fun set() = viewModelScope.launch {
         runCatching {
-            setState(state.idSelection, state.option, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            setState(state.stateSelection, state.option, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
         }
             .onSuccessStateAccess(::updateState)
             .onFailureState(getClassAndMethod(), ::updateState)

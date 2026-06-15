@@ -1,5 +1,7 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
+import br.com.usinasantafe.cav.domain.repositories.stable.EquipRepository
+import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -14,6 +16,8 @@ interface GetDescEquip {
 }
 
 class IGetDescEquip @Inject constructor(
+    private val cardRepository: CardRepository,
+    private val equipRepository: EquipRepository
 ): GetDescEquip {
 
     override suspend fun invoke(
@@ -22,7 +26,12 @@ class IGetDescEquip @Inject constructor(
         idSecondary: Int,
     ): Result<String> =
         call(getClassAndMethod()) {
-            TODO("Not yet implemented")
+            val id = when(flowNote) {
+                FlowNote.EQUIP -> cardRepository.getIdEquip(idMain)
+                else -> cardRepository.getIdEquipSecondary(idMain, idSecondary)
+            }.getOrThrow()
+            val entity = equipRepository.getById(id).getOrThrow()
+            "${entity.nro} - ${entity.description}"
         }
 
 }
