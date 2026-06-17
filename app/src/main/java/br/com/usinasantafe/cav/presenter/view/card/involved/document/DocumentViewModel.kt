@@ -115,7 +115,7 @@ class DocumentViewModel @Inject constructor(
                 updateState { withFailure(getClassAndMethod(), Errors.INVALID) }
                 return@launch
             }
-            setDocument(state.text, state.flowNote, state.idMain, state.idSecondary)
+            setDocument(state.text, state.option, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
         }
             .onSuccessStateAccess(::updateState)
             .onFailureState(getClassAndMethod(), ::updateState)

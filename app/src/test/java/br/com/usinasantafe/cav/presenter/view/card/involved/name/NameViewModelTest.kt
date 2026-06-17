@@ -105,6 +105,7 @@ class NameViewModelTest {
             whenever(
                 setName(
                     name = "Test",
+                    option = Option.INSERT,
                     flowNote = FlowNote.COLAB,
                     idMain = 0,
                     idSecondary = 0
@@ -150,6 +151,7 @@ class NameViewModelTest {
                 atLeastOnce()
             ).invoke(
                 name = "Test",
+                option = Option.INSERT,
                 flowNote = FlowNote.COLAB,
                 idMain = 0,
                 idSecondary = 0

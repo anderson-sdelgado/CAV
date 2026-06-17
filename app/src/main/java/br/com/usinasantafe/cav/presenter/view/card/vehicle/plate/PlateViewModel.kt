@@ -86,7 +86,7 @@ class PlateViewModel @Inject constructor(
                 updateState { withFailure(getClassAndMethod(), Errors.FIELD_EMPTY) }
                 return@launch
             }
-            setPlate(state.text, idMain).getOrThrow()
+            setPlate(state.text, state.option, idMain).getOrThrow()
         }
             .onSuccessStateAccess(::updateState)
             .onFailureState(getClassAndMethod(), ::updateState)

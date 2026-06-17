@@ -118,7 +118,7 @@ class BrandViewModelTest {
     fun `set - Check return failure if have error in SetBrand`() =
         runTest {
             whenever(
-                setBrand("Test", 1)
+                setBrand("Test", Option.INSERT, 1)
             ).thenReturn(
                 resultFailure(
                     context = "SetBrand",
@@ -155,7 +155,7 @@ class BrandViewModelTest {
         runTest {
             viewModel.onTextChanged("Test")
             viewModel.set()
-            verify(setBrand, atLeastOnce()).invoke("Test", 1)
+            verify(setBrand, atLeastOnce()).invoke("Test", Option.INSERT,1)
             assertEquals(
                 viewModel.uiState.value.status.flagAccess,
                 true

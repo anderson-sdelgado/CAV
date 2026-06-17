@@ -93,7 +93,7 @@ class NameViewModel @Inject constructor(
                 updateState { withFailure(getClassAndMethod(), Errors.FIELD_EMPTY) }
                 return@launch
             }
-            setName(state.text, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            setName(state.text, state.option, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
         }
             .onSuccessStateAccess(::updateState)
             .onFailureState(getClassAndMethod(), ::updateState)

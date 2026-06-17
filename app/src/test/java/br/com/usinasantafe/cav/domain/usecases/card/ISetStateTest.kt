@@ -71,13 +71,13 @@ class ISetStateTest {
         }
 
     @Test
-    fun `Check return failure if have error in CardRepository setStatePassengerColab - Option INSERT - FlowNote PASSENGER_COLAB`() =
+    fun `Check return failure if have error in CardRepository setStateColab - Option INSERT - FlowNote PASSENGER_COLAB`() =
         runTest {
             whenever(
-                cardRepository.setStatePassengerColab(State.INJURED, 10)
+                cardRepository.setStateColab(State.INJURED)
             ).thenReturn(
                 resultFailure(
-                    "ICardRepository.setStatePassengerColab",
+                    "ICardRepository.setStateColab",
                     "-",
                     Exception()
                 )
@@ -95,7 +95,7 @@ class ISetStateTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "ISetState -> ICardRepository.setStatePassengerColab"
+                "ISetState -> ICardRepository.setStateColab"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -113,7 +113,7 @@ class ISetStateTest {
                 idMain = 10,
                 idSecondary = 0
             )
-            verify(cardRepository, atLeastOnce()).setStatePassengerColab(State.INJURED, 10)
+            verify(cardRepository, atLeastOnce()).setStateColab(State.INJURED)
             assertEquals(
                 result.isSuccess,
                 true
@@ -121,13 +121,13 @@ class ISetStateTest {
         }
 
     @Test
-    fun `Check return failure if have error in CardRepository setStateDriver - Option INSERT - FlowNote DRIVER`() =
+    fun `Check return failure if have error in CardRepository setStateInvolved - Option INSERT - FlowNote DRIVER`() =
         runTest {
             whenever(
-                cardRepository.setStateDriver(State.INJURED)
+                cardRepository.setStateInvolved(State.INJURED)
             ).thenReturn(
                 resultFailure(
-                    "ICardRepository.setStateDriver",
+                    "ICardRepository.setStateInvolved",
                     "-",
                     Exception()
                 )
@@ -145,7 +145,7 @@ class ISetStateTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "ISetState -> ICardRepository.setStateDriver"
+                "ISetState -> ICardRepository.setStateInvolved"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -163,7 +163,7 @@ class ISetStateTest {
                 idMain = 0,
                 idSecondary = 0
             )
-            verify(cardRepository, atLeastOnce()).setStateDriver(State.INJURED)
+            verify(cardRepository, atLeastOnce()).setStateInvolved(State.INJURED)
             assertEquals(
                 result.isSuccess,
                 true
@@ -171,13 +171,13 @@ class ISetStateTest {
         }
 
     @Test
-    fun `Check return failure if have error in CardRepository setStatePassengerInvolved - Option INSERT - FlowNote PASSENGER_INVOLVED`() =
+    fun `Check return failure if have error in CardRepository setStateInvolved - Option INSERT - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.setStatePassengerInvolved(State.INJURED, 10)
+                cardRepository.setStateInvolved(State.INJURED)
             ).thenReturn(
                 resultFailure(
-                    "ICardRepository.setStatePassengerInvolved",
+                    "ICardRepository.setStateInvolved",
                     "-",
                     Exception()
                 )
@@ -195,7 +195,7 @@ class ISetStateTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "ISetState -> ICardRepository.setStatePassengerInvolved"
+                "ISetState -> ICardRepository.setStateInvolved"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -213,7 +213,7 @@ class ISetStateTest {
                 idMain = 10,
                 idSecondary = 0
             )
-            verify(cardRepository, atLeastOnce()).setStatePassengerInvolved(State.INJURED, 10)
+            verify(cardRepository, atLeastOnce()).setStateInvolved(State.INJURED)
             assertEquals(
                 result.isSuccess,
                 true
@@ -271,13 +271,13 @@ class ISetStateTest {
         }
 
     @Test
-    fun `Check return failure if have error in CardRepository setStateStateWitness - Option INSERT - FlowNote WITNESS`() =
+    fun `Check return failure if have error in CardRepository setStateInvolved - Option INSERT - FlowNote WITNESS`() =
         runTest {
             whenever(
-                cardRepository.setStateStateWitness(State.INJURED)
+                cardRepository.setStateInvolved(State.INJURED)
             ).thenReturn(
                 resultFailure(
-                    "ICardRepository.setStateStateWitness",
+                    "ICardRepository.setStateInvolved",
                     "-",
                     Exception()
                 )
@@ -295,7 +295,7 @@ class ISetStateTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "ISetState -> ICardRepository.setStateStateWitness"
+                "ISetState -> ICardRepository.setStateInvolved"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -313,7 +313,7 @@ class ISetStateTest {
                 idMain = 0,
                 idSecondary = 0
             )
-            verify(cardRepository, atLeastOnce()).setStateStateWitness(State.INJURED)
+            verify(cardRepository, atLeastOnce()).setStateInvolved(State.INJURED)
             assertEquals(
                 result.isSuccess,
                 true

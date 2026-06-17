@@ -185,6 +185,48 @@ class DocumentViewModelTest {
         }
 
     @Test
+    fun `set - Check return failure if have error in SetDocument`() =
+        runTest {
+            whenever(
+                setDocument(
+                    cpf = "123.456.789-09",
+                    option = Option.INSERT,
+                    flowNote = FlowNote.EQUIP,
+                    idMain = 0,
+                    idSecondary = 0
+                )
+            ).thenReturn(
+                resultFailure(
+                    context = "SetDocument",
+                    message = "-",
+                    cause = Exception()
+                )
+            )
+            "12345678909".forEach { char ->
+                viewModel.onTextField(char.toString(), TypeButton.NUMERIC)
+            }
+
+            viewModel.onTextField("", TypeButton.OK)
+
+            assertEquals(
+                viewModel.uiState.value.status.flagDialog,
+                true
+            )
+            assertEquals(
+                viewModel.uiState.value.status.failure,
+                "DocumentViewModel.onTextField -> DocumentViewModel.set -> SetDocument -> java.lang.Exception"
+            )
+            assertEquals(
+                viewModel.uiState.value.status.errors,
+                Errors.EXCEPTION
+            )
+            assertEquals(
+                viewModel.uiState.value.status.flagFailure,
+                true
+            )
+        }
+
+    @Test
     fun `set - Check return access if CPF is valid`() = runTest {
         "12345678909".forEach { char ->
             viewModel.onTextField(char.toString(), TypeButton.NUMERIC)
@@ -201,5 +243,7 @@ class DocumentViewModelTest {
             false
         )
     }
+
+
 
 }

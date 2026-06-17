@@ -118,7 +118,7 @@ class PlateViewModelTest {
     fun `set - Check return failure if have error in SetPlate`() =
         runTest {
             whenever(
-                setPlate("Test", 1)
+                setPlate("Test", Option.INSERT, 1)
             ).thenReturn(
                 resultFailure(
                     context = "SetPlate",
@@ -155,7 +155,7 @@ class PlateViewModelTest {
         runTest {
             viewModel.onTextChanged("Test")
             viewModel.set()
-            verify(setPlate, atLeastOnce()).invoke("Test", 1)
+            verify(setPlate, atLeastOnce()).invoke("Test", Option.INSERT, 1)
             assertEquals(
                 viewModel.uiState.value.status.flagAccess,
                 true

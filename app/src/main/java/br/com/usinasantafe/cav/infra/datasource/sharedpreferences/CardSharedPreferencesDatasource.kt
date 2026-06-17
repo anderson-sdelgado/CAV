@@ -1,6 +1,8 @@
 package br.com.usinasantafe.cav.infra.datasource.sharedpreferences
 
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.LocalSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleOwnSharedPreferencesModel
 import br.com.usinasantafe.cav.utils.EmptyResult
 
 interface CardSharedPreferencesDatasource {
@@ -20,4 +22,6 @@ interface CardSharedPreferencesDatasource {
     suspend fun setIdDataLocalList(idList: List<Int>): EmptyResult
     suspend fun listIdSupportTeams(): Result<List<Int>>
     suspend fun setIdSupportTeamsList(idList: List<Int>): EmptyResult
+    suspend fun setVehicleOwn(entity: VehicleOwnSharedPreferencesModel): Result<Int>
+    suspend fun setEquipSec(equipSharedPreferencesModel: EquipSharedPreferencesModel): EmptyResult
 }

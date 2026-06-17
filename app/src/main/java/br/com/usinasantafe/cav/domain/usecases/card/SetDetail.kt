@@ -32,15 +32,15 @@ class ISetDetail @Inject constructor(
             with(cardRepository) {
                 val result = when (option) {
                     Option.INSERT -> when (flowNote) {
-                        FlowNote.EQUIP -> setDetailEquip(text)
-                        FlowNote.EQUIP_SEC -> setDetailEquipSecondary(text, idMain)
-                        FlowNote.COLAB -> setDetailColab(text)
-                        FlowNote.PASSENGER_COLAB -> setDetailPassengerColab(text, idMain)
+                        FlowNote.EQUIP,
+                        FlowNote.EQUIP_SEC -> setDetailEquip(text)
+                        FlowNote.COLAB,
+                        FlowNote.PASSENGER_COLAB -> setDetailColab(text)
                         FlowNote.VEHICLE -> setDetailVehicle(text)
-                        FlowNote.DRIVER -> setDetailDriver(text)
-                        FlowNote.PASSENGER_INVOLVED -> setDetailPassengerInvolved(text, idMain)
-                        FlowNote.INVOLVED -> setDetailInvolved(text)
-                        FlowNote.WITNESS -> setDetailWitness(text)
+                        FlowNote.DRIVER,
+                        FlowNote.PASSENGER_INVOLVED,
+                        FlowNote.INVOLVED,
+                        FlowNote.WITNESS -> setDetailInvolved(text)
                     }
                     Option.EDIT -> when (flowNote) {
                         FlowNote.EQUIP -> updateDetailEquip(text, idMain)

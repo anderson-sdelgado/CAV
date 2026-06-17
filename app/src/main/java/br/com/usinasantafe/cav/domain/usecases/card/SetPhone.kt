@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
+import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -15,6 +16,7 @@ interface SetPhone {
 }
 
 class ISetPhone @Inject constructor(
+    private val cardRepository: CardRepository
 ): SetPhone {
 
     override suspend fun invoke(
@@ -24,7 +26,14 @@ class ISetPhone @Inject constructor(
         idSecondary: Int
     ): Result<Unit> =
         call(getClassAndMethod()) {
-            TODO("Not yet implemented")
+            with(cardRepository) {
+                when (flowNote) {
+                    FlowNote.DRIVER -> updatePhoneDriver(phone, idMain)
+                    FlowNote.INVOLVED -> updatePhoneInvolved(phone, idMain)
+                    FlowNote.WITNESS -> updatePhoneWitness(phone, idMain)
+                    else -> updatePhonePassengerInvolved(phone, idMain, idSecondary)
+                }.getOrThrow()
+            }
         }
 
 }

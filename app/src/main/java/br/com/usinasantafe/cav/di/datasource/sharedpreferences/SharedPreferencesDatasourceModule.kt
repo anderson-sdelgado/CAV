@@ -20,4 +20,16 @@ interface SharedPreferencesDatasourceModule {
     @Singleton
     fun bindCardSharedPreferencesDatasource(dataSource: ICardSharedPreferencesDatasource): CardSharedPreferencesDatasource
 
+    @Binds
+    @Singleton
+    fun bindColabSharedPreferencesDatasource(dataSource: IColabSharedPreferencesDatasource): ColabSharedPreferencesDatasource
+
+    @Binds
+    @Singleton
+    fun bindEquipSharedPreferencesDatasource(dataSource: IEquipSharedPreferencesDatasource): EquipSharedPreferencesDatasource
+
+    @Binds
+    @Singleton
+    fun bindVehicleSharedPreferencesDatasource(dataSource: IVehicleSharedPreferencesDatasource): VehicleSharedPreferencesDatasource
+
 }

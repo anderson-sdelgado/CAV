@@ -33,12 +33,9 @@ class ISetState @Inject constructor(
             with(cardRepository) {
                 when (option) {
                     Option.INSERT -> when(flowNote) {
-                        FlowNote.COLAB -> setStateColab(state)
-                        FlowNote.PASSENGER_COLAB -> setStatePassengerColab(state, idMain)
-                        FlowNote.DRIVER -> setStateDriver(state)
-                        FlowNote.PASSENGER_INVOLVED -> setStatePassengerInvolved(state, idMain)
-                        FlowNote.INVOLVED -> setStateInvolved(state)
-                        else -> setStateStateWitness(state)
+                        FlowNote.COLAB,
+                        FlowNote.PASSENGER_COLAB -> setStateColab(state)
+                        else -> setStateInvolved(state)
                     }
                     Option.EDIT -> when(flowNote) {
                         FlowNote.COLAB -> updateStateColab(state, idMain)

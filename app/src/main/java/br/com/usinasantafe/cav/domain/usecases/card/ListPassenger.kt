@@ -34,7 +34,7 @@ class IListPassenger @Inject constructor(
                         val fullData = entityList.find { it.reg == colabCard.reg }
                         ItemListScreenModel(
                             id = colabCard.id!!,
-                            desc = "${fullData?.reg} - ${fullData?.name}"
+                            desc = "${colabCard.reg} - ${fullData?.name ?: "-"}"
                         )
                     }
                 }

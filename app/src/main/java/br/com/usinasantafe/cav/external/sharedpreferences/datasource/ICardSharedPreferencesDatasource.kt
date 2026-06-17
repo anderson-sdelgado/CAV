@@ -4,7 +4,9 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.LocalSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleOwnSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.sharedPreferencesModelToEntity
 import br.com.usinasantafe.cav.lib.BASE_SHARED_PREFERENCES_TABLE_CARD
 import br.com.usinasantafe.cav.utils.EmptyResult
@@ -145,5 +147,13 @@ class ICardSharedPreferencesDatasource @Inject constructor(
             mainModel.idSupportTeamsList = idList
             save(mainModel).getOrThrow()
         }
+
+    override suspend fun setVehicleOwn(entity: VehicleOwnSharedPreferencesModel): Result<Int> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun setEquipSec(equipSharedPreferencesModel: EquipSharedPreferencesModel): EmptyResult {
+        TODO("Not yet implemented")
+    }
 
 }

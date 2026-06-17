@@ -36,21 +36,21 @@ interface BasicCardRepository{
 interface InsertCardRepository {
     suspend fun setIdEquip(idEquip: Int): EmptyResult
     suspend fun setDetailEquip(text: String): EmptyResult
-    suspend fun setDetailEquipSecondary(text: String, idMain: Int): EmptyResult
-    suspend fun setDetailColab(text: String): Result<Int>
+    suspend fun setDetailEquipSec(text: String): EmptyResult
     suspend fun setDetailDriver(text: String): Result<Int>
-    suspend fun setDetailPassengerColab(text: String, idMain: Int): EmptyResult
+    suspend fun setDetailColab(text: String): Result<Int>
+    suspend fun setDetailPassengerColab(text: String): Result<Int>
     suspend fun setDetailVehicle(text: String): EmptyResult
-    suspend fun setDetailPassengerInvolved(text: String, idMain: Int): EmptyResult
     suspend fun setDetailInvolved(text: String): Result<Int>
     suspend fun setDetailWitness(text: String): Result<Int>
     suspend fun setRegColab(regColab: Long): EmptyResult
     suspend fun setStateColab(state: State): EmptyResult
-    suspend fun setStatePassengerColab(state: State, idMain: Int): EmptyResult
     suspend fun setStateDriver(state: State): EmptyResult
+    suspend fun setBrand(text: String): EmptyResult
+    suspend fun setPlate(text: String): EmptyResult
+    suspend fun setDocument(text: String): EmptyResult
     suspend fun setStateInvolved(state: State): EmptyResult
-    suspend fun setStatePassengerInvolved(state: State, idMain: Int): EmptyResult
-    suspend fun setStateStateWitness(state: State): EmptyResult
+    suspend fun setName(text: String): EmptyResult
 }
 
 interface RecoverDataCardRepository {
@@ -119,6 +119,22 @@ interface UpdateCardRepository {
     suspend fun updateStatePassengerInvolved(state: State, idMain: Int, idSecondary: Int): EmptyResult
     suspend fun updateStateInvolved(state: State, idMain: Int): EmptyResult
     suspend fun updateStateWitness(state: State, idMain: Int): EmptyResult
+    suspend fun updateAddressPassengerInvolved(text: String, idMain: Int, idSecondary: Int): EmptyResult
+    suspend fun updateAddressInvolved(text: String, idMain: Int): EmptyResult
+    suspend fun updateAddressDriver(text: String, idMain: Int): EmptyResult
+    suspend fun updateBrand(text: String, idMain: Int): EmptyResult
+    suspend fun updatePlate(text: String, idMain: Int): EmptyResult
+    suspend fun updateDocumentDriver(text: String, idMain: Int): EmptyResult
+    suspend fun updateDocumentPassengerInvolved(text: String, idMain: Int, idSecondary: Int): EmptyResult
+    suspend fun updateDocumentInvolved(text: String, idMain: Int): EmptyResult
+    suspend fun updateNameDriver(text: String, idMain: Int): EmptyResult
+    suspend fun updateNamePassengerInvolved(text: String, idMain: Int, idSecondary: Int): EmptyResult
+    suspend fun updateNameInvolved(text: String, idMain: Int): EmptyResult
+    suspend fun updateNameWitness(text: String, idMain: Int): EmptyResult
+    suspend fun updatePhoneDriver(text: String, idMain: Int): EmptyResult
+    suspend fun updatePhoneInvolved(text: String, idMain: Int): EmptyResult
+    suspend fun updatePhoneWitness(text: String, idMain: Int): EmptyResult
+    suspend fun updatePhonePassengerInvolved(text: String, idMain: Int, idSecondary: Int): EmptyResult
 }
 
 interface DeleteCardRepository {

@@ -126,4 +126,120 @@ class IUpdateCardRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    override suspend fun updateAddressPassengerInvolved(
+        text: String,
+        idMain: Int,
+        idSecondary: Int
+    ): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateAddressInvolved(
+        text: String,
+        idMain: Int
+    ): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateAddressDriver(
+        text: String,
+        idMain: Int
+    ): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateBrand(
+        text: String,
+        idMain: Int
+    ): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updatePlate(
+        text: String,
+        idMain: Int
+    ): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateDocumentDriver(
+        text: String,
+        idMain: Int
+    ): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateDocumentPassengerInvolved(
+        text: String,
+        idMain: Int,
+        idSecondary: Int
+    ): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateDocumentInvolved(
+        text: String,
+        idMain: Int
+    ): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateNameDriver(
+        text: String,
+        idMain: Int
+    ): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateNamePassengerInvolved(
+        text: String,
+        idMain: Int,
+        idSecondary: Int
+    ): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateNameInvolved(
+        text: String,
+        idMain: Int
+    ): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateNameWitness(
+        text: String,
+        idMain: Int
+    ): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updatePhoneDriver(
+        text: String,
+        idMain: Int
+    ): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updatePhoneInvolved(
+        text: String,
+        idMain: Int
+    ): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updatePhoneWitness(
+        text: String,
+        idMain: Int
+    ): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updatePhonePassengerInvolved(
+        text: String,
+        idMain: Int,
+        idSecondary: Int
+    ): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
 }

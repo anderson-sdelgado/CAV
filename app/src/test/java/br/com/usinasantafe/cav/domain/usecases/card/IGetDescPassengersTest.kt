@@ -23,13 +23,13 @@ class IGetDescPassengersTest {
     )
 
     @Test
-    fun `Check return failure if have error in CardRepository listRegPassengerColab - FlowNote PASSENGER_COLAB`() =
+    fun `Check return failure if have error in CardRepository listPassengerColab - FlowNote PASSENGER_COLAB`() =
         runTest {
             whenever(
                 cardRepository.listPassengerColab(1)
             ).thenReturn(
                 resultFailure(
-                    "ICardRepository.listRegPassengerColab",
+                    "ICardRepository.listPassengerColab",
                     "-",
                     Exception()
                 )
@@ -44,7 +44,7 @@ class IGetDescPassengersTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IGetDescPassengers -> ICardRepository.listRegPassengerColab"
+                "IGetDescPassengers -> ICardRepository.listPassengerColab"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),

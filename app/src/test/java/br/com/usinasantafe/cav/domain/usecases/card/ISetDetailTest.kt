@@ -72,13 +72,13 @@ class ISetDetailTest {
     ////////////////////////////////////////////////
 
     @Test
-    fun `Check return failure if have error in CardRepository setDetailEquipSecondary - Option INSERT - FlowNote EQUIP_SEC`() =
+    fun `Check return failure if have error in CardRepository setDetailEquip - Option INSERT - FlowNote EQUIP_SEC`() =
         runTest {
             whenever(
-                cardRepository.setDetailEquipSecondary("Test", 1)
+                cardRepository.setDetailEquip("Test")
             ).thenReturn(
                 resultFailure(
-                    "ICardRepository.setDetailEquipSecondary",
+                    "ICardRepository.setDetailEquip",
                     "-",
                     Exception()
                 )
@@ -96,7 +96,7 @@ class ISetDetailTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "ISetDetail -> ICardRepository.setDetailEquipSecondary"
+                "ISetDetail -> ICardRepository.setDetailEquip"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -114,7 +114,7 @@ class ISetDetailTest {
                 idMain = 1,
                 idSecondary = 0
             )
-            verify(cardRepository, atLeastOnce()).setDetailEquipSecondary("Test", 1)
+            verify(cardRepository, atLeastOnce()).setDetailEquip("Test")
             assertEquals(
                 result.isSuccess,
                 true
@@ -184,13 +184,13 @@ class ISetDetailTest {
     ////////////////////////////////////////////////
 
     @Test
-    fun `Check return failure if have error in CardRepository setDetailPassengerColab - Option INSERT - FlowNote PASSENGER_COLAB`() =
+    fun `Check return failure if have error in CardRepository setDetailColab - Option INSERT - FlowNote PASSENGER_COLAB`() =
         runTest {
             whenever(
-                cardRepository.setDetailPassengerColab("Test", 1)
+                cardRepository.setDetailColab("Test")
             ).thenReturn(
                 resultFailure(
-                    "ICardRepository.setDetailPassengerColab",
+                    "ICardRepository.setDetailColab",
                     "-",
                     Exception()
                 )
@@ -208,7 +208,7 @@ class ISetDetailTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "ISetDetail -> ICardRepository.setDetailPassengerColab"
+                "ISetDetail -> ICardRepository.setDetailColab"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -219,6 +219,11 @@ class ISetDetailTest {
     @Test
     fun `Check return correct if function execute successfully - Option INSERT - FlowNote PASSENGER_COLAB`() =
         runTest {
+            whenever(
+                cardRepository.setDetailColab("Test")
+            ).thenReturn(
+                Result.success(35)
+            )
             val result = usecase(
                 text = "Test",
                 option = Option.INSERT,
@@ -226,10 +231,13 @@ class ISetDetailTest {
                 idMain = 1,
                 idSecondary = 0
             )
-            verify(cardRepository, atLeastOnce()).setDetailPassengerColab("Test", 1)
             assertEquals(
                 result.isSuccess,
                 true
+            )
+            assertEquals(
+                result.getOrNull(),
+                35
             )
         }
 
@@ -242,7 +250,7 @@ class ISetDetailTest {
                 cardRepository.setDetailVehicle("Test")
             ).thenReturn(
                 resultFailure(
-                    "ICardRepository.setDetailColab",
+                    "ICardRepository.setDetailVehicle",
                     "-",
                     Exception()
                 )
@@ -260,7 +268,7 @@ class ISetDetailTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "ISetDetail -> ICardRepository.setDetailColab"
+                "ISetDetail -> ICardRepository.setDetailVehicle"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -288,13 +296,13 @@ class ISetDetailTest {
     ////////////////////////////////////////////////
 
     @Test
-    fun `Check return failure if have error in CardRepository setDetailDriver - Option INSERT - FlowNote DRIVER`() =
+    fun `Check return failure if have error in CardRepository setDetailInvolved - Option INSERT - FlowNote DRIVER`() =
         runTest {
             whenever(
-                cardRepository.setDetailDriver("Test")
+                cardRepository.setDetailInvolved("Test")
             ).thenReturn(
                 resultFailure(
-                    "ICardRepository.setDetailDriver",
+                    "ICardRepository.setDetailInvolved",
                     "-",
                     Exception()
                 )
@@ -312,7 +320,7 @@ class ISetDetailTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "ISetDetail -> ICardRepository.setDetailDriver"
+                "ISetDetail -> ICardRepository.setDetailInvolved"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -324,9 +332,9 @@ class ISetDetailTest {
     fun `Check return correct if function execute successfully - Option INSERT - FlowNote DRIVER`() =
         runTest {
             whenever(
-                cardRepository.setDetailDriver("Test")
+                cardRepository.setDetailInvolved("Test")
             ).thenReturn(
-                Result.success(20)
+                Result.success(60)
             )
             val result = usecase(
                 text = "Test",
@@ -341,20 +349,20 @@ class ISetDetailTest {
             )
             assertEquals(
                 result.getOrNull(),
-                20
+                60
             )
         }
 
     ////////////////////////////////////////////////
 
     @Test
-    fun `Check return failure if have error in CardRepository setDetailPassengerInvolved - Option INSERT - FlowNote PASSENGER_INVOLVED`() =
+    fun `Check return failure if have error in CardRepository setDetailInvolved - Option INSERT - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.setDetailPassengerInvolved("Test", 1)
+                cardRepository.setDetailInvolved("Test")
             ).thenReturn(
                 resultFailure(
-                    "ICardRepository.setDetailPassengerInvolved",
+                    "ICardRepository.setDetailInvolved",
                     "-",
                     Exception()
                 )
@@ -372,7 +380,7 @@ class ISetDetailTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "ISetDetail -> ICardRepository.setDetailPassengerInvolved"
+                "ISetDetail -> ICardRepository.setDetailInvolved"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -383,6 +391,11 @@ class ISetDetailTest {
     @Test
     fun `Check return correct if function execute successfully - Option INSERT - FlowNote PASSENGER_INVOLVED`() =
         runTest {
+            whenever(
+                cardRepository.setDetailInvolved("Test")
+            ).thenReturn(
+                Result.success(70)
+            )
             val result = usecase(
                 text = "Test",
                 option = Option.INSERT,
@@ -390,10 +403,13 @@ class ISetDetailTest {
                 idMain = 1,
                 idSecondary = 0
             )
-            verify(cardRepository, atLeastOnce()).setDetailPassengerInvolved("Test", 1)
             assertEquals(
                 result.isSuccess,
                 true
+            )
+            assertEquals(
+                result.getOrNull(),
+                70
             )
         }
 
@@ -460,13 +476,13 @@ class ISetDetailTest {
     ////////////////////////////////////////////////
 
     @Test
-    fun `Check return failure if have error in CardRepository setDetailWitness - Option INSERT - FlowNote WITNESS`() =
+    fun `Check return failure if have error in CardRepository setDetailInvolved - Option INSERT - FlowNote WITNESS`() =
         runTest {
             whenever(
-                cardRepository.setDetailWitness("Test")
+                cardRepository.setDetailInvolved("Test")
             ).thenReturn(
                 resultFailure(
-                    "ICardRepository.setDetailWitness",
+                    "ICardRepository.setDetailInvolved",
                     "-",
                     Exception()
                 )
@@ -484,7 +500,7 @@ class ISetDetailTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "ISetDetail -> ICardRepository.setDetailWitness"
+                "ISetDetail -> ICardRepository.setDetailInvolved"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -496,9 +512,9 @@ class ISetDetailTest {
     fun `Check return correct if function execute successfully - Option INSERT - FlowNote WITNESS`() =
         runTest {
             whenever(
-                cardRepository.setDetailWitness("Test")
+                cardRepository.setDetailInvolved("Test")
             ).thenReturn(
-                Result.success(40)
+                Result.success(80)
             )
             val result = usecase(
                 text = "Test",
@@ -513,7 +529,7 @@ class ISetDetailTest {
             )
             assertEquals(
                 result.getOrNull(),
-                40
+                80
             )
         }
 

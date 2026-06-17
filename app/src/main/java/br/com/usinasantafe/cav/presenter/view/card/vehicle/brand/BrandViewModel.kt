@@ -72,7 +72,7 @@ class BrandViewModel @Inject constructor(
 
     fun recoverData() = viewModelScope.launch {
         runCatching {
-            getBrand(idMain).getOrThrow()
+            getBrand(state.idMain).getOrThrow()
         }
             .onSuccess { updateState { copy(text = it) } }
             .onFailureState(getClassAndMethod(), ::updateState)
@@ -84,7 +84,7 @@ class BrandViewModel @Inject constructor(
                 updateState { withFailure(getClassAndMethod(), Errors.FIELD_EMPTY) }
                 return@launch
             }
-            setBrand(state.text, idMain).getOrThrow()
+            setBrand(state.text, state.option, state.idMain).getOrThrow()
         }
             .onSuccessStateAccess(::updateState)
             .onFailureState(getClassAndMethod(), ::updateState)
