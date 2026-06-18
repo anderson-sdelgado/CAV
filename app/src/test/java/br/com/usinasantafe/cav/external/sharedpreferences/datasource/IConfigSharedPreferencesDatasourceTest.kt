@@ -7,14 +7,12 @@ import br.com.usinasantafe.cav.infra.models.sharedpreferences.ConfigSharedPrefer
 import br.com.usinasantafe.cav.lib.StatusSend
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
-import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import java.util.Date
 import kotlin.intArrayOf
+import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.text.get
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [34])

@@ -2,25 +2,54 @@ package br.com.usinasantafe.cav.external.sharedpreferences.datasource
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import br.com.usinasantafe.cav.external.sharedpreferences.datasource.card.IBasicCardSharedPreferencesDatasource
+import br.com.usinasantafe.cav.external.sharedpreferences.datasource.card.IDeleteCardSharedPreferencesDatasource
+import br.com.usinasantafe.cav.external.sharedpreferences.datasource.card.IInsertCardSharedPreferencesDatasource
+import br.com.usinasantafe.cav.external.sharedpreferences.datasource.card.IRecoverDataCardSharedPreferencesDatasource
+import br.com.usinasantafe.cav.external.sharedpreferences.datasource.card.IUpdateCardSharedPreferencesDatasource
+import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.BasicCardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
+import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.DeleteCardSharedPreferencesDatasource
+import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.InsertCardSharedPreferencesDatasource
+import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.RecoverDataCardSharedPreferencesDatasource
+import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.UpdateCardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.LocalSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleOwnSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.sharedPreferencesModelToEntity
 import br.com.usinasantafe.cav.lib.BASE_SHARED_PREFERENCES_TABLE_CARD
 import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.getClassAndMethod
-import br.com.usinasantafe.cav.utils.required
 import br.com.usinasantafe.cav.utils.result
 import com.google.gson.Gson
 import javax.inject.Inject
 
 class ICardSharedPreferencesDatasource @Inject constructor(
+    private val basicCardSharedPreferencesDatasource: IBasicCardSharedPreferencesDatasource,
+    private val insertCardSharedPreferencesDatasource: IInsertCardSharedPreferencesDatasource,
+    private val recoverDataCardSharedPreferencesDatasource: IRecoverDataCardSharedPreferencesDatasource,
+    private val updateCardSharedPreferencesDatasource: IUpdateCardSharedPreferencesDatasource,
+    private val deleteCardSharedPreferencesDatasource: IDeleteCardSharedPreferencesDatasource,
     private val sharedPreferences: SharedPreferences
-): CardSharedPreferencesDatasource {
+): CardSharedPreferencesDatasource,
+    BasicCardSharedPreferencesDatasource by basicCardSharedPreferencesDatasource,
+    InsertCardSharedPreferencesDatasource by insertCardSharedPreferencesDatasource,
+    RecoverDataCardSharedPreferencesDatasource by recoverDataCardSharedPreferencesDatasource,
+    UpdateCardSharedPreferencesDatasource by updateCardSharedPreferencesDatasource,
+    DeleteCardSharedPreferencesDatasource by deleteCardSharedPreferencesDatasource {
 
-    suspend fun save(model: CardSharedPreferencesModel): EmptyResult =
+    override suspend fun updateModel(block: CardSharedPreferencesModel.() -> Unit) {
+        val model = get().getOrThrow()
+        model.block()
+        save(model).getOrThrow()
+    }
+
+    override suspend fun <T> readModel(
+        block: CardSharedPreferencesModel.() -> T
+    ): T =
+        get()
+            .getOrThrow()
+            .block()
+
+    override suspend fun save(model: CardSharedPreferencesModel): EmptyResult =
         result(getClassAndMethod()) {
             sharedPreferences.edit {
                 putString(
@@ -49,13 +78,13 @@ class ICardSharedPreferencesDatasource @Inject constructor(
             !data.isNullOrEmpty()
         }
 
-    suspend fun get(): Result<CardSharedPreferencesModel> =
+    override suspend fun get(): Result<CardSharedPreferencesModel> =
         result(getClassAndMethod()) {
             val data = sharedPreferences.getString(
                 BASE_SHARED_PREFERENCES_TABLE_CARD,
                 null
             )
-            if(data.isNullOrEmpty()) return@result CardSharedPreferencesModel()
+            if (data.isNullOrEmpty()) return@result CardSharedPreferencesModel()
             val model = Gson().fromJson(
                 data,
                 CardSharedPreferencesModel::class.java
@@ -63,97 +92,5 @@ class ICardSharedPreferencesDatasource @Inject constructor(
             model.sharedPreferencesModelToEntity()
             model
         }
-
-    override suspend fun setRegAttendant(regColab: Long): EmptyResult =
-        result(getClassAndMethod()) {
-            val mainModel = get().getOrThrow()
-            mainModel.regAttendant = regColab
-            save(mainModel).getOrThrow()
-        }
-
-    override suspend fun setIdCar(idEquip: Int): EmptyResult =
-        result(getClassAndMethod()) {
-            val mainModel = get().getOrThrow()
-            mainModel.idCar = idEquip
-            save(mainModel).getOrThrow()
-        }
-
-    override suspend fun setLocal(model: LocalSharedPreferencesModel): EmptyResult =
-        result(getClassAndMethod()) {
-            val mainModel = get().getOrThrow()
-            mainModel.local = model
-            save(mainModel).getOrThrow()
-        }
-
-    override suspend fun listIdNature(): Result<List<Int>> =
-        result(getClassAndMethod()) {
-            get().getOrThrow().idNatureList
-        }
-
-    override suspend fun setIdNatureList(idList: List<Int>): EmptyResult =
-        result(getClassAndMethod()) {
-            val mainModel = get().getOrThrow()
-            mainModel.idNatureList = idList
-            save(mainModel).getOrThrow()
-        }
-
-    override suspend fun getRegAttendant(): Result<Long> =
-        result(getClassAndMethod()) {
-            get().getOrThrow()::regAttendant.required()
-        }
-
-    override suspend fun getIdCar(): Result<Int> =
-        result(getClassAndMethod()) {
-            get().getOrThrow()::idCar.required()
-        }
-
-    override suspend fun listIdTypeAccident(): Result<List<Int>> =
-        result(getClassAndMethod()) {
-            get().getOrThrow().idTypeAccidentList
-        }
-
-    override suspend fun setIdTypeAccidentList(idList: List<Int>): EmptyResult =
-        result(getClassAndMethod()) {
-            val mainModel = get().getOrThrow()
-            mainModel.idTypeAccidentList = idList
-            save(mainModel).getOrThrow()
-        }
-
-    override suspend fun getLocal(): Result<LocalSharedPreferencesModel> =
-        result(getClassAndMethod()) {
-            get().getOrThrow().local
-        }
-
-    override suspend fun listIdDataLocal(): Result<List<Int>> =
-        result(getClassAndMethod()) {
-            get().getOrThrow().idDataLocalList
-        }
-
-    override suspend fun setIdDataLocalList(idList: List<Int>): EmptyResult =
-        result(getClassAndMethod()) {
-            val mainModel = get().getOrThrow()
-            mainModel.idDataLocalList = idList
-            save(mainModel).getOrThrow()
-        }
-
-    override suspend fun listIdSupportTeams(): Result<List<Int>> =
-        result(getClassAndMethod()) {
-            get().getOrThrow().idSupportTeamsList
-        }
-
-    override suspend fun setIdSupportTeamsList(idList: List<Int>): EmptyResult =
-        result(getClassAndMethod()) {
-            val mainModel = get().getOrThrow()
-            mainModel.idSupportTeamsList = idList
-            save(mainModel).getOrThrow()
-        }
-
-    override suspend fun setVehicleOwn(entity: VehicleOwnSharedPreferencesModel): Result<Int> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun setEquipSec(equipSharedPreferencesModel: EquipSharedPreferencesModel): EmptyResult {
-        TODO("Not yet implemented")
-    }
 
 }

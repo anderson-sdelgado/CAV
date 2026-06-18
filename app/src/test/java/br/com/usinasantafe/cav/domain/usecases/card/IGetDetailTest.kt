@@ -2,6 +2,7 @@ package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.lib.FlowNote
+import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.test.runTest
 import org.mockito.Mockito.mock
@@ -29,6 +30,7 @@ class IGetDetailTest {
                 )
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.EQUIP,
                 idMain = 1,
                 idSecondary = 0
@@ -56,6 +58,7 @@ class IGetDetailTest {
                 Result.success(null)
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.EQUIP,
                 idMain = 1,
                 idSecondary = 0
@@ -79,6 +82,7 @@ class IGetDetailTest {
                 Result.success("Test")
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.EQUIP,
                 idMain = 1,
                 idSecondary = 0
@@ -108,6 +112,7 @@ class IGetDetailTest {
                 )
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.EQUIP_SEC,
                 idMain = 1,
                 idSecondary = 2
@@ -135,6 +140,7 @@ class IGetDetailTest {
                 Result.success(null)
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.EQUIP_SEC,
                 idMain = 1,
                 idSecondary = 2
@@ -158,6 +164,7 @@ class IGetDetailTest {
                 Result.success("Test")
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.EQUIP_SEC,
                 idMain = 1,
                 idSecondary = 2
@@ -187,6 +194,7 @@ class IGetDetailTest {
                 )
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.COLAB,
                 idMain = 1,
                 idSecondary = 0
@@ -214,6 +222,7 @@ class IGetDetailTest {
                 Result.success(null)
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.COLAB,
                 idMain = 1,
                 idSecondary = 2
@@ -237,6 +246,7 @@ class IGetDetailTest {
                 Result.success("Test")
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.COLAB,
                 idMain = 1,
                 idSecondary = 0
@@ -266,6 +276,7 @@ class IGetDetailTest {
                 )
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.PASSENGER_COLAB,
                 idMain = 1,
                 idSecondary = 2
@@ -293,6 +304,7 @@ class IGetDetailTest {
                 Result.success(null)
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.PASSENGER_COLAB,
                 idMain = 1,
                 idSecondary = 2

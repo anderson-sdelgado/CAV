@@ -63,6 +63,7 @@ class ColabViewModelTest {
         runTest {
             whenever(
                 getRegColab(
+                    option = Option.EDIT,
                     flowNote = FlowNote.COLAB,
                     idMain = 0,
                     idSecondary = 0
@@ -99,6 +100,7 @@ class ColabViewModelTest {
         runTest {
             whenever(
                 getRegColab(
+                    option = Option.EDIT,
                     flowNote = FlowNote.COLAB,
                     idMain = 0,
                     idSecondary = 0

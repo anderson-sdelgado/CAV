@@ -37,7 +37,7 @@ const val TAG_NAME_FOREIGN_TEXT_FIELD = "tag_name_foreign_text_field"
 fun NameScreen(
     viewModel: NameViewModel = hiltViewModel(),
     onNavDocument: () -> Unit,
-    onNavState: () -> Unit,
+    onNavPhone: () -> Unit,
     onNavDataInvolved: () -> Unit,
 ) {
     CAVTheme {
@@ -56,7 +56,7 @@ fun NameScreen(
                 onCloseDialog = viewModel::onCloseDialog,
                 status = uiState.status,
                 onNavDocument = onNavDocument,
-                onNavState = onNavState,
+                onNavState = onNavPhone,
                 onNavDataInvolved = onNavDataInvolved,
                 modifier = Modifier.padding(innerPadding)
             )

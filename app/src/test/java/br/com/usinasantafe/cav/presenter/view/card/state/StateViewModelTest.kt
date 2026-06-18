@@ -52,6 +52,7 @@ class StateViewModelTest {
         runTest {
             whenever(
                 getState(
+                    option = Option.INSERT,
                     flowNote = FlowNote.COLAB,
                     idMain = 0,
                     idSecondary = 0
@@ -88,6 +89,7 @@ class StateViewModelTest {
         runTest {
             whenever(
                 getState(
+                    option = Option.INSERT,
                     flowNote = FlowNote.COLAB,
                     idMain = 0,
                     idSecondary = 0

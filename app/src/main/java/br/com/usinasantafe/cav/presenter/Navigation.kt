@@ -119,7 +119,7 @@ object Routes {
     const val BRAND_ROUTE = "$BRAND_SCREEN/{$OPTION_ARG}/{$ID_MAIN_ARG}"
     const val DOCUMENT_ROUTE = "$DOCUMENT_SCREEN/{$OPTION_ARG}/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
     const val NAME_ROUTE = "$NAME_SCREEN/{$OPTION_ARG}/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
-    const val PHONE_ROUTE = "$PHONE_SCREEN/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
+    const val PHONE_ROUTE = "$PHONE_SCREEN/{$OPTION_ARG}/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
     const val ADDRESS_ROUTE = "$ADDRESS_SCREEN/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
     const val INVOLVED_WITNESS_ROUTE = INVOLVED_WITNESS_SCREEN
 }
@@ -319,11 +319,12 @@ class NavigationActions(private val navController: NavHostController) {
     }
 
     fun navigateToPhone(
+        option: Int,
         flowNote: Int,
         idMain: Int,
         idSecondary: Int,
     ) {
-        navController.navigate("$PHONE_SCREEN/$flowNote/$idMain/$idSecondary")
+        navController.navigate("$PHONE_SCREEN/$option/$flowNote/$idMain/$idSecondary")
     }
 
     fun navigateToAddress(

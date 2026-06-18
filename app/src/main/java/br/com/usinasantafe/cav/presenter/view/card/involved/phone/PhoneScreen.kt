@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
+import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.TypeButton
 import br.com.usinasantafe.cav.presenter.theme.ButtonsGenericNumeric
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
@@ -27,6 +28,8 @@ import br.com.usinasantafe.cav.utils.UiStatusState
 @Composable
 fun PhoneScreen(
     viewModel: PhoneViewModel = hiltViewModel(),
+    onNavName: () -> Unit,
+    onNavState: () -> Unit,
     onNavDataInvolved: () -> Unit,
 ) {
     CAVTheme {
@@ -38,10 +41,13 @@ fun PhoneScreen(
             }
 
             PhoneContent(
+                option = uiState.option,
                 text = uiState.text,
                 onTextField = viewModel::onTextField,
                 onCloseDialog = viewModel::onCloseDialog,
                 status = uiState.status,
+                onNavName = onNavName,
+                onNavState = onNavState,
                 onNavDataInvolved = onNavDataInvolved,
                 modifier = Modifier.padding(innerPadding)
             )
@@ -51,10 +57,13 @@ fun PhoneScreen(
 
 @Composable
 fun PhoneContent(
+    option: Option,
     text: String,
     onTextField: (String, TypeButton) -> Unit,
     onCloseDialog: () -> Unit,
     status: UiStatusState,
+    onNavName: () -> Unit,
+    onNavState: () -> Unit,
     onNavDataInvolved: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -75,7 +84,10 @@ fun PhoneContent(
             onTextField = onTextField
         )
         BackHandler {
-            onNavDataInvolved()
+            when(option) {
+                Option.INSERT -> onNavName()
+                Option.EDIT -> onNavDataInvolved()
+            }
         }
 
         if(status.flagDialog) {
@@ -86,7 +98,10 @@ fun PhoneContent(
 
     LaunchedEffect(status.flagAccess) {
         if(status.flagAccess) {
-            onNavDataInvolved()
+            when(option){
+                Option.INSERT -> onNavState()
+                Option.EDIT -> onNavDataInvolved()
+            }
         }
     }
 }
@@ -97,10 +112,13 @@ fun PhonePagePreview() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             PhoneContent(
+                option = Option.INSERT,
                 text = "",
                 onTextField = { _, _ -> },
                 onCloseDialog = {},
                 status = UiStatusState(),
+                onNavName = {},
+                onNavState = {},
                 onNavDataInvolved = {},
                 modifier = Modifier.padding(innerPadding)
             )

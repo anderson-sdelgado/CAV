@@ -45,6 +45,7 @@ class PhoneViewModelTest {
         runTest {
             whenever(
                 getPhone(
+                    option = Option.INSERT,
                     flowNote = FlowNote.COLAB,
                     idMain = 0,
                     idSecondary = 0
@@ -80,6 +81,7 @@ class PhoneViewModelTest {
         runTest {
             whenever(
                 getPhone(
+                    option = Option.INSERT,
                     flowNote = FlowNote.COLAB,
                     idMain = 0,
                     idSecondary = 0
@@ -117,20 +119,6 @@ class PhoneViewModelTest {
             assertEquals(
                 viewModel.uiState.value.text,
                 "(12) 34567"
-            )
-        }
-
-    @Test
-    fun `set - Check return correct if text is null`() =
-        runTest {
-            viewModel.onTextField("", TypeButton.OK)
-            assertEquals(
-                viewModel.uiState.value.status.flagAccess,
-                true
-            )
-            assertEquals(
-                viewModel.uiState.value.status.flagFailure,
-                false
             )
         }
 

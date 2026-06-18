@@ -85,8 +85,7 @@ class ColabViewModel @Inject constructor(
 
     fun recoverData() = viewModelScope.launch {
         runCatching {
-            if(state.option == Option.INSERT) return@launch
-            getRegColab(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            getRegColab(state.option, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
         }
             .onSuccess { updateState { copy(text = it) } }
             .onFailureUpdate(getClassAndMethod(), ::updateState)

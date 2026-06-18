@@ -6,7 +6,7 @@ data class VehicleInvolvedSharedPreferencesModel(
     var id: Int? = null,
     var vehicle: VehicleSharedPreferencesModel,
     var driver: InvolvedSharedPreferencesModel,
-    var passengerInvolvedList: List<InvolvedSharedPreferencesModel>
+    var passengerInvolvedList: List<InvolvedSharedPreferencesModel> = emptyList()
 )
 
 fun VehicleInvolvedSharedPreferencesModel.sharedPreferencesModelToEntity(): VehicleInvolved {

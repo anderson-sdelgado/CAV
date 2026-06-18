@@ -111,6 +111,7 @@ class DocumentViewModel @Inject constructor(
 
     private fun set() = viewModelScope.launch {
         runCatching {
+            if(state.text.isBlank()) return@runCatching
             if (!isValidCPF(state.text)) {
                 updateState { withFailure(getClassAndMethod(), Errors.INVALID) }
                 return@launch
@@ -122,7 +123,6 @@ class DocumentViewModel @Inject constructor(
     }
 
     private fun isValidCPF(cpf: String): Boolean {
-        if(cpf.isBlank()) return true
         val cleanCpf = cpf.replace(Regex("[^0-9]"), "")
         if (cleanCpf.length != 11) return false
         if (cleanCpf.all { it == cleanCpf[0] }) return false

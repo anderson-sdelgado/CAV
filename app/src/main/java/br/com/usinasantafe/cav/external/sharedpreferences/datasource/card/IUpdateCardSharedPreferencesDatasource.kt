@@ -1,16 +1,18 @@
-package br.com.usinasantafe.cav.infra.repositories.variable
+package br.com.usinasantafe.cav.external.sharedpreferences.datasource.card
 
-import br.com.usinasantafe.cav.domain.repositories.variable.UpdateCardRepository
-import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
+import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.UpdateCardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.lib.State
 import br.com.usinasantafe.cav.utils.EmptyResult
 import javax.inject.Inject
 
-class IUpdateCardRepository @Inject constructor(
-    private val cardSharedPreferencesDatasource: CardSharedPreferencesDatasource,
-): UpdateCardRepository {
+class IUpdateCardSharedPreferencesDatasource @Inject constructor(
 
-    override suspend fun updateIdEquip(idEquip: Int, id: Int): EmptyResult {
+): UpdateCardSharedPreferencesDatasource {
+
+    override suspend fun updateIdEquip(
+        idEquip: Int,
+        id: Int
+    ): EmptyResult {
         TODO("Not yet implemented")
     }
 
@@ -22,7 +24,10 @@ class IUpdateCardRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun updateDetailEquip(text: String, id: Int): EmptyResult {
+    override suspend fun updateDetailEquip(
+        text: String,
+        id: Int
+    ): EmptyResult {
         TODO("Not yet implemented")
     }
 
@@ -34,11 +39,17 @@ class IUpdateCardRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun updateDetailColab(text: String, id: Int): EmptyResult {
+    override suspend fun updateDetailColab(
+        text: String,
+        id: Int
+    ): EmptyResult {
         TODO("Not yet implemented")
     }
 
-    override suspend fun updateDetailDriver(text: String, id: Int): EmptyResult {
+    override suspend fun updateDetailDriver(
+        text: String,
+        id: Int
+    ): EmptyResult {
         TODO("Not yet implemented")
     }
 
@@ -50,7 +61,10 @@ class IUpdateCardRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun updateDetailVehicle(text: String, id: Int): EmptyResult {
+    override suspend fun updateDetailVehicle(
+        text: String,
+        id: Int
+    ): EmptyResult {
         TODO("Not yet implemented")
     }
 
@@ -62,15 +76,24 @@ class IUpdateCardRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun updateDetailInvolved(text: String, id: Int): EmptyResult {
+    override suspend fun updateDetailInvolved(
+        text: String,
+        id: Int
+    ): EmptyResult {
         TODO("Not yet implemented")
     }
 
-    override suspend fun updateDetailWitness(text: String, id: Int): EmptyResult {
+    override suspend fun updateDetailWitness(
+        text: String,
+        id: Int
+    ): EmptyResult {
         TODO("Not yet implemented")
     }
 
-    override suspend fun updateRegColab(regColab: Long, idMain: Int): EmptyResult {
+    override suspend fun updateRegColab(
+        regColab: Long,
+        idMain: Int
+    ): EmptyResult {
         TODO("Not yet implemented")
     }
 

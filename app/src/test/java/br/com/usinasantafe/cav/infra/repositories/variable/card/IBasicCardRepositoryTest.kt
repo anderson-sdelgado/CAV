@@ -1,4 +1,4 @@
-package br.com.usinasantafe.cav.infra.repositories.variable
+package br.com.usinasantafe.cav.infra.repositories.variable.card
 
 import br.com.usinasantafe.cav.domain.entities.variable.Local
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
@@ -366,45 +366,6 @@ class IBasicCardRepositoryTest {
             val result = repository.setIdTypeAccidentList(listOf(1))
             verify(cardSharedPreferencesDatasource, atLeastOnce())
                 .setIdTypeAccidentList(listOf(1))
-            assertEquals(
-                result.isSuccess,
-                true
-            )
-        }
-
-    @Test
-    fun `clean - Check return failure if have error in CardSharedPreferencesDatasource clean`() =
-        runTest {
-            whenever(
-                cardSharedPreferencesDatasource.clean()
-            ).thenReturn(
-                resultFailure(
-                    "ICardSharedPreferencesDatasource.clean",
-                    "-",
-                    Exception()
-                )
-            )
-            val result = repository.clean()
-            assertEquals(
-                result.isFailure,
-                true
-            )
-            assertEquals(
-                result.exceptionOrNull()!!.message,
-                "IBasicCardRepository.clean -> ICardSharedPreferencesDatasource.clean"
-            )
-            assertEquals(
-                result.exceptionOrNull()!!.cause.toString(),
-                "java.lang.Exception"
-            )
-        }
-
-    @Test
-    fun `clean - Check return correct if function execute successfully`() =
-        runTest {
-            val result = repository.clean()
-            verify(cardSharedPreferencesDatasource, atLeastOnce())
-                .clean()
             assertEquals(
                 result.isSuccess,
                 true

@@ -16,7 +16,7 @@ import br.com.usinasantafe.cav.external.room.dao.stable.ItemDataLocalDao
 import br.com.usinasantafe.cav.external.room.dao.stable.OptionDataLocalDao
 import br.com.usinasantafe.cav.external.room.dao.stable.SupportTeamsDao
 import br.com.usinasantafe.cav.external.room.dao.stable.TypeAccidentDao
-import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
+import br.com.usinasantafe.cav.external.sharedpreferences.datasource.card.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.ConfigSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.room.stable.ColabRoomModel
 import br.com.usinasantafe.cav.infra.models.room.stable.DataLocalRoomModel

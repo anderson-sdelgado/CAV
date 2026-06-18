@@ -12,6 +12,7 @@ import br.com.usinasantafe.cav.lib.TypeButton
 import br.com.usinasantafe.cav.presenter.Args.FLOW_NOTE_ARG
 import br.com.usinasantafe.cav.presenter.Args.ID_MAIN_ARG
 import br.com.usinasantafe.cav.presenter.Args.ID_SECONDARY_ARG
+import br.com.usinasantafe.cav.presenter.Args.OPTION_ARG
 import br.com.usinasantafe.cav.presenter.theme.clearTextField
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
 import br.com.usinasantafe.cav.utils.UiStatusState
@@ -27,6 +28,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class PhoneState(
+    val option: Option = Option.INSERT,
     val flowNote: FlowNote = FlowNote.INVOLVED,
     val idMain: Int = 0,
     val idSecondary: Int = 0,
@@ -46,6 +48,7 @@ class PhoneViewModel @Inject constructor(
     private val setPhone: SetPhone
 ) : ViewModel() {
 
+    private val option: Int = savedStateHandle[OPTION_ARG]!!
     private val flowNote: Int = savedStateHandle[FLOW_NOTE_ARG]!!
     private val idMain: Int = savedStateHandle[ID_MAIN_ARG]!!
     private val idSecondary: Int = savedStateHandle[ID_SECONDARY_ARG]!!
@@ -64,6 +67,7 @@ class PhoneViewModel @Inject constructor(
     init {
         updateState {
             copy(
+                option = Option.entries[this@PhoneViewModel.option],
                 flowNote = FlowNote.entries[this@PhoneViewModel.flowNote],
                 idMain = this@PhoneViewModel.idMain,
                 idSecondary = this@PhoneViewModel.idSecondary
@@ -79,7 +83,7 @@ class PhoneViewModel @Inject constructor(
 
     fun recoverData() = viewModelScope.launch {
         runCatching {
-            getPhone(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            getPhone(state.option, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
         }
             .onSuccess { updateState { copy(text = it) } }
             .onFailureState(getClassAndMethod(), ::updateState)
@@ -107,7 +111,7 @@ class PhoneViewModel @Inject constructor(
 
     private fun set() = viewModelScope.launch {
         runCatching {
-            if((!state.text.isBlank()) && (state.text.length != 15)) {
+            if(state.text.length != 15) {
                 updateState { withFailure(getClassAndMethod(), Errors.INVALID) }
                 return@launch
             }

@@ -13,7 +13,10 @@ interface CardRepository :
     InsertCardRepository,
     RecoverDataCardRepository,
     UpdateCardRepository,
-    DeleteCardRepository
+    DeleteCardRepository {
+
+    suspend fun clean(): EmptyResult
+}
 
 interface BasicCardRepository{
     suspend fun setRegAttendant(regColab: Long): EmptyResult
@@ -25,7 +28,6 @@ interface BasicCardRepository{
     suspend fun getIdCar(): Result<Int>
     suspend fun listIdTypeAccident(): Result<List<Int>>
     suspend fun setIdTypeAccidentList(idList: List<Int>): EmptyResult
-    suspend fun clean(): EmptyResult
     suspend fun getLocal(): Result<Local>
     suspend fun listIdDataLocal(): Result<List<Int>>
     suspend fun setIdDataLocalList(idList: List<Int>): EmptyResult
@@ -36,16 +38,16 @@ interface BasicCardRepository{
 interface InsertCardRepository {
     suspend fun setIdEquip(idEquip: Int): EmptyResult
     suspend fun setDetailEquip(text: String): EmptyResult
-    suspend fun setDetailEquipSec(text: String): EmptyResult
-    suspend fun setDetailDriver(text: String): Result<Int>
+    suspend fun setDetailEquipSec(text: String, idMain: Int): Result<Int>
+    suspend fun setDetailDriver(text: String): EmptyResult
     suspend fun setDetailColab(text: String): Result<Int>
-    suspend fun setDetailPassengerColab(text: String): Result<Int>
+    suspend fun setDetailPassengerColab(text: String, idMain: Int): Result<Int>
     suspend fun setDetailVehicle(text: String): EmptyResult
     suspend fun setDetailInvolved(text: String): Result<Int>
     suspend fun setDetailWitness(text: String): Result<Int>
+    suspend fun setDetailPassengerInvolved(text: String, idMain: Int): Result<Int>
     suspend fun setRegColab(regColab: Long): EmptyResult
     suspend fun setStateColab(state: State): EmptyResult
-    suspend fun setStateDriver(state: State): EmptyResult
     suspend fun setBrand(text: String): EmptyResult
     suspend fun setPlate(text: String): EmptyResult
     suspend fun setDocument(text: String): EmptyResult
@@ -97,6 +99,14 @@ interface RecoverDataCardRepository {
     suspend fun getPhonePassengerInvolved(idMain: Int, idSecondary: Int): Result<String?>
     suspend fun listVehicleOwn(): Result<List<VehicleOwn>>
     suspend fun listVehicleInvolved(): Result<List<VehicleInvolved>>
+    suspend fun getRegColab(): Result<Long?>
+    suspend fun getStateColab(): Result<State?>
+    suspend fun getDetailColab(): Result<String?>
+    suspend fun getPhoneInvolved(): Result<String?>
+    suspend fun getStateInvolved(): Result<State?>
+    suspend fun getDetailEquip(): Result<String?>
+    suspend fun getDetailInvolved(): Result<String?>
+    suspend fun getDetailVehicle(): Result<String?>
 }
 
 interface UpdateCardRepository {

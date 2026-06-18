@@ -786,8 +786,8 @@ fun NavigationGraph(
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 },
-                onNavState = {
-                    navActions.navigateToState(
+                onNavPhone = {
+                    navActions.navigateToPhone(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
                         flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
@@ -905,6 +905,7 @@ fun NavigationGraph(
                 },
                 onNavPhone = {
                     navActions.navigateToPhone(
+                        option = Option.EDIT.ordinal,
                         flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
@@ -943,12 +944,29 @@ fun NavigationGraph(
         composable(
             PHONE_ROUTE,
             arguments = listOf(
+                navArgument(OPTION_ARG) { type = NavType.IntType },
                 navArgument(FLOW_NOTE_ARG) { type = NavType.IntType },
                 navArgument(ID_MAIN_ARG) { type = NavType.IntType },
                 navArgument(ID_SECONDARY_ARG) { type = NavType.IntType }
             )
         ) { entry ->
             PhoneScreen(
+                onNavName = {
+                    navActions.navigateToName(
+                        option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
+                    )
+                },
+                onNavState = {
+                    navActions.navigateToState(
+                        option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
+                    )
+                },
                 onNavDataInvolved = {
                     navActions.navigateToDataInvolved(
                         flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,

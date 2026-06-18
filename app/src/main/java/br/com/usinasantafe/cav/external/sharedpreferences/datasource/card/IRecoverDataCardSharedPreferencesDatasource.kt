@@ -1,23 +1,24 @@
-package br.com.usinasantafe.cav.infra.repositories.variable
+package br.com.usinasantafe.cav.external.sharedpreferences.datasource.card
 
 import br.com.usinasantafe.cav.domain.entities.variable.ColabCard
 import br.com.usinasantafe.cav.domain.entities.variable.Involved
 import br.com.usinasantafe.cav.domain.entities.variable.VehicleInvolved
 import br.com.usinasantafe.cav.domain.entities.variable.VehicleOwn
-import br.com.usinasantafe.cav.domain.repositories.variable.RecoverDataCardRepository
-import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
+import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.RecoverDataCardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.lib.State
 import javax.inject.Inject
 
-class IRecoverDataCardRepository @Inject constructor(
-    private val cardSharedPreferencesDatasource: CardSharedPreferencesDatasource,
-): RecoverDataCardRepository {
+class IRecoverDataCardSharedPreferencesDatasource @Inject constructor(
 
+): RecoverDataCardSharedPreferencesDatasource {
     override suspend fun getIdEquip(id: Int): Result<Int> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getIdEquipSecondary(idMain: Int, idSecondary: Int): Result<Int> {
+    override suspend fun getIdEquipSecondary(
+        idMain: Int,
+        idSecondary: Int
+    ): Result<Int> {
         TODO("Not yet implemented")
     }
 
@@ -25,7 +26,10 @@ class IRecoverDataCardRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getDetailEquipSecondary(idMain: Int, idSecondary: Int): Result<String?> {
+    override suspend fun getDetailEquipSecondary(
+        idMain: Int,
+        idSecondary: Int
+    ): Result<String?> {
         TODO("Not yet implemented")
     }
 
@@ -33,7 +37,10 @@ class IRecoverDataCardRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getDetailPassengerColab(idMain: Int, idSecondary: Int): Result<String?> {
+    override suspend fun getDetailPassengerColab(
+        idMain: Int,
+        idSecondary: Int
+    ): Result<String?> {
         TODO("Not yet implemented")
     }
 
@@ -45,7 +52,10 @@ class IRecoverDataCardRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getDetailPassengerInvolved(idMain: Int, idSecondary: Int): Result<String?> {
+    override suspend fun getDetailPassengerInvolved(
+        idMain: Int,
+        idSecondary: Int
+    ): Result<String?> {
         TODO("Not yet implemented")
     }
 
@@ -61,7 +71,10 @@ class IRecoverDataCardRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getRegPassengerColab(idMain: Int, idSecondary: Int): Result<Long> {
+    override suspend fun getRegPassengerColab(
+        idMain: Int,
+        idSecondary: Int
+    ): Result<Long> {
         TODO("Not yet implemented")
     }
 
@@ -202,6 +215,4 @@ class IRecoverDataCardRepository @Inject constructor(
     override suspend fun listVehicleInvolved(): Result<List<VehicleInvolved>> {
         TODO("Not yet implemented")
     }
-
-
 }

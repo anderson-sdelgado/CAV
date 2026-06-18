@@ -70,7 +70,7 @@ class EquipDataViewModel @Inject constructor(
     fun recoverData() = viewModelScope.launch {
         runCatching {
             val descEquip = getDescEquip(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
-            val detail = getDetail(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            val detail = getDetail(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
             EquipDataState(
                 equip = descEquip,
                 detail = detail

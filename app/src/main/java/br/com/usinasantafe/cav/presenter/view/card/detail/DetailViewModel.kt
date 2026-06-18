@@ -81,8 +81,7 @@ class DetailViewModel @Inject constructor(
 
     fun recoverData() = viewModelScope.launch {
         runCatching {
-            if(state.option == Option.INSERT) return@launch
-            getDetail(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            getDetail(state.option, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
         }
             .onSuccess { updateState { copy(text = it) } }
             .onFailureState(getClassAndMethod(), ::updateState)

@@ -7,6 +7,7 @@ import br.com.usinasantafe.cav.domain.usecases.card.GetDescColab
 import br.com.usinasantafe.cav.domain.usecases.card.GetDetail
 import br.com.usinasantafe.cav.domain.usecases.card.GetState
 import br.com.usinasantafe.cav.lib.FlowNote
+import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.State
 import br.com.usinasantafe.cav.presenter.Args.FLOW_NOTE_ARG
 import br.com.usinasantafe.cav.presenter.Args.ID_MAIN_ARG
@@ -73,8 +74,8 @@ class ColabDataViewModel @Inject constructor(
     fun recoverData() = viewModelScope.launch {
         runCatching {
             val descColab = getDescColab(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
-            val stateRet = getState(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
-            val detail = getDetail(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            val stateRet = getState(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            val detail = getDetail(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
             ColabDataState(
                 colab = descColab,
                 state = stateRet,

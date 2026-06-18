@@ -1,13 +1,12 @@
-package br.com.usinasantafe.cav.infra.repositories.variable
+package br.com.usinasantafe.cav.external.sharedpreferences.datasource.card
 
-import br.com.usinasantafe.cav.domain.repositories.variable.DeleteCardRepository
+import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.DeleteCardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.utils.EmptyResult
 import javax.inject.Inject
 
-class IDeleteCardRepository @Inject constructor(
+class IDeleteCardSharedPreferencesDatasource @Inject constructor(
 
-): DeleteCardRepository {
-
+): DeleteCardSharedPreferencesDatasource {
     override suspend fun deleteVehicleOwn(id: Int): EmptyResult {
         TODO("Not yet implemented")
     }
@@ -44,5 +43,4 @@ class IDeleteCardRepository @Inject constructor(
     ): EmptyResult {
         TODO("Not yet implemented")
     }
-
 }

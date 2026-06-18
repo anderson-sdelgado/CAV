@@ -6,6 +6,9 @@ const val VERSION_DB = 999
 
 const val BASE_SHARED_PREFERENCES_TABLE_CONFIG = "config"
 const val BASE_SHARED_PREFERENCES_TABLE_CARD = "card"
+const val BASE_SHARED_PREFERENCES_TABLE_COLLABORATOR = "collaborator"
+const val BASE_SHARED_PREFERENCES_TABLE_EQUIP = "equip"
+const val BASE_SHARED_PREFERENCES_TABLE_INVOLVED = "involved"
 
 const val TB_COLAB = "tb_colab"
 const val TB_EQUIP = "tb_equip"

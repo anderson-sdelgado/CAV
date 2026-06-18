@@ -1,4 +1,4 @@
-package br.com.usinasantafe.cav.infra.repositories.variable
+package br.com.usinasantafe.cav.infra.repositories.variable.card
 
 import br.com.usinasantafe.cav.domain.entities.variable.Local
 import br.com.usinasantafe.cav.domain.repositories.variable.BasicCardRepository
@@ -57,11 +57,6 @@ class IBasicCardRepository @Inject constructor(
     override suspend fun setIdTypeAccidentList(idList: List<Int>): EmptyResult =
         call(getClassAndMethod()) {
             cardSharedPreferencesDatasource.setIdTypeAccidentList(idList).getOrThrow()
-        }
-
-    override suspend fun clean(): EmptyResult =
-        call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.clean().getOrThrow()
         }
 
     override suspend fun getLocal(): Result<Local> =

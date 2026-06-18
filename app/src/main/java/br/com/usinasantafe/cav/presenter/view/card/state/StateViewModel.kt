@@ -77,7 +77,7 @@ class StateViewModel @Inject constructor(
     fun recoverData() = viewModelScope.launch {
         runCatching {
             if (state.option == Option.INSERT) return@launch
-            getState(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            getState(state.option, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
         }
             .onSuccess { updateState { copy(stateSelection = it) } }
             .onFailureState(getClassAndMethod(), ::updateState)

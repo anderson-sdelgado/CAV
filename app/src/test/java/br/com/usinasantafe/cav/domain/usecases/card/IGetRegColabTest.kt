@@ -2,6 +2,7 @@ package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.lib.FlowNote
+import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.test.runTest
 import org.mockito.Mockito.mock
@@ -17,6 +18,86 @@ class IGetRegColabTest {
     )
 
     @Test
+    fun `Check return failure if have error in CardRepository getRegColab - Option INSERT`() =
+        runTest {
+            whenever(
+                cardRepository.getRegColab()
+            ).thenReturn(
+                resultFailure(
+                    "ICardRepository.getRegColab",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = usecase(
+                option = Option.INSERT,
+                flowNote = FlowNote.COLAB,
+                idMain = 0,
+                idSecondary = 0
+            )
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IGetRegColab -> ICardRepository.getRegColab"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `Check return correct if function execute successfully and return null - Option INSERT`() =
+        runTest {
+            whenever(
+                cardRepository.getRegColab()
+            ).thenReturn(
+                Result.success(null)
+            )
+            val result = usecase(
+                option = Option.INSERT,
+                flowNote = FlowNote.COLAB,
+                idMain = 0,
+                idSecondary = 0
+            )
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull(),
+                ""
+            )
+        }
+
+    @Test
+    fun `Check return correct if function execute successfully - Option INSERT`() =
+        runTest {
+            whenever(
+                cardRepository.getRegColab()
+            ).thenReturn(
+                Result.success(123456)
+            )
+            val result = usecase(
+                option = Option.INSERT,
+                flowNote = FlowNote.COLAB,
+                idMain = 0,
+                idSecondary = 0
+            )
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                "123456"
+            )
+        }
+
+    @Test
     fun `Check return failure if have error in CardRepository getRegColab - FlowNote COLAB`() =
         runTest {
             whenever(
@@ -29,6 +110,7 @@ class IGetRegColabTest {
                 )
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.COLAB,
                 idMain = 1,
                 idSecondary = 0
@@ -56,6 +138,7 @@ class IGetRegColabTest {
                 Result.success(123456)
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.COLAB,
                 idMain = 1,
                 idSecondary = 0
@@ -83,6 +166,7 @@ class IGetRegColabTest {
                 )
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.PASSENGER_COLAB,
                 idMain = 1,
                 idSecondary = 2
@@ -110,6 +194,7 @@ class IGetRegColabTest {
                 Result.success(456789)
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.PASSENGER_COLAB,
                 idMain = 1,
                 idSecondary = 2

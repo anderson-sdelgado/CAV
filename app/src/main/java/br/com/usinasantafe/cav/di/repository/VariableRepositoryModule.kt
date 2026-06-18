@@ -2,6 +2,7 @@ package br.com.usinasantafe.cav.di.repository
 
 import br.com.usinasantafe.cav.domain.repositories.variable.*
 import br.com.usinasantafe.cav.infra.repositories.variable.*
+import br.com.usinasantafe.cav.infra.repositories.variable.card.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
