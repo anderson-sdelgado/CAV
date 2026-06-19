@@ -3,8 +3,7 @@ package br.com.usinasantafe.cav.external.sharedpreferences.datasource
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.test.core.app.ApplicationProvider
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipSharedPreferencesModel
-import br.com.usinasantafe.cav.lib.State
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleSharedPreferencesModel
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.runner.RunWith
@@ -16,45 +15,54 @@ import kotlin.test.assertEquals
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [34])
-class IEquipSharedPreferencesDatasourceTest {
+class IVehicleSharedPreferencesDatasourceTest {
 
     private lateinit var context : Context
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var datasource: IEquipSharedPreferencesDatasource
+    private lateinit var datasource: IVehicleSharedPreferencesDatasource
 
     @Before
     fun setup() {
         context = ApplicationProvider.getApplicationContext()
         sharedPreferences = context.getSharedPreferences("test", Context.MODE_PRIVATE)
-        datasource = IEquipSharedPreferencesDatasource(sharedPreferences)
+        datasource = IVehicleSharedPreferencesDatasource(sharedPreferences)
     }
 
     @Test
-    fun `setIdEquip - Check alter data correct in sharedPreferences internal`() =
+    fun `setPlate - Check alter data correct in sharedPreferences internal`() =
         runTest {
-            val data = EquipSharedPreferencesModel(
-                idEquip = 1,
+            val data = VehicleSharedPreferencesModel(
+                plate = "ABC1234",
+                brand = "GOL",
                 detail = "Test"
             )
             datasource.save(data)
             val modelBefore = datasource.get().getOrThrow()
             assertEquals(
-                modelBefore.idEquip,
-                1
+                modelBefore.plate,
+                "ABC1234"
+            )
+            assertEquals(
+                modelBefore.brand,
+                "GOL"
             )
             assertEquals(
                 modelBefore.detail,
                 "Test"
             )
-            val result =  datasource.setIdEquip(2)
+            val result = datasource.setPlate("CBA4321")
             assertEquals(
                 result.isSuccess,
                 true
             )
             val modelAfter = datasource.get().getOrThrow()
             assertEquals(
-                modelAfter.idEquip,
-                2
+                modelAfter.plate,
+                "CBA4321"
+            )
+            assertEquals(
+                modelAfter.brand,
+                null
             )
             assertEquals(
                 modelAfter.detail,
@@ -63,9 +71,33 @@ class IEquipSharedPreferencesDatasourceTest {
         }
 
     @Test
+    fun `setBrand - Check alter data correct in sharedPreferences internal`() =
+        runTest {
+            val data = VehicleSharedPreferencesModel(
+                brand = "GOL"
+            )
+            datasource.save(data)
+            val modelBefore = datasource.get().getOrThrow()
+            assertEquals(
+                modelBefore.brand,
+                "GOL"
+            )
+            val result =  datasource.setBrand("UNO")
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            val modelAfter = datasource.get().getOrThrow()
+            assertEquals(
+                modelAfter.brand,
+                "UNO"
+            )
+        }
+
+    @Test
     fun `setDetail - Check alter data correct in sharedPreferences internal`() =
         runTest {
-            val data = EquipSharedPreferencesModel(
+            val data = VehicleSharedPreferencesModel(
                 detail = "Test"
             )
             datasource.save(data)
@@ -87,9 +119,9 @@ class IEquipSharedPreferencesDatasourceTest {
         }
 
     @Test
-    fun `getIdEquip - Check return correct if field is null`() =
+    fun `getPlate - Check return correct if field is null`() =
         runTest {
-            val result = datasource.getIdEquip()
+            val result = datasource.getPlate()
             assertEquals(
                 result.isSuccess,
                 true
@@ -101,22 +133,56 @@ class IEquipSharedPreferencesDatasourceTest {
         }
 
     @Test
-    fun `getIdEquip - Check return correct if function execute successfully`() =
+    fun `getPlate - Check return correct if function execute successfully`() =
         runTest {
-
-            val data = EquipSharedPreferencesModel(
-                idEquip = 1,
+            val data = VehicleSharedPreferencesModel(
+                plate = "ABC1234",
+                brand = "GOL",
                 detail = "Test"
             )
             datasource.save(data)
-            val result = datasource.getIdEquip()
+            val result = datasource.getPlate()
             assertEquals(
                 result.isSuccess,
                 true
             )
             assertEquals(
-                result.getOrNull()!!,
-                1
+                result.getOrNull(),
+                "ABC1234"
+            )
+        }
+
+    @Test
+    fun `getBrand - Check return correct if field is null`() =
+        runTest {
+            val result = datasource.getBrand()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull(),
+                null
+            )
+        }
+
+    @Test
+    fun `getBrand - Check return correct if function execute successfully`() =
+        runTest {
+            val data = VehicleSharedPreferencesModel(
+                plate = "ABC1234",
+                brand = "GOL",
+                detail = "Test"
+            )
+            datasource.save(data)
+            val result = datasource.getBrand()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull(),
+                "GOL"
             )
         }
 
@@ -137,8 +203,9 @@ class IEquipSharedPreferencesDatasourceTest {
     @Test
     fun `getDetail - Check return correct if function execute successfully`() =
         runTest {
-            val data = EquipSharedPreferencesModel(
-                idEquip = 1,
+            val data = VehicleSharedPreferencesModel(
+                plate = "ABC1234",
+                brand = "GOL",
                 detail = "Test"
             )
             datasource.save(data)

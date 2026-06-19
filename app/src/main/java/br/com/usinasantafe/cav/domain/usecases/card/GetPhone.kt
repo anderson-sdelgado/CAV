@@ -29,7 +29,7 @@ class IGetPhone @Inject constructor(
         call(getClassAndMethod()) {
             with(cardRepository) {
                 when {
-                    option == Option.INSERT -> getPhoneInvolved()
+                    option == Option.INSERT -> getPhone()
                     flowNote == FlowNote.DRIVER -> getPhoneDriver(idMain)
                     flowNote == FlowNote.INVOLVED -> getPhoneInvolved(idMain)
                     flowNote == FlowNote.WITNESS -> getPhoneWitness(idMain)

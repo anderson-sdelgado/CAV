@@ -102,11 +102,16 @@ interface RecoverDataCardRepository {
     suspend fun getRegColab(): Result<Long?>
     suspend fun getStateColab(): Result<State?>
     suspend fun getDetailColab(): Result<String?>
-    suspend fun getPhoneInvolved(): Result<String?>
+    suspend fun getPhone(): Result<String?>
     suspend fun getStateInvolved(): Result<State?>
     suspend fun getDetailEquip(): Result<String?>
     suspend fun getDetailInvolved(): Result<String?>
     suspend fun getDetailVehicle(): Result<String?>
+    suspend fun getIdEquip(): Result<Int?>
+    suspend fun getPlate(): Result<String?>
+    suspend fun getBrand(): Result<String?>
+    suspend fun getDocument(): Result<String?>
+    suspend fun getName(): Result<String?>
 }
 
 interface UpdateCardRepository {
@@ -153,6 +158,6 @@ interface DeleteCardRepository {
     suspend fun deleteVehicleInvolved(id: Int): EmptyResult
     suspend fun deleteInvolved(id: Int): EmptyResult
     suspend fun deleteWitness(id: Int): EmptyResult
-    suspend fun deletePassengerColab(idSelection: Int, idMain: Int): EmptyResult
-    suspend fun deletePassengerInvolved(idSelection: Int, idMain: Int): EmptyResult
+    suspend fun deletePassengerColab(idMain: Int, idSecondary: Int): EmptyResult
+    suspend fun deletePassengerInvolved(idMain: Int, idSecondary: Int): EmptyResult
 }

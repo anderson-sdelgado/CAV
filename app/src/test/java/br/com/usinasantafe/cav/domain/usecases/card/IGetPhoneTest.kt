@@ -18,13 +18,13 @@ class IGetPhoneTest {
     )
 
     @Test
-    fun `Check return failure if have error in CardRepository getPhoneInvolved - Option INSERT`() =
+    fun `Check return failure if have error in CardRepository getPhone - Option INSERT`() =
         runTest {
             whenever(
-                cardRepository.getPhoneInvolved()
+                cardRepository.getPhone()
             ).thenReturn(
                 resultFailure(
-                    "ICardRepository.getPhoneInvolved",
+                    "ICardRepository.getPhone",
                     "-",
                     Exception()
                 )
@@ -53,7 +53,7 @@ class IGetPhoneTest {
     fun `Check return correct if function execute successfully and return is null - Option INSERT`() =
         runTest {
             whenever(
-                cardRepository.getPhoneInvolved()
+                cardRepository.getPhone()
             ).thenReturn(
                 Result.success(null)
             )
@@ -77,7 +77,7 @@ class IGetPhoneTest {
     fun `Check return correct if function execute successfully - Option INSERT`() =
         runTest {
             whenever(
-                cardRepository.getPhoneInvolved()
+                cardRepository.getPhone()
             ).thenReturn(
                 Result.success("(16) 99999-1234")
             )

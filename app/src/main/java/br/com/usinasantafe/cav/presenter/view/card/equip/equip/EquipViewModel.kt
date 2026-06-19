@@ -85,8 +85,7 @@ class EquipViewModel @Inject constructor(
 
     fun recoverData() = viewModelScope.launch {
         runCatching {
-            if(state.option == Option.INSERT) return@launch
-            getNroEquip(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            getNroEquip(state.option, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
         }
             .onSuccess { updateState { copy(text = it) } }
             .onFailureUpdate(getClassAndMethod(), ::updateState)

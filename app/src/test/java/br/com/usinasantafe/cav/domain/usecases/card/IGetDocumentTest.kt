@@ -2,6 +2,7 @@ package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.lib.FlowNote
+import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.test.runTest
 import org.mockito.Mockito.mock
@@ -17,6 +18,86 @@ class IGetDocumentTest {
     )
 
     @Test
+    fun `Check return failure if have error in CardRepository getDocument - Option INSERT`() =
+        runTest {
+            whenever(
+                cardRepository.getDocument()
+            ).thenReturn(
+                resultFailure(
+                    "ICardRepository.getDocument",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = usecase(
+                option = Option.INSERT,
+                flowNote = FlowNote.INVOLVED,
+                idMain = 0,
+                idSecondary = 0
+            )
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IGetDocument -> ICardRepository.getDocument"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `Check return correct if function execute successfully and return is null - Option INSERT`() =
+        runTest {
+            whenever(
+                cardRepository.getDocument()
+            ).thenReturn(
+                Result.success(null)
+            )
+            val result = usecase(
+                option = Option.INSERT,
+                flowNote = FlowNote.INVOLVED,
+                idMain = 0,
+                idSecondary = 0
+            )
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull(),
+                ""
+            )
+        }
+
+    @Test
+    fun `Check return correct if function execute successfully - Option INSERT`() =
+        runTest {
+            whenever(
+                cardRepository.getDocument()
+            ).thenReturn(
+                Result.success("123.456.789-09")
+            )
+            val result = usecase(
+                option = Option.INSERT,
+                flowNote = FlowNote.INVOLVED,
+                idMain = 0,
+                idSecondary = 0
+            )
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull(),
+                "123.456.789-09"
+            )
+        }
+
+    @Test
     fun `Check return failure if have error in CardRepository getDocumentDriver - FlowNote DRIVER`() =
         runTest {
             whenever(
@@ -29,6 +110,7 @@ class IGetDocumentTest {
                 )
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.DRIVER,
                 idMain = 1,
                 idSecondary = 0
@@ -56,6 +138,7 @@ class IGetDocumentTest {
                 Result.success(null)
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.DRIVER,
                 idMain = 1,
                 idSecondary = 0
@@ -79,6 +162,7 @@ class IGetDocumentTest {
                 Result.success("123456")
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.DRIVER,
                 idMain = 1,
                 idSecondary = 0
@@ -106,6 +190,7 @@ class IGetDocumentTest {
                 )
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.INVOLVED,
                 idMain = 1,
                 idSecondary = 0
@@ -133,6 +218,7 @@ class IGetDocumentTest {
                 Result.success(null)
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.INVOLVED,
                 idMain = 1,
                 idSecondary = 0
@@ -156,6 +242,7 @@ class IGetDocumentTest {
                 Result.success("123456")
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.INVOLVED,
                 idMain = 1,
                 idSecondary = 0
@@ -183,6 +270,7 @@ class IGetDocumentTest {
                 )
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.WITNESS,
                 idMain = 1,
                 idSecondary = 0
@@ -210,6 +298,7 @@ class IGetDocumentTest {
                 Result.success(null)
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.WITNESS,
                 idMain = 1,
                 idSecondary = 0
@@ -233,6 +322,7 @@ class IGetDocumentTest {
                 Result.success("123456")
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.WITNESS,
                 idMain = 1,
                 idSecondary = 0
@@ -260,6 +350,7 @@ class IGetDocumentTest {
                 )
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.PASSENGER_INVOLVED,
                 idMain = 1,
                 idSecondary = 2
@@ -287,6 +378,7 @@ class IGetDocumentTest {
                 Result.success(null)
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.PASSENGER_INVOLVED,
                 idMain = 1,
                 idSecondary = 2
@@ -310,6 +402,7 @@ class IGetDocumentTest {
                 Result.success("123456")
             )
             val result = usecase(
+                option = Option.EDIT,
                 flowNote = FlowNote.PASSENGER_INVOLVED,
                 idMain = 1,
                 idSecondary = 2

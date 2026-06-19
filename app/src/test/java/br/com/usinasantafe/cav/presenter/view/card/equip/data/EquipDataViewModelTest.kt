@@ -6,6 +6,7 @@ import br.com.usinasantafe.cav.domain.usecases.card.GetDescEquip
 import br.com.usinasantafe.cav.domain.usecases.card.GetDetail
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.FlowNote
+import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.presenter.Args
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -108,6 +109,7 @@ class EquipDataViewModelTest {
         runTest {
             whenever(
                 getDetail(
+                    option = Option.EDIT,
                     flowNote = FlowNote.EQUIP,
                     idMain = 0,
                     idSecondary = 0
@@ -152,6 +154,7 @@ class EquipDataViewModelTest {
             )
             whenever(
                 getDetail(
+                    option = Option.EDIT,
                     flowNote = FlowNote.EQUIP,
                     idMain = 0,
                     idSecondary = 0

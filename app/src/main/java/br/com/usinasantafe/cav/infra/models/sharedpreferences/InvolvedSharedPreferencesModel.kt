@@ -1,6 +1,7 @@
 package br.com.usinasantafe.cav.infra.models.sharedpreferences
 
 import br.com.usinasantafe.cav.domain.entities.variable.Involved
+import br.com.usinasantafe.cav.lib.State
 
 data class InvolvedSharedPreferencesModel(
     var id: Int? = null,
@@ -8,8 +9,8 @@ data class InvolvedSharedPreferencesModel(
     var name: String? = null,
     var phone: String? = null,
     var address: String? = null,
-    var state: Int? = null,
-    var detail: Int? = null,
+    var state: State? = null,
+    var detail: String? = null,
 )
 
 fun InvolvedSharedPreferencesModel.sharedPreferencesModelToEntity(): Involved {

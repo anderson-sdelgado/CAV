@@ -29,9 +29,7 @@ class IBasicCardSharedPreferencesDatasourceTest {
     private lateinit var datasource: IBasicCardSharedPreferencesDatasource
 
     class TestProvider<T : Any> : Provider<T> {
-
         lateinit var value: T
-
         override fun get(): T = value
     }
 

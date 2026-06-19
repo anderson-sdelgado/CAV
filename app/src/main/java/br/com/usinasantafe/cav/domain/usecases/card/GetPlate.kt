@@ -1,21 +1,32 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
+import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import javax.inject.Inject
 
 interface GetPlate {
-    suspend operator fun invoke(idMain: Int): Result<String>
+    suspend operator fun invoke(
+        option: Option,
+        idMain: Int
+    ): Result<String>
 }
 
 class IGetPlate @Inject constructor(
     private val cardRepository: CardRepository
 ): GetPlate {
 
-    override suspend fun invoke(idMain: Int): Result<String> =
+    override suspend fun invoke(
+        option: Option,
+        idMain: Int
+    ): Result<String> =
         call(getClassAndMethod()) {
-            cardRepository.getPlate(idMain).getOrThrow() ?: ""
+            when(option){
+                Option.INSERT -> cardRepository.getPlate()
+                Option.EDIT -> cardRepository.getPlate(idMain)
+            }.getOrThrow() ?: ""
+
         }
 
 }

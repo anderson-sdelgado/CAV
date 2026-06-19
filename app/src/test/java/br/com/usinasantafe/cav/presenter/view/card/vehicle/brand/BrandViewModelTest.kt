@@ -42,7 +42,10 @@ class BrandViewModelTest {
     fun `recoverData - Check return failure if have error in GetBrand`() =
         runTest {
             whenever(
-                getBrand(1)
+                getBrand(
+                    option = Option.INSERT,
+                    idMain = 1
+                )
             ).thenReturn(
                 resultFailure(
                     context = "GetBrand",
@@ -77,7 +80,10 @@ class BrandViewModelTest {
     fun `recoverData - Check return correct if function execute successfully`() =
         runTest {
             whenever(
-                getBrand(1)
+                getBrand(
+                    option = Option.INSERT,
+                    idMain = 1
+                )
             ).thenReturn(
                 Result.success("ABC1234")
             )

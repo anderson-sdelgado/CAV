@@ -46,6 +46,7 @@ class NameViewModelTest {
         runTest {
             whenever(
                 getName(
+                    option = Option.INSERT,
                     flowNote = FlowNote.COLAB,
                     idMain = 0,
                     idSecondary = 0
@@ -81,6 +82,7 @@ class NameViewModelTest {
         runTest {
             whenever(
                 getName(
+                    option = Option.INSERT,
                     flowNote = FlowNote.COLAB,
                     idMain = 0,
                     idSecondary = 0

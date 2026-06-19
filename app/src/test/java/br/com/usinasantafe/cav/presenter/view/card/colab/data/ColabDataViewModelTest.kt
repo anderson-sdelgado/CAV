@@ -7,6 +7,7 @@ import br.com.usinasantafe.cav.domain.usecases.card.GetDetail
 import br.com.usinasantafe.cav.domain.usecases.card.GetState
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.FlowNote
+import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.State
 import br.com.usinasantafe.cav.presenter.Args
 import br.com.usinasantafe.cav.utils.resultFailure
@@ -121,6 +122,7 @@ class ColabDataViewModelTest {
             )
             whenever(
                 getState(
+                    option = Option.EDIT,
                     flowNote = FlowNote.COLAB,
                     idMain = 0,
                     idSecondary = 0
@@ -165,6 +167,7 @@ class ColabDataViewModelTest {
             )
             whenever(
                 getState(
+                    option = Option.EDIT,
                     flowNote = FlowNote.COLAB,
                     idMain = 0,
                     idSecondary = 0
@@ -174,6 +177,7 @@ class ColabDataViewModelTest {
             )
             whenever(
                 getDetail(
+                    option = Option.EDIT,
                     flowNote = FlowNote.COLAB,
                     idMain = 0,
                     idSecondary = 0
@@ -218,6 +222,7 @@ class ColabDataViewModelTest {
             )
             whenever(
                 getState(
+                    option = Option.EDIT,
                     flowNote = FlowNote.COLAB,
                     idMain = 0,
                     idSecondary = 0
@@ -227,6 +232,7 @@ class ColabDataViewModelTest {
             )
             whenever(
                 getDetail(
+                    option = Option.EDIT,
                     flowNote = FlowNote.COLAB,
                     idMain = 0,
                     idSecondary = 0

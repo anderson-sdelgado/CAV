@@ -40,19 +40,19 @@ class IDeleteCardRepository @Inject constructor(
         }
 
     override suspend fun deletePassengerColab(
-        idSelection: Int,
-        idMain: Int
+        idMain: Int,
+        idSecondary: Int
     ): EmptyResult =
         call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.deletePassengerColab(idSelection, idMain).getOrThrow()
+            cardSharedPreferencesDatasource.deletePassengerColab(idMain, idSecondary).getOrThrow()
         }
 
     override suspend fun deletePassengerInvolved(
-        idSelection: Int,
-        idMain: Int
+        idMain: Int,
+        idSecondary: Int
     ): EmptyResult =
         call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.deletePassengerInvolved(idSelection, idMain).getOrThrow()
+            cardSharedPreferencesDatasource.deletePassengerInvolved(idMain, idSecondary).getOrThrow()
         }
 
 }

@@ -66,20 +66,55 @@ class IInvolvedSharedPreferencesDatasource @Inject constructor(
             }
         }
 
-    override suspend fun setDocument(text: String): EmptyResult {
-        TODO("Not yet implemented")
-    }
+    override suspend fun setDocument(text: String): EmptyResult =
+        result(getClassAndMethod()) {
+            clean()
+            updateModel { document = text }
+        }
 
-    override suspend fun setState(state: State): EmptyResult {
-        TODO("Not yet implemented")
-    }
+    override suspend fun setName(text: String): EmptyResult =
+        result(getClassAndMethod()) {
+            updateModel { name = text }
+        }
 
-    override suspend fun setName(text: String): EmptyResult {
-        TODO("Not yet implemented")
-    }
+    override suspend fun setPhone(text: String): EmptyResult =
+        result(getClassAndMethod()) {
+            updateModel { phone = text }
+        }
 
-    override suspend fun setDetail(text: String): EmptyResult {
-        TODO("Not yet implemented")
-    }
+    override suspend fun setState(state: State): EmptyResult =
+        result(getClassAndMethod()) {
+            updateModel { this.state = state }
+        }
+
+    override suspend fun setDetail(text: String): EmptyResult =
+        result(getClassAndMethod()) {
+            updateModel { detail = text }
+        }
+
+    override suspend fun getDocument(): Result<String?> =
+        result(getClassAndMethod()) {
+            readModel { document }
+        }
+
+    override suspend fun getPhone(): Result<String?> =
+        result(getClassAndMethod()) {
+            readModel { phone }
+        }
+
+    override suspend fun getName(): Result<String?> =
+        result(getClassAndMethod()) {
+            readModel { name }
+        }
+
+    override suspend fun getState(): Result<State?> =
+        result(getClassAndMethod()) {
+            readModel { state }
+        }
+
+    override suspend fun getDetail(): Result<String?> =
+        result(getClassAndMethod()) {
+            readModel { detail }
+        }
 
 }

@@ -46,6 +46,7 @@ class DetailViewModelTest {
         runTest {
             whenever(
                 getDetail(
+                    option = Option.INSERT,
                     flowNote = FlowNote.EQUIP,
                     idMain = 0,
                     idSecondary = 0
@@ -81,6 +82,7 @@ class DetailViewModelTest {
         runTest {
             whenever(
                 getDetail(
+                    option = Option.INSERT,
                     flowNote = FlowNote.EQUIP,
                     idMain = 0,
                     idSecondary = 0
@@ -138,7 +140,7 @@ class DetailViewModelTest {
         }
 
     @Test
-    fun `set - Check return true if process execute successfully`() =
+    fun `set - Check return true if process execute successfully and return null`() =
         runTest {
             viewModel.onTextChanged("Test")
             viewModel.set()
@@ -159,6 +161,40 @@ class DetailViewModelTest {
             assertEquals(
                 viewModel.uiState.value.status.flagFailure,
                 false
+            )
+            assertEquals(
+                viewModel.uiState.value.id,
+                0
+            )
+        }
+
+    @Test
+    fun `set - Check return true if process execute successfully`() =
+        runTest {
+            whenever(
+                setDetail(
+                    text = "Test",
+                    option = Option.INSERT,
+                    flowNote = FlowNote.EQUIP,
+                    idMain = 0,
+                    idSecondary = 0
+                )
+            ).thenReturn(
+                Result.success(10)
+            )
+            viewModel.onTextChanged("Test")
+            viewModel.set()
+            assertEquals(
+                viewModel.uiState.value.status.flagAccess,
+                true
+            )
+            assertEquals(
+                viewModel.uiState.value.status.flagFailure,
+                false
+            )
+            assertEquals(
+                viewModel.uiState.value.id,
+                10
             )
         }
 

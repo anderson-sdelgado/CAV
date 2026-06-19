@@ -91,7 +91,7 @@ class DetailViewModel @Inject constructor(
         runCatching {
             setDetail(state.text, state.option, state.flowNote, state.idMain, state.idSecondary).getOrThrow() ?: 0
         }
-            .onSuccess { updateState { copy(id = it) } }
+            .onSuccess { updateState { copy(id = it, status = status.copy(flagAccess = true)) } }
             .onFailureState(getClassAndMethod(), ::updateState)
     }
 

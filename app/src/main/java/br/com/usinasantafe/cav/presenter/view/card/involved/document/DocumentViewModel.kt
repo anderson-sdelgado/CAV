@@ -13,7 +13,6 @@ import br.com.usinasantafe.cav.presenter.Args.FLOW_NOTE_ARG
 import br.com.usinasantafe.cav.presenter.Args.ID_MAIN_ARG
 import br.com.usinasantafe.cav.presenter.Args.ID_SECONDARY_ARG
 import br.com.usinasantafe.cav.presenter.Args.OPTION_ARG
-import br.com.usinasantafe.cav.presenter.theme.addTextField
 import br.com.usinasantafe.cav.presenter.theme.clearTextField
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
 import br.com.usinasantafe.cav.utils.UiStatusState
@@ -84,7 +83,7 @@ class DocumentViewModel @Inject constructor(
 
     fun recoverData() = viewModelScope.launch {
         runCatching {
-            getDocument(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            getDocument(state.option, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
         }
             .onSuccess { updateState { copy(text = it) } }
             .onFailureState(getClassAndMethod(), ::updateState)

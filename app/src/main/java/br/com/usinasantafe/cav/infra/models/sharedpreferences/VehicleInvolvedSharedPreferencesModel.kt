@@ -4,8 +4,8 @@ import br.com.usinasantafe.cav.domain.entities.variable.VehicleInvolved
 
 data class VehicleInvolvedSharedPreferencesModel(
     var id: Int? = null,
-    var vehicle: VehicleSharedPreferencesModel,
-    var driver: InvolvedSharedPreferencesModel,
+    var vehicle: VehicleSharedPreferencesModel = VehicleSharedPreferencesModel(),
+    var driver: InvolvedSharedPreferencesModel = InvolvedSharedPreferencesModel(),
     var passengerInvolvedList: List<InvolvedSharedPreferencesModel> = emptyList()
 )
 

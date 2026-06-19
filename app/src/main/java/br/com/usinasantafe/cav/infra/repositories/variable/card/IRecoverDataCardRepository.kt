@@ -7,6 +7,9 @@ import br.com.usinasantafe.cav.domain.entities.variable.VehicleOwn
 import br.com.usinasantafe.cav.domain.repositories.variable.RecoverDataCardRepository
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.ColabSharedPreferencesDatasource
+import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.EquipSharedPreferencesDatasource
+import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.InvolvedSharedPreferencesDatasource
+import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.VehicleSharedPreferencesDatasource
 import br.com.usinasantafe.cav.lib.State
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -14,7 +17,10 @@ import javax.inject.Inject
 
 class IRecoverDataCardRepository @Inject constructor(
     private val cardSharedPreferencesDatasource: CardSharedPreferencesDatasource,
-    private val colabSharedPreferencesDatasource: ColabSharedPreferencesDatasource
+    private val colabSharedPreferencesDatasource: ColabSharedPreferencesDatasource,
+    private val equipSharedPreferencesDatasource: EquipSharedPreferencesDatasource,
+    private val involvedSharedPreferencesDatasource: InvolvedSharedPreferencesDatasource,
+    private val vehicleSharedPreferencesDatasource: VehicleSharedPreferencesDatasource
 ): RecoverDataCardRepository {
 
     override suspend fun getIdEquip(id: Int): Result<Int> =
@@ -265,24 +271,54 @@ class IRecoverDataCardRepository @Inject constructor(
             colabSharedPreferencesDatasource.getDetail().getOrThrow()
         }
 
-    override suspend fun getPhoneInvolved(): Result<String?> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getPhone(): Result<String?> =
+        call(getClassAndMethod()) {
+            involvedSharedPreferencesDatasource.getPhone().getOrThrow()
+        }
 
-    override suspend fun getStateInvolved(): Result<State?> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getStateInvolved(): Result<State?> =
+        call(getClassAndMethod()) {
+            involvedSharedPreferencesDatasource.getState().getOrThrow()
+        }
 
-    override suspend fun getDetailEquip(): Result<String?> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getDetailEquip(): Result<String?> =
+        call(getClassAndMethod()) {
+            equipSharedPreferencesDatasource.getDetail().getOrThrow()
+        }
 
-    override suspend fun getDetailInvolved(): Result<String?> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getDetailInvolved(): Result<String?> =
+        call(getClassAndMethod()) {
+            involvedSharedPreferencesDatasource.getDetail().getOrThrow()
+        }
 
-    override suspend fun getDetailVehicle(): Result<String?> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getDetailVehicle(): Result<String?> =
+        call(getClassAndMethod()) {
+            vehicleSharedPreferencesDatasource.getDetail().getOrThrow()
+        }
+
+    override suspend fun getIdEquip(): Result<Int?> =
+        call(getClassAndMethod()) {
+            equipSharedPreferencesDatasource.getIdEquip().getOrThrow()
+        }
+
+    override suspend fun getPlate(): Result<String?> =
+        call(getClassAndMethod()) {
+            vehicleSharedPreferencesDatasource.getPlate().getOrThrow()
+        }
+
+    override suspend fun getBrand(): Result<String?> =
+        call(getClassAndMethod()) {
+            vehicleSharedPreferencesDatasource.getBrand().getOrThrow()
+        }
+
+    override suspend fun getDocument(): Result<String?> =
+        call(getClassAndMethod()) {
+            involvedSharedPreferencesDatasource.getDocument().getOrThrow()
+        }
+
+    override suspend fun getName(): Result<String?> =
+        call(getClassAndMethod()) {
+            involvedSharedPreferencesDatasource.getName().getOrThrow()
+        }
 
 }

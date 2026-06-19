@@ -149,6 +149,6 @@ interface DeleteCardSharedPreferencesDatasource {
     suspend fun deleteVehicleInvolved(id: Int): EmptyResult
     suspend fun deleteInvolved(id: Int): EmptyResult
     suspend fun deleteWitness(id: Int): EmptyResult
-    suspend fun deletePassengerColab(idSelection: Int, idMain: Int): EmptyResult
-    suspend fun deletePassengerInvolved(idSelection: Int, idMain: Int): EmptyResult
+    suspend fun deletePassengerColab(idMain: Int, idSecondary: Int): EmptyResult
+    suspend fun deletePassengerInvolved(idMain: Int, idSecondary: Int): EmptyResult
 }

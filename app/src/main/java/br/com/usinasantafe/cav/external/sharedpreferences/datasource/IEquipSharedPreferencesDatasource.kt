@@ -70,21 +70,17 @@ class IEquipSharedPreferencesDatasource @Inject constructor(
     override suspend fun setIdEquip(idEquip: Int): EmptyResult =
         result(getClassAndMethod()) {
             clean()
-            updateModel {
-                this.idEquip = idEquip
-            }
+            updateModel { this.idEquip = idEquip }
         }
 
     override suspend fun setDetail(text: String): EmptyResult =
         result(getClassAndMethod()) {
-            updateModel {
-                this.detail = text
-            }
+            updateModel { this.detail = text }
         }
 
-    override suspend fun getIdEquip(): Result<Int> =
+    override suspend fun getIdEquip(): Result<Int?> =
         result(getClassAndMethod()) {
-            readModel { ::idEquip.required() }
+            readModel { idEquip }
         }
 
     override suspend fun getDetail(): Result<String?> =

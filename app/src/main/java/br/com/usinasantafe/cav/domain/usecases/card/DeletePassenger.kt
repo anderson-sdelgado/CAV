@@ -26,8 +26,8 @@ class IDeletePassenger @Inject constructor(
         call(getClassAndMethod()) {
             with(cardRepository){
                 when (flowNote) {
-                    FlowNote.PASSENGER_COLAB -> deletePassengerColab(idSelection, idMain).getOrThrow()
-                    else -> deletePassengerInvolved(idSelection, idMain).getOrThrow()
+                    FlowNote.PASSENGER_COLAB -> deletePassengerColab(idMain, idSelection).getOrThrow()
+                    else -> deletePassengerInvolved(idMain, idSelection).getOrThrow()
                 }
             }
 

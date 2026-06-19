@@ -45,6 +45,7 @@ class DocumentViewModelTest {
         runTest {
             whenever(
                 getDocument(
+                    option = Option.INSERT,
                     flowNote = FlowNote.EQUIP,
                     idMain = 0,
                     idSecondary = 0
@@ -80,6 +81,7 @@ class DocumentViewModelTest {
         runTest {
             whenever(
                 getDocument(
+                    option = Option.INSERT,
                     flowNote = FlowNote.EQUIP,
                     idMain = 0,
                     idSecondary = 0

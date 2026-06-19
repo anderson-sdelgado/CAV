@@ -8,6 +8,6 @@ interface EquipSharedPreferencesDatasource {
     suspend fun clean(): EmptyResult
     suspend fun setIdEquip(idEquip: Int): EmptyResult
     suspend fun setDetail(text: String): EmptyResult
-    suspend fun getIdEquip(): Result<Int>
+    suspend fun getIdEquip(): Result<Int?>
     suspend fun getDetail(): Result<String?>
 }

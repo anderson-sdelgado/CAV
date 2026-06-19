@@ -19,6 +19,416 @@ class IGetStateTest {
     )
 
     @Test
+    fun `Check return failure if have error in CardRepository getStateColab - Option INSERT - FlowNote COLAB`() =
+        runTest {
+            whenever(
+                cardRepository.getStateColab()
+            ).thenReturn(
+                resultFailure(
+                    "ICardRepository.getStateColab",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = usecase(
+                option = Option.INSERT,
+                flowNote = FlowNote.COLAB,
+                idMain = 0,
+                idSecondary = 0
+            )
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IGetState -> ICardRepository.getStateColab"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `Check return correct if function execute successfully and return null - Option INSERT - FlowNote COLAB`() =
+        runTest {
+            whenever(
+                cardRepository.getStateColab()
+            ).thenReturn(
+                Result.success(null)
+            )
+            val result = usecase(
+                option = Option.INSERT,
+                flowNote = FlowNote.COLAB,
+                idMain = 0,
+                idSecondary = 0
+            )
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                State.UNHARMED
+            )
+        }
+
+    @Test
+    fun `Check return correct if function execute successfully - Option INSERT - FlowNote COLAB`() =
+        runTest {
+            whenever(
+                cardRepository.getStateColab()
+            ).thenReturn(
+                Result.success(State.INJURED)
+            )
+            val result = usecase(
+                option = Option.INSERT,
+                flowNote = FlowNote.COLAB,
+                idMain = 0,
+                idSecondary = 0
+            )
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                State.INJURED
+            )
+        }
+
+    ////////////////////////////////////////////////////////////////////
+
+    @Test
+    fun `Check return failure if have error in CardRepository getStateColab - Option INSERT - FlowNote PASSENGER_COLAB`() =
+        runTest {
+            whenever(
+                cardRepository.getStateColab()
+            ).thenReturn(
+                resultFailure(
+                    "ICardRepository.getStateColab",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = usecase(
+                option = Option.INSERT,
+                flowNote = FlowNote.PASSENGER_COLAB,
+                idMain = 0,
+                idSecondary = 0
+            )
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IGetState -> ICardRepository.getStateColab"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `Check return correct if function execute successfully and return null - Option INSERT - FlowNote PASSENGER_COLAB`() =
+        runTest {
+            whenever(
+                cardRepository.getStateColab()
+            ).thenReturn(
+                Result.success(null)
+            )
+            val result = usecase(
+                option = Option.INSERT,
+                flowNote = FlowNote.PASSENGER_COLAB,
+                idMain = 0,
+                idSecondary = 0
+            )
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                State.UNHARMED
+            )
+        }
+
+    @Test
+    fun `Check return correct if function execute successfully - Option INSERT - FlowNote PASSENGER_COLAB`() =
+        runTest {
+            whenever(
+                cardRepository.getStateColab()
+            ).thenReturn(
+                Result.success(State.INJURED)
+            )
+            val result = usecase(
+                option = Option.INSERT,
+                flowNote = FlowNote.PASSENGER_COLAB,
+                idMain = 0,
+                idSecondary = 0
+            )
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                State.INJURED
+            )
+        }
+
+    ///////////////////////////////////////////////////////////////////
+
+    @Test
+    fun `Check return failure if have error in CardRepository getStateColab - Option INSERT - FlowNote DRIVER`() =
+        runTest {
+            whenever(
+                cardRepository.getStateInvolved()
+            ).thenReturn(
+                resultFailure(
+                    "ICardRepository.getStateInvolved",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = usecase(
+                option = Option.INSERT,
+                    flowNote = FlowNote.DRIVER,
+                idMain = 0,
+                idSecondary = 0
+            )
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IGetState -> ICardRepository.getStateInvolved"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `Check return correct if function execute successfully and return null - Option INSERT - FlowNote DRIVER`() =
+        runTest {
+            whenever(
+                cardRepository.getStateInvolved()
+            ).thenReturn(
+                Result.success(null)
+            )
+            val result = usecase(
+                option = Option.INSERT,
+                flowNote = FlowNote.DRIVER,
+                idMain = 0,
+                idSecondary = 0
+            )
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                State.UNHARMED
+            )
+        }
+
+    @Test
+    fun `Check return correct if function execute successfully - Option INSERT - FlowNote DRIVER`() =
+        runTest {
+            whenever(
+                cardRepository.getStateInvolved()
+            ).thenReturn(
+                Result.success(State.INJURED)
+            )
+            val result = usecase(
+                option = Option.INSERT,
+                flowNote = FlowNote.DRIVER,
+                idMain = 0,
+                idSecondary = 0
+            )
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                State.INJURED
+            )
+        }
+
+    ///////////////////////////////////////////////////////////////////
+
+    @Test
+    fun `Check return failure if have error in CardRepository getStateColab - Option INSERT - FlowNote PASSENGER_INVOLVED`() =
+        runTest {
+            whenever(
+                cardRepository.getStateInvolved()
+            ).thenReturn(
+                resultFailure(
+                    "ICardRepository.getStateInvolved",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = usecase(
+                option = Option.INSERT,
+                flowNote = FlowNote.PASSENGER_INVOLVED,
+                idMain = 0,
+                idSecondary = 0
+            )
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IGetState -> ICardRepository.getStateInvolved"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `Check return correct if function execute successfully and return null - Option INSERT - FlowNote PASSENGER_INVOLVED`() =
+        runTest {
+            whenever(
+                cardRepository.getStateInvolved()
+            ).thenReturn(
+                Result.success(null)
+            )
+            val result = usecase(
+                option = Option.INSERT,
+                flowNote = FlowNote.PASSENGER_INVOLVED,
+                idMain = 0,
+                idSecondary = 0
+            )
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                State.UNHARMED
+            )
+        }
+
+    @Test
+    fun `Check return correct if function execute successfully - Option INSERT - FlowNote PASSENGER_INVOLVED`() =
+        runTest {
+            whenever(
+                cardRepository.getStateInvolved()
+            ).thenReturn(
+                Result.success(State.INJURED)
+            )
+            val result = usecase(
+                option = Option.INSERT,
+                flowNote = FlowNote.PASSENGER_INVOLVED,
+                idMain = 0,
+                idSecondary = 0
+            )
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                State.INJURED
+            )
+        }
+
+    ///////////////////////////////////////////////////////////////////
+
+    @Test
+    fun `Check return failure if have error in CardRepository getStateColab - Option INSERT - FlowNote INVOLVED`() =
+        runTest {
+            whenever(
+                cardRepository.getStateInvolved()
+            ).thenReturn(
+                resultFailure(
+                    "ICardRepository.getStateInvolved",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = usecase(
+                option = Option.INSERT,
+                flowNote = FlowNote.INVOLVED,
+                idMain = 0,
+                idSecondary = 0
+            )
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IGetState -> ICardRepository.getStateInvolved"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `Check return correct if function execute successfully and return null - Option INSERT - FlowNote INVOLVED`() =
+        runTest {
+            whenever(
+                cardRepository.getStateInvolved()
+            ).thenReturn(
+                Result.success(null)
+            )
+            val result = usecase(
+                option = Option.INSERT,
+                flowNote = FlowNote.INVOLVED,
+                idMain = 0,
+                idSecondary = 0
+            )
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                State.UNHARMED
+            )
+        }
+
+    @Test
+    fun `Check return correct if function execute successfully - Option INSERT - FlowNote INVOLVED`() =
+        runTest {
+            whenever(
+                cardRepository.getStateInvolved()
+            ).thenReturn(
+                Result.success(State.INJURED)
+            )
+            val result = usecase(
+                option = Option.INSERT,
+                flowNote = FlowNote.INVOLVED,
+                idMain = 0,
+                idSecondary = 0
+            )
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                State.INJURED
+            )
+        }
+
+    ///////////////////////////////////////////////////////////////////
+
+    @Test
     fun `Check return failure if have error in CardRepository getIdStateColab - Option EDIT - FlowNote COLAB`() =
         runTest {
             whenever(
@@ -42,7 +452,7 @@ class IGetStateTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IGetIdState -> ICardRepository.getIdStateColab"
+                "IGetState -> ICardRepository.getIdStateColab"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -98,7 +508,7 @@ class IGetStateTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IGetIdState -> ICardRepository.getIdStatePassengerColab"
+                "IGetState -> ICardRepository.getIdStatePassengerColab"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -154,7 +564,7 @@ class IGetStateTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IGetIdState -> ICardRepository.getIdStateDriver"
+                "IGetState -> ICardRepository.getIdStateDriver"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -210,7 +620,7 @@ class IGetStateTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IGetIdState -> ICardRepository.getIdStatePassengerInvolved"
+                "IGetState -> ICardRepository.getIdStatePassengerInvolved"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -266,7 +676,7 @@ class IGetStateTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IGetIdState -> ICardRepository.getIdStateInvolved"
+                "IGetState -> ICardRepository.getIdStateInvolved"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -322,7 +732,7 @@ class IGetStateTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IGetIdState -> ICardRepository.getIdStateWitness"
+                "IGetState -> ICardRepository.getIdStateWitness"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),

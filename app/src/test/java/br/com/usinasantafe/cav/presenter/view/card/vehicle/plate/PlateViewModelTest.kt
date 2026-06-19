@@ -42,7 +42,10 @@ class PlateViewModelTest {
     fun `recoverData - Check return failure if have error in GetPlate`() =
         runTest {
             whenever(
-                getPlate(1)
+                getPlate(
+                    option = Option.INSERT,
+                    idMain = 1
+                )
             ).thenReturn(
                 resultFailure(
                     context = "GetPlate",
@@ -77,7 +80,10 @@ class PlateViewModelTest {
     fun `recoverData - Check return correct if function execute successfully`() =
         runTest {
             whenever(
-                getPlate(1)
+                getPlate(
+                    option = Option.INSERT,
+                    idMain = 1
+                )
             ).thenReturn(
                 Result.success("ABC1234")
             )

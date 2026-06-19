@@ -74,7 +74,7 @@ class PlateViewModel @Inject constructor(
 
     fun recoverData() = viewModelScope.launch {
         runCatching {
-            getPlate(idMain).getOrThrow()
+            getPlate(state.option, idMain).getOrThrow()
         }
             .onSuccess { updateState { copy(text = it) } }
             .onFailureState(getClassAndMethod(), ::updateState)

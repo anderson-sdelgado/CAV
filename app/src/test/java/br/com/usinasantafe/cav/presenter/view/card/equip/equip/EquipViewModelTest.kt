@@ -59,21 +59,11 @@ class EquipViewModelTest {
     )
 
     @Test
-    fun `recoverData - Check return correct if function execute successfully and option is Option INSERT`() =
-        runTest {
-            val viewModel = createViewModel()
-            viewModel.recoverData()
-            assertEquals(
-                viewModel.uiState.value.text,
-                ""
-            )
-        }
-
-    @Test
     fun `recoverData - Check return failure if have error in GetNroEquip`() =
         runTest {
             whenever(
                 getNroEquip(
+                    option = Option.INSERT,
                     flowNote = FlowNote.EQUIP,
                     idMain = 0,
                     idSecondary = 0
@@ -85,7 +75,7 @@ class EquipViewModelTest {
                     cause = Exception()
                 )
             )
-            val viewModel = createViewModel(Option.EDIT)
+            val viewModel = createViewModel()
             viewModel.recoverData()
             assertEquals(
                 viewModel.uiState.value.status.flagDialog,
@@ -110,6 +100,7 @@ class EquipViewModelTest {
         runTest {
             whenever(
                 getNroEquip(
+                    option = Option.INSERT,
                     flowNote = FlowNote.EQUIP,
                     idMain = 0,
                     idSecondary = 0
@@ -117,7 +108,7 @@ class EquipViewModelTest {
             ).thenReturn(
                 Result.success("2200")
             )
-            val viewModel = createViewModel(Option.EDIT)
+            val viewModel = createViewModel()
             viewModel.recoverData()
             assertEquals(
                 viewModel.uiState.value.status.flagAccess,
