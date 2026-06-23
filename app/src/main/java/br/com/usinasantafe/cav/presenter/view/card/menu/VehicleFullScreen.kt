@@ -13,7 +13,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -32,7 +39,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
-import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.TypeVehicle
 import br.com.usinasantafe.cav.presenter.model.VehicleScreenModel
 import br.com.usinasantafe.cav.presenter.theme.AlertDialogCheckDesign
@@ -41,6 +47,14 @@ import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.MsgErrors
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
 import br.com.usinasantafe.cav.utils.UiStatusState
+
+
+const val TAG_VEHICLE_OWN_FULL_INSERT_BUTTON = "tag_vehicle_own_full_insert_button"
+const val TAG_VEHICLE_OWN_FULL_EDIT_BUTTON = "tag_vehicle_own_full_edit_button"
+const val TAG_VEHICLE_OWN_FULL_DELETE_BUTTON = "tag_vehicle_own_full_delete_button"
+const val TAG_VEHICLE_INVOLVED_FULL_INSERT_BUTTON = "tag_vehicle_involved_full_insert_button"
+const val TAG_VEHICLE_INVOLVED_FULL_EDIT_BUTTON = "tag_vehicle_involved_full_edit_button"
+const val TAG_VEHICLE_INVOLVED_FULL_DELETE_BUTTON = "tag_vehicle_involved_full_delete_button"
 
 @Composable
 fun VehicleFullScreen(
@@ -237,7 +251,9 @@ fun VehicleOwnSection(
 
         Button(
             onClick = onNavEquip,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .testTag(TAG_VEHICLE_OWN_FULL_INSERT_BUTTON)
         ) {
             Text(
                 text = stringResource(id = R.string.text_pattern_insert),
@@ -284,7 +300,9 @@ fun VehicleInvolvedSection(
 
         Button(
             onClick = onNavPlate,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .testTag(TAG_VEHICLE_INVOLVED_FULL_INSERT_BUTTON)
         ) {
             Text(
                 text = stringResource(id = R.string.text_pattern_insert),
@@ -320,14 +338,43 @@ fun CarItem(
             Text(model.driver)
         }
 
+        val testTagEdit = when(type){
+            TypeVehicle.OWN -> "$TAG_VEHICLE_OWN_FULL_EDIT_BUTTON${model.id}"
+            TypeVehicle.INVOLVED -> "$TAG_VEHICLE_INVOLVED_FULL_EDIT_BUTTON${model.id}"
+        }
+
+        val testTagDelete = when(type){
+            TypeVehicle.OWN -> "$TAG_VEHICLE_OWN_FULL_DELETE_BUTTON${model.id}"
+            TypeVehicle.INVOLVED -> "$TAG_VEHICLE_INVOLVED_FULL_DELETE_BUTTON${model.id}"
+        }
+
         Column(
             modifier = Modifier.width(IntrinsicSize.Max),
         ) {
-            Button(onClick = onClickEdit, modifier = Modifier.fillMaxWidth().padding(1.dp)) {
-                Text(text = stringResource(id = R.string.text_pattern_edit))
+            IconButton(
+                onClick = onClickEdit,
+                colors = IconButtonDefaults.iconButtonColors(
+                    containerColor = Color.LightGray
+                ),
+                modifier = Modifier.testTag(testTagEdit)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = stringResource(id = R.string.text_pattern_edit)
+                )
             }
-            Button(onClick = onClickDel, modifier = Modifier.fillMaxWidth().padding(1.dp)) {
-                Text(text = stringResource(id = R.string.text_pattern_delete))
+            IconButton(
+                onClick = onClickDel,
+                colors = IconButtonDefaults.iconButtonColors(
+                    containerColor = Color.LightGray
+                ),
+                modifier = Modifier.testTag(testTagDelete)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = stringResource(id = R.string.text_pattern_delete),
+                    tint = Color.Red
+                )
             }
         }
     }

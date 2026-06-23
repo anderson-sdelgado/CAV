@@ -38,7 +38,10 @@ class StateColabScreenTest {
         composeTestRule.setContent {
             StateScreen(
                 onNavDetail = {},
-                onNavColab = {}
+                onNavColab = {},
+                onNavName = {},
+                onNavDataColab = {},
+                onNavDataInvolved = {}
             )
         }
     }

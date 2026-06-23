@@ -39,12 +39,12 @@ class IBasicCardRepository @Inject constructor(
             cardSharedPreferencesDatasource.setIdNatureList(idList).getOrThrow()
         }
 
-    override suspend fun getRegAttendant(): Result<Long> =
+    override suspend fun getRegAttendant(): Result<Long?> =
         call(getClassAndMethod()) {
             cardSharedPreferencesDatasource.getRegAttendant().getOrThrow()
         }
 
-    override suspend fun getIdCar(): Result<Int> =
+    override suspend fun getIdCar(): Result<Int?> =
         call(getClassAndMethod()) {
             cardSharedPreferencesDatasource.getIdCar().getOrThrow()
         }

@@ -71,14 +71,15 @@ class EquipDataViewModel @Inject constructor(
         runCatching {
             val descEquip = getDescEquip(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
             val detail = getDetail(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
-            EquipDataState(
-                equip = descEquip,
-                detail = detail
-            )
+            Pair(descEquip, detail)
         }
-            .onSuccess { newState ->
+            .onSuccess { (equip, detail) ->
                 updateState {
-                    newState.copy(status = status.copy(flagFailure = false))
+                    copy(
+                        equip = equip,
+                        detail = detail,
+                        status = status.copy(flagFailure = false)
+                    )
                 }
             }
             .onFailureState(getClassAndMethod(), ::updateState)

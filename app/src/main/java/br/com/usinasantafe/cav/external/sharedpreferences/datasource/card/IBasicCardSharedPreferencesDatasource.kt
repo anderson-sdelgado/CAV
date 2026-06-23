@@ -49,17 +49,17 @@ class IBasicCardSharedPreferencesDatasource @Inject constructor(
             }
         }
 
-    override suspend fun getRegAttendant(): Result<Long> =
+    override suspend fun getRegAttendant(): Result<Long?> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                ::regAttendant.required()
+                regAttendant
             }
         }
 
-    override suspend fun getIdCar(): Result<Int> =
+    override suspend fun getIdCar(): Result<Int?> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                ::idCar.required()
+                idCar
             }
         }
 

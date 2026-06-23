@@ -2,6 +2,7 @@ package br.com.usinasantafe.cav.presenter.view.card.car
 
 import androidx.lifecycle.SavedStateHandle
 import br.com.usinasantafe.cav.MainCoroutineRule
+import br.com.usinasantafe.cav.domain.usecases.card.GetNroCar
 import br.com.usinasantafe.cav.domain.usecases.card.SetIdCar
 import br.com.usinasantafe.cav.domain.usecases.common.HasNroEquip
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableEquip
@@ -33,6 +34,7 @@ class CarViewModelTest {
     private val updateTableEquip = mock<UpdateTableEquip>()
     private val hasNroEquip = mock<HasNroEquip>()
     private val setIdCar = mock<SetIdCar>()
+    private val getNroCar = mock<GetNroCar>()
     private val viewModel = CarViewModel(
         saveStateHandle = SavedStateHandle(
             mapOf(
@@ -41,8 +43,55 @@ class CarViewModelTest {
         ),
         updateTableEquip = updateTableEquip,
         hasNroEquip = hasNroEquip,
-        setIdCar = setIdCar
+        setIdCar = setIdCar,
+        getNroCar = getNroCar
     )
+
+    @Test
+    fun `recoverData - Check return failure if have error in GetNroCar`() =
+        runTest {
+            whenever(
+                getNroCar()
+            ).thenReturn(
+                resultFailure(
+                    context = "GetNroCar",
+                    message = "-",
+                    cause = Exception()
+                )
+            )
+            viewModel.recoverData()
+            assertEquals(
+                viewModel.uiState.value.status.flagDialog,
+                true
+            )
+            assertEquals(
+                viewModel.uiState.value.status.failure,
+                "CarViewModel.recoverData -> GetNroCar -> java.lang.Exception"
+            )
+            assertEquals(
+                viewModel.uiState.value.status.errors,
+                Errors.EXCEPTION
+            )
+            assertEquals(
+                viewModel.uiState.value.status.flagFailure,
+                true
+            )
+        }
+
+    @Test
+    fun `recoverData - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                getNroCar()
+            ).thenReturn(
+                Result.success(123456)
+            )
+            viewModel.recoverData()
+            assertEquals(
+                viewModel.uiState.value.nroEquip,
+                "123456"
+            )
+        }
 
     @Test
     fun `setTextField - Check add char`() {
@@ -160,7 +209,7 @@ class CarViewModelTest {
             )
             assertEquals(
                 viewModel.uiState.value.status.failure,
-                "CarViewModel.setTextField -> CarViewModel.updateAllDatabase -> CleanEquip -> java.lang.NullPointerException"
+                "CarViewModel.onTextField -> CarViewModel.updateAllDatabase -> CleanEquip -> java.lang.NullPointerException"
             )
         }
 
@@ -272,7 +321,7 @@ class CarViewModelTest {
             )
             assertEquals(
                 viewModel.uiState.value.status.failure,
-                "CarViewModel.setTextField -> CarViewModel.updateState -> CarViewModel.set -> FIELD_EMPTY"
+                "CarViewModel.onTextField -> CarViewModel.updateState -> CarViewModel.set -> FIELD_EMPTY"
             )
             assertEquals(
                 viewModel.uiState.value.status.flagProgress,
@@ -318,7 +367,7 @@ class CarViewModelTest {
             )
             assertEquals(
                 viewModel.uiState.value.status.failure,
-                "CarViewModel.setTextField -> CarViewModel.set -> IHasNroEquip -> java.lang.Exception"
+                "CarViewModel.onTextField -> CarViewModel.set -> IHasNroEquip -> java.lang.Exception"
             )
             assertEquals(
                 viewModel.uiState.value.status.flagProgress,
@@ -403,7 +452,7 @@ class CarViewModelTest {
             )
             assertEquals(
                 viewModel.uiState.value.status.failure,
-                "CarViewModel.setTextField -> CarViewModel.set -> ISetIdCar -> java.lang.Exception"
+                "CarViewModel.onTextField -> CarViewModel.set -> ISetIdCar -> java.lang.Exception"
             )
             assertEquals(
                 viewModel.uiState.value.status.flagProgress,

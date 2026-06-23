@@ -50,12 +50,15 @@ class IEquipRepository @Inject constructor(
             equipRoomDatasource.getById(id).getOrThrow().roomModelToEntity()
         }
 
-    override suspend fun getNroById(id: Int): Result<Long> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getNroById(id: Int): Result<Long> =
+        call(getClassAndMethod()) {
+            equipRoomDatasource.getNroById(id).getOrThrow()
+        }
 
-    override suspend fun listByIdList(id: List<Int>): Result<List<Equip>> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun listByIdList(idList: List<Int>): Result<List<Equip>> =
+        call(getClassAndMethod()) {
+            val modelList = equipRoomDatasource.listByIdList(idList).getOrThrow()
+            modelList.map { it.roomModelToEntity() }
+        }
 
 }

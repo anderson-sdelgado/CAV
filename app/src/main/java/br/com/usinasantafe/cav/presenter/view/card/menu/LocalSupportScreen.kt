@@ -9,7 +9,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -171,15 +176,16 @@ fun LocalSupportContent(
 
                         }
                     }
-                    Button(
+                    IconButton(
                         onClick = onNavLocal,
-                        Modifier
-                            .testTag(TAG_LOCAL_EDIT_BUTTON)
+                        colors = IconButtonDefaults.iconButtonColors(
+                            containerColor = Color.LightGray
+                        ),
+                        modifier = Modifier.testTag(TAG_LOCAL_EDIT_BUTTON)
                     ) {
-                        Text(
-                            text = stringResource(
-                                id = R.string.text_pattern_edit
-                            ),
+                        Icon(
+                            imageVector = Icons.Default.Edit,
+                            contentDescription = stringResource(id = R.string.text_pattern_edit)
                         )
                     }
                 }
@@ -218,15 +224,16 @@ fun LocalSupportContent(
                         }
 
                     }
-                    Button(
+                    IconButton(
                         onClick = onNavDataLocal,
-                        Modifier
-                            .testTag(TAG_DATA_LOCAL_EDIT_BUTTON)
+                        colors = IconButtonDefaults.iconButtonColors(
+                            containerColor = Color.LightGray
+                        ),
+                        modifier = Modifier.testTag(TAG_DATA_LOCAL_EDIT_BUTTON)
                     ) {
-                        Text(
-                            text = stringResource(
-                                id = R.string.text_pattern_edit
-                            ),
+                        Icon(
+                            imageVector = Icons.Default.Edit,
+                            contentDescription = stringResource(id = R.string.text_pattern_edit)
                         )
                     }
                 }
@@ -251,15 +258,16 @@ fun LocalSupportContent(
                         )
                         Text(supportTeams)
                     }
-                    Button(
+                    IconButton(
                         onClick = onNavSupport,
-                        Modifier
-                            .testTag(TAG_SUPPORT_TEAMS_EDIT_BUTTON)
+                        colors = IconButtonDefaults.iconButtonColors(
+                            containerColor = Color.LightGray
+                        ),
+                        modifier = Modifier.testTag(TAG_SUPPORT_TEAMS_EDIT_BUTTON)
                     ) {
-                        Text(
-                            text = stringResource(
-                                id = R.string.text_pattern_edit
-                            ),
+                        Icon(
+                            imageVector = Icons.Default.Edit,
+                            contentDescription = stringResource(id = R.string.text_pattern_edit)
                         )
                     }
                 }

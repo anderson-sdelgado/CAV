@@ -36,4 +36,9 @@ class ICardRepository @Inject constructor(
             cardSharedPreferencesDatasource.clean().getOrThrow()
         }
 
+    override suspend fun has(): Result<Boolean> =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.has().getOrThrow()
+        }
+
 }

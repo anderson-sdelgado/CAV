@@ -6,7 +6,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -32,7 +35,7 @@ import br.com.usinasantafe.cav.presenter.theme.MsgErrors
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
 import br.com.usinasantafe.cav.utils.UiStatusState
 
-const val TAG_DETAIL_VEHICLE_OWN_TEXT_FIELD = "tag_detail_vehicle_own_text_field"
+const val TAG_DETAIL_TEXT_FIELD = "tag_detail_text_field"
 
 @Composable
 fun DetailScreen(
@@ -119,6 +122,7 @@ fun DetailContent(
     Column(
         modifier = modifier
             .padding(16.dp)
+            .imePadding()
     ) {
         TitleDesign(
             text = stringResource(
@@ -132,7 +136,7 @@ fun DetailContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .testTag(TAG_DETAIL_VEHICLE_OWN_TEXT_FIELD),
+                .testTag(TAG_DETAIL_TEXT_FIELD),
             textStyle = TextStyle(
                 textAlign = TextAlign.Center,
                 fontSize = 28.sp
@@ -177,13 +181,19 @@ fun DetailContent(
                 },
                 modifier = Modifier.weight(1f)
             ) {
-                TextButtonDesign(text = stringResource(id = R.string.text_pattern_cancel))
+                TextButtonDesign(
+                    text = stringResource(id = R.string.text_pattern_return),
+                    padding = 10
+                )
             }
             Button(
                 onClick = set,
                 modifier = Modifier.weight(1f),
             ) {
-                TextButtonDesign(text = stringResource(id = R.string.text_pattern_save))
+                TextButtonDesign(
+                    text = stringResource(id = R.string.text_pattern_save),
+                    padding = 10
+                )
             }
         }
 

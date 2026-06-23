@@ -3,6 +3,7 @@ package br.com.usinasantafe.cav.presenter.view.card.attendant
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.usinasantafe.cav.domain.usecases.card.GetRegAttendant
 import br.com.usinasantafe.cav.domain.usecases.common.HasRegColab
 import br.com.usinasantafe.cav.domain.usecases.card.SetRegAttendant
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableColab
@@ -44,7 +45,8 @@ class AttendantViewModel @Inject constructor(
     saveStateHandle: SavedStateHandle,
     private val updateTableColab: UpdateTableColab,
     private val hasRegColab: HasRegColab,
-    private val setRegAttendant: SetRegAttendant
+    private val setRegAttendant: SetRegAttendant,
+    private val getRegAttendant: GetRegAttendant
 ) : ViewModel() {
 
     private val option: Int = saveStateHandle[OPTION_ARG]!!
@@ -61,6 +63,14 @@ class AttendantViewModel @Inject constructor(
     fun onCloseDialog() = updateState { copy(status = status.copy(flagDialog = false, flagFailure = false)) }
 
     init { updateState { copy(option = Option.entries[this@AttendantViewModel.option]) } }
+
+    fun recoverData() = viewModelScope.launch {
+        runCatching {
+            getRegAttendant().getOrThrow()?.toString() ?: ""
+        }
+            .onSuccess{ updateState { copy( regColab = it) } }
+            .onFailureUpdate(getClassAndMethod(), ::updateState)
+    }
 
     fun onTextField(text: String, typeButton: TypeButton) {
         when (typeButton) {

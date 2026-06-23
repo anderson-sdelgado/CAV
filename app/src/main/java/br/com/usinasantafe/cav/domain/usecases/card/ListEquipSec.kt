@@ -18,12 +18,14 @@ class IListEquipSec @Inject constructor(
 
     override suspend fun invoke(id: Int): Result<List<ItemListScreenModel>> =
         call(getClassAndMethod()) {
-            val idEquipList = cardRepository.listIdEquipSecondary(id).getOrThrow()
+            val equipList = cardRepository.listEquipSecondary(id).getOrThrow()
+            val idEquipList = equipList.map { it.idEquip!! }
             val entityList = equipRepository.listByIdList(idEquipList).getOrThrow()
-            entityList.map {
+            equipList.map { equipCard ->
+                val fullData = entityList.find { it.id == equipCard.idEquip }
                 ItemListScreenModel(
-                    id = it.id,
-                    desc = "${it.nro} - ${it.description}"
+                    id = equipCard.id!!,
+                    desc = "${fullData?.nro ?: "-"} - ${fullData?.description ?: "-"}"
                 )
             }
         }

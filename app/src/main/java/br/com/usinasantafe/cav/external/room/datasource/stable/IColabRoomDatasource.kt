@@ -33,4 +33,9 @@ class IColabRoomDatasource @Inject constructor(
             colabDao.getNameByReg(reg).required("name")
         }
 
+    override suspend fun listColabByRegList(regList: List<Long>): Result<List<ColabRoomModel>> =
+        result(getClassAndMethod()) {
+            colabDao.listColabByRegList(regList)
+        }
+
 }

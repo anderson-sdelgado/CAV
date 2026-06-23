@@ -38,4 +38,14 @@ class IEquipRoomDatasource @Inject constructor(
             equipDao.getById(id).required("model")
         }
 
+    override suspend fun getNroById(id: Int): Result<Long> =
+        result(getClassAndMethod()) {
+            equipDao.getNroById(id).required("nro")
+        }
+
+    override suspend fun listByIdList(idList: List<Int>): Result<List<EquipRoomModel>> =
+        result(getClassAndMethod()) {
+            equipDao.listByIdList(idList)
+        }
+
 }

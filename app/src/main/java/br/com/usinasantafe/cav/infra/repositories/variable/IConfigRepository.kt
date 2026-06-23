@@ -65,8 +65,4 @@ class IConfigRepository @Inject constructor(
             configSharedPreferencesDatasource.getStatusSend().getOrThrow()
         }
 
-    override suspend fun setOption(option: Option): EmptyResult {
-        TODO("Not yet implemented")
-    }
-
 }

@@ -38,6 +38,11 @@ fun AttendantScreen(
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+            LaunchedEffect(Unit) {
+                viewModel.recoverData()
+            }
+
             AttendantContent(
                 option = uiState.option,
                 regColab = uiState.regColab,

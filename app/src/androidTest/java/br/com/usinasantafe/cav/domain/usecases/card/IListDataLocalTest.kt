@@ -3,7 +3,7 @@ package br.com.usinasantafe.cav.domain.usecases.card
 import br.com.usinasantafe.cav.external.room.dao.stable.ItemDataLocalDao
 import br.com.usinasantafe.cav.external.room.dao.stable.OptionDataLocalDao
 import br.com.usinasantafe.cav.external.room.dao.stable.DataLocalDao
-import br.com.usinasantafe.cav.external.sharedpreferences.datasource.card.ICardSharedPreferencesDatasource
+import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.room.stable.ItemDataLocalRoomModel
 import br.com.usinasantafe.cav.infra.models.room.stable.OptionDataLocalRoomModel
 import br.com.usinasantafe.cav.infra.models.room.stable.DataLocalRoomModel
@@ -24,7 +24,7 @@ class IListDataLocalTest {
     val hiltRule = HiltAndroidRule(this)
 
     @Inject
-    lateinit var usecase: SetDataLocalList
+    lateinit var usecase: ListDataLocal
 
     @Inject
     lateinit var cardSharedPreferencesDatasource: ICardSharedPreferencesDatasource

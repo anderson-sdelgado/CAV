@@ -9,4 +9,6 @@ interface EquipRoomDatasource {
     suspend fun hasNro(nro: Long): Result<Boolean>
     suspend fun getIdByNro(nro: Long): Result<Int>
     suspend fun getById(id: Int): Result<EquipRoomModel>
+    suspend fun getNroById(id: Int): Result<Long>
+    suspend fun listByIdList(idList: List<Int>): Result<List<EquipRoomModel>>
 }

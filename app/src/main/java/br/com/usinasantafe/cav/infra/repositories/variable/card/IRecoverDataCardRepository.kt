@@ -1,6 +1,7 @@
 package br.com.usinasantafe.cav.infra.repositories.variable.card
 
 import br.com.usinasantafe.cav.domain.entities.variable.ColabCard
+import br.com.usinasantafe.cav.domain.entities.variable.EquipCard
 import br.com.usinasantafe.cav.domain.entities.variable.Involved
 import br.com.usinasantafe.cav.domain.entities.variable.VehicleInvolved
 import br.com.usinasantafe.cav.domain.entities.variable.VehicleOwn
@@ -178,9 +179,9 @@ class IRecoverDataCardRepository @Inject constructor(
             cardSharedPreferencesDatasource.getNamePassengerInvolved(idMain, idSecondary).getOrThrow()
         }
 
-    override suspend fun listIdEquipSecondary(idMain: Int): Result<List<Int>> =
+    override suspend fun listEquipSecondary(idMain: Int): Result<List<EquipCard>> =
         call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.listIdEquipSecondary(idMain).getOrThrow()
+            cardSharedPreferencesDatasource.listEquipSecondary(idMain).getOrThrow()
         }
 
     override suspend fun listPassengerColab(idMain: Int): Result<List<ColabCard>> =

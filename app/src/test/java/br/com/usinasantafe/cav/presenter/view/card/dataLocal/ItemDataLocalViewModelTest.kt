@@ -2,6 +2,7 @@ package br.com.usinasantafe.cav.presenter.view.card.dataLocal
 
 import androidx.lifecycle.SavedStateHandle
 import br.com.usinasantafe.cav.MainCoroutineRule
+import br.com.usinasantafe.cav.domain.usecases.card.GetDescOption
 import br.com.usinasantafe.cav.domain.usecases.card.ListItemDataLocal
 import br.com.usinasantafe.cav.domain.usecases.card.SetDataLocalList
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableItemDataLocal
@@ -41,6 +42,7 @@ class ItemDataLocalViewModelTest {
     private val updateTableOptionDataLocal = mock<UpdateTableOptionDataLocal>()
     private val updateTableDataLocal = mock<UpdateTableDataLocal>()
     private val setDataLocalList = mock<SetDataLocalList>()
+    private val getDescOption = mock<GetDescOption>()
     private val viewModel = ItemDataLocalViewModel(
         saveStateHandle = SavedStateHandle(
             mapOf(
@@ -51,8 +53,55 @@ class ItemDataLocalViewModelTest {
         updateTableItemDataLocal = updateTableItemDataLocal,
         updateTableOptionDataLocal = updateTableOptionDataLocal,
         updateTableDataLocal = updateTableDataLocal,
-        setDataLocalList = setDataLocalList
+        setDataLocalList = setDataLocalList,
+        getDescOption = getDescOption
     )
+
+    @Test
+    fun `recoverData - Check return failure if have error in GetDescOption`() =
+        runTest {
+            whenever(
+                getDescOption(1)
+            ).thenReturn(
+                resultFailure(
+                    context = "GetDescOption",
+                    message = "-",
+                    cause = Exception()
+                )
+            )
+            viewModel.recoverData()
+            assertEquals(
+                viewModel.uiState.value.status.flagDialog,
+                true
+            )
+            assertEquals(
+                viewModel.uiState.value.status.failure,
+                "ItemDataLocalViewModel.recoverData -> GetDescOption -> java.lang.Exception"
+            )
+            assertEquals(
+                viewModel.uiState.value.status.errors,
+                Errors.EXCEPTION
+            )
+            assertEquals(
+                viewModel.uiState.value.status.flagFailure,
+                true
+            )
+        }
+
+    @Test
+    fun `recoverData - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                getDescOption(1)
+            ).thenReturn(
+                Result.success("Test")
+            )
+            viewModel.recoverData()
+            assertEquals(
+                viewModel.uiState.value.title,
+                "Test"
+            )
+        }
 
     @Test
     fun `list - Check return failure if have error in ListItemDataLocal`() =

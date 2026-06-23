@@ -1,6 +1,7 @@
 package br.com.usinasantafe.cav.domain.repositories.variable
 
 import br.com.usinasantafe.cav.domain.entities.variable.ColabCard
+import br.com.usinasantafe.cav.domain.entities.variable.EquipCard
 import br.com.usinasantafe.cav.domain.entities.variable.Involved
 import br.com.usinasantafe.cav.domain.entities.variable.Local
 import br.com.usinasantafe.cav.domain.entities.variable.VehicleInvolved
@@ -16,6 +17,7 @@ interface CardRepository :
     DeleteCardRepository {
 
     suspend fun clean(): EmptyResult
+    suspend fun has(): Result<Boolean>
 }
 
 interface BasicCardRepository{
@@ -24,8 +26,8 @@ interface BasicCardRepository{
     suspend fun setLocal(entity: Local): EmptyResult
     suspend fun listIdNature(): Result<List<Int>>
     suspend fun setIdNatureList(idList: List<Int>): EmptyResult
-    suspend fun getRegAttendant(): Result<Long>
-    suspend fun getIdCar(): Result<Int>
+    suspend fun getRegAttendant(): Result<Long?>
+    suspend fun getIdCar(): Result<Int?>
     suspend fun listIdTypeAccident(): Result<List<Int>>
     suspend fun setIdTypeAccidentList(idList: List<Int>): EmptyResult
     suspend fun getLocal(): Result<Local>
@@ -84,7 +86,7 @@ interface RecoverDataCardRepository {
     suspend fun getDocumentPassengerInvolved(idMain: Int, idSecondary: Int): Result<String?>
     suspend fun getNameDriver(idMain: Int): Result<String?>
     suspend fun getNamePassengerInvolved(idMain: Int, idSecondary: Int): Result<String?>
-    suspend fun listIdEquipSecondary(idMain: Int): Result<List<Int>>
+    suspend fun listEquipSecondary(idMain: Int): Result<List<EquipCard>>
     suspend fun listPassengerColab(idMain: Int): Result<List<ColabCard>>
     suspend fun listPassengerInvolved(idMain: Int): Result<List<Involved>>
     suspend fun listInvolved(): Result<List<Involved>>

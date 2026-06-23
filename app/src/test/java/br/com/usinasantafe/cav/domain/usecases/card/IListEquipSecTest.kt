@@ -24,7 +24,7 @@ class IListEquipSecTest {
     fun `Check return failure if have error in CardRepository listIdEquipSecondary`() =
         runTest {
             whenever(
-                cardRepository.listIdEquipSecondary(1)
+                cardRepository.listEquipSecondary(1)
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.listIdEquipSecondary",
@@ -51,7 +51,7 @@ class IListEquipSecTest {
     fun `Check return failure if have error in EquipRepository listByIdList`() =
         runTest {
             whenever(
-                cardRepository.listIdEquipSecondary(1)
+                cardRepository.listEquipSecondary(1)
             ).thenReturn(
                 Result.success(listOf(10, 20))
             )
@@ -83,7 +83,7 @@ class IListEquipSecTest {
     fun `Check return empty list if function execute successfully with empty list`() =
         runTest {
             whenever(
-                cardRepository.listIdEquipSecondary(1)
+                cardRepository.listEquipSecondary(1)
             ).thenReturn(
                 Result.success(emptyList())
             )
@@ -107,7 +107,7 @@ class IListEquipSecTest {
     fun `Check return list ItemListScreenModel if function execute successfully`() =
         runTest {
             whenever(
-                cardRepository.listIdEquipSecondary(1)
+                cardRepository.listEquipSecondary(1)
             ).thenReturn(
                 Result.success(listOf(10, 20))
             )

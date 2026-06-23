@@ -15,5 +15,4 @@ interface ConfigRepository {
     suspend fun getFlagUpdate(): Result<Boolean>
     suspend fun setFlagUpdate(): EmptyResult
     suspend fun getStatusSend(): Result<StatusSend>
-    suspend fun setOption(option: Option): EmptyResult
 }

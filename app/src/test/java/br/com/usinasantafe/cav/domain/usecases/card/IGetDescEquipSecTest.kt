@@ -23,7 +23,7 @@ class IGetDescEquipSecTest {
     fun `Check return failure if have error in CardRepository listIdEquipSecondary`() =
         runTest {
             whenever(
-                cardRepository.listIdEquipSecondary(1)
+                cardRepository.listEquipSecondary(1)
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.listIdEquipSecondary",
@@ -50,7 +50,7 @@ class IGetDescEquipSecTest {
     fun `Check return failure if have error in EquipRepository listByIdList`() =
         runTest {
             whenever(
-                cardRepository.listIdEquipSecondary(1)
+                cardRepository.listEquipSecondary(1)
             ).thenReturn(
                 Result.success(listOf(10, 20))
             )
@@ -82,7 +82,7 @@ class IGetDescEquipSecTest {
     fun `Check return empty string if function execute successfully with empty list`() =
         runTest {
             whenever(
-                cardRepository.listIdEquipSecondary(1)
+                cardRepository.listEquipSecondary(1)
             ).thenReturn(
                 Result.success(emptyList())
             )
@@ -106,7 +106,7 @@ class IGetDescEquipSecTest {
     fun `Check return correct formatted string if function execute successfully`() =
         runTest {
             whenever(
-                cardRepository.listIdEquipSecondary(1)
+                cardRepository.listEquipSecondary(1)
             ).thenReturn(
                 Result.success(listOf(10, 20))
             )

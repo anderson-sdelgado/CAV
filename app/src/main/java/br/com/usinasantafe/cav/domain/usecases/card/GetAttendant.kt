@@ -4,6 +4,7 @@ import br.com.usinasantafe.cav.domain.repositories.stable.ColabRepository
 import br.com.usinasantafe.cav.domain.repositories.variable.*
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
+import br.com.usinasantafe.cav.utils.required
 import javax.inject.Inject
 
 interface GetAttendant {
@@ -17,7 +18,7 @@ class IGetAttendant @Inject constructor(
 
     override suspend fun invoke(): Result<String> =
         call(getClassAndMethod()) {
-            val reg = cardRepository.getRegAttendant().getOrThrow()
+            val reg = cardRepository.getRegAttendant().getOrThrow().required("reg")
             val name = colabRepository.getNameByReg(reg).getOrThrow()
             "$reg - $name"
         }

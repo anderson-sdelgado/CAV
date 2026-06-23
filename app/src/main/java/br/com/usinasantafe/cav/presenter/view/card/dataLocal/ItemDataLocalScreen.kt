@@ -44,10 +44,12 @@ fun ItemDataLocalScreen(
             val list = viewModel.list
 
             LaunchedEffect(Unit) {
+                viewModel.recoverData()
                 viewModel.list()
             }
 
             ItemDataLocalContent(
+                title = uiState.title,
                 list = list,
                 onCheckChange = viewModel::onCheckChange,
                 updateDatabase = viewModel::updateDatabase,
@@ -63,6 +65,7 @@ fun ItemDataLocalScreen(
 
 @Composable
 fun ItemDataLocalContent(
+    title: String,
     list: List<ItemCheckBoxScreenModel>,
     onCheckChange: (Int, Boolean) -> Unit,
     updateDatabase: () -> Unit,
@@ -77,9 +80,7 @@ fun ItemDataLocalContent(
             .padding(16.dp)
     ) {
         TitleDesign(
-            text = stringResource(
-                id = R.string.text_item_data_local
-            )
+            text = title
         )
         LazyColumn(
             modifier = Modifier.weight(1f),
@@ -158,6 +159,7 @@ fun ItemDataLocalPagePreview() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             ItemDataLocalContent(
+                title = "LOMBADA",
                 list = emptyList(),
                 onCheckChange = { _, _ -> },
                 updateDatabase = {},

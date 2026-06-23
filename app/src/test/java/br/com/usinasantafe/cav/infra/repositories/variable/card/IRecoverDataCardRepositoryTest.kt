@@ -677,10 +677,10 @@ class IRecoverDataCardRepositoryTest {
     @Test
     fun `listIdEquipSecondary(idMain) - Check return failure if have error in CardSharedPreferencesDatasource listIdEquipSecondary`() =
         runTest {
-            whenever(cardSharedPreferencesDatasource.listIdEquipSecondary(1)).thenReturn(
+            whenever(cardSharedPreferencesDatasource.listEquipSecondary(1)).thenReturn(
                 resultFailure("ICardSharedPreferencesDatasource.listIdEquipSecondary", "-", Exception())
             )
-            val result = repository.listIdEquipSecondary(1)
+            val result = repository.listEquipSecondary(1)
             assertEquals(result.isFailure, true)
             assertEquals(result.exceptionOrNull()!!.message, "IRecoverDataCardRepository.listIdEquipSecondary -> ICardSharedPreferencesDatasource.listIdEquipSecondary")
         }
@@ -688,8 +688,8 @@ class IRecoverDataCardRepositoryTest {
     @Test
     fun `listIdEquipSecondary(idMain) - Check return correct if function execute successfully`() =
         runTest {
-            whenever(cardSharedPreferencesDatasource.listIdEquipSecondary(1)).thenReturn(Result.success(listOf(1, 2)))
-            val result = repository.listIdEquipSecondary(1)
+            whenever(cardSharedPreferencesDatasource.listEquipSecondary(1)).thenReturn(Result.success(listOf(1, 2)))
+            val result = repository.listEquipSecondary(1)
             assertEquals(result.isSuccess, true)
             assertEquals(result.getOrNull(), listOf(1, 2))
         }

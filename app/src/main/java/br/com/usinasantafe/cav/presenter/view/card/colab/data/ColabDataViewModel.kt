@@ -76,15 +76,16 @@ class ColabDataViewModel @Inject constructor(
             val descColab = getDescColab(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
             val stateRet = getState(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
             val detail = getDetail(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
-            ColabDataState(
-                colab = descColab,
-                state = stateRet,
-                detail = detail
-            )
+            Triple(descColab, stateRet, detail)
         }
-            .onSuccess { newState ->
+            .onSuccess { (colab, stateRet, detail) ->
                 updateState {
-                    newState.copy(status = status.copy(flagFailure = false))
+                    copy(
+                        colab = colab,
+                        state = stateRet,
+                        detail = detail,
+                        status = status.copy(flagFailure = false)
+                    )
                 }
             }
             .onFailureState(getClassAndMethod(), ::updateState)

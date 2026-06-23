@@ -23,7 +23,7 @@ class IListVehicleOwn @Inject constructor(
             val entityList = cardRepository.listVehicleOwn().getOrThrow()
             entityList.map { entity ->
                 val name = colabRepository.getNameByReg(entity.colabCard.reg!!).getOrThrow()
-                val equipEntity = equipRepository.getById(entity.equipCard.id!!).getOrThrow()
+                val equipEntity = equipRepository.getById(entity.equipCard.idEquip!!).getOrThrow()
                 VehicleScreenModel(
                     id = entity.id!!,
                     vehicle = "${equipEntity.nro} - ${equipEntity.description}",

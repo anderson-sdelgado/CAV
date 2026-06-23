@@ -305,14 +305,17 @@ fun TextFieldDesign(
 fun ButtonNumericDesign(
     text: @Composable () -> Unit,
     setActionButton: () -> Unit,
-    modifier: Modifier
+    modifier: Modifier,
+    tag: String = "",
 ) {
     return ElevatedButton(
         onClick = {
             setActionButton()
         },
         modifier = modifier
-            .fillMaxHeight(),
+            .fillMaxHeight()
+            .testTag("button_$tag")
+        ,
         shape = RoundedCornerShape(10.dp)
     ) {
         text()
@@ -512,15 +515,16 @@ fun ItemDefaultEditListScreenModel(
             )
             Text(text = desc)
         }
-        Button(
+        IconButton(
             onClick = onClickEdit,
-            Modifier
-                .testTag(tag)
+            colors = IconButtonDefaults.iconButtonColors(
+                containerColor = Color.LightGray
+            ),
+            modifier = Modifier.testTag(tag)
         ) {
-            Text(
-                text = stringResource(
-                    id = R.string.text_pattern_edit
-                ),
+            Icon(
+                imageVector = Icons.Default.Edit,
+                contentDescription = stringResource(id = R.string.text_pattern_edit)
             )
         }
     }

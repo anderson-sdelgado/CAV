@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.usinasantafe.cav.domain.usecases.card.GetDescOption
 import br.com.usinasantafe.cav.domain.usecases.card.ListItemDataLocal
 import br.com.usinasantafe.cav.domain.usecases.card.SetDataLocalList
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableItemDataLocal
@@ -29,6 +30,7 @@ import javax.inject.Inject
 
 data class ItemDataLocalStateUpdate(
     val id: Int = 0,
+    val title: String = "",
     override val status: UiStatusStateUpdate = UiStatusStateUpdate()
 ) : UiStateWithStatusUpdate<ItemDataLocalStateUpdate> {
 
@@ -44,7 +46,8 @@ class ItemDataLocalViewModel @Inject constructor(
     private val updateTableItemDataLocal: UpdateTableItemDataLocal,
     private val updateTableOptionDataLocal: UpdateTableOptionDataLocal,
     private val updateTableDataLocal: UpdateTableDataLocal,
-    private val setDataLocalList: SetDataLocalList
+    private val setDataLocalList: SetDataLocalList,
+    private val getDescOption: GetDescOption
 ) : ViewModel() {
 
     private val id: Int = saveStateHandle[ID_MAIN_ARG]!!
@@ -69,6 +72,14 @@ class ItemDataLocalViewModel @Inject constructor(
         if (index != -1) {
             list[index] = list[index].copy(flag = checked)
         }
+    }
+
+    fun recoverData() = viewModelScope.launch {
+        runCatching {
+            getDescOption(state.id).getOrThrow()
+        }
+            .onSuccess { updateState { copy(title = it) } }
+            .onFailureUpdate(getClassAndMethod(), ::updateState)
     }
 
     fun list() = viewModelScope.launch {

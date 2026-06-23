@@ -37,6 +37,11 @@ fun CarScreen(
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+            LaunchedEffect(Unit) {
+                viewModel.recoverData()
+            }
+
             CarContent(
                 option = uiState.option,
                 nroEquip = uiState.nroEquip,

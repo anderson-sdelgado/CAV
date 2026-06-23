@@ -12,11 +12,11 @@ class IDeleteCardSharedPreferencesDatasource @Inject constructor(
     private val datasource: Provider<CardSharedPreferencesDatasource>
 ): DeleteCardSharedPreferencesDatasource {
 
-    override suspend fun deleteVehicleOwn(id: Int): EmptyResult =
+    override suspend fun deleteVehicleOwn(idMain: Int): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
                 val list = vehicleOwnList.toMutableList()
-                list.removeIf { it.id == id }
+                list.removeIf { it.id == idMain }
                 this.vehicleOwnList = list
             }
         }
@@ -35,29 +35,29 @@ class IDeleteCardSharedPreferencesDatasource @Inject constructor(
             }
         }
 
-    override suspend fun deleteVehicleInvolved(id: Int): EmptyResult =
+    override suspend fun deleteVehicleInvolved(idMain: Int): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
                 val list = vehicleInvolvedList.toMutableList()
-                list.removeIf { it.id == id }
+                list.removeIf { it.id == idMain }
                 this.vehicleInvolvedList = list
             }
         }
 
-    override suspend fun deleteInvolved(id: Int): EmptyResult =
+    override suspend fun deleteInvolved(idMain: Int): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
                 val list = involvedList.toMutableList()
-                list.removeIf { it.id == id }
+                list.removeIf { it.id == idMain }
                 this.involvedList = list
             }
         }
 
-    override suspend fun deleteWitness(id: Int): EmptyResult =
+    override suspend fun deleteWitness(idMain: Int): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
                 val list = witnessList.toMutableList()
-                list.removeIf { it.id == id }
+                list.removeIf { it.id == idMain }
                 this.witnessList = list
             }
         }

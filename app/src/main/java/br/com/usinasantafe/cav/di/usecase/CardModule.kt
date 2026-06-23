@@ -243,4 +243,16 @@ interface CardModule {
     @Singleton
     fun bindListWitness(usecase: IListWitness): ListWitness
 
+    @Binds
+    @Singleton
+    fun bindGetDescOption(usecase: IGetDescOption): GetDescOption
+
+    @Binds
+    @Singleton
+    fun bindGetRegAttendant(usecase: IGetRegAttendant): GetRegAttendant
+
+    @Binds
+    @Singleton
+    fun bindGetNroCar(usecase: IGetNroCar): GetNroCar
+
 }

@@ -396,6 +396,14 @@ fun NavigationGraph(
                     navActions.navigateToDataVehicleOwn(
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
                     )
+                },
+                onNavDetail = {
+                    navActions.navigateToDetail(
+                        option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        flowNote = FlowNote.EQUIP.ordinal,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
+                    )
                 }
             )
         }
@@ -481,7 +489,7 @@ fun NavigationGraph(
                 onNavColab = {
                     navActions.navigateToColab(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        flowNote = FlowNote.COLAB.ordinal,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
@@ -493,16 +501,14 @@ fun NavigationGraph(
                     )
                 },
                 onNavDataColab = {
-                    navActions.navigateToState(
-                        option = entry.arguments?.getInt(OPTION_ARG)!!,
+                    navActions.navigateToDataColab(
                         flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 },
                 onNavDataEquip = {
-                    navActions.navigateToEquip(
-                        option = entry.arguments?.getInt(OPTION_ARG)!!,
+                    navActions.navigateToDataEquip(
                         flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!

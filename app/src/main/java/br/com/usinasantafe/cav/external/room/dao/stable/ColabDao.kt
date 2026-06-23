@@ -24,4 +24,7 @@ interface ColabDao {
     @Query("SELECT name FROM $TB_COLAB WHERE reg = :reg")
     suspend fun getNameByReg(reg: Long): String?
 
+    @Query("SELECT * FROM $TB_COLAB WHERE reg IN (:regList)")
+    suspend fun listColabByRegList(regList: List<Long>): List<ColabRoomModel>
+
 }

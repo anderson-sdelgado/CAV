@@ -17,7 +17,8 @@ class IGetDescEquipSec @Inject constructor(
 
     override suspend fun invoke(id: Int): Result<String> =
         call(getClassAndMethod()) {
-            val idEquipList = cardRepository.listIdEquipSecondary(id).getOrThrow()
+            val equipList = cardRepository.listEquipSecondary(id).getOrThrow()
+            val idEquipList = equipList.map { it.idEquip!! }
             val entityList = equipRepository.listByIdList(idEquipList).getOrThrow()
             val descList = entityList.map {  "${it.nro} - ${it.description}" }
             descList.joinToString(separator = "\n")

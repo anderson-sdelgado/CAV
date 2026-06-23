@@ -1,26 +1,25 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.domain.repositories.stable.EquipRepository
-import br.com.usinasantafe.cav.domain.repositories.variable.*
+import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import br.com.usinasantafe.cav.utils.required
 import javax.inject.Inject
 
-interface GetCar {
-    suspend operator fun invoke(): Result<String>
+interface GetNroCar {
+    suspend operator fun invoke(): Result<Long?>
 }
 
-class IGetCar @Inject constructor(
+class IGetNroCar @Inject constructor(
     private val cardRepository: CardRepository,
     private val equipRepository: EquipRepository
-): GetCar {
+): GetNroCar {
 
-    override suspend fun invoke(): Result<String> =
+    override suspend fun invoke(): Result<Long?> =
         call(getClassAndMethod()) {
-            val id = cardRepository.getIdCar().getOrThrow().required("id")
-            val entity = equipRepository.getById(id).getOrThrow()
-            "${entity.nro} - ${entity.description}"
+            val id = cardRepository.getIdCar().getOrThrow() ?: return@call null
+            equipRepository.getById(id).getOrThrow().nro
         }
 
 }

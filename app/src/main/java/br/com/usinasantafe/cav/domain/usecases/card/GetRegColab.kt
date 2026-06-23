@@ -18,7 +18,6 @@ interface GetRegColab {
 
 class IGetRegColab @Inject constructor(
     private val cardRepository: CardRepository,
-
 ): GetRegColab {
 
     override suspend fun invoke(

@@ -2,12 +2,15 @@ package br.com.usinasantafe.cav.presenter.view.card.attendant
 
 import androidx.lifecycle.SavedStateHandle
 import br.com.usinasantafe.cav.MainCoroutineRule
+import br.com.usinasantafe.cav.domain.usecases.card.GetRegAttendant
 import br.com.usinasantafe.cav.domain.usecases.common.HasRegColab
 import br.com.usinasantafe.cav.domain.usecases.card.SetRegAttendant
 import br.com.usinasantafe.cav.domain.usecases.update.UpdateTableColab
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.LevelUpdate
+import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.TypeButton
+import br.com.usinasantafe.cav.presenter.Args
 import br.com.usinasantafe.cav.utils.UiStatusStateUpdate
 import br.com.usinasantafe.cav.utils.percentage
 import br.com.usinasantafe.cav.utils.resultFailure
@@ -31,12 +34,64 @@ class AttendantViewModelTest {
     private val updateTableColab = mock<UpdateTableColab>()
     private val hasRegColab = mock<HasRegColab>()
     private val setRegAttendant = mock<SetRegAttendant>()
+    private val getRegAttendant = mock<GetRegAttendant>()
     private val viewModel = AttendantViewModel(
-        saveStateHandle = SavedStateHandle(),
+        saveStateHandle = SavedStateHandle(
+            mapOf(
+                Args.OPTION_ARG to Option.INSERT.ordinal
+            )
+        ),
         updateTableColab = updateTableColab,
         hasRegColab = hasRegColab,
-        setRegAttendant = setRegAttendant
+        setRegAttendant = setRegAttendant,
+        getRegAttendant = getRegAttendant
     )
+
+    @Test
+    fun `recoverData - Check return failure if have error in GetRegAttendant`() =
+        runTest {
+            whenever(
+                getRegAttendant()
+            ).thenReturn(
+                resultFailure(
+                    context = "GetRegAttendant",
+                    message = "-",
+                    cause = Exception()
+                )
+            )
+            viewModel.recoverData()
+            assertEquals(
+                viewModel.uiState.value.status.flagDialog,
+                true
+            )
+            assertEquals(
+                viewModel.uiState.value.status.failure,
+                "AttendantViewModel.recoverData -> GetRegAttendant -> java.lang.Exception"
+            )
+            assertEquals(
+                viewModel.uiState.value.status.errors,
+                Errors.EXCEPTION
+            )
+            assertEquals(
+                viewModel.uiState.value.status.flagFailure,
+                true
+            )
+        }
+
+    @Test
+    fun `recoverData - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                getRegAttendant()
+            ).thenReturn(
+                Result.success(123456)
+            )
+            viewModel.recoverData()
+            assertEquals(
+                viewModel.uiState.value.regColab,
+                "123456"
+            )
+        }
 
     @Test
     fun `setTextField - Check add char`() {
@@ -154,7 +209,7 @@ class AttendantViewModelTest {
             )
             assertEquals(
                 viewModel.uiState.value.status.failure,
-                "AttendantViewModel.setTextField -> AttendantViewModel.updateAllDatabase -> CleanColab -> java.lang.NullPointerException"
+                "AttendantViewModel.onTextField -> AttendantViewModel.updateAllDatabase -> CleanColab -> java.lang.NullPointerException"
             )
         }
 
@@ -266,7 +321,7 @@ class AttendantViewModelTest {
             )
             assertEquals(
                 viewModel.uiState.value.status.failure,
-                "AttendantViewModel.setTextField -> AttendantViewModel.updateState -> AttendantViewModel.set -> FIELD_EMPTY"
+                "AttendantViewModel.onTextField -> AttendantViewModel.updateState -> AttendantViewModel.set -> FIELD_EMPTY"
             )
             assertEquals(
                 viewModel.uiState.value.status.flagProgress,
@@ -312,7 +367,7 @@ class AttendantViewModelTest {
             )
             assertEquals(
                 viewModel.uiState.value.status.failure,
-                "AttendantViewModel.setTextField -> AttendantViewModel.set -> IHasRegColab -> java.lang.Exception"
+                "AttendantViewModel.onTextField -> AttendantViewModel.set -> IHasRegColab -> java.lang.Exception"
             )
             assertEquals(
                 viewModel.uiState.value.status.flagProgress,
@@ -397,7 +452,7 @@ class AttendantViewModelTest {
             )
             assertEquals(
                 viewModel.uiState.value.status.failure,
-                "AttendantViewModel.setTextField -> AttendantViewModel.set -> ISetRegAttendant -> java.lang.Exception"
+                "AttendantViewModel.onTextField -> AttendantViewModel.set -> ISetRegAttendant -> java.lang.Exception"
             )
             assertEquals(
                 viewModel.uiState.value.status.flagProgress,

@@ -6,6 +6,7 @@ import br.com.usinasantafe.cav.infra.datasource.retrofit.stable.ColabRetrofitDat
 import br.com.usinasantafe.cav.infra.datasource.room.stable.ColabRoomDatasource
 import br.com.usinasantafe.cav.infra.models.retrofit.stable.retrofitModelToEntity
 import br.com.usinasantafe.cav.infra.models.room.stable.entityToRoomModel
+import br.com.usinasantafe.cav.infra.models.room.stable.roomModelToEntity
 import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -44,8 +45,10 @@ class IColabRepository @Inject constructor(
             colabRoomDatasource.getNameByReg(reg).getOrThrow()
         }
 
-    override suspend fun listColabByRegList(regList: List<Long>): Result<List<Colab>> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun listColabByRegList(regList: List<Long>): Result<List<Colab>> =
+        call(getClassAndMethod()) {
+            val modelList = colabRoomDatasource.listColabByRegList(regList).getOrThrow()
+            modelList.map { it.roomModelToEntity() }
+        }
 
 }

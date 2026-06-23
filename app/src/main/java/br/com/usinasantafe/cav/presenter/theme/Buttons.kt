@@ -52,6 +52,8 @@ fun clearTextFieldComma(text: String): String {
     return format.format(value)
 }
 
+
+
 @Composable
 fun ButtonsGenericNumeric(
     onTextField: (
@@ -94,8 +96,8 @@ fun ButtonsGenericNumeric(
                         TypeButton.NUMERIC
                     )
                 },
-                Modifier
-                    .weight(1f)
+                Modifier.weight(1f),
+                tag = number1
             )
             ButtonNumericDesign(
                 {
@@ -109,8 +111,8 @@ fun ButtonsGenericNumeric(
                         TypeButton.NUMERIC
                     )
                 },
-                Modifier
-                    .weight(1f)
+                Modifier.weight(1f),
+                tag = number2
             )
             ButtonNumericDesign(
                 {
@@ -124,8 +126,8 @@ fun ButtonsGenericNumeric(
                         TypeButton.NUMERIC
                     )
                 },
-                Modifier
-                    .weight(1f)
+                Modifier.weight(1f),
+                tag = number3
             )
         }
         Row(
@@ -145,8 +147,8 @@ fun ButtonsGenericNumeric(
                         TypeButton.NUMERIC
                     )
                 },
-                Modifier
-                    .weight(1f)
+                Modifier.weight(1f),
+                tag = number4
             )
             ButtonNumericDesign(
                 {
@@ -160,8 +162,8 @@ fun ButtonsGenericNumeric(
                         TypeButton.NUMERIC
                     )
                 },
-                Modifier
-                    .weight(1f)
+                Modifier.weight(1f),
+                tag = number5
             )
             ButtonNumericDesign(
                 {
@@ -175,8 +177,8 @@ fun ButtonsGenericNumeric(
                         TypeButton.NUMERIC
                     )
                 },
-                Modifier
-                    .weight(1f)
+                Modifier.weight(1f),
+                tag = number6
             )
         }
         Row(
@@ -196,8 +198,8 @@ fun ButtonsGenericNumeric(
                         TypeButton.NUMERIC
                     )
                 },
-                Modifier
-                    .weight(1f)
+                Modifier.weight(1f),
+                tag = number7
             )
             ButtonNumericDesign(
                 {
@@ -211,8 +213,8 @@ fun ButtonsGenericNumeric(
                         TypeButton.NUMERIC
                     )
                 },
-                Modifier
-                    .weight(1f)
+                Modifier.weight(1f),
+                tag = number8
             )
             ButtonNumericDesign(
                 {
@@ -226,8 +228,8 @@ fun ButtonsGenericNumeric(
                         TypeButton.NUMERIC
                     )
                 },
-                Modifier
-                    .weight(1f)
+                Modifier.weight(1f),
+                tag = number9
             )
         }
         Row(
@@ -247,8 +249,8 @@ fun ButtonsGenericNumeric(
                         TypeButton.CLEAN
                     )
                 },
-                modifier = Modifier
-                    .weight(1f)
+                modifier = Modifier.weight(1f),
+                tag = "CLEAN"
             )
             ButtonNumericDesign(
                 {
@@ -262,8 +264,8 @@ fun ButtonsGenericNumeric(
                         TypeButton.NUMERIC
                     )
                 },
-                Modifier
-                    .weight(1f)
+                Modifier.weight(1f),
+                tag = number0
             )
             ButtonNumericDesign(
                 {
@@ -277,8 +279,8 @@ fun ButtonsGenericNumeric(
                         TypeButton.OK
                     )
                 },
-                Modifier
-                    .weight(1f)
+                Modifier.weight(1f),
+                tag = "OK"
             )
         }
         if(flagUpdate){
@@ -299,8 +301,8 @@ fun ButtonsGenericNumeric(
                             TypeButton.UPDATE
                         )
                     },
-                    Modifier
-                        .weight(1f)
+                    Modifier.weight(1f),
+                    tag = "UPDATE"
                 )
             }
         }

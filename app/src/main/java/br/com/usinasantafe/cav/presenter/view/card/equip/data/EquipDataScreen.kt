@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.presenter.view.card.equip.data
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -104,10 +105,10 @@ fun EquipDataContent(
             }
         }
         ButtonMaxWidth(R.string.text_pattern_return) {
+            Log.d("TestDebug", "FLowNote: $flowNote")
             when(flowNote) {
                 FlowNote.EQUIP -> onNavDataVehicleOwn()
-                FlowNote.EQUIP_SEC -> onNavEquipSecList()
-                else -> {}
+                else -> onNavEquipSecList()
             }
         }
         BackHandler {}
