@@ -73,14 +73,4 @@ class VehicleFullViewModel @Inject constructor(
             .onFailureState(getClassAndMethod(), ::updateState)
     }
 
-    fun delete() = viewModelScope.launch {
-        runCatching {
-            when(state.typeVehicle){
-                TypeVehicle.OWN -> deleteVehicleOwn(state.idSelection).getOrThrow()
-                TypeVehicle.INVOLVED -> deleteVehicleInvolved(state.idSelection).getOrThrow()
-            }
-        }
-            .onSuccess { recoverData() }
-            .onFailureState(getClassAndMethod(), ::updateState)
-    }
 }

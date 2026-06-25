@@ -78,7 +78,7 @@ class PassengerListViewModel @Inject constructor(
 
     fun delete() = viewModelScope.launch {
         runCatching {
-            deletePassenger(state.idSelection, state.flowNote, state.idMain).getOrThrow()
+            deletePassenger( state.flowNote, state.idMain, state.idSelection).getOrThrow()
         }
             .onSuccess { recoverData() }
             .onFailureState(getClassAndMethod(), ::updateState)

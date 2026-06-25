@@ -8,7 +8,6 @@ import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.presenter.Args
 import br.com.usinasantafe.cav.presenter.model.ItemListScreenModel
-import br.com.usinasantafe.cav.presenter.view.card.passengerList.PassengerListViewModel
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -109,7 +108,7 @@ class PassengerListViewModelTest {
         runTest {
             whenever(
                 deletePassenger(
-                    idSelection = 2,
+                    idSecondary = 2,
                     flowNote = FlowNote.COLAB,
                     idMain = 0
                 )
@@ -156,7 +155,7 @@ class PassengerListViewModelTest {
             viewModel.onSelectionDelete(2)
             viewModel.delete()
             verify(deletePassenger, atLeastOnce()).invoke(
-                idSelection = 2,
+                idSecondary = 2,
                 flowNote = FlowNote.COLAB,
                 idMain = 0
             )

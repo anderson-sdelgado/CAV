@@ -51,10 +51,8 @@ import br.com.usinasantafe.cav.utils.UiStatusState
 
 const val TAG_VEHICLE_OWN_FULL_INSERT_BUTTON = "tag_vehicle_own_full_insert_button"
 const val TAG_VEHICLE_OWN_FULL_EDIT_BUTTON = "tag_vehicle_own_full_edit_button"
-const val TAG_VEHICLE_OWN_FULL_DELETE_BUTTON = "tag_vehicle_own_full_delete_button"
 const val TAG_VEHICLE_INVOLVED_FULL_INSERT_BUTTON = "tag_vehicle_involved_full_insert_button"
 const val TAG_VEHICLE_INVOLVED_FULL_EDIT_BUTTON = "tag_vehicle_involved_full_edit_button"
-const val TAG_VEHICLE_INVOLVED_FULL_DELETE_BUTTON = "tag_vehicle_involved_full_delete_button"
 
 @Composable
 fun VehicleFullScreen(
@@ -75,14 +73,8 @@ fun VehicleFullScreen(
             }
 
             VehicleFullContent(
-                typeVehicle = uiState.typeVehicle,
                 vehicleOwnList = uiState.vehicleOwnList,
                 vehicleInvolvedList = uiState.vehicleInvolvedList,
-                idSelection = uiState.idSelection,
-                onSelectionDelete = viewModel::onSelectionDelete,
-                flagDialogCheck = uiState.flagDialogCheck,
-                onDialogCheck = viewModel::onDialogCheck,
-                delete = viewModel::delete,
                 onCloseDialog = viewModel::onCloseDialog,
                 status = uiState.status,
                 onNavLocalSupport = onNavLocalSupport,
@@ -99,14 +91,8 @@ fun VehicleFullScreen(
 
 @Composable
 fun VehicleFullContent(
-    typeVehicle: TypeVehicle,
     vehicleOwnList: List<VehicleScreenModel>,
     vehicleInvolvedList: List<VehicleScreenModel>,
-    idSelection: Int,
-    onSelectionDelete: (Int, TypeVehicle) -> Unit,
-    flagDialogCheck: Boolean,
-    onDialogCheck: (Boolean) -> Unit,
-    delete: () -> Unit,
     onCloseDialog: () -> Unit,
     status: UiStatusState,
     onNavLocalSupport: () -> Unit,
@@ -134,7 +120,6 @@ fun VehicleFullContent(
             item {
                 VehicleOwnSection(
                     vehicleList = vehicleOwnList,
-                    onSelectionDelete = onSelectionDelete,
                     onNavEquip = onNavEquip,
                     onNavDataVehicleOwn = onNavDataVehicleOwn,
                 )
@@ -142,7 +127,6 @@ fun VehicleFullContent(
             item {
                 VehicleInvolvedSection(
                     vehicleList = vehicleInvolvedList,
-                    onSelectionDelete = onSelectionDelete,
                     onNavPlate = onNavPlate,
                     onNavDataVehicleInvolved = onNavDataVehicleInvolved
                 )
@@ -179,31 +163,6 @@ fun VehicleFullContent(
         }
         BackHandler {}
 
-        if(flagDialogCheck){
-            var list: List<VehicleScreenModel>
-            var id: Int
-            when(typeVehicle){
-                TypeVehicle.OWN -> {
-                    list = vehicleOwnList
-                    id = R.string.text_check_delete_equip
-                }
-
-                TypeVehicle.INVOLVED -> {
-                    list = vehicleInvolvedList
-                    id = R.string.text_check_delete_vehicle
-                }
-            }
-            val desc = list.first{ it.id == idSelection }.vehicle
-            AlertDialogCheckDesign(
-                text = stringResource(
-                    id = id,
-                    desc
-                ),
-                onClickDismiss = { onDialogCheck(false) },
-                onClickYes = delete
-            )
-        }
-
         if(status.flagDialog) {
             MsgErrors(status.errors, onCloseDialog, status.failure)
         }
@@ -215,7 +174,6 @@ fun VehicleFullContent(
 @Composable
 fun VehicleOwnSection(
     vehicleList: List<VehicleScreenModel>,
-    onSelectionDelete: (Int, TypeVehicle) -> Unit,
     onNavEquip: () -> Unit,
     onNavDataVehicleOwn: (Int) -> Unit,
 ) {
@@ -244,7 +202,6 @@ fun VehicleOwnSection(
                     onClickEdit = {
                         onNavDataVehicleOwn(it.id)
                     },
-                    onClickDel = { onSelectionDelete(it.id, TypeVehicle.OWN) }
                 )
             }
         }
@@ -266,7 +223,6 @@ fun VehicleOwnSection(
 @Composable
 fun VehicleInvolvedSection(
     vehicleList: List<VehicleScreenModel>,
-    onSelectionDelete: (Int, TypeVehicle) -> Unit,
     onNavPlate: () -> Unit,
     onNavDataVehicleInvolved: (Int) -> Unit,
 ) {
@@ -293,7 +249,6 @@ fun VehicleInvolvedSection(
                     type = TypeVehicle.INVOLVED,
                     model = it,
                     onClickEdit = { onNavDataVehicleInvolved(it.id) },
-                    onClickDel = { onSelectionDelete(it.id, TypeVehicle.INVOLVED) }
                 )
             }
         }
@@ -317,7 +272,6 @@ fun CarItem(
     type: TypeVehicle,
     model: VehicleScreenModel,
     onClickEdit: () -> Unit,
-    onClickDel: () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -343,11 +297,6 @@ fun CarItem(
             TypeVehicle.INVOLVED -> "$TAG_VEHICLE_INVOLVED_FULL_EDIT_BUTTON${model.id}"
         }
 
-        val testTagDelete = when(type){
-            TypeVehicle.OWN -> "$TAG_VEHICLE_OWN_FULL_DELETE_BUTTON${model.id}"
-            TypeVehicle.INVOLVED -> "$TAG_VEHICLE_INVOLVED_FULL_DELETE_BUTTON${model.id}"
-        }
-
         Column(
             modifier = Modifier.width(IntrinsicSize.Max),
         ) {
@@ -363,19 +312,6 @@ fun CarItem(
                     contentDescription = stringResource(id = R.string.text_pattern_edit)
                 )
             }
-            IconButton(
-                onClick = onClickDel,
-                colors = IconButtonDefaults.iconButtonColors(
-                    containerColor = Color.LightGray
-                ),
-                modifier = Modifier.testTag(testTagDelete)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = stringResource(id = R.string.text_pattern_delete),
-                    tint = Color.Red
-                )
-            }
         }
     }
 }
@@ -386,14 +322,8 @@ fun VehicleFullPagePreview() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             VehicleFullContent(
-                typeVehicle = TypeVehicle.OWN,
                 vehicleOwnList = emptyList(),
                 vehicleInvolvedList = emptyList(),
-                idSelection = 0,
-                onSelectionDelete = { _, _ -> },
-                flagDialogCheck = true,
-                onDialogCheck = {},
-                delete = {},
                 onCloseDialog = {},
                 status = UiStatusState(),
                 onNavLocalSupport = {},
@@ -414,7 +344,6 @@ fun VehicleFullPagePreviewWithData() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             VehicleFullContent(
-                typeVehicle = TypeVehicle.OWN,
                 vehicleOwnList = listOf(
                     VehicleScreenModel(
                         id = 1,
@@ -429,11 +358,6 @@ fun VehicleFullPagePreviewWithData() {
                         driver = "123.456.789-00 - ANDERSON DA SILVA DELGADO"
                     )
                 ),
-                idSelection = 0,
-                onSelectionDelete = { _, _ -> },
-                flagDialogCheck = true,
-                onDialogCheck = {},
-                delete = {},
                 onCloseDialog = {},
                 status = UiStatusState(),
                 onNavLocalSupport = {},

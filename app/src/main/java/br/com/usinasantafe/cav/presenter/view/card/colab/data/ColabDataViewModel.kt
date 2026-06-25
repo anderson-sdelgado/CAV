@@ -3,6 +3,7 @@ package br.com.usinasantafe.cav.presenter.view.card.colab.data
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.usinasantafe.cav.domain.usecases.card.DeletePassenger
 import br.com.usinasantafe.cav.domain.usecases.card.GetDescColab
 import br.com.usinasantafe.cav.domain.usecases.card.GetDetail
 import br.com.usinasantafe.cav.domain.usecases.card.GetState
@@ -16,6 +17,7 @@ import br.com.usinasantafe.cav.utils.UiStateWithStatus
 import br.com.usinasantafe.cav.utils.UiStatusState
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import br.com.usinasantafe.cav.utils.onFailureState
+import br.com.usinasantafe.cav.utils.onSuccessStateAccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,6 +32,7 @@ data class ColabDataState(
     val colab: String = "",
     val state: State = State.UNHARMED,
     val detail: String = "",
+    val flagDialogCheck: Boolean = false,
     override val status: UiStatusState = UiStatusState()
 ) : UiStateWithStatus<ColabDataState> {
 
@@ -43,7 +46,8 @@ class ColabDataViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getDescColab: GetDescColab,
     private val getState: GetState,
-    private val getDetail: GetDetail
+    private val getDetail: GetDetail,
+    private val deletePassenger: DeletePassenger
 ) : ViewModel() {
 
     private val flowNote: Int = savedStateHandle[FLOW_NOTE_ARG]!!
@@ -60,6 +64,8 @@ class ColabDataViewModel @Inject constructor(
     }
 
     fun onCloseDialog() = updateState { copy(status = status.copy(flagDialog = false, flagFailure = false)) }
+
+    fun onDialogCheck(flag: Boolean) = updateState { copy(flagDialogCheck = flag) }
 
     init {
         updateState {
@@ -91,4 +97,11 @@ class ColabDataViewModel @Inject constructor(
             .onFailureState(getClassAndMethod(), ::updateState)
     }
 
+    fun delete() = viewModelScope.launch {
+        runCatching {
+            deletePassenger(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+        }
+            .onSuccessStateAccess(::updateState)
+            .onFailureState(getClassAndMethod(), ::updateState)
+    }
 }

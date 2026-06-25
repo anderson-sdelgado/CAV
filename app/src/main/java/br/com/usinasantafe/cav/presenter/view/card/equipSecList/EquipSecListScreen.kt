@@ -45,12 +45,7 @@ fun EquipSecListScreen(
 
             EquipSecListContent(
                 list = uiState.list,
-                idSelection = uiState.idSelection,
-                onSelectionDelete = viewModel::onSelectionDelete,
                 onCloseDialog = viewModel::onCloseDialog,
-                flagDialogCheck = uiState.flagDialogCheck,
-                onDialogCheck = viewModel::onDialogCheck,
-                delete = viewModel::delete,
                 status = uiState.status,
                 onNavDataVehicleOwn = onNavDataVehicleOwn,
                 onNavEquip = onNavEquip,
@@ -64,12 +59,7 @@ fun EquipSecListScreen(
 @Composable
 fun EquipSecListContent(
     list: List<ItemListScreenModel>,
-    idSelection: Int,
-    onSelectionDelete: (Int) -> Unit,
-    flagDialogCheck: Boolean,
-    onDialogCheck: (Boolean) -> Unit,
     onCloseDialog: () -> Unit,
-    delete: () -> Unit,
     status: UiStatusState,
     onNavDataVehicleOwn: () -> Unit,
     onNavEquip: () -> Unit,
@@ -96,33 +86,23 @@ fun EquipSecListContent(
                     onClickEdit = {
                         onNavDataEquip(item.id)
                     },
-                    onClickDel = {
-                        onSelectionDelete(item.id)
-                    }
                 )
             }
         }
         ButtonMaxWidth(R.string.text_pattern_insert, onClick = onNavEquip)
-        Spacer(modifier = Modifier.padding(vertical = 8.dp))
+        Spacer(modifier = Modifier.padding(vertical = 4.dp))
         ButtonMaxWidth(R.string.text_pattern_return, onClick = onNavDataVehicleOwn)
         BackHandler {}
-
-        if(flagDialogCheck){
-            val desc = list.first{ it.id == idSelection }.desc
-            AlertDialogCheckDesign(
-                text = stringResource(
-                    id = R.string.text_check_delete_equip_sec,
-                    desc
-                ),
-                onClickDismiss = { onDialogCheck(false) },
-                onClickYes = delete
-            )
-        }
 
         if(status.flagDialog) {
             MsgErrors(status.errors, onCloseDialog, status.failure)
         }
 
+        LaunchedEffect(status.flagAccess) {
+            if(status.flagAccess) {
+                onNavDataVehicleOwn()
+            }
+        }
     }
 }
 
@@ -133,11 +113,6 @@ fun EquipSecListPagePreview() {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             EquipSecListContent(
                 list = emptyList(),
-                idSelection = 0,
-                onSelectionDelete = {},
-                flagDialogCheck = true,
-                onDialogCheck = {},
-                delete = {},
                 onCloseDialog = {},
                 status = UiStatusState(),
                 onNavDataVehicleOwn = {},
@@ -169,11 +144,6 @@ fun EquipSecListPagePreviewWithData() {
                         desc = "ITEM 3"
                     )
                 ),
-                idSelection = 0,
-                onSelectionDelete = {},
-                flagDialogCheck = true,
-                onDialogCheck = {},
-                delete = {},
                 onCloseDialog = {},
                 status = UiStatusState(),
                 onNavDataVehicleOwn = {},

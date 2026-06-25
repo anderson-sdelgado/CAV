@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ElevatedButton
@@ -22,6 +23,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -327,11 +329,24 @@ fun ButtonMaxWidth(
     id: Int,
     font: Int = 20,
     padding: Int = 12,
+    flagDelete: Boolean = false,
     onClick: () -> Unit
 ) {
+
+    var containerColor: Color = MaterialTheme.colorScheme.primary
+    var contentColor: Color = MaterialTheme.colorScheme.onPrimary
+    if(flagDelete) {
+        containerColor = MaterialTheme.colorScheme.error
+        contentColor = MaterialTheme.colorScheme.onError
+    }
+
     return Button(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = containerColor,
+            contentColor = contentColor
+        )
     ) {
         TextButtonDesign(
             text = stringResource(id = id),
@@ -454,8 +469,7 @@ fun MsgErrors(errors: Errors, onClickOk: () -> Unit, failure: String){
 fun ItemDefaultEditDelListScreenModel(
     id: Int,
     desc: String,
-    onClickEdit: () -> Unit,
-    onClickDel: () -> Unit
+    onClickEdit: () -> Unit
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically
@@ -475,19 +489,6 @@ fun ItemDefaultEditDelListScreenModel(
             Icon(
                 imageVector = Icons.Default.Edit,
                 contentDescription = stringResource(id = R.string.text_pattern_edit)
-            )
-        }
-        IconButton(
-            onClick = onClickDel,
-            colors = IconButtonDefaults.iconButtonColors(
-                containerColor = Color.LightGray
-            ),
-            modifier = Modifier.testTag("tag_item_delete_$id")
-        ) {
-            Icon(
-                imageVector = Icons.Default.Delete,
-                contentDescription = stringResource(id = R.string.text_pattern_delete),
-                tint = Color.Red
             )
         }
     }

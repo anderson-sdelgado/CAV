@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,6 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.lib.FlowNote
+import br.com.usinasantafe.cav.presenter.theme.AlertDialogCheckDesign
 import br.com.usinasantafe.cav.presenter.theme.ButtonMaxWidth
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
@@ -49,6 +51,9 @@ fun EquipDataScreen(
                 flowNote = uiState.flowNote,
                 equip = uiState.equip,
                 detail = uiState.detail,
+                flagDialogCheck = uiState.flagDialogCheck,
+                onDialogCheck = viewModel::onDialogCheck,
+                delete = viewModel::delete,
                 onCloseDialog = viewModel::onCloseDialog,
                 status = uiState.status,
                 onNavEquip = onNavEquip,
@@ -66,6 +71,9 @@ fun EquipDataContent(
     flowNote: FlowNote,
     equip: String,
     detail: String,
+    flagDialogCheck: Boolean,
+    onDialogCheck: (Boolean) -> Unit,
+    delete: () -> Unit,
     onCloseDialog: () -> Unit,
     status: UiStatusState,
     onNavEquip: () -> Unit,
@@ -104,8 +112,16 @@ fun EquipDataContent(
                 )
             }
         }
+        if(flowNote != FlowNote.EQUIP) {
+            ButtonMaxWidth(
+                id = R.string.text_pattern_delete,
+                flagDelete = true
+            ) {
+                onDialogCheck(true)
+            }
+            Spacer(modifier = Modifier.padding(vertical = 4.dp))
+        }
         ButtonMaxWidth(R.string.text_pattern_return) {
-            Log.d("TestDebug", "FLowNote: $flowNote")
             when(flowNote) {
                 FlowNote.EQUIP -> onNavDataVehicleOwn()
                 else -> onNavEquipSecList()
@@ -113,10 +129,29 @@ fun EquipDataContent(
         }
         BackHandler {}
 
+        if(flagDialogCheck){
+            AlertDialogCheckDesign(
+                text = stringResource(
+                    id = R.string.text_check_delete_equip_sec,
+                    equip
+                ),
+                onClickDismiss = { onDialogCheck(false) },
+                onClickYes = delete
+            )
+        }
+
         if(status.flagDialog) {
             MsgErrors(status.errors, onCloseDialog, status.failure)
         }
 
+        LaunchedEffect(status.flagAccess) {
+            if(status.flagAccess) {
+                when(flowNote) {
+                    FlowNote.EQUIP -> onNavDataVehicleOwn()
+                    else -> onNavEquipSecList()
+                }
+            }
+        }
     }
 }
 
@@ -129,6 +164,9 @@ fun EquipDataPagePreview() {
                 flowNote = FlowNote.EQUIP,
                 equip = "2200 - CAMINHAO",
                 detail = "-",
+                flagDialogCheck = true,
+                onDialogCheck = {},
+                delete = {},
                 onCloseDialog = {},
                 status = UiStatusState(),
                 onNavEquip = {},

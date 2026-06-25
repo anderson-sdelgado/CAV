@@ -34,7 +34,6 @@ class EquipSecListViewModelTest {
             )
         ),
         listEquipSec = listEquipSec,
-        deleteEquipSec = deleteEquipSec
     )
 
     @Test
@@ -92,63 +91,6 @@ class EquipSecListViewModelTest {
                         desc = "Test"
                     )
                 )
-            )
-        }
-
-    @Test
-    fun `delete - Check return failure if have error in DeleteEquipSec`() =
-        runTest {
-            whenever(
-                deleteEquipSec(
-                    idSelection = 2,
-                    idMain = 0
-                )
-            ).thenReturn(
-                resultFailure(
-                    context = "DeleteEquipSec",
-                    message = "-",
-                    cause = Exception()
-                )
-            )
-            viewModel.onSelectionDelete(2)
-            viewModel.delete()
-            assertEquals(
-                viewModel.uiState.value.status.flagDialog,
-                true
-            )
-            assertEquals(
-                viewModel.uiState.value.status.failure,
-                "EquipSecListViewModel.delete -> DeleteEquipSec -> java.lang.Exception"
-            )
-            assertEquals(
-                viewModel.uiState.value.status.errors,
-                Errors.EXCEPTION
-            )
-            assertEquals(
-                viewModel.uiState.value.status.flagFailure,
-                true
-            )
-        }
-
-    @Test
-    fun `delete - Check return true if process execute successfully`() =
-        runTest {
-            whenever(
-                listEquipSec(0)
-            ).thenReturn(
-                Result.success(
-                    emptyList()
-                )
-            )
-            viewModel.onSelectionDelete(2)
-            viewModel.delete()
-            verify(deleteEquipSec, atLeastOnce()).invoke(
-                idSelection = 2,
-                idMain = 0
-            )
-            assertEquals(
-                viewModel.uiState.value.list,
-                emptyList()
             )
         }
 

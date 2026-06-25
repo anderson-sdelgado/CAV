@@ -66,6 +66,7 @@ class IInsertCardRepository @Inject constructor(
         call(getClassAndMethod()) {
             colabSharedPreferencesDatasource.setDetail(text).getOrThrow()
             val colabCard = colabSharedPreferencesDatasource.get().getOrThrow()
+            colabSharedPreferencesDatasource.clean().getOrThrow()
             cardSharedPreferencesDatasource.addPassengerColab(colabCard, idMain).getOrThrow()
         }
 

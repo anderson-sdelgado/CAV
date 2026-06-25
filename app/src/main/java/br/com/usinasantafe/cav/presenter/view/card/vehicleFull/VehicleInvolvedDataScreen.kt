@@ -2,6 +2,7 @@ package br.com.usinasantafe.cav.presenter.view.card.vehicleFull
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
+import br.com.usinasantafe.cav.presenter.theme.AlertDialogCheckDesign
 import br.com.usinasantafe.cav.presenter.theme.ButtonMaxWidth
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
@@ -47,6 +49,9 @@ fun VehicleInvolvedDataScreen(
                 vehicle = uiState.vehicle,
                 driver = uiState.driver,
                 passengers = uiState.passengers,
+                flagDialogCheck = uiState.flagDialogCheck,
+                onDialogCheck = viewModel::onDialogCheck,
+                delete = viewModel::delete,
                 onCloseDialog = viewModel::onCloseDialog,
                 status = uiState.status,
                 onNavDataVehicle = onNavDataVehicle,
@@ -64,6 +69,9 @@ fun VehicleForeignDataContent(
     vehicle: String,
     driver: String,
     passengers: String,
+    flagDialogCheck: Boolean,
+    onDialogCheck: (Boolean) -> Unit,
+    delete: () -> Unit,
     onCloseDialog: () -> Unit,
     status: UiStatusState,
     onNavDataVehicle: () -> Unit,
@@ -110,12 +118,35 @@ fun VehicleForeignDataContent(
                 )
             }
         }
+        ButtonMaxWidth(
+            id = R.string.text_pattern_delete,
+            flagDelete = true
+        ) {
+            onDialogCheck(true)
+        }
+        Spacer(modifier = Modifier.padding(vertical = 4.dp))
         ButtonMaxWidth(R.string.text_pattern_return) { onNavMenu() }
+
+        if(flagDialogCheck){
+            AlertDialogCheckDesign(
+                text = stringResource(
+                    id = R.string.text_check_delete_vehicle,
+                    vehicle
+                ),
+                onClickDismiss = { onDialogCheck(false) },
+                onClickYes = delete
+            )
+        }
 
         if(status.flagDialog) {
             MsgErrors(status.errors, onCloseDialog, status.failure)
         }
 
+        LaunchedEffect(status.flagAccess) {
+            if(status.flagAccess) {
+                onNavMenu()
+            }
+        }
     }
 
 }
@@ -129,6 +160,33 @@ fun VehicleForeignDataPagePreview() {
                 vehicle = "ABC1234 - GOL",
                 driver = "123.468.789-00 - ANDERSON DA SILVA DELGADO",
                 passengers = "123.456.789-00 - JOÃO HENRIQUE DA SILVA\n123.456.789-00 - PAULO GUSTAVO DA SILVA",
+                flagDialogCheck = false,
+                onDialogCheck = {},
+                delete = {},
+                onCloseDialog = {},
+                status = UiStatusState(),
+                onNavDataVehicle = {},
+                onNavDataForeign = {},
+                onNavPassengerList = {},
+                onNavMenu = {},
+                modifier = Modifier.padding(innerPadding)
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun VehicleForeignDataPagePreviewWithCheck() {
+    CAVTheme {
+        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+            VehicleForeignDataContent(
+                vehicle = "ABC1234 - GOL",
+                driver = "123.468.789-00 - ANDERSON DA SILVA DELGADO",
+                passengers = "123.456.789-00 - JOÃO HENRIQUE DA SILVA\n123.456.789-00 - PAULO GUSTAVO DA SILVA",
+                flagDialogCheck = true,
+                onDialogCheck = {},
+                delete = {},
                 onCloseDialog = {},
                 status = UiStatusState(),
                 onNavDataVehicle = {},

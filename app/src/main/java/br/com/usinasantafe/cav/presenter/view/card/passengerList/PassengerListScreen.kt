@@ -21,7 +21,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.presenter.model.ItemListScreenModel
-import br.com.usinasantafe.cav.presenter.theme.AlertDialogCheckDesign
 import br.com.usinasantafe.cav.presenter.theme.ButtonMaxWidth
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
@@ -34,8 +33,10 @@ fun PassengerListScreen(
     viewModel: PassengerListViewModel = hiltViewModel(),
     onNavDataVehicleOwn: () -> Unit,
     onNavDataVehicleInvolved: () -> Unit,
+    onNavColab: () -> Unit,
     onNavDataColab: (Int) -> Unit,
-    onNavColab: () -> Unit
+    onNavDocument: () -> Unit,
+    onNavDataInvolved: (Int) -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -48,17 +49,14 @@ fun PassengerListScreen(
             PassengerListContent(
                 flowNote = uiState.flowNote,
                 list = uiState.list,
-                idSelection = uiState.idSelection,
-                onSelectionDelete = viewModel::onSelectionDelete,
-                flagDialogCheck = uiState.flagDialogCheck,
-                onDialogCheck = viewModel::onDialogCheck,
-                delete = viewModel::delete,
                 onCloseDialog = viewModel::onCloseDialog,
                 status = uiState.status,
                 onNavDataVehicleOwn = onNavDataVehicleOwn,
                 onNavDataVehicleInvolved = onNavDataVehicleInvolved,
-                onNavDataColab = onNavDataColab,
                 onNavColab = onNavColab,
+                onNavDataColab = onNavDataColab,
+                onNavDocument = onNavDocument,
+                onNavDataInvolved = onNavDataInvolved,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -69,17 +67,14 @@ fun PassengerListScreen(
 fun PassengerListContent(
     flowNote: FlowNote,
     list: List<ItemListScreenModel>,
-    idSelection: Int,
-    onSelectionDelete: (Int) -> Unit,
-    flagDialogCheck: Boolean,
-    onDialogCheck: (Boolean) -> Unit,
     onCloseDialog: () -> Unit,
-    delete: () -> Unit,
     status: UiStatusState,
     onNavDataVehicleOwn: () -> Unit,
     onNavDataVehicleInvolved: () -> Unit,
     onNavColab: () -> Unit,
     onNavDataColab: (Int) -> Unit,
+    onNavDocument: () -> Unit,
+    onNavDataInvolved: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -100,36 +95,29 @@ fun PassengerListContent(
                     id = item.id,
                     desc = item.desc,
                     onClickEdit = {
-                        onNavDataColab(item.id)
+                        when(flowNote){
+                            FlowNote.PASSENGER_COLAB -> onNavDataColab(item.id)
+                            else -> onNavDataInvolved(item.id)
+                        }
                     },
-                    onClickDel = {
-                        onSelectionDelete(item.id)
-                    }
                 )
             }
         }
-        ButtonMaxWidth(R.string.text_pattern_insert, onClick = onNavColab)
-        Spacer(modifier = Modifier.padding(vertical = 8.dp))
+        ButtonMaxWidth(R.string.text_pattern_insert) {
+            when(flowNote){
+                FlowNote.PASSENGER_COLAB -> onNavColab()
+                else -> onNavDocument()
+            }
+        }
+        Spacer(modifier = Modifier.padding(vertical = 4.dp))
         ButtonMaxWidth(R.string.text_pattern_return) {
             when(flowNote){
                 FlowNote.PASSENGER_COLAB -> onNavDataVehicleOwn()
-                FlowNote.PASSENGER_INVOLVED -> onNavDataVehicleInvolved()
-                else -> {}
+                else -> onNavDataVehicleInvolved()
             }
         }
         BackHandler {}
 
-        if(flagDialogCheck){
-            val desc = list.first{ it.id == idSelection }.desc
-            AlertDialogCheckDesign(
-                text = stringResource(
-                    id = R.string.text_check_delete_passenger,
-                    desc
-                ),
-                onClickDismiss = { onDialogCheck(false) },
-                onClickYes = delete
-            )
-        }
 
         if(status.flagDialog) {
             MsgErrors(status.errors, onCloseDialog, status.failure)
@@ -147,17 +135,14 @@ fun PassengerListPagePreview() {
             PassengerListContent(
                 flowNote = FlowNote.EQUIP,
                 list = emptyList(),
-                idSelection = 0,
-                onSelectionDelete = {},
-                flagDialogCheck = true,
-                onDialogCheck = {},
-                delete = {},
                 onCloseDialog = {},
                 status = UiStatusState(),
                 onNavDataVehicleOwn = {},
                 onNavDataVehicleInvolved = {},
-                onNavDataColab = {},
                 onNavColab = {},
+                onNavDataColab = {},
+                onNavDocument = {},
+                onNavDataInvolved = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

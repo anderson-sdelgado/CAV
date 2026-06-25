@@ -2,6 +2,7 @@ package br.com.usinasantafe.cav.presenter.view.card.colab.data
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,10 +19,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.State
+import br.com.usinasantafe.cav.presenter.theme.AlertDialogCheckDesign
 import br.com.usinasantafe.cav.presenter.theme.ButtonMaxWidth
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.ItemDefaultEditListScreenModel
+import br.com.usinasantafe.cav.presenter.theme.MsgErrors
 import br.com.usinasantafe.cav.utils.UiStatusState
 
 
@@ -51,6 +54,9 @@ fun ColabDataScreen(
                 colab = uiState.colab,
                 state = uiState.state,
                 detail = uiState.detail,
+                flagDialogCheck = uiState.flagDialogCheck,
+                onDialogCheck = viewModel::onDialogCheck,
+                delete = viewModel::delete,
                 onCloseDialog = viewModel::onCloseDialog,
                 status = uiState.status,
                 onNavColab = onNavColab,
@@ -70,6 +76,9 @@ fun ColabDataContent(
     colab: String,
     state: State,
     detail: String,
+    flagDialogCheck: Boolean,
+    onDialogCheck: (Boolean) -> Unit,
+    delete: () -> Unit,
     onCloseDialog: () -> Unit,
     status: UiStatusState,
     onNavColab: () -> Unit,
@@ -128,13 +137,45 @@ fun ColabDataContent(
                 )
             }
         }
+        if(flowNote != FlowNote.COLAB){
+            ButtonMaxWidth(
+                id = R.string.text_pattern_delete,
+                flagDelete = true
+            ) {
+                onDialogCheck(true)
+            }
+            Spacer(modifier = Modifier.padding(vertical = 4.dp))
+        }
         ButtonMaxWidth(R.string.text_pattern_return) {
-//            when(type) {
-//                Type.MAIN -> onNavDataVehicleOwn()
-//                Type.SECONDARY -> onNavPassengerList()
-//            }
+            when(flowNote) {
+                FlowNote.COLAB -> onNavDataVehicleOwn()
+                else -> onNavPassengerList()
+            }
         }
 
+        if(flagDialogCheck){
+            AlertDialogCheckDesign(
+                text = stringResource(
+                    id = R.string.text_check_delete_passenger,
+                    colab
+                ),
+                onClickDismiss = { onDialogCheck(false) },
+                onClickYes = delete
+            )
+        }
+
+        if(status.flagDialog) {
+            MsgErrors(status.errors, onCloseDialog, status.failure)
+        }
+
+        LaunchedEffect(status.flagAccess) {
+            if(status.flagAccess) {
+                when(flowNote) {
+                    FlowNote.COLAB -> onNavDataVehicleOwn()
+                    else -> onNavPassengerList()
+                }
+            }
+        }
     }
 }
 
@@ -148,6 +189,35 @@ fun ColabDataPagePreview() {
                 colab = "19759 - ANDERSON DA SILVA DELGADO",
                 state = State.INJURED,
                 detail = "PERNA MACHUCADA",
+                flagDialogCheck = false,
+                onDialogCheck = {},
+                delete = {},
+                onCloseDialog = {},
+                status = UiStatusState(),
+                onNavColab = {},
+                onNavState = {},
+                onNavDetail = {},
+                onNavDataVehicleOwn = {},
+                onNavPassengerList = {},
+                modifier = Modifier.padding(innerPadding)
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ColabDataPagePreviewWithCheck() {
+    CAVTheme {
+        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+            ColabDataContent(
+                flowNote = FlowNote.EQUIP,
+                colab = "19759 - ANDERSON DA SILVA DELGADO",
+                state = State.INJURED,
+                detail = "PERNA MACHUCADA",
+                flagDialogCheck = true,
+                onDialogCheck = {},
+                delete = {},
                 onCloseDialog = {},
                 status = UiStatusState(),
                 onNavColab = {},

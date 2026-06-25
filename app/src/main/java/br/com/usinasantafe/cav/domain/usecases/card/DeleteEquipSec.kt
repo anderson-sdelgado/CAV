@@ -7,8 +7,8 @@ import javax.inject.Inject
 
 interface DeleteEquipSec {
     suspend operator fun invoke(
-        idSelection: Int,
-        idMain: Int
+        idMain: Int,
+        idSecondary: Int,
     ): Result<Unit>
 }
 
@@ -17,11 +17,11 @@ class IDeleteEquipSec @Inject constructor(
 ): DeleteEquipSec {
 
     override suspend fun invoke(
-        idSelection: Int,
-        idMain: Int
+        idMain: Int,
+        idSecondary: Int
     ): Result<Unit> =
         call(getClassAndMethod()) {
-            cardRepository.deleteEquipSecondary(idMain, idSelection).getOrThrow()
+            cardRepository.deleteEquipSecondary(idMain, idSecondary).getOrThrow()
         }
 
 }

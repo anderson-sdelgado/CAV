@@ -114,13 +114,19 @@ fun NameContent(
                 },
                 modifier = Modifier.weight(1f)
             ) {
-                TextButtonDesign(text = stringResource(id = R.string.text_pattern_cancel))
+                TextButtonDesign(
+                    text = stringResource(id = R.string.text_pattern_return),
+                    padding = 10
+                )
             }
             Button(
                 onClick = set,
                 modifier = Modifier.weight(1f),
             ) {
-                TextButtonDesign(text = stringResource(id = R.string.text_pattern_save))
+                TextButtonDesign(
+                    text = stringResource(id = R.string.text_pattern_save),
+                    padding = 10
+                )
             }
         }
 

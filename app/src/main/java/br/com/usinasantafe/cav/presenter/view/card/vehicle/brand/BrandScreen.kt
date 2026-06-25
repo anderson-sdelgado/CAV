@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
@@ -31,7 +32,7 @@ import br.com.usinasantafe.cav.presenter.theme.MsgErrors
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
 import br.com.usinasantafe.cav.utils.UiStatusState
 
-const val TAG_BRAND_FOREIGN_TEXT_FIELD = "tag_brand_foreign_text_field"
+const val TAG_BRAND_INVOLVED_TEXT_FIELD = "tag_brand_foreign_text_field"
 
 @Composable
 fun BrandScreen(
@@ -80,6 +81,7 @@ fun BrandContent(
     Column(
         modifier = modifier
             .padding(16.dp)
+            .imePadding()
     ) {
         TitleDesign(
             text = stringResource(
@@ -93,7 +95,7 @@ fun BrandContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .testTag(TAG_BRAND_FOREIGN_TEXT_FIELD),
+                .testTag(TAG_BRAND_INVOLVED_TEXT_FIELD),
             textStyle = TextStyle(
                 textAlign = TextAlign.Center,
                 fontSize = 28.sp
@@ -114,13 +116,19 @@ fun BrandContent(
                 },
                 modifier = Modifier.weight(1f)
             ) {
-                TextButtonDesign(text = stringResource(id = R.string.text_pattern_cancel))
+                TextButtonDesign(
+                    text = stringResource(id = R.string.text_pattern_return),
+                    padding = 10
+                )
             }
             Button(
                 onClick = set,
                 modifier = Modifier.weight(1f),
             ) {
-                TextButtonDesign(text = stringResource(id = R.string.text_pattern_save))
+                TextButtonDesign(
+                    text = stringResource(id = R.string.text_pattern_save),
+                    padding = 10
+                )
             }
         }
 

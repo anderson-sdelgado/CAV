@@ -3,16 +3,19 @@ package br.com.usinasantafe.cav.presenter.view.card.vehicleFull
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.usinasantafe.cav.domain.usecases.card.DeleteVehicleOwn
 import br.com.usinasantafe.cav.domain.usecases.card.GetDescColab
 import br.com.usinasantafe.cav.domain.usecases.card.GetDescEquip
 import br.com.usinasantafe.cav.domain.usecases.card.GetDescEquipSec
 import br.com.usinasantafe.cav.domain.usecases.card.GetDescPassengers
 import br.com.usinasantafe.cav.lib.FlowNote
+import br.com.usinasantafe.cav.lib.TypeVehicle
 import br.com.usinasantafe.cav.presenter.Args.ID_MAIN_ARG
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
 import br.com.usinasantafe.cav.utils.UiStatusState
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import br.com.usinasantafe.cav.utils.onFailureState
+import br.com.usinasantafe.cav.utils.onSuccessStateAccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,6 +30,7 @@ data class VehicleOwnDataState(
     val equipSec: String = "",
     val driver: String = "",
     val passengers: String = "",
+    val flagDialogCheck: Boolean = false,
     override val status: UiStatusState = UiStatusState()
 ) : UiStateWithStatus<VehicleOwnDataState> {
 
@@ -41,7 +45,8 @@ class VehicleOwnDataViewModel @Inject constructor(
     private val getDescEquip: GetDescEquip,
     private val getDescEquipSec: GetDescEquipSec,
     private val getDescColab: GetDescColab,
-    private val getDescPassengers: GetDescPassengers
+    private val getDescPassengers: GetDescPassengers,
+    private val deleteVehicleOwn: DeleteVehicleOwn
 ) : ViewModel() {
 
     private val idMain: Int = savedStateHandle[ID_MAIN_ARG]!!
@@ -56,6 +61,8 @@ class VehicleOwnDataViewModel @Inject constructor(
     }
     
     fun onCloseDialog() = updateState { copy(status = status.copy(flagDialog = false)) }
+
+    fun onDialogCheck(flag: Boolean) = updateState { copy(flagDialogCheck = flag) }
 
     init {
         updateState {
@@ -86,5 +93,12 @@ class VehicleOwnDataViewModel @Inject constructor(
             }
             .onFailureState(getClassAndMethod(), ::updateState)
     }
-    
+
+    fun delete() = viewModelScope.launch {
+        runCatching {
+            deleteVehicleOwn(state.idMain).getOrThrow()
+        }
+            .onSuccessStateAccess(::updateState)
+            .onFailureState(getClassAndMethod(), ::updateState)
+    }
 }

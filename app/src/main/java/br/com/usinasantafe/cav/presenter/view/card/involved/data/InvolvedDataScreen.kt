@@ -2,6 +2,7 @@ package br.com.usinasantafe.cav.presenter.view.card.involved.data
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,6 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.lib.FlowNote
+import br.com.usinasantafe.cav.presenter.theme.AlertDialogCheckDesign
 import br.com.usinasantafe.cav.presenter.theme.ButtonMaxWidth
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
@@ -60,6 +62,9 @@ fun InvolvedDataScreen(
                 phone = uiState.phone,
                 address = uiState.address,
                 detail = uiState.detail,
+                flagDialogCheck = uiState.flagDialogCheck,
+                onDialogCheck = viewModel::onDialogCheck,
+                delete = viewModel::delete,
                 onCloseDialog = viewModel::onCloseDialog,
                 status = uiState.status,
                 onNavDocument = onNavDocument,
@@ -86,6 +91,9 @@ fun InvolvedDataContent(
     phone: String,
     address: String,
     detail: String,
+    flagDialogCheck: Boolean,
+    onDialogCheck: (Boolean) -> Unit,
+    delete: () -> Unit,
     onCloseDialog: () -> Unit,
     status: UiStatusState,
     onNavDocument: () -> Unit,
@@ -165,13 +173,47 @@ fun InvolvedDataContent(
                 )
             }
         }
+        if(flowNote != FlowNote.DRIVER) {
+            ButtonMaxWidth(
+                id = R.string.text_pattern_delete,
+                flagDelete = true
+            ) {
+                onDialogCheck(true)
+            }
+            Spacer(modifier = Modifier.padding(vertical = 4.dp))
+        }
         ButtonMaxWidth(R.string.text_pattern_return) {
+            when(flowNote) {
+                FlowNote.DRIVER -> onNavDataVehicleInvolved()
+                FlowNote.PASSENGER_INVOLVED -> onNavPassengerList()
+                else -> onNavMenu()
+            }
+        }
+
+        if(flagDialogCheck){
+            AlertDialogCheckDesign(
+                text = stringResource(
+                    id = R.string.text_check_delete_passenger,
+                    name
+                ),
+                onClickDismiss = { onDialogCheck(false) },
+                onClickYes = delete
+            )
         }
 
         if(status.flagDialog) {
             MsgErrors(status.errors, onCloseDialog, status.failure)
         }
 
+        LaunchedEffect(status.flagAccess) {
+            if(status.flagAccess) {
+                when(flowNote) {
+                    FlowNote.DRIVER -> onNavDataVehicleInvolved()
+                    FlowNote.PASSENGER_INVOLVED -> onNavPassengerList()
+                    else -> onNavMenu()
+                }
+            }
+        }
     }
 }
 
@@ -188,6 +230,42 @@ fun InvolvedDataPagePreview() {
                 phone = "(16) 99999-1234",
                 address = "RUA TESTE, 123 - JARDIM TESTE2",
                 detail = "-",
+                flagDialogCheck = false,
+                onDialogCheck = {},
+                delete = {},
+                onCloseDialog = {},
+                status = UiStatusState(),
+                onNavDocument = {},
+                onNavName = {},
+                onNavPhone = {},
+                onNavDetail = {},
+                onNavState = {},
+                onNavAddress = {},
+                onNavDataVehicleInvolved = {},
+                onNavPassengerList = {},
+                onNavMenu = {},
+                modifier = Modifier.padding(innerPadding)
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun InvolvedDataPagePreviewWithCheck() {
+    CAVTheme {
+        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+            InvolvedDataContent(
+                flowNote = FlowNote.COLAB,
+                document = "123.456.789-00",
+                name = "ANDERSON DA SILVA DELGADO",
+                state = "ILESO",
+                phone = "(16) 99999-1234",
+                address = "RUA TESTE, 123 - JARDIM TESTE2",
+                detail = "-",
+                flagDialogCheck = true,
+                onDialogCheck = {},
+                delete = {},
                 onCloseDialog = {},
                 status = UiStatusState(),
                 onNavDocument = {},

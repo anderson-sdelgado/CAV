@@ -37,7 +37,6 @@ data class EquipSecListState(
 class EquipSecListViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val listEquipSec: ListEquipSec,
-    private val deleteEquipSec: DeleteEquipSec
 ) : ViewModel() {
 
     private val idMain: Int = savedStateHandle[ID_MAIN_ARG]!!
@@ -72,11 +71,4 @@ class EquipSecListViewModel @Inject constructor(
             .onFailureState(getClassAndMethod(), ::updateState)
     }
 
-    fun delete() = viewModelScope.launch {
-        runCatching {
-            deleteEquipSec(state.idSelection, state.idMain).getOrThrow()
-        }
-            .onSuccess { recoverData() }
-            .onFailureState(getClassAndMethod(), ::updateState)
-    }
 }

@@ -8,9 +8,9 @@ import javax.inject.Inject
 
 interface DeletePassenger {
     suspend operator fun invoke(
-        idSelection: Int,
         flowNote: FlowNote,
-        idMain: Int
+        idMain: Int,
+        idSecondary: Int,
     ): Result<Unit>
 }
 
@@ -19,15 +19,15 @@ class IDeletePassenger @Inject constructor(
 ): DeletePassenger {
 
     override suspend fun invoke(
-        idSelection: Int,
         flowNote: FlowNote,
-        idMain: Int
+        idMain: Int,
+        idSecondary: Int,
     ): Result<Unit> =
         call(getClassAndMethod()) {
             with(cardRepository){
                 when (flowNote) {
-                    FlowNote.PASSENGER_COLAB -> deletePassengerColab(idMain, idSelection).getOrThrow()
-                    else -> deletePassengerInvolved(idMain, idSelection).getOrThrow()
+                    FlowNote.PASSENGER_COLAB -> deletePassengerColab(idMain, idSecondary).getOrThrow()
+                    else -> deletePassengerInvolved(idMain, idSecondary).getOrThrow()
                 }
             }
 

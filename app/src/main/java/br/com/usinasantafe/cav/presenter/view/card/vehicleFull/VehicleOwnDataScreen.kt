@@ -2,6 +2,7 @@ package br.com.usinasantafe.cav.presenter.view.card.vehicleFull
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,6 +17,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
+import br.com.usinasantafe.cav.lib.Option
+import br.com.usinasantafe.cav.lib.TypeVehicle
+import br.com.usinasantafe.cav.presenter.model.VehicleScreenModel
+import br.com.usinasantafe.cav.presenter.theme.AlertDialogCheckDesign
 import br.com.usinasantafe.cav.presenter.theme.ButtonMaxWidth
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
@@ -50,6 +55,9 @@ fun VehicleOwnDataScreen(
                 equipSec = uiState.equipSec,
                 driver = uiState.driver,
                 passengers = uiState.passengers,
+                flagDialogCheck = uiState.flagDialogCheck,
+                onDialogCheck = viewModel::onDialogCheck,
+                delete = viewModel::delete,
                 onCloseDialog = viewModel::onCloseDialog,
                 status = uiState.status,
                 onNavDataColab = onNavDataColab,
@@ -69,6 +77,9 @@ fun VehicleOwnDataContent(
     equipSec: String,
     driver: String,
     passengers: String,
+    flagDialogCheck: Boolean,
+    onDialogCheck: (Boolean) -> Unit,
+    delete: () -> Unit,
     onCloseDialog: () -> Unit,
     status: UiStatusState,
     onNavDataEquip: () -> Unit,
@@ -124,12 +135,35 @@ fun VehicleOwnDataContent(
                 )
             }
         }
+        ButtonMaxWidth(
+            id = R.string.text_pattern_delete,
+            flagDelete = true
+        ) {
+            onDialogCheck(true)
+        }
+        Spacer(modifier = Modifier.padding(vertical = 4.dp))
         ButtonMaxWidth(R.string.text_pattern_return) { onNavMenu() }
+
+        if(flagDialogCheck){
+            AlertDialogCheckDesign(
+                text = stringResource(
+                    id = R.string.text_check_delete_equip,
+                    equip
+                ),
+                onClickDismiss = { onDialogCheck(false) },
+                onClickYes = delete
+            )
+        }
 
         if(status.flagDialog) {
             MsgErrors(status.errors, onCloseDialog, status.failure)
         }
 
+        LaunchedEffect(status.flagAccess) {
+            if(status.flagAccess) {
+                onNavMenu()
+            }
+        }
     }
 }
 
@@ -143,6 +177,9 @@ fun VehicleOwnDataPagePreview() {
                 equipSec = "200 - CARRETA\n201 - CARRETA",
                 driver = "19759 - ANDERSON DA SILVA DELGADO",
                 passengers = "18019 - RONALDO GOMES\n123457 - JOSE PAULO",
+                flagDialogCheck = false,
+                onDialogCheck = {},
+                delete = {},
                 onCloseDialog = {},
                 status = UiStatusState(),
                 onNavDataEquip = {},

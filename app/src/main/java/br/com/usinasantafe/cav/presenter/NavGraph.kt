@@ -392,11 +392,6 @@ fun NavigationGraph(
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 },
-                onNavDataColab = {
-                    navActions.navigateToDataVehicleOwn(
-                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
-                    )
-                },
                 onNavDetail = {
                     navActions.navigateToDetail(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
@@ -404,7 +399,14 @@ fun NavigationGraph(
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
-                }
+                },
+                onNavDataColab = {
+                    navActions.navigateToDataColab(
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
+                    )
+                },
             )
         }
 
@@ -418,7 +420,7 @@ fun NavigationGraph(
         ) { entry ->
             ColabDataScreen(
                 onNavColab = {
-                    navActions.navigateToEquip(
+                    navActions.navigateToColab(
                         option = Option.EDIT.ordinal,
                         flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
@@ -630,6 +632,21 @@ fun NavigationGraph(
                     navActions.navigateToDataVehicleInvolved(
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                     )
+                },
+                onNavDocument = {
+                    navActions.navigateToDocument(
+                        option = Option.INSERT.ordinal,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = 0
+                    )
+                },
+                onNavDataInvolved = {
+                    navActions.navigateToDataInvolved(
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = it
+                    )
                 }
             )
         }
@@ -719,7 +736,7 @@ fun NavigationGraph(
         ) { entry ->
             BrandScreen(
                 onNavPlate = {
-                    navActions.navigateToBrand(
+                    navActions.navigateToPlate(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                     )

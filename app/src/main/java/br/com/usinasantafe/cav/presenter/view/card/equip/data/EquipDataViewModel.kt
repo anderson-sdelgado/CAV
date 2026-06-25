@@ -3,6 +3,7 @@ package br.com.usinasantafe.cav.presenter.view.card.equip.data
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.usinasantafe.cav.domain.usecases.card.DeleteEquipSec
 import br.com.usinasantafe.cav.domain.usecases.card.GetDescEquip
 import br.com.usinasantafe.cav.domain.usecases.card.GetDetail
 import br.com.usinasantafe.cav.lib.FlowNote
@@ -14,6 +15,7 @@ import br.com.usinasantafe.cav.utils.UiStateWithStatus
 import br.com.usinasantafe.cav.utils.UiStatusState
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import br.com.usinasantafe.cav.utils.onFailureState
+import br.com.usinasantafe.cav.utils.onSuccessStateAccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,6 +29,7 @@ data class EquipDataState(
     val idSecondary: Int = 0,
     val equip: String = "",
     val detail: String = "",
+    val flagDialogCheck: Boolean = false,
     override val status: UiStatusState = UiStatusState()
 ) : UiStateWithStatus<EquipDataState> {
 
@@ -39,7 +42,8 @@ data class EquipDataState(
 class EquipDataViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getDescEquip: GetDescEquip,
-    private val getDetail: GetDetail
+    private val getDetail: GetDetail,
+    private val deleteEquipSec: DeleteEquipSec
 ) : ViewModel() {
 
     private val flowNote: Int = savedStateHandle[FLOW_NOTE_ARG]!!
@@ -56,6 +60,8 @@ class EquipDataViewModel @Inject constructor(
     }
 
     fun onCloseDialog() = updateState { copy(status = status.copy(flagDialog = false, flagFailure = false)) }
+
+    fun onDialogCheck(flag: Boolean) = updateState { copy(flagDialogCheck = flag) }
 
     init {
         updateState {
@@ -85,5 +91,11 @@ class EquipDataViewModel @Inject constructor(
             .onFailureState(getClassAndMethod(), ::updateState)
     }
 
-
+    fun delete() = viewModelScope.launch {
+        runCatching {
+            deleteEquipSec( state.idMain, state.idSecondary).getOrThrow()
+        }
+            .onSuccessStateAccess(::updateState)
+            .onFailureState(getClassAndMethod(), ::updateState)
+    }
 }
