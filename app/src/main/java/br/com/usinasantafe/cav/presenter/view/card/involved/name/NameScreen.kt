@@ -31,7 +31,7 @@ import br.com.usinasantafe.cav.presenter.theme.MsgErrors
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
 import br.com.usinasantafe.cav.utils.UiStatusState
 
-const val TAG_NAME_FOREIGN_TEXT_FIELD = "tag_name_foreign_text_field"
+const val TAG_NAME_INVOLVED_TEXT_FIELD = "tag_name_involved_text_field"
 
 @Composable
 fun NameScreen(
@@ -93,7 +93,7 @@ fun NameContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .testTag(TAG_NAME_FOREIGN_TEXT_FIELD),
+                .testTag(TAG_NAME_INVOLVED_TEXT_FIELD),
             textStyle = TextStyle(
                 textAlign = TextAlign.Center,
                 fontSize = 28.sp

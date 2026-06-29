@@ -19,7 +19,7 @@ fun msg(levelUpdate: LevelUpdate?, failure: String, tableUpdate: String): String
 }
 
 @Composable
-fun errors(errors: Errors, failure: String, value: String = "", hourMeter: String = "", hourMeterOld: String = ""): String {
+fun errors(errors: Errors, failure: String, value: String = ""): String {
     return when (errors) {
         Errors.FIELD_EMPTY -> {
             if(!value.isEmpty()) return stringResource(

@@ -81,6 +81,7 @@
     <string name="text_option_data_local">OPÇÃO</string>
     <string name="text_item_data_local">ITEM</string>
     <string name="text_edit_driver">MATRICULA MOTORISTA</string>
+    <string name="text_edit_passenger">MATRICULA PASSAGEIRO</string>
     <string name="text_edit_equip">NRO EQUIPAMENTO</string>
     <string name="text_detail">DETALHE</string>
     <string name="text_equip_sec">EQUIP. SECUNDÁRIO(S)</string>

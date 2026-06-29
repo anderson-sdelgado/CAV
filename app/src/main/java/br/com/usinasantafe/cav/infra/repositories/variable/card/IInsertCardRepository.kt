@@ -24,6 +24,7 @@ class IInsertCardRepository @Inject constructor(
 
     override suspend fun setIdEquip(idEquip: Int): EmptyResult =
         call(getClassAndMethod()) {
+            equipSharedPreferencesDatasource.clean().getOrThrow()
             equipSharedPreferencesDatasource.setIdEquip(idEquip).getOrThrow()
         }
 
@@ -104,6 +105,7 @@ class IInsertCardRepository @Inject constructor(
 
     override suspend fun setRegColab(regColab: Long): EmptyResult =
         call(getClassAndMethod()) {
+            colabSharedPreferencesDatasource.clean().getOrThrow()
             colabSharedPreferencesDatasource.setRegColab(regColab).getOrThrow()
         }
 
@@ -119,11 +121,13 @@ class IInsertCardRepository @Inject constructor(
 
     override suspend fun setPlate(text: String): EmptyResult =
         call(getClassAndMethod()) {
+            vehicleSharedPreferencesDatasource.clean().getOrThrow()
             vehicleSharedPreferencesDatasource.setPlate(text).getOrThrow()
         }
 
     override suspend fun setDocument(text: String): EmptyResult =
         call(getClassAndMethod()) {
+            involvedSharedPreferencesDatasource.clean().getOrThrow()
             involvedSharedPreferencesDatasource.setDocument(text).getOrThrow()
         }
 

@@ -35,7 +35,7 @@ import br.com.usinasantafe.cav.presenter.theme.MsgErrors
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
 import br.com.usinasantafe.cav.utils.UiStatusState
 
-const val TAG_PLATE_INVOLVED_TEXT_FIELD = "tag_plate_foreign_text_field"
+const val TAG_PLATE_INVOLVED_TEXT_FIELD = "tag_plate_involved_text_field"
 
 @Composable
 fun PlateScreen(

@@ -68,7 +68,6 @@ class IColabSharedPreferencesDatasource @Inject constructor(
 
     override suspend fun setRegColab(reg: Long): EmptyResult =
         result(getClassAndMethod()) {
-            clean()
             updateModel {
                 this.reg = reg
             }

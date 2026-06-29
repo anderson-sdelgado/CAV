@@ -32,7 +32,7 @@ import br.com.usinasantafe.cav.presenter.theme.MsgErrors
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
 import br.com.usinasantafe.cav.utils.UiStatusState
 
-const val TAG_BRAND_INVOLVED_TEXT_FIELD = "tag_brand_foreign_text_field"
+const val TAG_BRAND_INVOLVED_TEXT_FIELD = "tag_brand_involved_text_field"
 
 @Composable
 fun BrandScreen(

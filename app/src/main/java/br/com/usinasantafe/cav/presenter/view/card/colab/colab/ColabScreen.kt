@@ -81,7 +81,7 @@ fun ColabContent(
     ) {
         TitleDesign(
             text = stringResource(
-                id = R.string.text_edit_driver
+                id = if(flowNote == FlowNote.COLAB) R.string.text_edit_driver else  R.string.text_edit_passenger
             )
         )
         TextFieldDesign(
@@ -104,7 +104,8 @@ fun ColabContent(
         }
 
         if (status.flagDialog) {
-            MsgUpdate(status = status, onClickOk = onCloseDialog, value = stringResource(id = R.string.text_title_attendant))
+            val value =  if(flowNote == FlowNote.COLAB) R.string.text_edit_driver else  R.string.text_edit_passenger
+            MsgUpdate(status = status, onClickOk = onCloseDialog, value = stringResource(id = value))
         }
 
         if (status.flagProgress) {

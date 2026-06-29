@@ -69,7 +69,6 @@ class IEquipSharedPreferencesDatasource @Inject constructor(
 
     override suspend fun setIdEquip(idEquip: Int): EmptyResult =
         result(getClassAndMethod()) {
-            clean()
             updateModel { this.idEquip = idEquip }
         }
 

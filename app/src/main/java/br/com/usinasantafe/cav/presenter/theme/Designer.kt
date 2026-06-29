@@ -457,8 +457,8 @@ fun CheckboxDefault(
 }
 
 @Composable
-fun MsgErrors(errors: Errors, onClickOk: () -> Unit, failure: String){
-    val text = errors(errors, failure)
+fun MsgErrors(errors: Errors, onClickOk: () -> Unit, failure: String, value: String = ""){
+    val text = errors(errors, failure, value)
     AlertDialogSimpleDesign(
         text = text,
         onClickOk = onClickOk,

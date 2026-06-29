@@ -105,7 +105,7 @@ fun EquipContent(
         }
 
         if (status.flagDialog) {
-            MsgUpdate(status = status, onClickOk = onCloseDialog, value = stringResource(id = R.string.text_edit_car))
+            MsgUpdate(status = status, onClickOk = onCloseDialog, value = stringResource(id = R.string.text_edit_equip))
         }
 
         if (status.flagProgress) {

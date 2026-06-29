@@ -67,7 +67,6 @@ class IVehicleSharedPreferencesDatasource @Inject constructor(
 
     override suspend fun setPlate(text: String): EmptyResult =
         result(getClassAndMethod()) {
-            clean()
             updateModel { plate = text }
         }
 

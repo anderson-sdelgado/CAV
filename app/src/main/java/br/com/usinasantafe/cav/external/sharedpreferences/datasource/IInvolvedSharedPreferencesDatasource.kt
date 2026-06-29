@@ -68,7 +68,6 @@ class IInvolvedSharedPreferencesDatasource @Inject constructor(
 
     override suspend fun setDocument(text: String): EmptyResult =
         result(getClassAndMethod()) {
-            clean()
             updateModel { document = text }
         }
 
