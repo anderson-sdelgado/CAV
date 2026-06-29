@@ -39,7 +39,7 @@ class StateColabScreenTest {
             StateScreen(
                 onNavDetail = {},
                 onNavColab = {},
-                onNavName = {},
+                onNavPhone = {},
                 onNavDataColab = {},
                 onNavDataInvolved = {}
             )

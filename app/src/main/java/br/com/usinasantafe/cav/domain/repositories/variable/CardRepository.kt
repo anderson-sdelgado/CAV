@@ -55,6 +55,7 @@ interface InsertCardRepository {
     suspend fun setDocument(text: String): EmptyResult
     suspend fun setStateInvolved(state: State): EmptyResult
     suspend fun setName(text: String): EmptyResult
+    suspend fun setPhone(text: String): EmptyResult
 }
 
 interface RecoverDataCardRepository {

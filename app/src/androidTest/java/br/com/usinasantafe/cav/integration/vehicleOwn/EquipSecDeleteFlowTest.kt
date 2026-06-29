@@ -111,8 +111,6 @@ class EquipSecDeleteFlowTest {
 
             initialRegister()
 
-            val scenario = ActivityScenario.launch(MainActivity::class.java)
-
             Log.d("TestDebug", "Position 1")
 
             composeTestRule.waitUntilTimeout(3_000)

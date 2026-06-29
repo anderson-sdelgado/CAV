@@ -5,6 +5,7 @@ import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferen
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.FlowNote
+import br.com.usinasantafe.cav.lib.Option
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
@@ -43,7 +44,7 @@ class ISetPhoneTest {
         )
         cardSharedPreferencesDatasource.save(data)
         
-        val result = usecase("NEW", FlowNote.DRIVER, 1, 0)
+        val result = usecase("NEW", Option.INSERT, FlowNote.DRIVER, 1, 0)
         assertEquals(result.isSuccess, true)
         
         val modelAfter = cardSharedPreferencesDatasource.get().getOrThrow()
@@ -59,7 +60,7 @@ class ISetPhoneTest {
         )
         cardSharedPreferencesDatasource.save(data)
         
-        val result = usecase("NEW", FlowNote.INVOLVED, 1, 0)
+        val result = usecase("NEW", Option.INSERT, FlowNote.INVOLVED, 1, 0)
         assertEquals(result.isSuccess, true)
         
         val modelAfter = cardSharedPreferencesDatasource.get().getOrThrow()

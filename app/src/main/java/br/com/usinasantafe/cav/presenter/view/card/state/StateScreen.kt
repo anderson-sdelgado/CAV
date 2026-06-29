@@ -45,7 +45,7 @@ const val TAG_DEAD_RADIO_BUTTON = "tag_dead_radio_button"
 fun StateScreen(
     viewModel: StateViewModel = hiltViewModel(),
     onNavColab: () -> Unit,
-    onNavName: () -> Unit,
+    onNavPhone: () -> Unit,
     onNavDetail: () -> Unit,
     onNavDataColab: () -> Unit,
     onNavDataInvolved: () -> Unit
@@ -67,7 +67,7 @@ fun StateScreen(
                 set = viewModel::set,
                 status = uiState.status,
                 onNavColab = onNavColab,
-                onNavName = onNavName,
+                onNavPhone = onNavPhone,
                 onNavDetail = onNavDetail,
                 onNavDataColab = onNavDataColab,
                 onNavDataInvolved = onNavDataInvolved,
@@ -87,7 +87,7 @@ fun StateContent(
     set: () -> Unit,
     status: UiStatusState,
     onNavColab: () -> Unit,
-    onNavName: () -> Unit,
+    onNavPhone: () -> Unit,
     onNavDetail: () -> Unit,
     onNavDataColab: () -> Unit,
     onNavDataInvolved: () -> Unit,
@@ -208,7 +208,7 @@ fun StateContent(
                                 FlowNote.PASSENGER_INVOLVED,
                                 FlowNote.VEHICLE,
                                 FlowNote.WITNESS,
-                                FlowNote.INVOLVED -> onNavName()
+                                FlowNote.INVOLVED -> onNavPhone()
 
                             }
                         }
@@ -290,7 +290,7 @@ fun StatePagePreview() {
                 onNavColab = {},
                 onNavDetail = {},
                 onNavDataColab = {},
-                onNavName = {},
+                onNavPhone = {},
                 onNavDataInvolved = {},
                 modifier = Modifier.padding(innerPadding)
             )

@@ -141,4 +141,9 @@ class IInsertCardRepository @Inject constructor(
             involvedSharedPreferencesDatasource.setName(text).getOrThrow()
         }
 
+    override suspend fun setPhone(text: String): EmptyResult =
+        call(getClassAndMethod()) {
+            involvedSharedPreferencesDatasource.setPhone(text).getOrThrow()
+        }
+
 }

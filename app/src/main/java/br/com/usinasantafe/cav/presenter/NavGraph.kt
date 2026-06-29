@@ -525,7 +525,7 @@ fun NavigationGraph(
                 onNavDocument = {
                     navActions.navigateToDocument(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        flowNote = FlowNote.DRIVER.ordinal,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
@@ -691,8 +691,8 @@ fun NavigationGraph(
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 },
-                onNavName = {
-                    navActions.navigateToName(
+                onNavPhone = {
+                    navActions.navigateToPhone(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
                         flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
@@ -770,7 +770,7 @@ fun NavigationGraph(
                 onNavDetail = {
                     navActions.navigateToDetail(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        flowNote = FlowNote.VEHICLE.ordinal,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )

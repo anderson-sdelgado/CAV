@@ -91,7 +91,12 @@ fun PhoneContent(
         }
 
         if(status.flagDialog) {
-            MsgErrors(status.errors, onCloseDialog, status.failure)
+            MsgErrors(
+                errors =  status.errors,
+                onClickOk = onCloseDialog,
+                failure = status.failure,
+                value = stringResource(id = R.string.text_phone)
+            )
         }
 
     }

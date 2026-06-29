@@ -111,11 +111,15 @@ class PhoneViewModel @Inject constructor(
 
     private fun set() = viewModelScope.launch {
         runCatching {
+            if(state.text.isEmpty()) {
+                updateState { withFailure(getClassAndMethod(), Errors.FIELD_EMPTY) }
+                return@launch
+            }
             if(state.text.length != 15) {
                 updateState { withFailure(getClassAndMethod(), Errors.INVALID) }
                 return@launch
             }
-            setPhone(state.text, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            setPhone(state.text, state.option, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
         }
             .onSuccessStateAccess(::updateState)
             .onFailureState(getClassAndMethod(), ::updateState)
