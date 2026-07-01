@@ -1,11 +1,11 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
+import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.ColabSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.EquipSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.InvolvedSharedPreferencesDatasource
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.VehicleSharedPreferencesDatasource
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.*
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -16,6 +16,8 @@ import org.junit.Rule
 import javax.inject.Inject
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 @HiltAndroidTest
 class ISetDetailTest {
@@ -33,36 +35,255 @@ class ISetDetailTest {
     lateinit var equipSharedPreferencesDatasource: EquipSharedPreferencesDatasource
 
     @Inject
+    lateinit var colabSharedPreferencesDatasource: ColabSharedPreferencesDatasource
+
+    @Inject
     lateinit var involvedSharedPreferencesDatasource: InvolvedSharedPreferencesDatasource
+
+    @Inject
+    lateinit var vehicleSharedPreferencesDatasource: VehicleSharedPreferencesDatasource
 
     @Before
     fun init() {
         hiltRule.inject()
     }
 
+    // region INSERT FLOWS
+
     @Test
-    fun check_set_detail_insert_equip() = runTest {
+    fun check_insert_detail_equip() = runTest {
         equipSharedPreferencesDatasource.clean()
-        val result = usecase("DETAIL", Option.INSERT, FlowNote.EQUIP, 0, 0)
-        assertEquals(result.isSuccess, true)
-        
-        val resultGet = equipSharedPreferencesDatasource.get()
-        assertEquals(resultGet.getOrNull()?.detail, "DETAIL")
+        val result = usecase("DET EQUIP", Option.INSERT, FlowNote.EQUIP, 0, 0)
+        assertTrue(result.isSuccess)
+        assertEquals(equipSharedPreferencesDatasource.get().getOrNull()?.detail, "DET EQUIP")
     }
 
     @Test
-    fun check_update_detail_involved() = runTest {
-        val data = CardSharedPreferencesModel(
-            involvedList = listOf(
-                InvolvedSharedPreferencesModel(id = 1, detail = "OLD")
-            )
-        )
-        cardSharedPreferencesDatasource.save(data)
+    fun check_insert_detail_equip_sec() = runTest {
+        cardSharedPreferencesDatasource.save(CardSharedPreferencesModel(
+            vehicleOwnList = listOf(VehicleOwnSharedPreferencesModel(id = 1))
+        ))
+        // setDetailEquipSec consolidates data from equipSharedPreferencesDatasource
+        equipSharedPreferencesDatasource.setIdEquip(100)
         
-        val result = usecase("NEW", Option.EDIT, FlowNote.INVOLVED, 1, 0)
-        assertEquals(result.isSuccess, true)
+        val result = usecase("DET EQUIP SEC", Option.INSERT, FlowNote.EQUIP_SEC, 1, 0)
+        assertTrue(result.isSuccess)
+        assertEquals(result.getOrNull(), 1) // Returns the new ID of the equipSec
         
-        val modelAfter = cardSharedPreferencesDatasource.get().getOrThrow()
-        assertEquals(modelAfter.involvedList[0].detail, "NEW")
+        val model = cardSharedPreferencesDatasource.get().getOrThrow()
+        assertEquals(model.vehicleOwnList[0].equipSecList[0].detail, "DET EQUIP SEC")
+        assertEquals(model.vehicleOwnList[0].equipSecList[0].idEquip, 100)
+        
+        // Check if temporary datasource was cleaned
+        assertNull(equipSharedPreferencesDatasource.get().getOrNull()?.idEquip)
     }
+
+    @Test
+    fun check_insert_detail_colab() = runTest {
+        // setDetailColab consolidates data from equipSharedPreferencesDatasource and colabSharedPreferencesDatasource
+        equipSharedPreferencesDatasource.setIdEquip(100)
+        colabSharedPreferencesDatasource.setRegColab(12345L)
+        
+        val result = usecase("DET COLAB", Option.INSERT, FlowNote.COLAB, 0, 0)
+        assertTrue(result.isSuccess)
+        assertEquals(result.getOrNull(), 1) // Returns the new ID of the vehicleOwn
+        
+        val model = cardSharedPreferencesDatasource.get().getOrThrow()
+        assertEquals(model.vehicleOwnList[0].colab.detail, "DET COLAB")
+        assertEquals(model.vehicleOwnList[0].colab.reg, 12345L)
+        assertEquals(model.vehicleOwnList[0].equip.idEquip, 100)
+        
+        // Check if temporary datasources were cleaned
+        assertNull(equipSharedPreferencesDatasource.get().getOrNull()?.idEquip)
+        assertNull(colabSharedPreferencesDatasource.get().getOrNull()?.reg)
+    }
+
+    @Test
+    fun check_insert_detail_passenger_colab() = runTest {
+        cardSharedPreferencesDatasource.save(CardSharedPreferencesModel(
+            vehicleOwnList = listOf(VehicleOwnSharedPreferencesModel(id = 1))
+        ))
+        colabSharedPreferencesDatasource.setRegColab(12345L)
+        
+        val result = usecase("DET PASS COLAB", Option.INSERT, FlowNote.PASSENGER_COLAB, 1, 0)
+        assertTrue(result.isSuccess)
+        assertEquals(result.getOrNull(), 1)
+        
+        val model = cardSharedPreferencesDatasource.get().getOrThrow()
+        assertEquals(model.vehicleOwnList[0].passengerColabList[0].detail, "DET PASS COLAB")
+        assertEquals(model.vehicleOwnList[0].passengerColabList[0].reg, 12345L)
+        
+        // Check if temporary datasource was cleaned
+        assertNull(colabSharedPreferencesDatasource.get().getOrNull()?.reg)
+    }
+
+    @Test
+    fun check_insert_detail_vehicle() = runTest {
+        vehicleSharedPreferencesDatasource.clean()
+        val result = usecase("DET VEHICLE", Option.INSERT, FlowNote.VEHICLE, 0, 0)
+        assertTrue(result.isSuccess)
+        assertEquals(vehicleSharedPreferencesDatasource.get().getOrNull()?.detail, "DET VEHICLE")
+    }
+
+    @Test
+    fun check_insert_detail_involved() = runTest {
+        involvedSharedPreferencesDatasource.setDocument("123")
+        
+        val result = usecase("DET INVOLVED", Option.INSERT, FlowNote.INVOLVED, 0, 0)
+        assertTrue(result.isSuccess)
+        assertEquals(result.getOrNull(), 1)
+        
+        val model = cardSharedPreferencesDatasource.get().getOrThrow()
+        assertEquals(model.involvedList[0].detail, "DET INVOLVED")
+        assertEquals(model.involvedList[0].document, "123")
+        
+        assertNull(involvedSharedPreferencesDatasource.get().getOrNull()?.document)
+    }
+
+    @Test
+    fun check_insert_detail_witness() = runTest {
+        involvedSharedPreferencesDatasource.setDocument("123")
+        
+        val result = usecase("DET WITNESS", Option.INSERT, FlowNote.WITNESS, 0, 0)
+        assertTrue(result.isSuccess)
+        assertEquals(result.getOrNull(), 1)
+        
+        val model = cardSharedPreferencesDatasource.get().getOrThrow()
+        assertEquals(model.witnessList[0].detail, "DET WITNESS")
+        assertEquals(model.witnessList[0].document, "123")
+        
+        assertNull(involvedSharedPreferencesDatasource.get().getOrNull()?.document)
+    }
+
+    @Test
+    fun check_insert_detail_passenger_involved() = runTest {
+        cardSharedPreferencesDatasource.save(CardSharedPreferencesModel(
+            vehicleInvolvedList = listOf(VehicleInvolvedSharedPreferencesModel(id = 1))
+        ))
+        involvedSharedPreferencesDatasource.setDocument("123")
+        
+        val result = usecase("DET PASS INV", Option.INSERT, FlowNote.PASSENGER_INVOLVED, 1, 0)
+        assertTrue(result.isSuccess)
+        assertEquals(result.getOrNull(), 1)
+        
+        val model = cardSharedPreferencesDatasource.get().getOrThrow()
+        assertEquals(model.vehicleInvolvedList[0].passengerInvolvedList[0].detail, "DET PASS INV")
+        assertEquals(model.vehicleInvolvedList[0].passengerInvolvedList[0].document, "123")
+        
+        assertNull(involvedSharedPreferencesDatasource.get().getOrNull()?.document)
+    }
+
+    @Test
+    fun check_insert_detail_driver() = runTest {
+        vehicleSharedPreferencesDatasource.setPlate("ABC-1234")
+        involvedSharedPreferencesDatasource.setDocument("123")
+        
+        val result = usecase("DET DRIVER", Option.INSERT, FlowNote.DRIVER, 0, 0)
+        assertTrue(result.isSuccess)
+        assertEquals(result.getOrNull(), 1)
+        
+        val model = cardSharedPreferencesDatasource.get().getOrThrow()
+        assertEquals(model.vehicleInvolvedList[0].driver.detail, "DET DRIVER")
+        assertEquals(model.vehicleInvolvedList[0].driver.document, "123")
+        assertEquals(model.vehicleInvolvedList[0].vehicle.plate, "ABC-1234")
+        
+        assertNull(vehicleSharedPreferencesDatasource.get().getOrNull()?.plate)
+        assertNull(involvedSharedPreferencesDatasource.get().getOrNull()?.document)
+    }
+
+    // endregion
+
+    // region EDIT FLOWS
+
+    @Test
+    fun check_edit_detail_equip() = runTest {
+        cardSharedPreferencesDatasource.save(CardSharedPreferencesModel(
+            vehicleOwnList = listOf(VehicleOwnSharedPreferencesModel(id = 1, equip = EquipSharedPreferencesModel(detail = "OLD")))
+        ))
+        val result = usecase("NEW", Option.EDIT, FlowNote.EQUIP, 1, 0)
+        assertTrue(result.isSuccess)
+        assertEquals(cardSharedPreferencesDatasource.get().getOrThrow().vehicleOwnList[0].equip.detail, "NEW")
+    }
+
+    @Test
+    fun check_edit_detail_equip_sec() = runTest {
+        cardSharedPreferencesDatasource.save(CardSharedPreferencesModel(
+            vehicleOwnList = listOf(VehicleOwnSharedPreferencesModel(id = 1, equipSecList = listOf(EquipSharedPreferencesModel(id = 10, detail = "OLD"))))
+        ))
+        val result = usecase("NEW", Option.EDIT, FlowNote.EQUIP_SEC, 1, 10)
+        assertTrue(result.isSuccess)
+        assertEquals(cardSharedPreferencesDatasource.get().getOrThrow().vehicleOwnList[0].equipSecList[0].detail, "NEW")
+    }
+
+    @Test
+    fun check_edit_detail_colab() = runTest {
+        cardSharedPreferencesDatasource.save(CardSharedPreferencesModel(
+            vehicleOwnList = listOf(VehicleOwnSharedPreferencesModel(id = 1, colab = ColabSharedPreferencesModel(detail = "OLD")))
+        ))
+        val result = usecase("NEW", Option.EDIT, FlowNote.COLAB, 1, 0)
+        assertTrue(result.isSuccess)
+        assertEquals(cardSharedPreferencesDatasource.get().getOrThrow().vehicleOwnList[0].colab.detail, "NEW")
+    }
+
+    @Test
+    fun check_edit_detail_passenger_colab() = runTest {
+        cardSharedPreferencesDatasource.save(CardSharedPreferencesModel(
+            vehicleOwnList = listOf(VehicleOwnSharedPreferencesModel(id = 1, passengerColabList = listOf(ColabSharedPreferencesModel(id = 10, detail = "OLD"))))
+        ))
+        val result = usecase("NEW", Option.EDIT, FlowNote.PASSENGER_COLAB, 1, 10)
+        assertTrue(result.isSuccess)
+        assertEquals(cardSharedPreferencesDatasource.get().getOrThrow().vehicleOwnList[0].passengerColabList[0].detail, "NEW")
+    }
+
+    @Test
+    fun check_edit_detail_vehicle() = runTest {
+        cardSharedPreferencesDatasource.save(CardSharedPreferencesModel(
+            vehicleInvolvedList = listOf(VehicleInvolvedSharedPreferencesModel(id = 1, vehicle = VehicleSharedPreferencesModel(detail = "OLD")))
+        ))
+        val result = usecase("NEW", Option.EDIT, FlowNote.VEHICLE, 1, 0)
+        assertTrue(result.isSuccess)
+        assertEquals(cardSharedPreferencesDatasource.get().getOrThrow().vehicleInvolvedList[0].vehicle.detail, "NEW")
+    }
+
+    @Test
+    fun check_edit_detail_driver() = runTest {
+        cardSharedPreferencesDatasource.save(CardSharedPreferencesModel(
+            vehicleInvolvedList = listOf(VehicleInvolvedSharedPreferencesModel(id = 1, driver = InvolvedSharedPreferencesModel(detail = "OLD")))
+        ))
+        val result = usecase("NEW", Option.EDIT, FlowNote.DRIVER, 1, 0)
+        assertTrue(result.isSuccess)
+        assertEquals(cardSharedPreferencesDatasource.get().getOrThrow().vehicleInvolvedList[0].driver.detail, "NEW")
+    }
+
+    @Test
+    fun check_edit_detail_passenger_involved() = runTest {
+        cardSharedPreferencesDatasource.save(CardSharedPreferencesModel(
+            vehicleInvolvedList = listOf(VehicleInvolvedSharedPreferencesModel(id = 1, passengerInvolvedList = listOf(InvolvedSharedPreferencesModel(id = 10, detail = "OLD"))))
+        ))
+        val result = usecase("NEW", Option.EDIT, FlowNote.PASSENGER_INVOLVED, 1, 10)
+        assertTrue(result.isSuccess)
+        assertEquals(cardSharedPreferencesDatasource.get().getOrThrow().vehicleInvolvedList[0].passengerInvolvedList[0].detail, "NEW")
+    }
+
+    @Test
+    fun check_edit_detail_involved() = runTest {
+        cardSharedPreferencesDatasource.save(CardSharedPreferencesModel(
+            involvedList = listOf(InvolvedSharedPreferencesModel(id = 1, detail = "OLD"))
+        ))
+        val result = usecase("NEW", Option.EDIT, FlowNote.INVOLVED, 1, 0)
+        assertTrue(result.isSuccess)
+        assertEquals(cardSharedPreferencesDatasource.get().getOrThrow().involvedList[0].detail, "NEW")
+    }
+
+    @Test
+    fun check_edit_detail_witness() = runTest {
+        cardSharedPreferencesDatasource.save(CardSharedPreferencesModel(
+            witnessList = listOf(InvolvedSharedPreferencesModel(id = 1, detail = "OLD"))
+        ))
+        val result = usecase("NEW", Option.EDIT, FlowNote.WITNESS, 1, 0)
+        assertTrue(result.isSuccess)
+        assertEquals(cardSharedPreferencesDatasource.get().getOrThrow().witnessList[0].detail, "NEW")
+    }
+
+    // endregion
 }

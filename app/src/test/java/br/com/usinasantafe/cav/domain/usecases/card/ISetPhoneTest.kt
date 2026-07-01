@@ -2,6 +2,7 @@ package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.lib.FlowNote
+import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.test.runTest
 import org.mockito.Mockito.mock
@@ -33,6 +34,7 @@ class ISetPhoneTest {
             )
             val result = usecase(
                 phone = "16999999999",
+                option = Option.INSERT,
                 flowNote = FlowNote.DRIVER,
                 idMain = 1,
                 idSecondary = 0
@@ -64,6 +66,7 @@ class ISetPhoneTest {
         runTest {
             val result = usecase(
                 phone = "16999999999",
+                option = Option.INSERT,
                 flowNote = FlowNote.DRIVER,
                 idMain = 1,
                 idSecondary = 0
@@ -96,6 +99,7 @@ class ISetPhoneTest {
             )
             val result = usecase(
                 phone = "16999999999",
+                option = Option.INSERT,
                 flowNote = FlowNote.INVOLVED,
                 idMain = 2,
                 idSecondary = 0
@@ -127,6 +131,7 @@ class ISetPhoneTest {
         runTest {
             val result = usecase(
                 phone = "16999999999",
+                option = Option.INSERT,
                 flowNote = FlowNote.INVOLVED,
                 idMain = 2,
                 idSecondary = 0
@@ -159,6 +164,7 @@ class ISetPhoneTest {
             )
             val result = usecase(
                 phone = "16999999999",
+                option = Option.INSERT,
                 flowNote = FlowNote.WITNESS,
                 idMain = 3,
                 idSecondary = 0
@@ -190,6 +196,7 @@ class ISetPhoneTest {
         runTest {
             val result = usecase(
                 phone = "16999999999",
+                option = Option.INSERT,
                 flowNote = FlowNote.WITNESS,
                 idMain = 3,
                 idSecondary = 0
@@ -222,6 +229,7 @@ class ISetPhoneTest {
             )
             val result = usecase(
                 phone = "16999999999",
+                option = Option.INSERT,
                 flowNote = FlowNote.PASSENGER_INVOLVED,
                 idMain = 4,
                 idSecondary = 5
@@ -253,6 +261,7 @@ class ISetPhoneTest {
         runTest {
             val result = usecase(
                 phone = "16999999999",
+                option = Option.INSERT,
                 flowNote = FlowNote.PASSENGER_INVOLVED,
                 idMain = 4,
                 idSecondary = 5

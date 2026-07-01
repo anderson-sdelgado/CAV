@@ -284,7 +284,7 @@ fun NavigationGraph(
                 },
                 onNavPassengerList = {
                     navActions.navigateToPassengerList(
-                        flow = FlowNote.PASSENGER_COLAB.ordinal,
+                        flowNote = FlowNote.PASSENGER_COLAB.ordinal,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                     )
                 },
@@ -380,7 +380,7 @@ fun NavigationGraph(
             ColabScreen(
                 onNavPassengerList = {
                     navActions.navigateToPassengerList(
-                        flow = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                     )
                 },
@@ -445,7 +445,7 @@ fun NavigationGraph(
                 },
                 onNavPassengerList = {
                     navActions.navigateToPassengerList(
-                        flow = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                     )
                 },
@@ -498,7 +498,7 @@ fun NavigationGraph(
                 },
                 onNavPassengerList = {
                     navActions.navigateToPassengerList(
-                        flow = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                     )
                 },
@@ -531,7 +531,7 @@ fun NavigationGraph(
                     )
                 },
                 onNavDataVehicle = {
-                    navActions.navigateToDataVehicleInvolved(
+                    navActions.navigateToDataVehicle(
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
                     )
                 },
@@ -720,7 +720,7 @@ fun NavigationGraph(
                     )
                 },
                 onNavDataVehicle = {
-                    navActions.navigateToDataVehicleInvolved(
+                    navActions.navigateToDataVehicle(
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                     )
                 }
@@ -750,7 +750,7 @@ fun NavigationGraph(
                     )
                 },
                 onNavDataVehicle = {
-                    navActions.navigateToDataVehicleOwn(
+                    navActions.navigateToDataVehicle(
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
                     )
                 }
@@ -776,8 +776,10 @@ fun NavigationGraph(
                     )
                 },
                 onNavDataInvolved = {
-                    navActions.navigateToDataVehicle(
+                    navActions.navigateToDataInvolved(
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 },
                 onNavName = {
@@ -786,6 +788,12 @@ fun NavigationGraph(
                         flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
+                    )
+                },
+                onNavPassenger = {
+                    navActions.navigateToPassengerList(
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                     )
                 }
             )
@@ -839,7 +847,7 @@ fun NavigationGraph(
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                     )
                 },
-                onNavDataInvolved = {
+                onNavDataDriver = {
                     navActions.navigateToDataInvolved(
                         flowNote = FlowNote.DRIVER.ordinal,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
@@ -848,7 +856,7 @@ fun NavigationGraph(
                 },
                 onNavPassengerList = {
                     navActions.navigateToPassengerList(
-                        flow = FlowNote.PASSENGER_INVOLVED.ordinal,
+                        flowNote = FlowNote.PASSENGER_INVOLVED.ordinal,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                     )
                 },
@@ -957,7 +965,7 @@ fun NavigationGraph(
                 onNavMenu = {},
                 onNavPassengerList = {
                     navActions.navigateToPassengerList(
-                        flow = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                     )
                 }

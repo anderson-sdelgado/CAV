@@ -2,6 +2,7 @@ package br.com.usinasantafe.cav.presenter.view.card.equip.data
 
 import androidx.lifecycle.SavedStateHandle
 import br.com.usinasantafe.cav.MainCoroutineRule
+import br.com.usinasantafe.cav.domain.usecases.card.DeleteEquipSec
 import br.com.usinasantafe.cav.domain.usecases.card.GetDescEquip
 import br.com.usinasantafe.cav.domain.usecases.card.GetDetail
 import br.com.usinasantafe.cav.lib.Errors
@@ -26,6 +27,7 @@ class EquipDataViewModelTest {
 
     private val getDescEquip = mock<GetDescEquip>()
     private val getDetail = mock<GetDetail>()
+    private val deleteEquipSec = mock<DeleteEquipSec>()
     private val viewModel = EquipDataViewModel(
         savedStateHandle = SavedStateHandle(
             mapOf(
@@ -35,7 +37,8 @@ class EquipDataViewModelTest {
             )
         ),
         getDescEquip = getDescEquip,
-        getDetail = getDetail
+        getDetail = getDetail,
+        deleteEquipSec = deleteEquipSec
     )
     
     @Test

@@ -1,6 +1,7 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.domain.entities.stable.Equip
+import br.com.usinasantafe.cav.domain.entities.variable.EquipCard
 import br.com.usinasantafe.cav.domain.repositories.stable.EquipRepository
 import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.utils.resultFailure
@@ -52,7 +53,16 @@ class IGetDescEquipSecTest {
             whenever(
                 cardRepository.listEquipSecondary(1)
             ).thenReturn(
-                Result.success(listOf(10, 20))
+                Result.success(
+                    listOf(
+                        EquipCard(
+                            idEquip = 10
+                        ),
+                        EquipCard(
+                            idEquip = 20
+                        )
+                    )
+                )
             )
             whenever(
                 equipRepository.listByIdList(listOf(10, 20))
@@ -108,7 +118,16 @@ class IGetDescEquipSecTest {
             whenever(
                 cardRepository.listEquipSecondary(1)
             ).thenReturn(
-                Result.success(listOf(10, 20))
+                Result.success(
+                    listOf(
+                        EquipCard(
+                            idEquip = 10
+                        ),
+                        EquipCard(
+                            idEquip = 20
+                        )
+                    )
+                )
             )
             whenever(
                 equipRepository.listByIdList(listOf(10, 20))

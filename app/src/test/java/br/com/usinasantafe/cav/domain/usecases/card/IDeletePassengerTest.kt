@@ -31,9 +31,9 @@ class IDeletePassengerTest {
                 )
             )
             val result = usecase(
-                idSelection = 1,
                 flowNote = FlowNote.PASSENGER_COLAB,
-                idMain = 10
+                idMain = 10,
+                idSecondary = 1
             )
             assertEquals(
                 result.isFailure,
@@ -53,9 +53,9 @@ class IDeletePassengerTest {
     fun `Check return correct if function execute successfully - FlowNote PASSENGER_COLAB`() =
         runTest {
             val result = usecase(
-                idSelection = 1,
                 flowNote = FlowNote.PASSENGER_COLAB,
-                idMain = 10
+                idMain = 10,
+                idSecondary = 1
             )
             verify(cardRepository, atLeastOnce()).deletePassengerColab(1, 10)
             assertEquals(
@@ -77,9 +77,9 @@ class IDeletePassengerTest {
                 )
             )
             val result = usecase(
-                idSelection = 1,
                 flowNote = FlowNote.PASSENGER_INVOLVED,
-                idMain = 10
+                idMain = 10,
+                idSecondary = 1
             )
             assertEquals(
                 result.isFailure,
@@ -99,9 +99,9 @@ class IDeletePassengerTest {
     fun `Check return correct if function execute successfully - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             val result = usecase(
-                idSelection = 1,
                 flowNote = FlowNote.PASSENGER_INVOLVED,
-                idMain = 10
+                idMain = 10,
+                idSecondary = 1
             )
             verify(cardRepository, atLeastOnce()).deletePassengerInvolved(1, 10)
             assertEquals(

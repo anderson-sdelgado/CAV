@@ -32,6 +32,7 @@ fun DocumentScreen(
     onNavDetail: () -> Unit,
     onNavDataInvolved: () -> Unit,
     onNavName: () -> Unit,
+    onNavPassenger: () -> Unit
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -43,6 +44,7 @@ fun DocumentScreen(
 
             DocumentContent(
                 option = uiState.option,
+                flowNote = uiState.flowNote,
                 text = uiState.text,
                 onTextField = viewModel::onTextField,
                 onCloseDialog = viewModel::onCloseDialog,
@@ -50,6 +52,7 @@ fun DocumentScreen(
                 onNavDetail = onNavDetail,
                 onNavDataInvolved = onNavDataInvolved,
                 onNavName = onNavName,
+                onNavPassenger = onNavPassenger,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -59,6 +62,7 @@ fun DocumentScreen(
 @Composable
 fun DocumentContent(
     option: Option,
+    flowNote: FlowNote,
     text: String,
     onTextField: (String, TypeButton) -> Unit,
     onCloseDialog: () -> Unit,
@@ -66,6 +70,7 @@ fun DocumentContent(
     onNavDetail: () -> Unit,
     onNavDataInvolved: () -> Unit,
     onNavName: () -> Unit,
+    onNavPassenger: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -86,7 +91,12 @@ fun DocumentContent(
         )
         BackHandler {
             when(option) {
-                Option.INSERT -> onNavDetail()
+                Option.INSERT -> {
+                    when(flowNote) {
+                        FlowNote.PASSENGER_INVOLVED -> onNavPassenger()
+                        else -> onNavDetail()
+                    }
+                }
                 Option.EDIT -> onNavDataInvolved()
             }
         }
@@ -105,7 +115,10 @@ fun DocumentContent(
 
     LaunchedEffect(status.flagAccess) {
         if(status.flagAccess) {
-            onNavName()
+            when(option) {
+                Option.INSERT -> onNavName()
+                Option.EDIT -> onNavDataInvolved()
+            }
         }
     }
 }
@@ -117,6 +130,7 @@ fun DocumentPagePreview() {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             DocumentContent(
                 option = Option.INSERT,
+                flowNote = FlowNote.PASSENGER_INVOLVED,
                 text = "",
                 onTextField = { _, _ -> },
                 onCloseDialog = {},
@@ -124,6 +138,7 @@ fun DocumentPagePreview() {
                 onNavDetail = {},
                 onNavDataInvolved = {},
                 onNavName = {},
+                onNavPassenger = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

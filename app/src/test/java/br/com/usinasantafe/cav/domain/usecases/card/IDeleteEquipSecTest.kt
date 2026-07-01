@@ -30,8 +30,8 @@ class IDeleteEquipSecTest {
                 )
             )
             val result = usecase(
-                idSelection = 2,
-                idMain = 1
+                idMain = 1,
+                idSecondary = 2
             )
             assertEquals(
                 result.isFailure,
@@ -51,8 +51,8 @@ class IDeleteEquipSecTest {
     fun `Check return correct if function execute successfully`() =
         runTest {
             val result = usecase(
-                idSelection = 2,
-                idMain = 1
+                idMain = 1,
+                idSecondary = 2
             )
             verify(cardRepository, atLeastOnce()).deleteEquipSecondary(1, 2)
             assertEquals(

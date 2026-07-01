@@ -41,7 +41,7 @@ class IInsertCardRepository @Inject constructor(
             cardSharedPreferencesDatasource.addEquipSec(equipCard, idMain).getOrThrow()
         }
 
-    override suspend fun setDetailDriver(text: String): EmptyResult =
+    override suspend fun setDetailDriver(text: String): Result<Int> =
         call(getClassAndMethod()) {
             involvedSharedPreferencesDatasource.setDetail(text).getOrThrow()
             val vehicle = vehicleSharedPreferencesDatasource.get().getOrThrow()

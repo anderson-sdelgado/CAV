@@ -122,8 +122,7 @@ fun ColabDataContent(
                         State.DEAD -> stringResource(
                             id = R.string.text_item_dead
                         )
-                    }
-                    ,
+                    },
                     tag = TAG_STATE_DATA_COLAB_EDIT_BUTTON,
                     onClickEdit = onNavState
                 )

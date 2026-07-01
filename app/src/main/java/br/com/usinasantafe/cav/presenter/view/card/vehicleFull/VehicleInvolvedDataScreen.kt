@@ -25,15 +25,15 @@ import br.com.usinasantafe.cav.presenter.theme.ItemDefaultEditListScreenModel
 import br.com.usinasantafe.cav.presenter.theme.MsgErrors
 import br.com.usinasantafe.cav.utils.UiStatusState
 
-const val TAG_VEHICLE_FOREIGN_EDIT_BUTTON = "tag_vehicle_foreign_edit_button"
-const val TAG_DRIVER_FOREIGN_EDIT_BUTTON = "tag_driver_foreign_edit_button"
-const val TAG_PASSENGERS_FOREIGN_EDIT_BUTTON = "tag_passengers_foreign_edit_button"
+const val TAG_VEHICLE_INVOLVED_EDIT_BUTTON = "tag_vehicle_involved_edit_button"
+const val TAG_DRIVER_INVOLVED_EDIT_BUTTON = "tag_driver_involved_edit_button"
+const val TAG_PASSENGERS_INVOLVED_EDIT_BUTTON = "tag_passengers_involved_edit_button"
 
 @Composable
 fun VehicleInvolvedDataScreen(
     viewModel: VehicleInvolvedDataViewModel = hiltViewModel(),
     onNavDataVehicle: () -> Unit,
-    onNavDataInvolved: () -> Unit,
+    onNavDataDriver: () -> Unit,
     onNavPassengerList: () -> Unit,
     onNavMenu: () -> Unit,
 ) {
@@ -55,7 +55,7 @@ fun VehicleInvolvedDataScreen(
                 onCloseDialog = viewModel::onCloseDialog,
                 status = uiState.status,
                 onNavDataVehicle = onNavDataVehicle,
-                onNavDataForeign = onNavDataInvolved,
+                onNavDataDriver = onNavDataDriver,
                 onNavPassengerList = onNavPassengerList,
                 onNavMenu = onNavMenu,
                 modifier = Modifier.padding(innerPadding)
@@ -75,7 +75,7 @@ fun VehicleForeignDataContent(
     onCloseDialog: () -> Unit,
     status: UiStatusState,
     onNavDataVehicle: () -> Unit,
-    onNavDataForeign: () -> Unit,
+    onNavDataDriver: () -> Unit,
     onNavPassengerList: () -> Unit,
     onNavMenu: () -> Unit,
     modifier: Modifier = Modifier
@@ -97,7 +97,7 @@ fun VehicleForeignDataContent(
                 ItemDefaultEditListScreenModel(
                     id = R.string.text_vehicle,
                     desc = vehicle,
-                    tag = TAG_VEHICLE_FOREIGN_EDIT_BUTTON,
+                    tag = TAG_VEHICLE_INVOLVED_EDIT_BUTTON,
                     onClickEdit = onNavDataVehicle
                 )
             }
@@ -105,15 +105,15 @@ fun VehicleForeignDataContent(
                 ItemDefaultEditListScreenModel(
                     id = R.string.text_driver,
                     desc = driver,
-                    tag = TAG_DRIVER_FOREIGN_EDIT_BUTTON,
-                    onClickEdit = onNavDataForeign
+                    tag = TAG_DRIVER_INVOLVED_EDIT_BUTTON,
+                    onClickEdit = onNavDataDriver
                 )
             }
             item {
                 ItemDefaultEditListScreenModel(
                     id = R.string.text_passenger,
                     desc = passengers,
-                    tag = TAG_PASSENGERS_FOREIGN_EDIT_BUTTON,
+                    tag = TAG_PASSENGERS_INVOLVED_EDIT_BUTTON,
                     onClickEdit = onNavPassengerList
                 )
             }
@@ -166,7 +166,7 @@ fun VehicleForeignDataPagePreview() {
                 onCloseDialog = {},
                 status = UiStatusState(),
                 onNavDataVehicle = {},
-                onNavDataForeign = {},
+                onNavDataDriver = {},
                 onNavPassengerList = {},
                 onNavMenu = {},
                 modifier = Modifier.padding(innerPadding)
@@ -190,7 +190,7 @@ fun VehicleForeignDataPagePreviewWithCheck() {
                 onCloseDialog = {},
                 status = UiStatusState(),
                 onNavDataVehicle = {},
-                onNavDataForeign = {},
+                onNavDataDriver = {},
                 onNavPassengerList = {},
                 onNavMenu = {},
                 modifier = Modifier.padding(innerPadding)

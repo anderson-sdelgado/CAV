@@ -1,6 +1,7 @@
 package br.com.usinasantafe.cav.infra.repositories.variable.card
 
 import br.com.usinasantafe.cav.domain.entities.variable.ColabCard
+import br.com.usinasantafe.cav.domain.entities.variable.EquipCard
 import br.com.usinasantafe.cav.domain.entities.variable.Involved
 import br.com.usinasantafe.cav.domain.entities.variable.Vehicle
 import br.com.usinasantafe.cav.domain.entities.variable.VehicleInvolved
@@ -10,6 +11,7 @@ import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.ColabSharedPre
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.EquipSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.InvolvedSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.VehicleSharedPreferencesDatasource
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.State
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.test.runTest
@@ -688,10 +690,22 @@ class IRecoverDataCardRepositoryTest {
     @Test
     fun `listIdEquipSecondary(idMain) - Check return correct if function execute successfully`() =
         runTest {
-            whenever(cardSharedPreferencesDatasource.listEquipSecondary(1)).thenReturn(Result.success(listOf(1, 2)))
+            whenever(cardSharedPreferencesDatasource.listEquipSecondary(1))
+                .thenReturn(
+                    Result.success(
+                        listOf(
+                            EquipCard(
+                                id = 1
+                            ),
+                            EquipCard(
+                                id = 2
+                            )
+                        )
+                    )
+                )
             val result = repository.listEquipSecondary(1)
             assertEquals(result.isSuccess, true)
-            assertEquals(result.getOrNull(), listOf(1, 2))
+            assertEquals(result.getOrNull(), listOf(EquipCard(id = 1), EquipCard(id = 2)))
         }
 
     @Test

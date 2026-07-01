@@ -243,28 +243,28 @@ class PassengerInsertFlowTest {
             composeTestRule.onNodeWithTag(TAG_PASSENGERS_OWN_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 76")
+            Log.d("TestDebug", "Position 13")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 77")
+            Log.d("TestDebug", "Position 14")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_PASSENGERS_OWN_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 78")
+            Log.d("TestDebug", "Position 15")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("INSERIR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 79")
+            Log.d("TestDebug", "Position 16")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -272,14 +272,14 @@ class PassengerInsertFlowTest {
                 activity.onBackPressedDispatcher.onBackPressed()
             }
 
-            Log.d("TestDebug", "Position 80")
+            Log.d("TestDebug", "Position 17")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("INSERIR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 81")
+            Log.d("TestDebug", "Position 18")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -298,21 +298,21 @@ class PassengerInsertFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 82")
+            Log.d("TestDebug", "Position 19")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 83")
+            Log.d("TestDebug", "Position 20")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 84")
+            Log.d("TestDebug", "Position 21")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -321,21 +321,21 @@ class PassengerInsertFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 85")
+            Log.d("TestDebug", "Position 22")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 84")
+            Log.d("TestDebug", "Position 23")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 86")
+            Log.d("TestDebug", "Position 24")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -344,21 +344,21 @@ class PassengerInsertFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 87")
+            Log.d("TestDebug", "Position 25")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 88")
+            Log.d("TestDebug", "Position 26")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_PASSENGERS_OWN_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 89")
+            Log.d("TestDebug", "Position 27")
 
             composeTestRule.waitUntilTimeout(20_000)
 

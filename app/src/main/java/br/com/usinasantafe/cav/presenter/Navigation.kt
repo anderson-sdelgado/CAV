@@ -234,10 +234,10 @@ class NavigationActions(private val navController: NavHostController) {
     }
 
     fun navigateToPassengerList(
-        flow: Int,
+        flowNote: Int,
         idMain: Int,
     ){
-        navController.navigate("$PASSENGER_LIST_SCREEN/$flow/$idMain")
+        navController.navigate("$PASSENGER_LIST_SCREEN/$flowNote/$idMain")
     }
 
     fun navigateToState(

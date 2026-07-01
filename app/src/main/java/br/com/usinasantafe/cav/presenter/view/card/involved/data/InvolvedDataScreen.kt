@@ -18,6 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.lib.FlowNote
+import br.com.usinasantafe.cav.lib.State
 import br.com.usinasantafe.cav.presenter.theme.AlertDialogCheckDesign
 import br.com.usinasantafe.cav.presenter.theme.ButtonMaxWidth
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
@@ -87,7 +88,7 @@ fun InvolvedDataContent(
     flowNote: FlowNote,
     document: String,
     name: String,
-    state: String,
+    state: State,
     phone: String,
     address: String,
     detail: String,
@@ -140,7 +141,17 @@ fun InvolvedDataContent(
                 item {
                     ItemDefaultEditListScreenModel(
                         id = R.string.text_state,
-                        desc = state,
+                        desc = when(state) {
+                            State.UNHARMED -> stringResource(
+                                id = R.string.text_item_unharmed
+                            )
+                            State.INJURED -> stringResource(
+                                id = R.string.text_item_injured
+                            )
+                            State.DEAD -> stringResource(
+                                id = R.string.text_item_dead
+                            )
+                        },
                         tag = TAG_STATE_DATA_INVOLVED_EDIT_BUTTON,
                         onClickEdit = onNavState
                     )
@@ -226,7 +237,7 @@ fun InvolvedDataPagePreview() {
                 flowNote = FlowNote.COLAB,
                 document = "123.456.789-00",
                 name = "ANDERSON DA SILVA DELGADO",
-                state = "ILESO",
+                state = State.INJURED,
                 phone = "(16) 99999-1234",
                 address = "RUA TESTE, 123 - JARDIM TESTE2",
                 detail = "-",
@@ -259,7 +270,7 @@ fun InvolvedDataPagePreviewWithCheck() {
                 flowNote = FlowNote.COLAB,
                 document = "123.456.789-00",
                 name = "ANDERSON DA SILVA DELGADO",
-                state = "ILESO",
+                state = State.UNHARMED,
                 phone = "(16) 99999-1234",
                 address = "RUA TESTE, 123 - JARDIM TESTE2",
                 detail = "-",

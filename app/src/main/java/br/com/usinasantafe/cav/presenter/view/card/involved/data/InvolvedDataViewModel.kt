@@ -4,7 +4,15 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.usinasantafe.cav.domain.usecases.card.DeletePassenger
+import br.com.usinasantafe.cav.domain.usecases.card.GetAddress
+import br.com.usinasantafe.cav.domain.usecases.card.GetDetail
+import br.com.usinasantafe.cav.domain.usecases.card.GetDocument
+import br.com.usinasantafe.cav.domain.usecases.card.GetName
+import br.com.usinasantafe.cav.domain.usecases.card.GetPhone
+import br.com.usinasantafe.cav.domain.usecases.card.GetState
 import br.com.usinasantafe.cav.lib.FlowNote
+import br.com.usinasantafe.cav.lib.Option
+import br.com.usinasantafe.cav.lib.State
 import br.com.usinasantafe.cav.presenter.Args.FLOW_NOTE_ARG
 import br.com.usinasantafe.cav.presenter.Args.ID_MAIN_ARG
 import br.com.usinasantafe.cav.presenter.Args.ID_SECONDARY_ARG
@@ -25,7 +33,7 @@ data class InvolvedDataState(
     val idSecondary: Int = 0,
     val document: String = "",
     val name: String = "",
-    val state: String = "",
+    val state: State = State.UNHARMED,
     val phone: String = "",
     val address: String = "",
     val detail: String = "",
@@ -41,6 +49,12 @@ data class InvolvedDataState(
 @HiltViewModel
 class InvolvedDataViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    private val getDocument: GetDocument,
+    private val getName: GetName,
+    private val getState: GetState,
+    private val getPhone: GetPhone,
+    private val getAddress: GetAddress,
+    private val getDetail: GetDetail,
     private val deletePassenger: DeletePassenger
 ) : ViewModel() {
 
@@ -72,6 +86,39 @@ class InvolvedDataViewModel @Inject constructor(
     }
 
     fun recoverData() = viewModelScope.launch {
+
+        data class RecoverInvolved(
+            val document: String,
+            val name: String,
+            val state: State,
+            val phone: String,
+            val address: String,
+            val detail: String
+        )
+
+        runCatching {
+            RecoverInvolved(
+                document = getDocument(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow(),
+                name = getName(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow(),
+                state = getState(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow(),
+                phone = getPhone(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow(),
+                address = getAddress(state.flowNote, state.idMain, state.idSecondary).getOrThrow(),
+                detail = getDetail(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            )
+        }
+            .onSuccess {
+                updateState {
+                    copy(
+                        document = it.document,
+                        name = it.name,
+                        state = it.state,
+                        phone = it.phone,
+                        address = it.address,
+                        detail = it.detail
+                    )
+                }
+            }
+            .onFailureState(getClassAndMethod(), ::updateState)
 
     }
 

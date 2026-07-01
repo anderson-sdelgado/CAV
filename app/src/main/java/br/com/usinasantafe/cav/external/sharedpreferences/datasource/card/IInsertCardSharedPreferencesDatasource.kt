@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.external.sharedpreferences.datasource.card
 
+import android.util.Log
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.InsertCardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabSharedPreferencesModel
@@ -75,6 +76,7 @@ class IInsertCardSharedPreferencesDatasource @Inject constructor(
                 list.add(entity)
                 this.vehicleInvolvedList = list
             }
+            Log.d("TestDebug", "Id Interno: $id")
             id
         }
 

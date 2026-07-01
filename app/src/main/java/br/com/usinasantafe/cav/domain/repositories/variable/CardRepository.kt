@@ -41,7 +41,7 @@ interface InsertCardRepository {
     suspend fun setIdEquip(idEquip: Int): EmptyResult
     suspend fun setDetailEquip(text: String): EmptyResult
     suspend fun setDetailEquipSec(text: String, idMain: Int): Result<Int>
-    suspend fun setDetailDriver(text: String): EmptyResult
+    suspend fun setDetailDriver(text: String): Result<Int>
     suspend fun setDetailColab(text: String): Result<Int>
     suspend fun setDetailPassengerColab(text: String, idMain: Int): Result<Int>
     suspend fun setDetailVehicle(text: String): EmptyResult

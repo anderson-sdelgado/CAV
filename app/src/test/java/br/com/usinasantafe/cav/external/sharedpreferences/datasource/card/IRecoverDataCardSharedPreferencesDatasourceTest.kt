@@ -3,6 +3,7 @@ package br.com.usinasantafe.cav.external.sharedpreferences.datasource.card
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.test.core.app.ApplicationProvider
+import br.com.usinasantafe.cav.domain.entities.variable.EquipCard
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.*
@@ -465,7 +466,7 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
             cardDatasource.save(CardSharedPreferencesModel(vehicleOwnList = list))
             
             val result = datasource.listEquipSecondary(1)
-            assertEquals(result.getOrNull(), listOf(10, 20))
+            assertEquals(result.getOrNull(), listOf(EquipCard(id = 10), EquipCard(id = 20)))
         }
 
     @Test

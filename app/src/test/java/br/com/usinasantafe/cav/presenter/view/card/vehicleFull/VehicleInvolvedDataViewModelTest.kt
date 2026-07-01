@@ -3,6 +3,7 @@ package br.com.usinasantafe.cav.presenter.view.card.vehicleFull
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.usinasantafe.cav.MainCoroutineRule
+import br.com.usinasantafe.cav.domain.usecases.card.DeleteVehicleInvolved
 import br.com.usinasantafe.cav.domain.usecases.card.GetDescDriver
 import br.com.usinasantafe.cav.domain.usecases.card.GetDescPassengers
 import br.com.usinasantafe.cav.domain.usecases.card.GetDescVehicle
@@ -28,6 +29,8 @@ class VehicleInvolvedDataViewModelTest {
     private val getDescVehicle = mock<GetDescVehicle>()
     private val getDescDriver = mock<GetDescDriver>()
     private val getDescPassengers = mock<GetDescPassengers>()
+    private val deleteVehicleInvolved = mock<DeleteVehicleInvolved>()
+
     private val viewModel = VehicleInvolvedDataViewModel(
         savedStateHandle = SavedStateHandle(
             mapOf(
@@ -36,7 +39,8 @@ class VehicleInvolvedDataViewModelTest {
         ),
         getDescVehicle = getDescVehicle,
         getDescDriver = getDescDriver,
-        getDescPassengers = getDescPassengers
+        getDescPassengers = getDescPassengers,
+        deleteVehicleInvolved = deleteVehicleInvolved
     )
 
     @Test

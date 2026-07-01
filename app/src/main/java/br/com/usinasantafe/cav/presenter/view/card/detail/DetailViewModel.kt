@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.presenter.view.card.detail
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
