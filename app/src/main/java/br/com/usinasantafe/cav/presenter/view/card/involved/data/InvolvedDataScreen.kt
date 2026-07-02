@@ -114,7 +114,12 @@ fun InvolvedDataContent(
     ) {
         TitleDesign(
             text = stringResource(
-                id = R.string.text_data_people
+                id = when(flowNote) {
+                    FlowNote.DRIVER -> R.string.text_data_driver
+                    FlowNote.INVOLVED -> R.string.text_data_involved
+                    FlowNote.WITNESS -> R.string.text_data_witness
+                    else -> R.string.text_data_passenger
+                }
             )
         )
         LazyColumn(

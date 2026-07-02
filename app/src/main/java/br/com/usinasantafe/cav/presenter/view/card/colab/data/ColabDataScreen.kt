@@ -94,7 +94,10 @@ fun ColabDataContent(
     ) {
         TitleDesign(
             text = stringResource(
-                id = R.string.text_data_colab
+                id = when(flowNote) {
+                    FlowNote.COLAB -> R.string.text_data_colab
+                    else -> R.string.text_data_passenger
+                }
             )
         )
         LazyColumn(

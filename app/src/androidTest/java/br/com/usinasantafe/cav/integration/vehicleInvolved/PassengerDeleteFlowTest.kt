@@ -41,17 +41,12 @@ import br.com.usinasantafe.cav.presenter.view.card.involved.data.TAG_NAME_DATA_I
 import br.com.usinasantafe.cav.presenter.view.card.involved.data.TAG_PHONE_DATA_INVOLVED_EDIT_BUTTON
 import br.com.usinasantafe.cav.presenter.view.card.involved.data.TAG_STATE_DATA_INVOLVED_EDIT_BUTTON
 import br.com.usinasantafe.cav.presenter.view.card.involved.name.TAG_NAME_INVOLVED_TEXT_FIELD
-import br.com.usinasantafe.cav.presenter.view.card.menu.TAG_VEHICLE_INVOLVED_FULL_EDIT_BUTTON
 import br.com.usinasantafe.cav.presenter.view.card.menu.TAG_VEHICLE_INVOLVED_FULL_INSERT_BUTTON
 import br.com.usinasantafe.cav.presenter.view.card.state.TAG_DEAD_RADIO_BUTTON
 import br.com.usinasantafe.cav.presenter.view.card.state.TAG_INJURED_RADIO_BUTTON
 import br.com.usinasantafe.cav.presenter.view.card.vehicle.brand.TAG_BRAND_INVOLVED_TEXT_FIELD
-import br.com.usinasantafe.cav.presenter.view.card.vehicle.data.TAG_BRAND_DATA_VEHICLE_EDIT_BUTTON
-import br.com.usinasantafe.cav.presenter.view.card.vehicle.data.TAG_DETAIL_DATA_VEHICLE_EDIT_BUTTON
-import br.com.usinasantafe.cav.presenter.view.card.vehicle.data.TAG_PLATE_DATA_VEHICLE_EDIT_BUTTON
 import br.com.usinasantafe.cav.presenter.view.card.vehicle.plate.TAG_PLATE_INVOLVED_TEXT_FIELD
-import br.com.usinasantafe.cav.presenter.view.card.vehicleFull.TAG_DRIVER_INVOLVED_EDIT_BUTTON
-import br.com.usinasantafe.cav.presenter.view.card.vehicleFull.TAG_VEHICLE_INVOLVED_EDIT_BUTTON
+import br.com.usinasantafe.cav.presenter.view.card.vehicleFull.TAG_PASSENGERS_INVOLVED_EDIT_BUTTON
 import br.com.usinasantafe.cav.utils.dataLocalList
 import br.com.usinasantafe.cav.utils.itemDataLocalList
 import br.com.usinasantafe.cav.utils.natureList
@@ -71,7 +66,7 @@ import javax.inject.Inject
 import kotlin.time.Duration.Companion.minutes
 
 @HiltAndroidTest
-class DriverEditFlowTest {
+class PassengerDeleteFlowTest {
 
     @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)
@@ -127,8 +122,6 @@ class DriverEditFlowTest {
         ) {
 
             initialRegister()
-
-            val scenario = ActivityScenario.launch(MainActivity::class.java)
 
             Log.d("TestDebug", "Position 1")
 
@@ -310,71 +303,134 @@ class DriverEditFlowTest {
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithTag(TAG_DRIVER_INVOLVED_EDIT_BUTTON)
+            composeTestRule.onNodeWithTag(TAG_PASSENGERS_INVOLVED_EDIT_BUTTON)
                 .performClick()
 
             Log.d("TestDebug", "Position 16")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithText("RETORNAR")
+            composeTestRule.onNodeWithText("INSERIR")
                 .performClick()
 
             Log.d("TestDebug", "Position 17")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithTag(TAG_DRIVER_INVOLVED_EDIT_BUTTON)
+            composeTestRule.onNodeWithTag("button_1")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_2")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_3")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_4")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_5")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_6")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_7")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_8")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_9")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_0")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_9")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
             Log.d("TestDebug", "Position 18")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithTag(TAG_DOCUMENT_DATA_INVOLVED_EDIT_BUTTON)
+            composeTestRule.onNodeWithTag(TAG_NAME_INVOLVED_TEXT_FIELD)
+                .performTextInput("JOÃO PEDRO HENRIQUE")
+            composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
             Log.d("TestDebug", "Position 19")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            scenario.onActivity { activity ->
-                activity.onBackPressedDispatcher.onBackPressed()
-            }
+            composeTestRule.onNodeWithTag("button_1")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_6")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_9")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_9")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_9")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_9")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_9")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_1")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_2")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_3")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_4")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_OK")
+                .performClick()
 
             Log.d("TestDebug", "Position 20")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithTag(TAG_DOCUMENT_DATA_INVOLVED_EDIT_BUTTON)
+            composeTestRule.onNodeWithTag(TAG_INJURED_RADIO_BUTTON)
+                .performClick()
+            composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
             Log.d("TestDebug", "Position 21")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithTag("button_CLEAN")
+            composeTestRule.onNodeWithTag(TAG_DETAIL_TEXT_FIELD)
+                .performTextInput("TESTE PASSAGEIRO")
+            composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
-            composeTestRule.onNodeWithTag("button_CLEAN")
+
+            Log.d("TestDebug", "Position 22")
+
+            ///////////////////////////////////////////////////////////////////////////////////////
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
-            composeTestRule.onNodeWithTag("button_CLEAN")
+
+            Log.d("TestDebug", "Position 23")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
-            composeTestRule.onNodeWithTag("button_CLEAN")
+
+            Log.d("TestDebug", "Position 24")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithTag(TAG_PASSENGERS_INVOLVED_EDIT_BUTTON)
                 .performClick()
-            composeTestRule.onNodeWithTag("button_CLEAN")
+
+            Log.d("TestDebug", "Position 25")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("INSERIR")
                 .performClick()
-            composeTestRule.onNodeWithTag("button_CLEAN")
-                .performClick()
-            composeTestRule.onNodeWithTag("button_CLEAN")
-                .performClick()
-            composeTestRule.onNodeWithTag("button_CLEAN")
-                .performClick()
-            composeTestRule.onNodeWithTag("button_CLEAN")
-                .performClick()
-            composeTestRule.onNodeWithTag("button_CLEAN")
-                .performClick()
-            composeTestRule.onNodeWithTag("button_CLEAN")
-                .performClick()
+
+            Log.d("TestDebug", "Position 26")
+
+            composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag("button_1")
                 .performClick()
@@ -401,116 +457,18 @@ class DriverEditFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 22")
-
-            composeTestRule.waitUntilTimeout(3_000)
-
-            composeTestRule.onNodeWithTag(TAG_NAME_DATA_INVOLVED_EDIT_BUTTON)
-                .performClick()
-
-            Log.d("TestDebug", "Position 23")
-
-            composeTestRule.waitUntilTimeout(3_000)
-
-            composeTestRule.onNodeWithText("RETORNAR")
-                .performClick()
-
-            Log.d("TestDebug", "Position 24")
-
-            composeTestRule.waitUntilTimeout(3_000)
-
-            composeTestRule.onNodeWithTag(TAG_NAME_DATA_INVOLVED_EDIT_BUTTON)
-                .performClick()
-
-            Log.d("TestDebug", "Position 25")
-
-            composeTestRule.waitUntilTimeout(3_000)
-
-            composeTestRule.onNodeWithTag(TAG_NAME_INVOLVED_TEXT_FIELD)
-                .performTextClearance()
-            composeTestRule.onNodeWithTag(TAG_NAME_INVOLVED_TEXT_FIELD)
-                .performTextInput("TESTE DE EDIÇÃO DE NOME")
-            composeTestRule.onNodeWithText("SALVAR")
-                .performClick()
-
-            Log.d("TestDebug", "Position 26")
-
-            composeTestRule.waitUntilTimeout(3_000)
-
-            composeTestRule.onNodeWithTag(TAG_STATE_DATA_INVOLVED_EDIT_BUTTON)
-                .performClick()
-
             Log.d("TestDebug", "Position 27")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithText("RETORNAR")
+            composeTestRule.onNodeWithTag(TAG_NAME_INVOLVED_TEXT_FIELD)
+                .performTextInput("SEGUNDO PASSAGEIRO")
+            composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
             Log.d("TestDebug", "Position 28")
 
             composeTestRule.waitUntilTimeout(3_000)
-
-            composeTestRule.onNodeWithTag(TAG_STATE_DATA_INVOLVED_EDIT_BUTTON)
-                .performClick()
-
-            Log.d("TestDebug", "Position 29")
-
-            composeTestRule.waitUntilTimeout(3_000)
-
-            composeTestRule.onNodeWithTag(TAG_DEAD_RADIO_BUTTON)
-                .performClick()
-            composeTestRule.onNodeWithText("SALVAR")
-                .performClick()
-
-            Log.d("TestDebug", "Position 30")
-
-            composeTestRule.waitUntilTimeout(3_000)
-
-            composeTestRule.onNodeWithTag(TAG_PHONE_DATA_INVOLVED_EDIT_BUTTON)
-                .performClick()
-
-            Log.d("TestDebug", "Position 31")
-
-            composeTestRule.waitUntilTimeout(3_000)
-
-            scenario.onActivity { activity ->
-                activity.onBackPressedDispatcher.onBackPressed()
-            }
-
-            Log.d("TestDebug", "Position 32")
-
-            composeTestRule.waitUntilTimeout(3_000)
-
-            composeTestRule.onNodeWithTag(TAG_PHONE_DATA_INVOLVED_EDIT_BUTTON)
-                .performClick()
-
-            Log.d("TestDebug", "Position 33")
-
-            composeTestRule.waitUntilTimeout(3_000)
-
-            composeTestRule.onNodeWithTag("button_CLEAN")
-                .performClick()
-            composeTestRule.onNodeWithTag("button_CLEAN")
-                .performClick()
-            composeTestRule.onNodeWithTag("button_CLEAN")
-                .performClick()
-            composeTestRule.onNodeWithTag("button_CLEAN")
-                .performClick()
-            composeTestRule.onNodeWithTag("button_CLEAN")
-                .performClick()
-            composeTestRule.onNodeWithTag("button_CLEAN")
-                .performClick()
-            composeTestRule.onNodeWithTag("button_CLEAN")
-                .performClick()
-            composeTestRule.onNodeWithTag("button_CLEAN")
-                .performClick()
-            composeTestRule.onNodeWithTag("button_CLEAN")
-                .performClick()
-            composeTestRule.onNodeWithTag("button_CLEAN")
-                .performClick()
-            composeTestRule.onNodeWithTag("button_CLEAN")
-                .performClick()
 
             composeTestRule.onNodeWithTag("button_1")
                 .performClick()
@@ -537,83 +495,74 @@ class DriverEditFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
+            Log.d("TestDebug", "Position 29")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithTag(TAG_DEAD_RADIO_BUTTON)
+                .performClick()
+            composeTestRule.onNodeWithText("SALVAR")
+                .performClick()
+
+            Log.d("TestDebug", "Position 30")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithTag(TAG_DETAIL_TEXT_FIELD)
+                .performTextInput("DETALHE SEGUNDO PASSAGEIRO")
+            composeTestRule.onNodeWithText("SALVAR")
+                .performClick()
+
+            Log.d("TestDebug", "Position 31")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("RETORNAR")
+                .performClick()
+
+            Log.d("TestDebug", "Position 32")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("RETORNAR")
+                .performClick()
+
+            Log.d("TestDebug", "Position 33")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithTag(TAG_PASSENGERS_INVOLVED_EDIT_BUTTON)
+                .performClick()
+
             Log.d("TestDebug", "Position 34")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithTag(TAG_ADDRESS_DATA_INVOLVED_EDIT_BUTTON)
+            composeTestRule.onNodeWithTag("tag_item_edit_1")
                 .performClick()
 
             Log.d("TestDebug", "Position 35")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithText("RETORNAR")
+            composeTestRule.onNodeWithText("EXCLUIR")
                 .performClick()
 
             Log.d("TestDebug", "Position 36")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithTag(TAG_ADDRESS_DATA_INVOLVED_EDIT_BUTTON)
+            composeTestRule.onNodeWithText("SIM")
                 .performClick()
 
             Log.d("TestDebug", "Position 37")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithTag(TAG_ADDRESS_INVOLVED_TEXT_FIELD)
-                .performTextInput("TESTE DE EDIÇÃO DE ENDEREÇO")
-            composeTestRule.onNodeWithText("SALVAR")
+            composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
             Log.d("TestDebug", "Position 38")
-
-            composeTestRule.waitUntilTimeout(3_000)
-
-            composeTestRule.onNodeWithTag(TAG_DETAIL_DATA_INVOLVED_EDIT_BUTTON)
-                .performClick()
-
-            Log.d("TestDebug", "Position 39")
-
-            composeTestRule.waitUntilTimeout(3_000)
-
-            composeTestRule.onNodeWithText("RETORNAR")
-                .performClick()
-
-            Log.d("TestDebug", "Position 40")
-
-            composeTestRule.waitUntilTimeout(3_000)
-
-            composeTestRule.onNodeWithTag(TAG_DETAIL_DATA_INVOLVED_EDIT_BUTTON)
-                .performClick()
-
-            Log.d("TestDebug", "Position 41")
-
-            composeTestRule.waitUntilTimeout(3_000)
-
-            composeTestRule.onNodeWithTag(TAG_DETAIL_TEXT_FIELD)
-                .performTextClearance()
-            composeTestRule.onNodeWithTag(TAG_DETAIL_TEXT_FIELD)
-                .performTextInput("TESTE DE EDIÇÃO DE DETALHE DO MOTORISTA")
-            composeTestRule.onNodeWithText("SALVAR")
-                .performClick()
-
-            Log.d("TestDebug", "Position 42")
-
-            composeTestRule.waitUntilTimeout(3_000)
-
-            composeTestRule.onNodeWithText("RETORNAR")
-                .performClick()
-
-            Log.d("TestDebug", "Position 43")
-
-            composeTestRule.waitUntilTimeout(3_000)
-
-            composeTestRule.onNodeWithTag(TAG_DRIVER_INVOLVED_EDIT_BUTTON)
-                .performClick()
-
-            Log.d("TestDebug", "Position 44")
 
             composeTestRule.waitUntilTimeout(20_000)
 

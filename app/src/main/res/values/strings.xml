@@ -99,14 +99,17 @@
     <string name="text_name">NOME</string>
     <string name="text_phone">TELEFONE</string>
     <string name="text_data_vehicle_foreign">DADOS VEÍCULO ENVOLVIDO</string>
-    <string name="text_data_equip">DADOS EQUIPAMENTO</string>
-    <string name="text_data_colab">DADOS COLABORADOR</string>
+    <string name="text_data_equip">DADOS DO EQUIPAMENTO</string>
+    <string name="text_data_colab">DADOS DO COLABORADOR</string>
     <string name="text_colab">COLABORADOR</string>
     <string name="text_data_vehicle">DADOS VEÍCULO</string>
-    <string name="text_data_people">DADOS PESSOAIS</string>
+    <string name="text_data_driver">DADOS DO MOTORISTA</string>
     <string name="text_document">DOCUMENTO</string>
     <string name="text_check_delete_equip">DESEJA REALMENTE EXCLUIR O EQUIPAMENTO \"%1$s\"?</string>
     <string name="text_check_delete_vehicle">DESEJA REALMENTE EXCLUIR O VEÍCULO \"%1$s\"?</string>
     <string name="text_check_delete_involved">DESEJA REALMENTE EXCLUIR O ENVOLVIDO \"%1$s\"?</string>
     <string name="text_check_delete_witness">DESEJA REALMENTE EXCLUIR A TESTEMUNHA \"%1$s\"?</string>
+    <string name="text_data_passenger">DADOS DO PASSAGEIRO</string>
+    <string name="text_data_involved">DADOS DO ENVOLVIDO</string>
+    <string name="text_data_witness">DADOS DA TESTEMUNHA</string>
 </resources>

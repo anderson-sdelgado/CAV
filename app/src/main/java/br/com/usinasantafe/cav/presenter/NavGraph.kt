@@ -566,6 +566,27 @@ fun NavigationGraph(
                     navActions.navigateToDataVehicleInvolved(
                         idMain = it
                     )
+                },
+                onNavDataEquipSec = {
+                    navActions.navigateToDataEquip(
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = it
+                    )
+                },
+                onNavDataPassengerColab = {
+                    navActions.navigateToDataColab(
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = it
+                    )
+                },
+                onNavDataPassengerInvolved = {
+                    navActions.navigateToDataInvolved(
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = it
+                    )
                 }
             )
         }

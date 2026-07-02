@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -54,6 +52,9 @@ fun DetailScreen(
     onNavDataVehicleOwnInsert: (Int) -> Unit,
     onNavDataVehicleInvolvedInsert: (Int) -> Unit,
     onNavDataInvolvedInsert: (Int) -> Unit,
+    onNavDataEquipSec: (Int) -> Unit,
+    onNavDataPassengerColab: (Int) -> Unit,
+    onNavDataPassengerInvolved: (Int) -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -82,10 +83,13 @@ fun DetailScreen(
                 onNavBrand = onNavBrand,
                 onNavDocument = onNavDocument,
                 onNavDataVehicle = onNavDataVehicle,
-                onNavDataInvolvedEdit = onNavDataInvolvedEdit,
+                onNavDataInvolved = onNavDataInvolvedEdit,
                 onNavDataVehicleOwnInsert = onNavDataVehicleOwnInsert,
                 onNavDataVehicleInvolvedInsert = onNavDataVehicleInvolvedInsert,
                 onNavDataInvolvedInsert = onNavDataInvolvedInsert,
+                onNavDataEquipSec = onNavDataEquipSec,
+                onNavDataPassengerColab = onNavDataPassengerColab,
+                onNavDataPassengerInvolved = onNavDataPassengerInvolved,
                 modifier = Modifier.padding(innerPadding)
             )
 
@@ -113,10 +117,13 @@ fun DetailContent(
     onNavBrand: () -> Unit,
     onNavDocument: () -> Unit,
     onNavDataVehicle: () -> Unit,
-    onNavDataInvolvedEdit: () -> Unit,
+    onNavDataInvolved: () -> Unit,
     onNavDataVehicleOwnInsert: (Int) -> Unit,
     onNavDataVehicleInvolvedInsert: (Int) -> Unit,
     onNavDataInvolvedInsert: (Int) -> Unit,
+    onNavDataEquipSec: (Int) -> Unit,
+    onNavDataPassengerColab: (Int) -> Unit,
+    onNavDataPassengerInvolved: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -174,7 +181,7 @@ fun DetailContent(
                                 FlowNote.DRIVER,
                                 FlowNote.PASSENGER_INVOLVED,
                                 FlowNote.INVOLVED,
-                                FlowNote.WITNESS -> onNavDataInvolvedEdit()
+                                FlowNote.WITNESS -> onNavDataInvolved()
                             }
                         }
                     }
@@ -209,14 +216,14 @@ fun DetailContent(
                 Option.INSERT -> {
                     when(flowNote) {
                         FlowNote.EQUIP -> onNavColab()
-                        FlowNote.EQUIP_SEC -> onNavEquipSecList()
+                        FlowNote.EQUIP_SEC -> onNavDataEquipSec(id)
                         FlowNote.VEHICLE -> onNavDocument()
                         FlowNote.COLAB -> onNavDataVehicleOwnInsert(id)
                         FlowNote.INVOLVED,
                         FlowNote.WITNESS -> onNavDataInvolvedInsert(id)
                         FlowNote.DRIVER -> onNavDataVehicleInvolvedInsert(id)
-                        FlowNote.PASSENGER_COLAB,
-                        FlowNote.PASSENGER_INVOLVED -> onNavPassengerList()
+                        FlowNote.PASSENGER_COLAB -> onNavDataPassengerColab(id)
+                        FlowNote.PASSENGER_INVOLVED -> onNavDataPassengerInvolved(id)
                     }
                 }
                 Option.EDIT -> {
@@ -229,7 +236,7 @@ fun DetailContent(
                         FlowNote.DRIVER,
                         FlowNote.PASSENGER_INVOLVED,
                         FlowNote.INVOLVED,
-                        FlowNote.WITNESS -> onNavDataInvolvedEdit()
+                        FlowNote.WITNESS -> onNavDataInvolved()
                     }
                 }
             }
@@ -262,10 +269,13 @@ fun DetailPagePreview() {
                 onNavBrand = {},
                 onNavDocument = {},
                 onNavDataVehicle = {},
-                onNavDataInvolvedEdit = {},
+                onNavDataInvolved = {},
                 onNavDataVehicleOwnInsert = {},
                 onNavDataVehicleInvolvedInsert = {},
                 onNavDataInvolvedInsert = {},
+                onNavDataEquipSec = {},
+                onNavDataPassengerColab = {},
+                onNavDataPassengerInvolved = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
