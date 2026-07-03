@@ -1,6 +1,7 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
+import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.test.runTest
 import org.mockito.Mockito.mock
@@ -18,25 +19,29 @@ class IDeleteInvolvedTest {
     )
 
     @Test
-    fun `Check return failure if have error in CardRepository deleteInvolved`() =
+    fun `Check return failure if have error in CardRepository deletePassengerColab - FlowNote PASSENGER_COLAB`() =
         runTest {
             whenever(
-                cardRepository.deleteInvolved(1)
+                cardRepository.deletePassengerColab(1, 10)
             ).thenReturn(
                 resultFailure(
-                    "ICardRepository.deleteInvolved",
+                    "ICardRepository.deletePassengerColab",
                     "-",
                     Exception()
                 )
             )
-            val result = usecase(1)
+            val result = usecase(
+                flowNote = FlowNote.PASSENGER_COLAB,
+                idMain = 10,
+                idSecondary = 1
+            )
             assertEquals(
                 result.isFailure,
                 true
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IDeleteInvolved -> ICardRepository.deleteInvolved"
+                "IDeletePassenger -> ICardRepository.deletePassengerColab"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -45,10 +50,60 @@ class IDeleteInvolvedTest {
         }
 
     @Test
-    fun `Check return correct if function execute successfully`() =
+    fun `Check return correct if function execute successfully - FlowNote PASSENGER_COLAB`() =
         runTest {
-            val result = usecase(1)
-            verify(cardRepository, atLeastOnce()).deleteInvolved(1)
+            val result = usecase(
+                flowNote = FlowNote.PASSENGER_COLAB,
+                idMain = 10,
+                idSecondary = 1
+            )
+            verify(cardRepository, atLeastOnce()).deletePassengerColab(1, 10)
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+        }
+
+    @Test
+    fun `Check return failure if have error in CardRepository deletePassengerInvolved - FlowNote PASSENGER_INVOLVED`() =
+        runTest {
+            whenever(
+                cardRepository.deletePassengerInvolved(1, 10)
+            ).thenReturn(
+                resultFailure(
+                    "ICardRepository.deletePassengerInvolved",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = usecase(
+                flowNote = FlowNote.PASSENGER_INVOLVED,
+                idMain = 10,
+                idSecondary = 1
+            )
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IDeletePassenger -> ICardRepository.deletePassengerInvolved"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `Check return correct if function execute successfully - FlowNote PASSENGER_INVOLVED`() =
+        runTest {
+            val result = usecase(
+                flowNote = FlowNote.PASSENGER_INVOLVED,
+                idMain = 10,
+                idSecondary = 1
+            )
+            verify(cardRepository, atLeastOnce()).deletePassengerInvolved(1, 10)
             assertEquals(
                 result.isSuccess,
                 true

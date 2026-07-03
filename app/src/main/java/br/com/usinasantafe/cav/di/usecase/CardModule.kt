@@ -137,7 +137,7 @@ interface CardModule {
 
     @Binds
     @Singleton
-    fun bindDeletePassenger(usecase: IDeletePassenger): DeletePassenger
+    fun bindDeletePassenger(usecase: IDeleteInvolved): DeleteInvolved
 
     @Binds
     @Singleton
@@ -226,14 +226,6 @@ interface CardModule {
     @Binds
     @Singleton
     fun bindDeleteVehicle(usecase: IDeleteVehicleInvolved): DeleteVehicleInvolved
-
-    @Binds
-    @Singleton
-    fun bindDeleteInvolved(usecase: IDeleteInvolved): DeleteInvolved
-
-    @Binds
-    @Singleton
-    fun bindDeleteWitness(usecase: IDeleteWitness): DeleteWitness
 
     @Binds
     @Singleton

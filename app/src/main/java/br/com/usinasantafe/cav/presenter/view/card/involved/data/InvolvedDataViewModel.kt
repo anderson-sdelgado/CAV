@@ -3,7 +3,7 @@ package br.com.usinasantafe.cav.presenter.view.card.involved.data
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.usinasantafe.cav.domain.usecases.card.DeletePassenger
+import br.com.usinasantafe.cav.domain.usecases.card.DeleteInvolved
 import br.com.usinasantafe.cav.domain.usecases.card.GetAddress
 import br.com.usinasantafe.cav.domain.usecases.card.GetDetail
 import br.com.usinasantafe.cav.domain.usecases.card.GetDocument
@@ -56,7 +56,7 @@ class InvolvedDataViewModel @Inject constructor(
     private val getPhone: GetPhone,
     private val getAddress: GetAddress,
     private val getDetail: GetDetail,
-    private val deletePassenger: DeletePassenger
+    private val deleteInvolved: DeleteInvolved,
 ) : ViewModel() {
 
     private val flowNote: Int = savedStateHandle[FLOW_NOTE_ARG]!!
@@ -125,7 +125,7 @@ class InvolvedDataViewModel @Inject constructor(
 
     fun delete() = viewModelScope.launch {
         runCatching {
-            deletePassenger(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            deleteInvolved(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
         }
             .onSuccessStateAccess(::updateState)
             .onFailureState(getClassAndMethod(), ::updateState)

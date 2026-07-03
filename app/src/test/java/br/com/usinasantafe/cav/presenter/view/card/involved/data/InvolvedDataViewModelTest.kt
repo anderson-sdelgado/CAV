@@ -30,7 +30,7 @@ class InvolvedDataViewModelTest {
     private val getPhone = mock<GetPhone>()
     private val getAddress = mock<GetAddress>()
     private val getDetail = mock<GetDetail>()
-    private val deletePassenger = mock<DeletePassenger>()
+    private val deleteInvolved = mock<DeleteInvolved>()
     
     private val viewModel = InvolvedDataViewModel(
         savedStateHandle = SavedStateHandle(
@@ -46,7 +46,7 @@ class InvolvedDataViewModelTest {
         getPhone = getPhone,
         getAddress = getAddress,
         getDetail = getDetail,
-        deletePassenger = deletePassenger
+        deleteInvolved = deleteInvolved
     )
 
     @Test
@@ -122,7 +122,7 @@ class InvolvedDataViewModelTest {
     fun `delete - Check return failure if have error`() =
         runTest {
             whenever(
-                deletePassenger(FlowNote.INVOLVED, 1, 0)
+                deleteInvolved(FlowNote.INVOLVED, 1, 0)
             ).thenReturn(
                 resultFailure(
                     context = "DeletePassenger",

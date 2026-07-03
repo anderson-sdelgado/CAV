@@ -816,6 +816,9 @@ fun NavigationGraph(
                         flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                     )
+                },
+                onNavMenu = {
+                    navActions.navigateToInvolvedWitness()
                 }
             )
         }
@@ -983,7 +986,9 @@ fun NavigationGraph(
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                     )
                 },
-                onNavMenu = {},
+                onNavMenu = {
+                    navActions.navigateToInvolvedWitness()
+                },
                 onNavPassengerList = {
                     navActions.navigateToPassengerList(
                         flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
@@ -1104,7 +1109,9 @@ fun NavigationGraph(
                 onNavLocalSupport = {
                     navActions.navigateToLocalSupport()
                 },
-                onNavInvolvedWitness = {},
+                onNavInvolvedWitness = {
+                    navActions.navigateToInvolvedWitness()
+                },
                 onNavEquip = {
                     navActions.navigateToEquip(
                         option = Option.INSERT.ordinal,

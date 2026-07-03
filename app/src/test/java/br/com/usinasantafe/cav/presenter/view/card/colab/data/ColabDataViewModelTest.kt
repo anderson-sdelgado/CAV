@@ -2,7 +2,7 @@ package br.com.usinasantafe.cav.presenter.view.card.colab.data
 
 import androidx.lifecycle.SavedStateHandle
 import br.com.usinasantafe.cav.MainCoroutineRule
-import br.com.usinasantafe.cav.domain.usecases.card.DeletePassenger
+import br.com.usinasantafe.cav.domain.usecases.card.DeleteInvolved
 import br.com.usinasantafe.cav.domain.usecases.card.GetDescColab
 import br.com.usinasantafe.cav.domain.usecases.card.GetDetail
 import br.com.usinasantafe.cav.domain.usecases.card.GetState
@@ -30,7 +30,7 @@ class ColabDataViewModelTest {
     private val getDescColab = mock<GetDescColab>()
     private val getState = mock<GetState>()
     private val getDetail = mock<GetDetail>()
-    private val deletePassenger = mock<DeletePassenger>()
+    private val deleteInvolved = mock<DeleteInvolved>()
     private val viewModel = ColabDataViewModel(
         savedStateHandle = SavedStateHandle(
             mapOf(
@@ -42,7 +42,7 @@ class ColabDataViewModelTest {
         getDescColab = getDescColab,
         getState = getState,
         getDetail = getDetail,
-        deletePassenger = deletePassenger
+        deleteInvolved = deleteInvolved
     )
 
     @Test

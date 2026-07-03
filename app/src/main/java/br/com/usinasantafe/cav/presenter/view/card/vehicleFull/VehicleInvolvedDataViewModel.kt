@@ -69,19 +69,28 @@ class VehicleInvolvedDataViewModel @Inject constructor(
     }
 
     fun recoverData() = viewModelScope.launch {
+
+        data class RecoverVehicleInvolved(
+            val vehicle: String,
+            val driver: String,
+            val passengers: String
+        )
+
         runCatching {
-            val vehicle = getDescVehicle(state.idMain).getOrThrow()
-            val driver = getDescDriver(FlowNote.DRIVER, state.idMain).getOrThrow()
-            val passengers = getDescPassengers(FlowNote.PASSENGER_INVOLVED, state.idMain).getOrThrow()
-            VehicleInvolvedDataState(
-                vehicle = vehicle,
-                driver = driver,
-                passengers = passengers
+            RecoverVehicleInvolved(
+                vehicle = getDescVehicle(state.idMain).getOrThrow(),
+                driver = getDescDriver(FlowNote.DRIVER, state.idMain).getOrThrow(),
+                passengers = getDescPassengers(FlowNote.PASSENGER_INVOLVED, state.idMain).getOrThrow()
             )
         }
-            .onSuccess { newState ->
+            .onSuccess {
                 updateState {
-                    newState.copy(status = status.copy(flagFailure = false))
+                    copy(
+                        vehicle = it.vehicle,
+                        driver = it.driver,
+                        passengers = it.passengers,
+                        status = status.copy(flagFailure = false)
+                    )
                 }
             }
             .onFailureState(getClassAndMethod(), ::updateState)

@@ -2,7 +2,7 @@ package br.com.usinasantafe.cav.presenter.view.card.passengerList
 
 import androidx.lifecycle.SavedStateHandle
 import br.com.usinasantafe.cav.MainCoroutineRule
-import br.com.usinasantafe.cav.domain.usecases.card.DeletePassenger
+import br.com.usinasantafe.cav.domain.usecases.card.DeleteInvolved
 import br.com.usinasantafe.cav.domain.usecases.card.ListPassenger
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.FlowNote
@@ -27,7 +27,7 @@ class PassengerListViewModelTest {
     val mainCoroutineRule = MainCoroutineRule()
 
     private val listPassenger = mock<ListPassenger>()
-    private val deletePassenger = mock<DeletePassenger>()
+    private val deleteInvolved = mock<DeleteInvolved>()
     private val viewModel = PassengerListViewModel(
         savedStateHandle = SavedStateHandle(
             mapOf(
@@ -36,7 +36,7 @@ class PassengerListViewModelTest {
             )
         ),
         listPassenger = listPassenger,
-        deletePassenger = deletePassenger
+        deleteInvolved = deleteInvolved
     )
 
     @Test
@@ -107,7 +107,7 @@ class PassengerListViewModelTest {
     fun `delete - Check return failure if have error in DeletePassenger`() =
         runTest {
             whenever(
-                deletePassenger(
+                deleteInvolved(
                     idSecondary = 2,
                     flowNote = FlowNote.COLAB,
                     idMain = 0
@@ -154,7 +154,7 @@ class PassengerListViewModelTest {
             )
             viewModel.onSelectionDelete(2)
             viewModel.delete()
-            verify(deletePassenger, atLeastOnce()).invoke(
+            verify(deleteInvolved, atLeastOnce()).invoke(
                 idSecondary = 2,
                 flowNote = FlowNote.COLAB,
                 idMain = 0

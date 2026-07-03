@@ -2,12 +2,9 @@ package br.com.usinasantafe.cav.presenter.view.card.menu
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.usinasantafe.cav.domain.usecases.card.DeleteInvolved
-import br.com.usinasantafe.cav.domain.usecases.card.DeleteWitness
 import br.com.usinasantafe.cav.domain.usecases.card.ListInvolved
 import br.com.usinasantafe.cav.domain.usecases.card.ListWitness
 import br.com.usinasantafe.cav.lib.TypePeople
-import br.com.usinasantafe.cav.lib.TypeVehicle
 import br.com.usinasantafe.cav.presenter.model.ItemListScreenModel
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
 import br.com.usinasantafe.cav.utils.UiStatusState
@@ -21,7 +18,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class InvolvedWitnessState(
-    val typePeople: TypePeople = TypePeople.INVOLVED,
     val involvedList: List<ItemListScreenModel> = emptyList(),
     val witnessList: List<ItemListScreenModel> = emptyList(),
     val idSelection: Int = 0,
@@ -38,8 +34,6 @@ data class InvolvedWitnessState(
 class InvolvedWitnessViewModel @Inject constructor(
     private val listInvolved: ListInvolved,
     private val listWitness: ListWitness,
-    private val deleteInvolved: DeleteInvolved,
-    private val deleteWitness: DeleteWitness
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(InvolvedWitnessState())
@@ -55,7 +49,7 @@ class InvolvedWitnessViewModel @Inject constructor(
 
     fun onDialogCheck(flag: Boolean) = updateState { copy(flagDialogCheck = flag) }
 
-    fun onSelectionDelete(id: Int, typePeople: TypePeople) = updateState { copy(flagDialogCheck = true, idSelection = id, typePeople = typePeople) }
+    fun onSelectionDelete(id: Int, typePeople: TypePeople) = updateState { copy(flagDialogCheck = true, idSelection = id) }
 
     fun recoverData() = viewModelScope.launch {
         runCatching {
@@ -71,17 +65,6 @@ class InvolvedWitnessViewModel @Inject constructor(
                     newState.copy(status = status.copy(flagFailure = false))
                 }
             }
-            .onFailureState(getClassAndMethod(), ::updateState)
-    }
-
-    fun delete() = viewModelScope.launch {
-        runCatching {
-            when(state.typePeople) {
-                TypePeople.INVOLVED -> deleteInvolved(state.idSelection).getOrThrow()
-                TypePeople.WITNESS -> deleteWitness(state.idSelection).getOrThrow()
-            }
-        }
-            .onSuccess { recoverData() }
             .onFailureState(getClassAndMethod(), ::updateState)
     }
 

@@ -12,7 +12,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -33,15 +39,17 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.TypePeople
-import br.com.usinasantafe.cav.lib.TypeVehicle
 import br.com.usinasantafe.cav.presenter.model.ItemListScreenModel
-import br.com.usinasantafe.cav.presenter.model.VehicleScreenModel
-import br.com.usinasantafe.cav.presenter.theme.AlertDialogCheckDesign
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.MsgErrors
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
 import br.com.usinasantafe.cav.utils.UiStatusState
+
+const val TAG_INVOLVED_FULL_INSERT_BUTTON = "tag_involved_full_insert_button"
+const val TAG_INVOLVED_FULL_EDIT_BUTTON = "tag_involved_full_edit_button"
+const val TAG_WITNESS_FULL_INSERT_BUTTON = "tag_witness_full_insert_button"
+const val TAG_WITNESS_FULL_EDIT_BUTTON = "tag_witness_full_edit_button"
 
 @Composable
 fun InvolvedWitnessScreen(
@@ -60,14 +68,8 @@ fun InvolvedWitnessScreen(
             }
 
             InvolvedWitnessContent(
-                typePeople = uiState.typePeople,
                 involvedList = uiState.involvedList,
                 witnessList = uiState.witnessList,
-                idSelection = uiState.idSelection,
-                onSelectionDelete = viewModel::onSelectionDelete,
-                flagDialogCheck = uiState.flagDialogCheck,
-                onDialogCheck = viewModel::onDialogCheck,
-                delete = viewModel::delete,
                 onCloseDialog = viewModel::onCloseDialog,
                 status = uiState.status,
                 onNavVehicleFull = onNavVehicleFull,
@@ -82,14 +84,8 @@ fun InvolvedWitnessScreen(
 
 @Composable
 fun InvolvedWitnessContent(
-    typePeople: TypePeople,
     involvedList: List<ItemListScreenModel>,
     witnessList: List<ItemListScreenModel>,
-    idSelection: Int,
-    onSelectionDelete: (Int, TypePeople) -> Unit,
-    flagDialogCheck: Boolean,
-    onDialogCheck: (Boolean) -> Unit,
-    delete: () -> Unit,
     onCloseDialog: () -> Unit,
     status: UiStatusState,
     onNavVehicleFull: () -> Unit,
@@ -113,19 +109,19 @@ fun InvolvedWitnessContent(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             item {
-                InvolvedSection(
-                    involvedList = involvedList,
-                    onSelectionDelete = onSelectionDelete,
-                    onNavDataInvolved = onNavDataInvolved,
+                InvolvedWitnessSection(
+                    typePeople = TypePeople.INVOLVED,
+                    list = involvedList,
                     onNavDocument = onNavDocument,
+                    onNavDataInvolved = onNavDataInvolved,
                 )
             }
             item{
-                WitnessSection(
-                    witnessList = witnessList,
-                    onSelectionDelete = onSelectionDelete,
-                    onNavDataInvolved = onNavDataInvolved,
+                InvolvedWitnessSection(
+                    typePeople = TypePeople.WITNESS,
+                    list = witnessList,
                     onNavDocument = onNavDocument,
+                    onNavDataInvolved = onNavDataInvolved,
                 )
             }
         }
@@ -139,39 +135,20 @@ fun InvolvedWitnessContent(
                 onClick = onNavVehicleFull,
                 modifier = Modifier.weight(1f)
             ) {
-                TextButtonDesign(text = stringResource(id = R.string.text_pattern_return))
+                TextButtonDesign(
+                    text = stringResource(id = R.string.text_pattern_return),
+                    padding = 10
+                )
             }
             Button(
                 onClick = onNavObs,
                 modifier = Modifier.weight(1f),
             ) {
-                TextButtonDesign(text = stringResource(id = R.string.text_pattern_next))
+                TextButtonDesign(
+                    text = stringResource(id = R.string.text_pattern_next),
+                    padding = 10
+                )
             }
-        }
-
-        if(flagDialogCheck){
-            var list: List<ItemListScreenModel>
-            var id: Int
-            when(typePeople){
-                TypePeople.INVOLVED -> {
-                    list = involvedList
-                    id = R.string.text_check_delete_involved
-                }
-
-                TypePeople.WITNESS -> {
-                    list = witnessList
-                    id = R.string.text_check_delete_witness
-                }
-            }
-            val desc = list.first{ it.id == idSelection }.desc
-            AlertDialogCheckDesign(
-                text = stringResource(
-                    id = id,
-                    desc
-                ),
-                onClickDismiss = { onDialogCheck(false) },
-                onClickYes = delete
-            )
         }
 
         if(status.flagDialog) {
@@ -182,9 +159,9 @@ fun InvolvedWitnessContent(
 }
 
 @Composable
-fun InvolvedSection(
-    involvedList: List<ItemListScreenModel>,
-    onSelectionDelete: (Int, TypePeople) -> Unit,
+fun InvolvedWitnessSection(
+    typePeople: TypePeople,
+    list: List<ItemListScreenModel>,
     onNavDocument: (FlowNote) -> Unit,
     onNavDataInvolved: (FlowNote, Int) -> Unit,
 ) {
@@ -195,85 +172,51 @@ fun InvolvedSection(
             .padding(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        val text = when(typePeople){
+            TypePeople.INVOLVED -> stringResource(id = R.string.text_title_involved)
+            TypePeople.WITNESS -> stringResource(id = R.string.text_title_witness)
+        }
         Text(
             modifier = Modifier
                 .padding(bottom = 8.dp),
-            text = stringResource(id = R.string.text_title_involved),
+            text = text,
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp
         )
 
-        if(involvedList.isEmpty()){
+        if(list.isEmpty()){
             Text("-")
         } else {
-            involvedList.forEach {
+            list.forEach {
                 PeopleItem(
-                    type = TypePeople.INVOLVED,
+                    type = typePeople,
                     model = it,
                     onClickEdit = {
-                        onNavDataInvolved(FlowNote.INVOLVED, it.id)
+                        when(typePeople){
+                            TypePeople.INVOLVED -> onNavDataInvolved(FlowNote.INVOLVED, it.id)
+                            TypePeople.WITNESS -> onNavDataInvolved(FlowNote.WITNESS, it.id)
+                        }
+
                     },
-                    onClickDel = {
-                        onSelectionDelete(it.id, TypePeople.INVOLVED)
-                    }
                 )
             }
         }
 
-        Button(
-            onClick = { onNavDocument(FlowNote.INVOLVED) },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(
-                text = stringResource(id = R.string.text_pattern_insert),
-                textAlign = TextAlign.Center,
-            )
+        val testTag = when(typePeople){
+            TypePeople.INVOLVED -> TAG_INVOLVED_FULL_INSERT_BUTTON
+            TypePeople.WITNESS -> TAG_WITNESS_FULL_INSERT_BUTTON
         }
-    }
-}
+        Button(
+            onClick = {
+                when(typePeople){
+                    TypePeople.INVOLVED -> onNavDocument(FlowNote.INVOLVED)
+                    TypePeople.WITNESS -> onNavDocument(FlowNote.WITNESS)
+                }
 
-@Composable
-fun WitnessSection(
-    witnessList: List<ItemListScreenModel>,
-    onSelectionDelete: (Int, TypePeople) -> Unit,
-    onNavDocument: (FlowNote) -> Unit,
-    onNavDataInvolved: (FlowNote, Int) -> Unit,
-) {
-    Column(
-        modifier = Modifier
-            .clip(RoundedCornerShape(12.dp))
-            .background(Color.LightGray.copy(alpha = 0.2f))
-            .padding(12.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
+            },
             modifier = Modifier
-                .padding(bottom = 8.dp),
-            text = stringResource(id = R.string.text_title_witness),
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp
-        )
-
-        if(witnessList.isEmpty()){
-            Text("-")
-        } else {
-            witnessList.forEach {
-                PeopleItem(
-                    type = TypePeople.WITNESS,
-                    model = it,
-                    onClickEdit = {
-                        onNavDataInvolved(FlowNote.WITNESS, it.id)
-                    },
-                    onClickDel = {
-                        onSelectionDelete(it.id, TypePeople.WITNESS)
-                    }
-                )
-            }
-        }
-
-        Button(
-            onClick = { onNavDocument(FlowNote.INVOLVED) },
-            modifier = Modifier.fillMaxWidth()
+                .fillMaxWidth()
+                .testTag(testTag)
         ) {
             Text(
                 text = stringResource(id = R.string.text_pattern_insert),
@@ -288,7 +231,6 @@ fun PeopleItem(
     type: TypePeople,
     model: ItemListScreenModel,
     onClickEdit: () -> Unit,
-    onClickDel: () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -298,23 +240,30 @@ fun PeopleItem(
         ,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        val title = when(type){
-            TypePeople.INVOLVED -> stringResource(id = R.string.text_title_involved)
-            TypePeople.WITNESS -> stringResource(id = R.string.text_involved)
-        }
+
         Column(modifier = Modifier.weight(1f)) {
-            Text(text = title, fontWeight = FontWeight.Bold)
+            Text(text = stringResource(id = R.string.text_item_involved), fontWeight = FontWeight.Bold)
             Text(model.desc)
         }
 
+        val testTagEdit = when(type){
+            TypePeople.INVOLVED -> "$TAG_INVOLVED_FULL_EDIT_BUTTON${model.id}"
+            TypePeople.WITNESS -> "$TAG_WITNESS_FULL_EDIT_BUTTON${model.id}"
+        }
         Column(
             modifier = Modifier.width(IntrinsicSize.Max),
         ) {
-            Button(onClick = onClickEdit, modifier = Modifier.fillMaxWidth().padding(1.dp)) {
-                Text(text = stringResource(id = R.string.text_pattern_edit))
-            }
-            Button(onClick = onClickDel, modifier = Modifier.fillMaxWidth().padding(1.dp)) {
-                Text(text = stringResource(id = R.string.text_pattern_delete))
+            IconButton(
+                onClick = onClickEdit,
+                colors = IconButtonDefaults.iconButtonColors(
+                    containerColor = Color.LightGray
+                ),
+                modifier = Modifier.testTag(testTagEdit)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = stringResource(id = R.string.text_pattern_edit)
+                )
             }
         }
     }
@@ -326,7 +275,6 @@ fun InvolvedWitnessPagePreview() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             InvolvedWitnessContent(
-                typePeople = TypePeople.WITNESS,
                 involvedList = listOf(
                     ItemListScreenModel(
                         id = 1,
@@ -343,11 +291,6 @@ fun InvolvedWitnessPagePreview() {
                         "123.456.789-88 - MARIA PAULA"
                     )
                 ),
-                idSelection = 0,
-                onSelectionDelete = { _, _ -> },
-                flagDialogCheck = true,
-                onDialogCheck = {},
-                delete = {},
                 onCloseDialog = {},
                 status = UiStatusState(),
                 onNavVehicleFull = {},

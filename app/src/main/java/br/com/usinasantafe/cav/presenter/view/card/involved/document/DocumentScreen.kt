@@ -32,7 +32,8 @@ fun DocumentScreen(
     onNavDetail: () -> Unit,
     onNavDataInvolved: () -> Unit,
     onNavName: () -> Unit,
-    onNavPassenger: () -> Unit
+    onNavPassenger: () -> Unit,
+    onNavMenu: () -> Unit
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -53,6 +54,7 @@ fun DocumentScreen(
                 onNavDataInvolved = onNavDataInvolved,
                 onNavName = onNavName,
                 onNavPassenger = onNavPassenger,
+                onNavMenu = onNavMenu,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -71,6 +73,7 @@ fun DocumentContent(
     onNavDataInvolved: () -> Unit,
     onNavName: () -> Unit,
     onNavPassenger: () -> Unit,
+    onNavMenu: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -93,6 +96,8 @@ fun DocumentContent(
             when(option) {
                 Option.INSERT -> {
                     when(flowNote) {
+                        FlowNote.INVOLVED,
+                        FlowNote.WITNESS -> onNavMenu()
                         FlowNote.PASSENGER_INVOLVED -> onNavPassenger()
                         else -> onNavDetail()
                     }
@@ -139,6 +144,7 @@ fun DocumentPagePreview() {
                 onNavDataInvolved = {},
                 onNavName = {},
                 onNavPassenger = {},
+                onNavMenu = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

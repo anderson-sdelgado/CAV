@@ -3,7 +3,7 @@ package br.com.usinasantafe.cav.presenter.view.card.passengerList
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.usinasantafe.cav.domain.usecases.card.DeletePassenger
+import br.com.usinasantafe.cav.domain.usecases.card.DeleteInvolved
 import br.com.usinasantafe.cav.domain.usecases.card.ListPassenger
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.presenter.Args.FLOW_NOTE_ARG
@@ -38,7 +38,7 @@ data class PassengerListState(
 class PassengerListViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val listPassenger: ListPassenger,
-    private val deletePassenger: DeletePassenger
+    private val deleteInvolved: DeleteInvolved
 ) : ViewModel() {
 
     private val flowNote: Int = savedStateHandle[FLOW_NOTE_ARG]!!
@@ -78,7 +78,7 @@ class PassengerListViewModel @Inject constructor(
 
     fun delete() = viewModelScope.launch {
         runCatching {
-            deletePassenger( state.flowNote, state.idMain, state.idSelection).getOrThrow()
+            deleteInvolved( state.flowNote, state.idMain, state.idSelection).getOrThrow()
         }
             .onSuccess { recoverData() }
             .onFailureState(getClassAndMethod(), ::updateState)
