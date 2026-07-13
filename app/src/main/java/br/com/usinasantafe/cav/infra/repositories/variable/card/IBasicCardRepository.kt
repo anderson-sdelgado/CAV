@@ -85,4 +85,14 @@ class IBasicCardRepository @Inject constructor(
             cardSharedPreferencesDatasource.setIdSupportTeamsList(idList).getOrThrow()
         }
 
+    override suspend fun getObs(): Result<String?> =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.getObs().getOrThrow()
+        }
+
+    override suspend fun setObs(text: String): EmptyResult =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.setObs(text).getOrThrow()
+        }
+
 }

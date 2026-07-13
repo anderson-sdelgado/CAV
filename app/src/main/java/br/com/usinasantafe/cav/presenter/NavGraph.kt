@@ -40,10 +40,12 @@ import br.com.usinasantafe.cav.presenter.Routes.LOCAL_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.LOCAL_SUPPORT_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.NAME_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.NATURE_ROUTE
+import br.com.usinasantafe.cav.presenter.Routes.OBS_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.OPTION_DATA_LOCAL_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.PASSENGER_LIST_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.PASSWORD_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.PHONE_ROUTE
+import br.com.usinasantafe.cav.presenter.Routes.PHOTO_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.PLATE_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.SPLASH_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.STATE_ROUTE
@@ -74,7 +76,9 @@ import br.com.usinasantafe.cav.presenter.view.card.involved.document.DocumentScr
 import br.com.usinasantafe.cav.presenter.view.card.involved.name.NameScreen
 import br.com.usinasantafe.cav.presenter.view.card.involved.phone.PhoneScreen
 import br.com.usinasantafe.cav.presenter.view.card.menu.InvolvedWitnessScreen
+import br.com.usinasantafe.cav.presenter.view.card.menu.ObsScreen
 import br.com.usinasantafe.cav.presenter.view.card.passengerList.PassengerListScreen
+import br.com.usinasantafe.cav.presenter.view.card.photo.PhotoScreen
 import br.com.usinasantafe.cav.presenter.view.card.state.StateScreen
 import br.com.usinasantafe.cav.presenter.view.card.vehicle.brand.BrandScreen
 import br.com.usinasantafe.cav.presenter.view.card.vehicle.data.VehicleDataScreen
@@ -105,7 +109,8 @@ fun NavigationGraph(
         composable(SPLASH_ROUTE) {
             SplashScreen(
                 onNavInitialMenu = {
-                    navActions.navigateToInitialMenu()
+//                    navActions.navigateToInitialMenu()
+                    navActions.navigateToPhoto()
                 },
             )
         }
@@ -483,9 +488,12 @@ fun NavigationGraph(
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 },
-                onNavEquipSecList = {
-                    navActions.navigateToEquipSecList(
-                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
+                onNavPhone = {
+                    navActions.navigateToPhone(
+                        option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 },
                 onNavColab = {
@@ -494,12 +502,6 @@ fun NavigationGraph(
                         flowNote = FlowNote.COLAB.ordinal,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
-                    )
-                },
-                onNavPassengerList = {
-                    navActions.navigateToPassengerList(
-                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
-                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                     )
                 },
                 onNavDataColab = {
@@ -855,6 +857,9 @@ fun NavigationGraph(
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
+                },
+                onNavMenu = {
+                    navActions.navigateToInvolvedWitness()
                 }
             )
         }
@@ -1024,6 +1029,14 @@ fun NavigationGraph(
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 },
+                onNavDetail = {
+                    navActions.navigateToDetail(
+                        option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
+                    )
+                },
                 onNavDataInvolved = {
                     navActions.navigateToDataInvolved(
                         flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
@@ -1141,10 +1154,18 @@ fun NavigationGraph(
 
         composable(INVOLVED_WITNESS_ROUTE) {
             InvolvedWitnessScreen(
-                onNavDocument = { flowNote ->
+                onNavDocument = {
                     navActions.navigateToDocument(
                         option = Option.INSERT.ordinal,
-                        flowNote = flowNote.ordinal,
+                        flowNote = FlowNote.INVOLVED.ordinal,
+                        idMain = 0,
+                        idSecondary = 0
+                    )
+                },
+                onNavName = {
+                    navActions.navigateToName(
+                        option = Option.INSERT.ordinal,
+                        flowNote = FlowNote.WITNESS.ordinal,
                         idMain = 0,
                         idSecondary = 0
                     )
@@ -1161,6 +1182,14 @@ fun NavigationGraph(
                 },
                 onNavObs = {}
             )
+        }
+
+        composable(OBS_ROUTE) {
+            ObsScreen()
+        }
+
+        composable(PHOTO_ROUTE) {
+            PhotoScreen()
         }
 
         //////////////////////////////////////////////////////////////////////

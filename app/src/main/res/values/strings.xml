@@ -112,5 +112,6 @@
     <string name="text_data_passenger">DADOS DO PASSAGEIRO</string>
     <string name="text_data_involved">DADOS DO ENVOLVIDO</string>
     <string name="text_data_witness">DADOS DA TESTEMUNHA</string>
-    <string name="text_item_involved">CPF - NOME</string>
+    <string name="text_item_involved">TELEFONE - NOME</string>
+    <string name="text_obs">OBSERVAÇÃO</string>
 </resources>

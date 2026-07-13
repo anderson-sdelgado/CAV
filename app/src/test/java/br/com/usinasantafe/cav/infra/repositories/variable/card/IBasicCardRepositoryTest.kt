@@ -574,4 +574,91 @@ class IBasicCardRepositoryTest {
             )
         }
 
+    @Test
+    fun `getObs - Check return failure if have error in CardSharedPreferencesDatasource getObs`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.getObs()
+            ).thenReturn(
+                resultFailure(
+                    "ICardSharedPreferencesDatasource.getObs",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.getObs()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IBasicCardRepository.getObs -> ICardSharedPreferencesDatasource.getObs"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `getObs - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.getObs()
+            ).thenReturn(
+                Result.success("TESTE OBS")
+            )
+            val result = repository.getObs()
+            verify(cardSharedPreferencesDatasource, atLeastOnce())
+                .getObs()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull(),
+                "TESTE OBS"
+            )
+        }
+
+    @Test
+    fun `setObs - Check return failure if have error in CardSharedPreferencesDatasource setObs`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.setObs("TESTE OBS")
+            ).thenReturn(
+                resultFailure(
+                    "ICardSharedPreferencesDatasource.setObs",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.setObs("TESTE OBS")
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IBasicCardRepository.setObs -> ICardSharedPreferencesDatasource.setObs"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `setObs - Check return correct if function execute successfully`() =
+        runTest {
+            val result = repository.setObs("TESTE OBS")
+            verify(cardSharedPreferencesDatasource, atLeastOnce())
+                .setObs("TESTE OBS")
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+        }
+
 }

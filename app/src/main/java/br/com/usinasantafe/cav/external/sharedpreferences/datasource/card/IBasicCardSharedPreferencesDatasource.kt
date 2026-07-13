@@ -111,4 +111,18 @@ class IBasicCardSharedPreferencesDatasource @Inject constructor(
                 idSupportTeamsList = idList
             }
         }
+
+    override suspend fun getObs(): Result<String?> =
+        result(getClassAndMethod()) {
+            datasource.get().readModel {
+                obs
+            }
+        }
+
+    override suspend fun setObs(text: String): EmptyResult =
+        result(getClassAndMethod()) {
+            datasource.get().updateModel {
+                obs = text
+            }
+        }
 }

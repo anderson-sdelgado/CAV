@@ -32,6 +32,7 @@ timber = "5.0.1"
 playServicesLocation = "21.3.0"
 mapsCompose = "6.1.2"
 rules = "1.7.0"
+coil = "2.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -81,6 +82,7 @@ timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "tim
 google-play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 google-maps-compose = { group = "com.google.maps.android", name = "maps-compose", version.ref = "mapsCompose" }
 androidx-rules = { group = "androidx.test", name = "rules", version.ref = "rules" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

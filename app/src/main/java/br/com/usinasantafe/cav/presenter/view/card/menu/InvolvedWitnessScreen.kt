@@ -56,8 +56,9 @@ fun InvolvedWitnessScreen(
     viewModel: InvolvedWitnessViewModel = hiltViewModel(),
     onNavVehicleFull: () -> Unit,
     onNavObs: () -> Unit,
-    onNavDocument: (FlowNote) -> Unit,
+    onNavDocument: () -> Unit,
     onNavDataInvolved: (FlowNote, Int) -> Unit,
+    onNavName: () -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -76,6 +77,7 @@ fun InvolvedWitnessScreen(
                 onNavObs = onNavObs,
                 onNavDataInvolved = onNavDataInvolved,
                 onNavDocument = onNavDocument,
+                onNavName = onNavName,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -90,8 +92,9 @@ fun InvolvedWitnessContent(
     status: UiStatusState,
     onNavVehicleFull: () -> Unit,
     onNavObs: () -> Unit,
-    onNavDocument: (FlowNote) -> Unit,
+    onNavDocument: () -> Unit,
     onNavDataInvolved: (FlowNote, Int) -> Unit,
+    onNavName: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -112,7 +115,7 @@ fun InvolvedWitnessContent(
                 InvolvedWitnessSection(
                     typePeople = TypePeople.INVOLVED,
                     list = involvedList,
-                    onNavDocument = onNavDocument,
+                    onNavInsert = onNavDocument,
                     onNavDataInvolved = onNavDataInvolved,
                 )
             }
@@ -120,7 +123,7 @@ fun InvolvedWitnessContent(
                 InvolvedWitnessSection(
                     typePeople = TypePeople.WITNESS,
                     list = witnessList,
-                    onNavDocument = onNavDocument,
+                    onNavInsert = onNavName,
                     onNavDataInvolved = onNavDataInvolved,
                 )
             }
@@ -162,7 +165,7 @@ fun InvolvedWitnessContent(
 fun InvolvedWitnessSection(
     typePeople: TypePeople,
     list: List<ItemListScreenModel>,
-    onNavDocument: (FlowNote) -> Unit,
+    onNavInsert: () -> Unit,
     onNavDataInvolved: (FlowNote, Int) -> Unit,
 ) {
     Column(
@@ -207,13 +210,7 @@ fun InvolvedWitnessSection(
             TypePeople.WITNESS -> TAG_WITNESS_FULL_INSERT_BUTTON
         }
         Button(
-            onClick = {
-                when(typePeople){
-                    TypePeople.INVOLVED -> onNavDocument(FlowNote.INVOLVED)
-                    TypePeople.WITNESS -> onNavDocument(FlowNote.WITNESS)
-                }
-
-            },
+            onClick = onNavInsert,
             modifier = Modifier
                 .fillMaxWidth()
                 .testTag(testTag)
@@ -297,6 +294,7 @@ fun InvolvedWitnessPagePreview() {
                 onNavObs = {},
                 onNavDocument = {},
                 onNavDataInvolved = { _, _ -> },
+                onNavName = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

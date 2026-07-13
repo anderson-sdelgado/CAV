@@ -35,10 +35,7 @@ import br.com.usinasantafe.cav.presenter.theme.TAG_BUTTON_OK_ALERT_DIALOG_SIMPLE
 import br.com.usinasantafe.cav.presenter.view.card.detail.TAG_DETAIL_TEXT_FIELD
 import br.com.usinasantafe.cav.presenter.view.card.involved.name.TAG_NAME_INVOLVED_TEXT_FIELD
 import br.com.usinasantafe.cav.presenter.view.card.menu.TAG_INVOLVED_FULL_INSERT_BUTTON
-import br.com.usinasantafe.cav.presenter.view.card.menu.TAG_VEHICLE_INVOLVED_FULL_INSERT_BUTTON
 import br.com.usinasantafe.cav.presenter.view.card.state.TAG_INJURED_RADIO_BUTTON
-import br.com.usinasantafe.cav.presenter.view.card.vehicle.brand.TAG_BRAND_INVOLVED_TEXT_FIELD
-import br.com.usinasantafe.cav.presenter.view.card.vehicle.plate.TAG_PLATE_INVOLVED_TEXT_FIELD
 import br.com.usinasantafe.cav.utils.dataLocalList
 import br.com.usinasantafe.cav.utils.itemDataLocalList
 import br.com.usinasantafe.cav.utils.natureList

@@ -42,8 +42,7 @@ class IGetState @Inject constructor(
                         FlowNote.PASSENGER_COLAB -> cardRepository.getStatePassengerColab(idMain, idSecondary)
                         FlowNote.DRIVER -> cardRepository.getStateDriver(idMain)
                         FlowNote.PASSENGER_INVOLVED -> cardRepository.getStatePassengerInvolved(idMain, idSecondary)
-                        FlowNote.INVOLVED -> cardRepository.getStateInvolved(idMain)
-                        else -> cardRepository.getStateWitness(idMain)
+                        else -> cardRepository.getStateInvolved(idMain)
                     }
                 }
             }.getOrThrow() ?: State.UNHARMED

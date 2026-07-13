@@ -1,4 +1,4 @@
-package br.com.usinasantafe.cav.presenter.view.card.involved.name
+package br.com.usinasantafe.cav.presenter.view.card.obs
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
@@ -31,17 +30,14 @@ import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
 import br.com.usinasantafe.cav.presenter.theme.MsgErrors
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
+import br.com.usinasantafe.cav.presenter.view.card.detail.TAG_DETAIL_TEXT_FIELD
 import br.com.usinasantafe.cav.utils.UiStatusState
 
-const val TAG_NAME_INVOLVED_TEXT_FIELD = "tag_name_involved_text_field"
-
 @Composable
-fun NameScreen(
-    viewModel: NameViewModel = hiltViewModel(),
-    onNavDocument: () -> Unit,
-    onNavPhone: () -> Unit,
-    onNavDataInvolved: () -> Unit,
-    onNavMenu: () -> Unit
+fun ObsScreen(
+    viewModel: ObsViewModel = hiltViewModel(),
+    onNavMenu: () -> Unit,
+    onNavPhoto: () -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -51,18 +47,14 @@ fun NameScreen(
                 viewModel.recoverData()
             }
 
-            NameContent(
-                option = uiState.option,
-                flowNote = uiState.flowNote,
+            ObsContent(
                 text = uiState.text,
                 onTextChanged = viewModel::onTextChanged,
                 set = viewModel::set,
                 onCloseDialog = viewModel::onCloseDialog,
                 status = uiState.status,
-                onNavDocument = onNavDocument,
-                onNavPhone = onNavPhone,
-                onNavDataInvolved = onNavDataInvolved,
                 onNavMenu = onNavMenu,
+                onNavPhoto = onNavPhoto,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -70,28 +62,23 @@ fun NameScreen(
 }
 
 @Composable
-fun NameContent(
-    option: Option,
-    flowNote: FlowNote,
+fun ObsContent(
     text: String,
     onTextChanged: (String) -> Unit,
     set: () -> Unit,
     onCloseDialog: () -> Unit,
     status: UiStatusState,
-    onNavDocument: () -> Unit,
-    onNavPhone: () -> Unit,
-    onNavDataInvolved: () -> Unit,
     onNavMenu: () -> Unit,
+    onNavPhoto: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
             .padding(16.dp)
-            .imePadding()
     ) {
         TitleDesign(
             text = stringResource(
-                id = R.string.text_name
+                id = R.string.text_obs
             )
         )
         Spacer(modifier = Modifier.padding(vertical = 4.dp))
@@ -101,7 +88,7 @@ fun NameContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .testTag(TAG_NAME_INVOLVED_TEXT_FIELD),
+                .testTag(TAG_DETAIL_TEXT_FIELD),
             textStyle = TextStyle(
                 textAlign = TextAlign.Center,
                 fontSize = 28.sp
@@ -114,17 +101,7 @@ fun NameContent(
             horizontalArrangement = Arrangement.Center,
         ) {
             Button(
-                onClick = {
-                    when(option) {
-                        Option.INSERT -> {
-                            when(flowNote) {
-                                FlowNote.WITNESS -> onNavMenu()
-                                else -> onNavDocument()
-                            }
-                        }
-                        Option.EDIT -> onNavDataInvolved()
-                    }
-                },
+                onClick = onNavMenu,
                 modifier = Modifier.weight(1f)
             ) {
                 TextButtonDesign(
@@ -151,31 +128,25 @@ fun NameContent(
 
     LaunchedEffect(status.flagAccess) {
         if (status.flagAccess) {
-            when(option) {
-                Option.INSERT -> onNavPhone()
-                Option.EDIT -> onNavDataInvolved()
-            }
+            onNavPhoto()
         }
     }
+
 }
 
 @Preview(showBackground = true)
 @Composable
-fun NamePagePreview() {
+fun ObsPagePreview() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            NameContent(
-                option = Option.INSERT,
-                flowNote = FlowNote.EQUIP,
+            ObsContent(
                 text = "Text",
                 onTextChanged = {},
                 set = {},
                 onCloseDialog = {},
                 status = UiStatusState(),
-                onNavDocument = {},
-                onNavPhone = {},
-                onNavDataInvolved = {},
                 onNavMenu = {},
+                onNavPhoto = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

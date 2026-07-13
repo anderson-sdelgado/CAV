@@ -98,24 +98,27 @@ class InvolvedDataViewModel @Inject constructor(
         )
 
         runCatching {
-            RecoverInvolved(
-                document = getDocument(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow(),
-                name = getName(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow(),
-                state = getState(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow(),
-                phone = getPhone(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow(),
-                address = getAddress(state.flowNote, state.idMain, state.idSecondary).getOrThrow(),
-                detail = getDetail(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
-            )
+            val isWitness = state.flowNote == FlowNote.WITNESS
+
+            val name = getName(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            val phone = getPhone(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            val detail = getDetail(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+
+            val document = if (isWitness) "" else getDocument(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            val stateRet = if (isWitness) State.UNHARMED else getState(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            val address = if (isWitness) "" else getAddress(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+
+            RecoverInvolved(document, name, stateRet, phone, address, detail)
         }
-            .onSuccess {
+            .onSuccess { recovered ->
                 updateState {
                     copy(
-                        document = it.document,
-                        name = it.name,
-                        state = it.state,
-                        phone = it.phone,
-                        address = it.address,
-                        detail = it.detail
+                        document = recovered.document,
+                        name = recovered.name,
+                        state = recovered.state,
+                        phone = recovered.phone,
+                        address = recovered.address,
+                        detail = recovered.detail
                     )
                 }
             }

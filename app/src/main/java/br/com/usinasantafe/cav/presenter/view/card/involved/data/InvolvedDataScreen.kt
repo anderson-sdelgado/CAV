@@ -126,13 +126,15 @@ fun InvolvedDataContent(
             modifier = Modifier.weight(1f),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            item {
-                ItemDefaultEditListScreenModel(
-                    id = R.string.text_document,
-                    desc = document,
-                    tag = TAG_DOCUMENT_DATA_INVOLVED_EDIT_BUTTON,
-                    onClickEdit = onNavDocument
-                )
+            if(flowNote != FlowNote.WITNESS) {
+                item {
+                    ItemDefaultEditListScreenModel(
+                        id = R.string.text_document,
+                        desc = document,
+                        tag = TAG_DOCUMENT_DATA_INVOLVED_EDIT_BUTTON,
+                        onClickEdit = onNavDocument
+                    )
+                }
             }
             item {
                 ItemDefaultEditListScreenModel(

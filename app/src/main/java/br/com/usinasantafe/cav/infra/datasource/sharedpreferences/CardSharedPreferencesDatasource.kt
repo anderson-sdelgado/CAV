@@ -48,6 +48,8 @@ interface BasicCardSharedPreferencesDatasource {
     suspend fun setIdDataLocalList(idList: List<Int>): EmptyResult
     suspend fun listIdSupportTeams(): Result<List<Int>>
     suspend fun setIdSupportTeamsList(idList: List<Int>): EmptyResult
+    suspend fun getObs(): Result<String?>
+    suspend fun setObs(text: String): EmptyResult
 }
 
 interface InsertCardSharedPreferencesDatasource {
@@ -76,7 +78,6 @@ interface RecoverDataCardSharedPreferencesDatasource {
     suspend fun getRegPassengerColab(idMain: Int, idSecondary: Int): Result<Long>
     suspend fun getStateColab(idMain: Int): Result<State>
     suspend fun getStatePassengerColab(idMain: Int, idSecondary: Int): Result<State>
-    suspend fun getStateWitness(idMain: Int): Result<State>
     suspend fun getStatePassengerInvolved(idMain: Int, idSecondary: Int): Result<State>
     suspend fun getStateInvolved(idMain: Int): Result<State>
     suspend fun getStateDriver(idMain: Int): Result<State>
@@ -95,7 +96,6 @@ interface RecoverDataCardSharedPreferencesDatasource {
     suspend fun listInvolved(): Result<List<Involved>>
     suspend fun listWitness(): Result<List<Involved>>
     suspend fun getDocumentInvolved(idMain: Int): Result<String?>
-    suspend fun getDocumentWitness(idMain: Int): Result<String?>
     suspend fun getNameInvolved(idMain: Int): Result<String?>
     suspend fun getNameWitness(idMain: Int): Result<String?>
     suspend fun getPhoneDriver(idMain: Int): Result<String?>

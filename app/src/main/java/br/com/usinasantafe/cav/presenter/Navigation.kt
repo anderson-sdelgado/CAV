@@ -39,7 +39,9 @@ import br.com.usinasantafe.cav.presenter.Screens.BRAND_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.DOCUMENT_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.INVOLVED_WITNESS_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.NAME_SCREEN
+import br.com.usinasantafe.cav.presenter.Screens.OBS_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.PHONE_SCREEN
+import br.com.usinasantafe.cav.presenter.Screens.PHOTO_SCREEN
 
 object Screens {
     const val SPLASH_SCREEN = "splashScreen"
@@ -76,7 +78,9 @@ object Screens {
     const val NAME_SCREEN = "nameScreen"
     const val PHONE_SCREEN = "phoneScreen"
     const val ADDRESS_SCREEN = "addressScreen"
-    const val INVOLVED_WITNESS_SCREEN = "InvolvedScreen"
+    const val INVOLVED_WITNESS_SCREEN = "involvedScreen"
+    const val OBS_SCREEN = "obsScreen"
+    const val PHOTO_SCREEN = "photoScreen"
 }
 
 object Args {
@@ -122,6 +126,8 @@ object Routes {
     const val PHONE_ROUTE = "$PHONE_SCREEN/{$OPTION_ARG}/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
     const val ADDRESS_ROUTE = "$ADDRESS_SCREEN/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
     const val INVOLVED_WITNESS_ROUTE = INVOLVED_WITNESS_SCREEN
+    const val OBS_ROUTE = OBS_SCREEN
+    const val PHOTO_ROUTE = PHOTO_SCREEN
 }
 
 class NavigationActions(private val navController: NavHostController) {
@@ -353,6 +359,14 @@ class NavigationActions(private val navController: NavHostController) {
 
     fun navigateToInvolvedWitness() {
         navController.navigate(INVOLVED_WITNESS_SCREEN)
+    }
+
+    fun navigateToObs() {
+        navController.navigate(OBS_SCREEN)
+    }
+
+    fun navigateToPhoto() {
+        navController.navigate(PHOTO_SCREEN)
     }
 
     //////////////////////////////////////////////////////////////////////

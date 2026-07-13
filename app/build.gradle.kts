@@ -153,6 +153,7 @@ dependencies {
     implementation(libs.google.play.services.location)
     implementation(libs.google.maps.compose)
     androidTestImplementation(libs.androidx.rules)
+    implementation(libs.coil.compose)
 }
 
 kapt {

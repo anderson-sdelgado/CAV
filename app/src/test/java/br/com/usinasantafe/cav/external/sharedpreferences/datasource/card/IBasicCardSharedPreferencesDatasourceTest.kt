@@ -526,4 +526,62 @@ class IBasicCardSharedPreferencesDatasourceTest {
             )
         }
 
+    @Test
+    fun `getObs - Check return data and sharePreferences is empty`() =
+        runTest {
+            val result = datasource.getObs()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull(),
+                null
+            )
+        }
+
+    @Test
+    fun `getObs - Check return data and sharePreferences with data`() =
+        runTest {
+            val data = CardSharedPreferencesModel(
+                obs = "TESTE OBS"
+            )
+            cardDatasource.save(data)
+            val result = datasource.getObs()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull(),
+                "TESTE OBS"
+            )
+        }
+
+    @Test
+    fun `setObs - Check alter data correct in SharedPreferences internal`() =
+        runTest {
+            val data = CardSharedPreferencesModel(
+                obs = "TESTE"
+            )
+            cardDatasource.save(data)
+            val modelBefore =
+                cardDatasource.get().getOrThrow()
+            assertEquals(
+                modelBefore.obs,
+                "TESTE"
+            )
+            val result = datasource.setObs("TESTE OBS")
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            val modelAfter =
+                cardDatasource.get().getOrThrow()
+            assertEquals(
+                modelAfter.obs,
+                "TESTE OBS"
+            )
+        }
+
 }

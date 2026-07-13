@@ -32,7 +32,6 @@ import br.com.usinasantafe.cav.infra.models.room.stable.TypeAccidentRoomModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.ConfigSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.StatusSend
 import br.com.usinasantafe.cav.presenter.MainActivity
-import br.com.usinasantafe.cav.presenter.theme.TAG_BUTTON_OK_ALERT_DIALOG_SIMPLE
 import br.com.usinasantafe.cav.presenter.view.card.detail.TAG_DETAIL_TEXT_FIELD
 import br.com.usinasantafe.cav.presenter.view.card.involved.address.TAG_ADDRESS_INVOLVED_TEXT_FIELD
 import br.com.usinasantafe.cav.presenter.view.card.involved.data.TAG_ADDRESS_DATA_INVOLVED_EDIT_BUTTON
@@ -46,7 +45,6 @@ import br.com.usinasantafe.cav.presenter.view.card.menu.TAG_INVOLVED_FULL_EDIT_B
 import br.com.usinasantafe.cav.presenter.view.card.menu.TAG_INVOLVED_FULL_INSERT_BUTTON
 import br.com.usinasantafe.cav.presenter.view.card.state.TAG_DEAD_RADIO_BUTTON
 import br.com.usinasantafe.cav.presenter.view.card.state.TAG_INJURED_RADIO_BUTTON
-import br.com.usinasantafe.cav.presenter.view.card.vehicleFull.TAG_DRIVER_INVOLVED_EDIT_BUTTON
 import br.com.usinasantafe.cav.utils.dataLocalList
 import br.com.usinasantafe.cav.utils.itemDataLocalList
 import br.com.usinasantafe.cav.utils.natureList

@@ -102,11 +102,6 @@ class IRecoverDataCardRepository @Inject constructor(
             cardSharedPreferencesDatasource.getStatePassengerColab(idMain, idSecondary).getOrThrow()
         }
 
-    override suspend fun getStateWitness(id: Int): Result<State> =
-        call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.getStateWitness(id).getOrThrow()
-        }
-
     override suspend fun getStatePassengerInvolved(
         idMain: Int,
         idSecondary: Int
@@ -207,11 +202,6 @@ class IRecoverDataCardRepository @Inject constructor(
     override suspend fun getDocumentInvolved(idMain: Int): Result<String?> =
         call(getClassAndMethod()) {
             cardSharedPreferencesDatasource.getDocumentInvolved(idMain).getOrThrow()
-        }
-
-    override suspend fun getDocumentWitness(idMain: Int): Result<String?> =
-        call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.getDocumentWitness(idMain).getOrThrow()
         }
 
     override suspend fun getNameInvolved(idMain: Int): Result<String?> =

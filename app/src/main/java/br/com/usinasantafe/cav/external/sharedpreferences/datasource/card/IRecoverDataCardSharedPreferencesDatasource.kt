@@ -142,13 +142,6 @@ class IRecoverDataCardSharedPreferencesDatasource @Inject constructor(
             }
         }
 
-    override suspend fun getStateWitness(idMain: Int): Result<State> =
-        result(getClassAndMethod()) {
-            datasource.get().readModel {
-                witnessList.find { it.id == idMain }?.state.required("state")
-            }
-        }
-
     override suspend fun getStatePassengerInvolved(
         idMain: Int,
         idSecondary: Int
@@ -284,13 +277,6 @@ class IRecoverDataCardSharedPreferencesDatasource @Inject constructor(
         result(getClassAndMethod()) {
             datasource.get().readModel {
                 involvedList.find { it.id == idMain }?.document
-            }
-        }
-
-    override suspend fun getDocumentWitness(idMain: Int): Result<String?> =
-        result(getClassAndMethod()) {
-            datasource.get().readModel {
-                witnessList.find { it.id == idMain }?.document
             }
         }
 

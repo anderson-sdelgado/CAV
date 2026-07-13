@@ -1,4 +1,4 @@
-package br.com.usinasantafe.cav
+package br.com.usinasantafe.cav.integration
 
 import android.util.Log
 import androidx.compose.ui.test.assertIsDisplayed

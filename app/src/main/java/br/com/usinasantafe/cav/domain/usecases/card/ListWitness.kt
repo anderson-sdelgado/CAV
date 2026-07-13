@@ -20,7 +20,7 @@ class IListWitness @Inject constructor(
             list.map {
                 ItemListScreenModel(
                     id = it.id!!,
-                    desc = "${it.document ?: '-' } - ${it.name ?: '-' }"
+                    desc = "${it.phone ?: '-' } - ${it.name ?: '-' }"
                 )
             }
         }

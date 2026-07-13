@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
+import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.TypeButton
 import br.com.usinasantafe.cav.presenter.theme.ButtonsGenericNumeric
@@ -31,6 +32,7 @@ fun PhoneScreen(
     onNavName: () -> Unit,
     onNavState: () -> Unit,
     onNavDataInvolved: () -> Unit,
+    onNavDetail: () -> Unit
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -42,6 +44,7 @@ fun PhoneScreen(
 
             PhoneContent(
                 option = uiState.option,
+                flowNote = uiState.flowNote,
                 text = uiState.text,
                 onTextField = viewModel::onTextField,
                 onCloseDialog = viewModel::onCloseDialog,
@@ -49,6 +52,7 @@ fun PhoneScreen(
                 onNavName = onNavName,
                 onNavState = onNavState,
                 onNavDataInvolved = onNavDataInvolved,
+                onNavDetail = onNavDetail,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -58,6 +62,7 @@ fun PhoneScreen(
 @Composable
 fun PhoneContent(
     option: Option,
+    flowNote: FlowNote,
     text: String,
     onTextField: (String, TypeButton) -> Unit,
     onCloseDialog: () -> Unit,
@@ -65,6 +70,7 @@ fun PhoneContent(
     onNavName: () -> Unit,
     onNavState: () -> Unit,
     onNavDataInvolved: () -> Unit,
+    onNavDetail: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -104,7 +110,13 @@ fun PhoneContent(
     LaunchedEffect(status.flagAccess) {
         if(status.flagAccess) {
             when(option){
-                Option.INSERT -> onNavState()
+                Option.INSERT -> {
+                    when(flowNote){
+                        FlowNote.WITNESS -> onNavDetail()
+                        else -> onNavState()
+                    }
+
+                }
                 Option.EDIT -> onNavDataInvolved()
             }
         }
@@ -118,6 +130,7 @@ fun PhonePagePreview() {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             PhoneContent(
                 option = Option.INSERT,
+                flowNote = FlowNote.WITNESS,
                 text = "",
                 onTextField = { _, _ -> },
                 onCloseDialog = {},
@@ -125,6 +138,7 @@ fun PhonePagePreview() {
                 onNavName = {},
                 onNavState = {},
                 onNavDataInvolved = {},
+                onNavDetail = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

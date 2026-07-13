@@ -247,4 +247,12 @@ interface CardModule {
     @Singleton
     fun bindGetNroCar(usecase: IGetNroCar): GetNroCar
 
+    @Binds
+    @Singleton
+    fun bindGetObs(usecase: IGetObs): GetObs
+
+    @Binds
+    @Singleton
+    fun bindSetObs(usecase: ISetObs): SetObs
+
 }

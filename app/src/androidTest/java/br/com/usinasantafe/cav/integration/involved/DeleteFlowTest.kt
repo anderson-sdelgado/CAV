@@ -7,9 +7,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
-import androidx.test.core.app.ActivityScenario
 import androidx.test.rule.GrantPermissionRule
 import br.com.usinasantafe.cav.external.room.dao.stable.ColabDao
 import br.com.usinasantafe.cav.external.room.dao.stable.DataLocalDao
@@ -33,13 +31,6 @@ import br.com.usinasantafe.cav.infra.models.sharedpreferences.ConfigSharedPrefer
 import br.com.usinasantafe.cav.lib.StatusSend
 import br.com.usinasantafe.cav.presenter.MainActivity
 import br.com.usinasantafe.cav.presenter.view.card.detail.TAG_DETAIL_TEXT_FIELD
-import br.com.usinasantafe.cav.presenter.view.card.involved.address.TAG_ADDRESS_INVOLVED_TEXT_FIELD
-import br.com.usinasantafe.cav.presenter.view.card.involved.data.TAG_ADDRESS_DATA_INVOLVED_EDIT_BUTTON
-import br.com.usinasantafe.cav.presenter.view.card.involved.data.TAG_DETAIL_DATA_INVOLVED_EDIT_BUTTON
-import br.com.usinasantafe.cav.presenter.view.card.involved.data.TAG_DOCUMENT_DATA_INVOLVED_EDIT_BUTTON
-import br.com.usinasantafe.cav.presenter.view.card.involved.data.TAG_NAME_DATA_INVOLVED_EDIT_BUTTON
-import br.com.usinasantafe.cav.presenter.view.card.involved.data.TAG_PHONE_DATA_INVOLVED_EDIT_BUTTON
-import br.com.usinasantafe.cav.presenter.view.card.involved.data.TAG_STATE_DATA_INVOLVED_EDIT_BUTTON
 import br.com.usinasantafe.cav.presenter.view.card.involved.name.TAG_NAME_INVOLVED_TEXT_FIELD
 import br.com.usinasantafe.cav.presenter.view.card.menu.TAG_INVOLVED_FULL_EDIT_BUTTON
 import br.com.usinasantafe.cav.presenter.view.card.menu.TAG_INVOLVED_FULL_INSERT_BUTTON
@@ -120,8 +111,6 @@ class DeleteFlowTest {
         ) {
 
             initialRegister()
-
-            val scenario = ActivityScenario.launch(MainActivity::class.java)
 
             Log.d("TestDebug", "Position 1")
 
@@ -389,8 +378,6 @@ class DeleteFlowTest {
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithTag(TAG_DETAIL_TEXT_FIELD)
-                .performTextInput("TESTE DE EDIÇÃO DE ENDEREÇO")
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
