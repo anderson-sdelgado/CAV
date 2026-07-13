@@ -33,6 +33,8 @@ import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
 import br.com.usinasantafe.cav.presenter.view.card.detail.TAG_DETAIL_TEXT_FIELD
 import br.com.usinasantafe.cav.utils.UiStatusState
 
+const val TAG_OBS_TEXT_FIELD = "tag_obs_text_field"
+
 @Composable
 fun ObsScreen(
     viewModel: ObsViewModel = hiltViewModel(),
@@ -88,7 +90,7 @@ fun ObsContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .testTag(TAG_DETAIL_TEXT_FIELD),
+                .testTag(TAG_OBS_TEXT_FIELD),
             textStyle = TextStyle(
                 textAlign = TextAlign.Center,
                 fontSize = 28.sp

@@ -76,7 +76,7 @@ import br.com.usinasantafe.cav.presenter.view.card.involved.document.DocumentScr
 import br.com.usinasantafe.cav.presenter.view.card.involved.name.NameScreen
 import br.com.usinasantafe.cav.presenter.view.card.involved.phone.PhoneScreen
 import br.com.usinasantafe.cav.presenter.view.card.menu.InvolvedWitnessScreen
-import br.com.usinasantafe.cav.presenter.view.card.menu.ObsScreen
+import br.com.usinasantafe.cav.presenter.view.card.obs.ObsScreen
 import br.com.usinasantafe.cav.presenter.view.card.passengerList.PassengerListScreen
 import br.com.usinasantafe.cav.presenter.view.card.photo.PhotoScreen
 import br.com.usinasantafe.cav.presenter.view.card.state.StateScreen
@@ -109,9 +109,8 @@ fun NavigationGraph(
         composable(SPLASH_ROUTE) {
             SplashScreen(
                 onNavInitialMenu = {
-//                    navActions.navigateToInitialMenu()
-                    navActions.navigateToPhoto()
-                },
+                    navActions.navigateToInitialMenu()
+                }
             )
         }
 
@@ -1180,16 +1179,29 @@ fun NavigationGraph(
                         idSecondary = 0
                     )
                 },
-                onNavObs = {}
+                onNavObs = {
+                    navActions.navigateToObs()
+                }
             )
         }
 
         composable(OBS_ROUTE) {
-            ObsScreen()
+            ObsScreen(
+                onNavMenu = {
+                    navActions.navigateToInvolvedWitness()
+                },
+                onNavPhoto = {
+                    navActions.navigateToPhoto()
+                }
+            )
         }
 
         composable(PHOTO_ROUTE) {
-            PhotoScreen()
+            PhotoScreen(
+                onNavObs = {
+                    navActions.navigateToObs()
+                }
+            )
         }
 
         //////////////////////////////////////////////////////////////////////

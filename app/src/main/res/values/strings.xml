@@ -114,4 +114,9 @@
     <string name="text_data_witness">DADOS DA TESTEMUNHA</string>
     <string name="text_item_involved">TELEFONE - NOME</string>
     <string name="text_obs">OBSERVAÇÃO</string>
+    <string name="text_take_photo">TIRAR FOTOS</string>
+    <string name="text_title_photo">FOTO(S)</string>
+    <string name="text_delete_photo">EXCLUIR FOTOS</string>
+    <string name="text_name_photo">photo_</string>
+    <string name="text_extension_photo">.jpg</string>
 </resources>

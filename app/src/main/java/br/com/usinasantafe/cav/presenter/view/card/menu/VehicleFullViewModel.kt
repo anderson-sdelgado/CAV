@@ -2,8 +2,6 @@ package br.com.usinasantafe.cav.presenter.view.card.menu
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.usinasantafe.cav.domain.usecases.card.DeleteVehicleOwn
-import br.com.usinasantafe.cav.domain.usecases.card.DeleteVehicleInvolved
 import br.com.usinasantafe.cav.domain.usecases.card.ListVehicleInvolved
 import br.com.usinasantafe.cav.domain.usecases.card.ListVehicleOwn
 import br.com.usinasantafe.cav.lib.TypeVehicle
@@ -37,8 +35,6 @@ data class VehicleFullState(
 class VehicleFullViewModel @Inject constructor(
     private val listVehicleOwn: ListVehicleOwn,
     private val listVehicleInvolved: ListVehicleInvolved,
-    private val deleteVehicleInvolved: DeleteVehicleInvolved,
-    private val deleteVehicleOwn: DeleteVehicleOwn
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(VehicleFullState())

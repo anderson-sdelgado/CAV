@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.presenter.view.card.photo
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
@@ -11,7 +12,11 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private const val MAX_PHOTOS = 4
+
 data class PhotoState(
+    val photos: List<Uri> = emptyList(),
+    val newPhoto: Uri? = null,
     override val status: UiStatusState = UiStatusState()
 ) : UiStateWithStatus<PhotoState> {
 
@@ -35,6 +40,34 @@ class PhotoViewModel @Inject constructor(
 
     fun onCloseDialog() = updateState { copy(status = status.copy(flagDialog = false, flagFailure = false)) }
 
+    fun addPhoto(uri: Uri) {
 
+        if (state.photos.size >= MAX_PHOTOS)
+            return
+
+        if (state.photos.contains(uri))
+            return
+
+        updateState {
+            copy(
+                photos = photos + uri,
+                newPhoto = null
+            )
+        }
+    }
+
+    fun removePhoto(uri: Uri) {
+        updateState {
+            copy(
+                photos = photos - uri
+            )
+        }
+    }
+
+    fun setNewPhoto(uri: Uri?) {
+        updateState {
+            copy(newPhoto = uri)
+        }
+    }
 
 }
