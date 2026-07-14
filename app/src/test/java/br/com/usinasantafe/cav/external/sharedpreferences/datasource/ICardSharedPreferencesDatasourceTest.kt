@@ -56,7 +56,7 @@ class ICardSharedPreferencesDatasourceTest {
             val model = resultGet.getOrNull()!!
             assertEquals(model.regAttendant, 18017)
             assertEquals(model.idCar, 1)
-            assertEquals(model.local.address, "test")
+            assertEquals(model.local!!.address, "test")
         }
 
     @Test

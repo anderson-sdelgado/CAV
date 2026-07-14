@@ -417,26 +417,6 @@ class IRecoverDataCardRepositoryTest {
         }
 
     @Test
-    fun `getStateWitness(id) - Check return failure if have error in CardSharedPreferencesDatasource getStateWitness`() =
-        runTest {
-            whenever(cardSharedPreferencesDatasource.getStateWitness(1)).thenReturn(
-                resultFailure("ICardSharedPreferencesDatasource.getStateWitness", "-", Exception())
-            )
-            val result = repository.getStateWitness(1)
-            assertEquals(result.isFailure, true)
-            assertEquals(result.exceptionOrNull()!!.message, "IRecoverDataCardRepository.getStateWitness -> ICardSharedPreferencesDatasource.getStateWitness")
-        }
-
-    @Test
-    fun `getStateWitness(id) - Check return correct if function execute successfully`() =
-        runTest {
-            whenever(cardSharedPreferencesDatasource.getStateWitness(1)).thenReturn(Result.success(State.UNHARMED))
-            val result = repository.getStateWitness(1)
-            assertEquals(result.isSuccess, true)
-            assertEquals(result.getOrNull()!!, State.UNHARMED)
-        }
-
-    @Test
     fun `getStatePassengerInvolved(idMain, idSecondary) - Check return failure if have error in CardSharedPreferencesDatasource getStatePassengerInvolved`() =
         runTest {
             whenever(cardSharedPreferencesDatasource.getStatePassengerInvolved(1, 2)).thenReturn(
@@ -808,26 +788,6 @@ class IRecoverDataCardRepositoryTest {
         runTest {
             whenever(cardSharedPreferencesDatasource.getDocumentInvolved(1)).thenReturn(Result.success("document"))
             val result = repository.getDocumentInvolved(1)
-            assertEquals(result.isSuccess, true)
-            assertEquals(result.getOrNull(), "document")
-        }
-
-    @Test
-    fun `getDocumentWitness(idMain) - Check return failure if have error in CardSharedPreferencesDatasource getDocumentWitness`() =
-        runTest {
-            whenever(cardSharedPreferencesDatasource.getDocumentWitness(1)).thenReturn(
-                resultFailure("ICardSharedPreferencesDatasource.getDocumentWitness", "-", Exception())
-            )
-            val result = repository.getDocumentWitness(1)
-            assertEquals(result.isFailure, true)
-            assertEquals(result.exceptionOrNull()!!.message, "IRecoverDataCardRepository.getDocumentWitness -> ICardSharedPreferencesDatasource.getDocumentWitness")
-        }
-
-    @Test
-    fun `getDocumentWitness(idMain) - Check return correct if function execute successfully`() =
-        runTest {
-            whenever(cardSharedPreferencesDatasource.getDocumentWitness(1)).thenReturn(Result.success("document"))
-            val result = repository.getDocumentWitness(1)
             assertEquals(result.isSuccess, true)
             assertEquals(result.getOrNull(), "document")
         }

@@ -2,7 +2,6 @@ package br.com.usinasantafe.cav.presenter.view.card.photo
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -29,6 +28,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
@@ -59,6 +59,11 @@ fun PhotoScreen(
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+            LaunchedEffect(Unit) {
+                viewModel.recoverData()
+            }
+
             PhotoContent(
                 photos = uiState.photos,
                 newPhoto = uiState.newPhoto,
@@ -74,11 +79,11 @@ fun PhotoScreen(
 
 @Composable
 fun PhotoContent(
-    photos: List<Uri>,
-    newPhoto: Uri?,
-    addPhoto: (Uri) -> Unit,
-    removePhoto: (Uri) -> Unit,
-    setNewPhoto: (Uri?) -> Unit,
+    photos: List<String>,
+    newPhoto: String?,
+    addPhoto: (String) -> Unit,
+    removePhoto: (String) -> Unit,
+    setNewPhoto: (String) -> Unit,
     onNavObs: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -90,9 +95,13 @@ fun PhotoContent(
         rememberLauncherForActivityResult(
             contract = ActivityResultContracts.TakePicture()
         ) { success ->
+
             if (success) {
-                currentNewPhoto?.let(addPhoto)
+                currentNewPhoto?.let { path ->
+                    addPhoto(path)
+                }
             }
+
         }
 
     val cameraPermissionLauncher =
@@ -100,8 +109,15 @@ fun PhotoContent(
             contract = ActivityResultContracts.RequestPermission()
         ) { granted ->
             if (granted) {
-                newPhoto?.let {
-                    takePictureLauncher.launch(it)
+                currentNewPhoto?.let { path ->
+                    val file = File(path)
+                    if (!file.exists()) return@let
+                    val uri = FileProvider.getUriForFile(
+                        context,
+                        "${context.packageName}.provider",
+                        file
+                    )
+                    takePictureLauncher.launch(uri)
                 }
             }
         }
@@ -119,13 +135,13 @@ fun PhotoContent(
                 .fillMaxWidth()
                 .weight(1f)
         ) {
-            items(photos) { uri ->
+            items(photos) { path ->
                 Box(
                     modifier = Modifier.aspectRatio(1f)
                 ) {
 
                     AsyncImage(
-                        model = uri,
+                        model = path,
                         contentDescription = null,
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Crop
@@ -141,7 +157,7 @@ fun PhotoContent(
                                 shape = CircleShape
                             )
                             .clickable {
-                                removePhoto(uri)
+                                removePhoto(path)
                             },
                         contentAlignment = Alignment.Center
                     ) {
@@ -165,17 +181,25 @@ fun PhotoContent(
             ,
             onClick = {
                 try {
+                    val photoDir = File(context.filesDir, "photos")
+
+                    if (!photoDir.exists()) {
+                        photoDir.mkdirs()
+                    }
+
                     val file = File.createTempFile(
                         prefix,
                         suffix,
-                        context.cacheDir
+                        photoDir
                     )
+
                     val uri = FileProvider.getUriForFile(
                         context,
                         "${context.packageName}.provider",
                         file
                     )
-                    setNewPhoto(uri)
+
+                    setNewPhoto(file.absolutePath)
                     if (
                         ContextCompat.checkSelfPermission(
                             context,

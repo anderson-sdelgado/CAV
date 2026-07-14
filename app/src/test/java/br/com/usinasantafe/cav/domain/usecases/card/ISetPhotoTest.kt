@@ -10,33 +10,33 @@ import org.mockito.kotlin.whenever
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class IDeleteWitnessTest {
+class ISetPhotoTest {
 
     private val cardRepository = mock<CardRepository>()
-    private val usecase = IDeleteWitness(
+    private val usecase = ISetPhoto(
         cardRepository = cardRepository
     )
 
     @Test
-    fun `Check return failure if have error in CardRepository deleteWitness`() =
+    fun `Check return failure if have error in CardRepository setPhoto`() =
         runTest {
             whenever(
-                cardRepository.deleteWitness(1)
+                cardRepository.setPhoto("test")
             ).thenReturn(
                 resultFailure(
-                    "ICardRepository.deleteWitness",
+                    "ICardRepository.setPhoto",
                     "-",
                     Exception()
                 )
             )
-            val result = usecase(1)
+            val result = usecase("test")
             assertEquals(
                 result.isFailure,
                 true
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IDeleteWitness -> ICardRepository.deleteWitness"
+                "ISetPhoto -> ICardRepository.setPhoto"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -47,8 +47,13 @@ class IDeleteWitnessTest {
     @Test
     fun `Check return correct if function execute successfully`() =
         runTest {
-            val result = usecase(1)
-            verify(cardRepository, atLeastOnce()).deleteWitness(1)
+            whenever(
+                cardRepository.setPhoto("test")
+            ).thenReturn(
+                Result.success(Unit)
+            )
+            val result = usecase("test")
+            verify(cardRepository, atLeastOnce()).setPhoto("test")
             assertEquals(
                 result.isSuccess,
                 true

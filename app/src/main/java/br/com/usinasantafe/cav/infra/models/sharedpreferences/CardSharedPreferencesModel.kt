@@ -5,7 +5,7 @@ import br.com.usinasantafe.cav.domain.entities.variable.Card
 data class CardSharedPreferencesModel(
     var regAttendant: Long? = null,
     var idCar: Int? = null,
-    var local: LocalSharedPreferencesModel = LocalSharedPreferencesModel(),
+    var local: LocalSharedPreferencesModel? = null,
     var idNatureList: List<Int> = emptyList(),
     var idTypeAccidentList: List<Int> = emptyList(),
     var idDataLocalList: List<Int> = emptyList(),
@@ -14,6 +14,7 @@ data class CardSharedPreferencesModel(
     var vehicleInvolvedList: List<VehicleInvolvedSharedPreferencesModel> = emptyList(),
     var involvedList: List<InvolvedSharedPreferencesModel> = emptyList(),
     var witnessList: List<InvolvedSharedPreferencesModel> = emptyList(),
+    var photoList: List<String> = emptyList(),
     var obs: String? = null,
 )
 
@@ -23,7 +24,7 @@ fun CardSharedPreferencesModel.sharedPreferencesModelToEntity(): Card {
         Card(
             regAttendant = regAttendant,
             idCar = idCar,
-            local = local.sharedPreferencesModelToEntity(),
+            local = local?.sharedPreferencesModelToEntity(),
             idNatureList = idNatureList,
             idTypeAccidentList = idTypeAccidentList,
             idDataLocalList = idDataLocalList,
@@ -32,6 +33,7 @@ fun CardSharedPreferencesModel.sharedPreferencesModelToEntity(): Card {
             vehicleInvolvedList = vehicleInvolvedList.map { it.sharedPreferencesModelToEntity() },
             involvedList = involvedList.map { it.sharedPreferencesModelToEntity() },
             witnessList = witnessList.map { it.sharedPreferencesModelToEntity() },
+            photoList = photoList,
             obs = obs
         )
     }
@@ -41,7 +43,7 @@ fun Card.entityToSharedPreferencesModel(): CardSharedPreferencesModel {
         CardSharedPreferencesModel(
             regAttendant = regAttendant,
             idCar = idCar,
-            local = local.entityToSharedPreferencesModel(),
+            local = local?.entityToSharedPreferencesModel(),
             idNatureList = idNatureList,
             idTypeAccidentList = idTypeAccidentList,
             idDataLocalList = idDataLocalList,
@@ -50,6 +52,7 @@ fun Card.entityToSharedPreferencesModel(): CardSharedPreferencesModel {
             vehicleInvolvedList = vehicleInvolvedList.map { it.entityToSharedPreferencesModel() },
             involvedList = involvedList.map { it.entityToSharedPreferencesModel() },
             witnessList = witnessList.map { it.entityToSharedPreferencesModel() },
+            photoList = photoList,
             obs = obs
         )
     }

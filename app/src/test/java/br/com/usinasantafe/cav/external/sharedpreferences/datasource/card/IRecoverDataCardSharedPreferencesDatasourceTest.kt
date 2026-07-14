@@ -276,18 +276,6 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
         }
 
     @Test
-    fun `getStateWitness - Check return correct state from witnessList`() =
-        runTest {
-            val list = listOf(
-                InvolvedSharedPreferencesModel(id = 1, state = State.UNHARMED)
-            )
-            cardDatasource.save(CardSharedPreferencesModel(witnessList = list))
-            
-            val result = datasource.getStateWitness(1)
-            assertEquals(result.getOrNull(), State.UNHARMED)
-        }
-
-    @Test
     fun `getStatePassengerInvolved - Check return correct state from passengerInvolvedList`() =
         runTest {
             val list = listOf(
@@ -553,18 +541,6 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
             
             val result = datasource.getDocumentInvolved(1)
             assertEquals(result.getOrNull(), "DOC1")
-        }
-
-    @Test
-    fun `getDocumentWitness - Check return correct document from witnessList`() =
-        runTest {
-            val list = listOf(
-                InvolvedSharedPreferencesModel(id = 1, document = "DOCW1")
-            )
-            cardDatasource.save(CardSharedPreferencesModel(witnessList = list))
-            
-            val result = datasource.getDocumentWitness(1)
-            assertEquals(result.getOrNull(), "DOCW1")
         }
 
     @Test

@@ -26,13 +26,9 @@ class VehicleFullViewModelTest {
 
     private val listVehicleOwn = mock<ListVehicleOwn>()
     private val listVehicleInvolved = mock<ListVehicleInvolved>()
-    private val deleteVehicleOwn = mock<DeleteVehicleOwn>()
-    private val deleteVehicleInvolved = mock<DeleteVehicleInvolved>()
     private val viewModel = VehicleFullViewModel(
         listVehicleOwn = listVehicleOwn,
         listVehicleInvolved = listVehicleInvolved,
-        deleteVehicleOwn = deleteVehicleOwn,
-        deleteVehicleInvolved = deleteVehicleInvolved
     )
 
     @Test

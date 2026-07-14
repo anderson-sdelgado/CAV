@@ -18,6 +18,8 @@ interface CardRepository :
 
     suspend fun clean(): EmptyResult
     suspend fun has(): Result<Boolean>
+    suspend fun hasLocal(): Result<Boolean>
+    suspend fun save(): EmptyResult
 }
 
 interface BasicCardRepository{
@@ -30,13 +32,15 @@ interface BasicCardRepository{
     suspend fun getIdCar(): Result<Int?>
     suspend fun listIdTypeAccident(): Result<List<Int>>
     suspend fun setIdTypeAccidentList(idList: List<Int>): EmptyResult
-    suspend fun getLocal(): Result<Local>
+    suspend fun getLocal(): Result<Local?>
     suspend fun listIdDataLocal(): Result<List<Int>>
     suspend fun setIdDataLocalList(idList: List<Int>): EmptyResult
     suspend fun listIdSupportTeams(): Result<List<Int>>
     suspend fun setIdSupportTeamsList(idList: List<Int>): EmptyResult
     suspend fun getObs(): Result<String?>
     suspend fun setObs(text: String): EmptyResult
+    suspend fun setPhoto(url: String): EmptyResult
+    suspend fun listPhoto(): Result<List<String>>
 }
 
 interface InsertCardRepository {
@@ -163,4 +167,5 @@ interface DeleteCardRepository {
     suspend fun deleteWitness(id: Int): EmptyResult
     suspend fun deletePassengerColab(idMain: Int, idSecondary: Int): EmptyResult
     suspend fun deletePassengerInvolved(idMain: Int, idSecondary: Int): EmptyResult
+    suspend fun deletePhoto(url: String): EmptyResult
 }

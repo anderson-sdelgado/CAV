@@ -18,9 +18,9 @@ class IGetLocal @Inject constructor(
         call(getClassAndMethod()) {
             val entity = cardRepository.getLocal().getOrThrow()
             LocalScreenModel(
-                address = entity.address ?: "",
-                latitude = entity.latitude?.toString() ?: "",
-                longitude = entity.longitude?.toString() ?: ""
+                address = entity?.address ?: "",
+                latitude = entity?.latitude?.toString() ?: "",
+                longitude = entity?.longitude?.toString() ?: ""
             )
         }
 

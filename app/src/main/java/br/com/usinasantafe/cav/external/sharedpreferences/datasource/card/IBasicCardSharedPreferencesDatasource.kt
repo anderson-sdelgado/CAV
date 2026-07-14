@@ -5,7 +5,6 @@ import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPref
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.LocalSharedPreferencesModel
 import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.getClassAndMethod
-import br.com.usinasantafe.cav.utils.required
 import br.com.usinasantafe.cav.utils.result
 import javax.inject.Inject
 import javax.inject.Provider
@@ -77,7 +76,7 @@ class IBasicCardSharedPreferencesDatasource @Inject constructor(
             }
         }
 
-    override suspend fun getLocal(): Result<LocalSharedPreferencesModel> =
+    override suspend fun getLocal(): Result<LocalSharedPreferencesModel?> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
                 local
@@ -125,4 +124,21 @@ class IBasicCardSharedPreferencesDatasource @Inject constructor(
                 obs = text
             }
         }
+
+    override suspend fun setPhoto(url: String): EmptyResult =
+        result(getClassAndMethod()) {
+            datasource.get().updateModel {
+                val list = photoList.toMutableList()
+                list.add(url)
+                this.photoList = list
+            }
+        }
+
+    override suspend fun listPhoto(): Result<List<String>> =
+        result(getClassAndMethod()) {
+            datasource.get().readModel {
+                photoList
+            }
+        }
+
 }

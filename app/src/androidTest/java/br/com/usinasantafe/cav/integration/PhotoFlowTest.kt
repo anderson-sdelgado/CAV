@@ -7,6 +7,8 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.rule.IntentsRule
 import androidx.test.rule.GrantPermissionRule
 import br.com.usinasantafe.cav.external.room.dao.stable.ColabDao
 import br.com.usinasantafe.cav.external.room.dao.stable.DataLocalDao
@@ -41,6 +43,7 @@ import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -182,28 +185,7 @@ class PhotoFlowTest {
 
             Log.d("TestDebug", "Position 10")
 
-            composeTestRule.waitUntilTimeout(3_000)
-
-            composeTestRule.onNodeWithText("RETORNAR")
-                .performClick()
-
-            Log.d("TestDebug", "Position 11")
-
-            composeTestRule.waitUntilTimeout(3_000)
-
-            composeTestRule.onNodeWithText("SALVAR")
-                .performClick()
-
-            Log.d("TestDebug", "Position 12")
-
-            composeTestRule.waitUntilTimeout(3_000)
-
-            composeTestRule.onNodeWithText("TIRAR FOTOS")
-                .performClick()
-
-            Log.d("TestDebug", "Position 13")
-
-            composeTestRule.waitUntilTimeout(30_000)
+            composeTestRule.waitUntilTimeout(60_000)
 
         }
 

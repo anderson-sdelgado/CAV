@@ -41,4 +41,12 @@ class ICardRepository @Inject constructor(
             cardSharedPreferencesDatasource.has().getOrThrow()
         }
 
+    override suspend fun hasLocal(): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun save(): EmptyResult {
+        TODO("Not yet implemented")
+    }
+
 }

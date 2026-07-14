@@ -661,4 +661,43 @@ class IBasicCardRepositoryTest {
             )
         }
 
+    @Test
+    fun `setPhoto- Check return failure if have error in CardSharedPreferencesDatasource setPhoto`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.setPhoto("test")
+            ).thenReturn(
+                resultFailure(
+                    "ICardSharedPreferencesDatasource.setPhotoList",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.setPhoto("test")
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IBasicCardRepository.setPhotoList -> ICardSharedPreferencesDatasource.setPhotoList"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `setPhotoList - Check return correct if function execute successfully`() =
+        runTest {
+            val result = repository.setPhoto("test")
+            verify(cardSharedPreferencesDatasource, atLeastOnce())
+                .setPhoto("test")
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+        }
+
 }

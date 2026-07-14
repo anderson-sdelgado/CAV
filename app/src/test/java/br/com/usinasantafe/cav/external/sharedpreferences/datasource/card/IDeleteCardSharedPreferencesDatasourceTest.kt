@@ -476,4 +476,29 @@ class IDeleteCardSharedPreferencesDatasourceTest {
             )
         }
 
+    @Test
+    fun `deletePhoto - Check delete data correct in sharedPreferences internal`() =
+        runTest {
+            val list = listOf("test1", "test2", "test3")
+            val data = CardSharedPreferencesModel(
+                photoList = list
+            )
+            cardDatasource.save(data)
+            val modelBefore = cardDatasource.get().getOrThrow()
+            assertEquals(
+                modelBefore.photoList,
+                list
+            )
+            val result =  datasource.deletePhoto("test2")
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            val modelAfter = cardDatasource.get().getOrThrow()
+            assertEquals(
+                modelAfter.photoList,
+                listOf("test1", "test3")
+            )
+        }
+
 }

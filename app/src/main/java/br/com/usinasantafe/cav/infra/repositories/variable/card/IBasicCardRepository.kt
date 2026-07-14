@@ -59,10 +59,10 @@ class IBasicCardRepository @Inject constructor(
             cardSharedPreferencesDatasource.setIdTypeAccidentList(idList).getOrThrow()
         }
 
-    override suspend fun getLocal(): Result<Local> =
+    override suspend fun getLocal(): Result<Local?> =
         call(getClassAndMethod()) {
             val model = cardSharedPreferencesDatasource.getLocal().getOrThrow()
-            model.sharedPreferencesModelToEntity()
+            model?.sharedPreferencesModelToEntity()
         }
 
     override suspend fun listIdDataLocal(): Result<List<Int>> =
@@ -93,6 +93,16 @@ class IBasicCardRepository @Inject constructor(
     override suspend fun setObs(text: String): EmptyResult =
         call(getClassAndMethod()) {
             cardSharedPreferencesDatasource.setObs(text).getOrThrow()
+        }
+
+    override suspend fun setPhoto(url: String): EmptyResult =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.setPhoto(url).getOrThrow()
+        }
+
+    override suspend fun listPhoto(): Result<List<String>> =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.listPhoto().getOrThrow()
         }
 
 }

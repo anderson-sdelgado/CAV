@@ -89,4 +89,13 @@ class IDeleteCardSharedPreferencesDatasource @Inject constructor(
                 }
             }
         }
+
+    override suspend fun deletePhoto(url: String): EmptyResult =
+        result(getClassAndMethod()) {
+            datasource.get().updateModel {
+                val list = photoList.toMutableList()
+                list.remove(url)
+                this.photoList = list
+            }
+        }
 }

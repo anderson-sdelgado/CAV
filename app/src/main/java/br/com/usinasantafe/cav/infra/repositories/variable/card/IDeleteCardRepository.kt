@@ -55,4 +55,9 @@ class IDeleteCardRepository @Inject constructor(
             cardSharedPreferencesDatasource.deletePassengerInvolved(idMain, idSecondary).getOrThrow()
         }
 
+    override suspend fun deletePhoto(url: String): EmptyResult =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.deletePhoto(url).getOrThrow()
+        }
+
 }

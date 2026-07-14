@@ -290,5 +290,43 @@ class IDeleteCardRepositoryTest {
             )
         }
 
+    @Test
+    fun `deletePhoto - Check return failure if have error in CardSharedPreferencesDatasource deletePhoto`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.deletePhoto("test")
+            ).thenReturn(
+                resultFailure(
+                    "ICardSharedPreferencesDatasource.deletePhoto",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.deletePhoto("test")
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IDeleteCardRepository.deletePhoto -> ICardSharedPreferencesDatasource.deletePhoto"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `deletePhoto - Check return correct if function execute successfully`() =
+        runTest {
+            val result = repository.deletePhoto("test")
+            verify(cardSharedPreferencesDatasource, atLeastOnce())
+                .deletePhoto("test")
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+        }
 
 }

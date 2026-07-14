@@ -128,15 +128,15 @@ class IBasicCardSharedPreferencesDatasourceTest {
             val modelBefore =
                 cardDatasource.get().getOrThrow()
             assertEquals(
-                modelBefore.local.address,
+                modelBefore.local!!.address,
                 "Test"
             )
             assertEquals(
-                modelBefore.local.latitude,
+                modelBefore.local!!.latitude,
                 0.0
             )
             assertEquals(
-                modelBefore.local.longitude,
+                modelBefore.local!!.longitude,
                 0.0
             )
             val result = datasource.setLocal(
@@ -153,15 +153,15 @@ class IBasicCardSharedPreferencesDatasourceTest {
             val modelAfter =
                 cardDatasource.get().getOrThrow()
             assertEquals(
-                modelAfter.local.address,
+                modelAfter.local!!.address,
                 "Test2"
             )
             assertEquals(
-                modelAfter.local.latitude,
+                modelAfter.local!!.latitude,
                 1.0
             )
             assertEquals(
-                modelAfter.local.longitude,
+                modelAfter.local!!.longitude,
                 1.0
             )
         }
@@ -581,6 +581,22 @@ class IBasicCardSharedPreferencesDatasourceTest {
             assertEquals(
                 modelAfter.obs,
                 "TESTE OBS"
+            )
+        }
+
+    @Test
+    fun `setPhotoList - Check alter data correct in SharedPreferences internal`() =
+        runTest {
+            val result = datasource.setPhoto("test2")
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            val modelAfter =
+                cardDatasource.get().getOrThrow()
+            assertEquals(
+                modelAfter.photoList,
+                listOf("test2")
             )
         }
 

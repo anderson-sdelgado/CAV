@@ -255,4 +255,20 @@ interface CardModule {
     @Singleton
     fun bindSetObs(usecase: ISetObs): SetObs
 
+    @Binds
+    @Singleton
+    fun bindListPhoto(usecase: IListPhoto): ListPhoto
+
+    @Binds
+    @Singleton
+    fun bindSetPhoto(usecase: ISetPhoto): SetPhoto
+
+    @Binds
+    @Singleton
+    fun bindDeletePhoto(usecase: IDeletePhoto): DeletePhoto
+
+    @Binds
+    @Singleton
+    fun bindSaveCard(usecase: ISaveCard): SaveCard
+
 }
