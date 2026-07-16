@@ -4,4 +4,5 @@ import br.com.usinasantafe.cav.infra.models.room.variable.PassengerColabRoomMode
 
 interface PassengerColabRoomDatasource {
     suspend fun add(model: PassengerColabRoomModel): Result<Int>
+    suspend fun listByIdVehicleList(idVehicleList: List<Int>): Result<List<PassengerColabRoomModel>>
 }

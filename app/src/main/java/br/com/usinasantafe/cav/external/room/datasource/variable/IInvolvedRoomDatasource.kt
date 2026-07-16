@@ -18,4 +18,8 @@ class IInvolvedRoomDatasource @Inject constructor(
             involvedDao.insert(model).toInt()
         }
 
+    override suspend fun listByIdCard(idCard: Int): Result<List<InvolvedRoomModel>> {
+        TODO("Not yet implemented")
+    }
+
 }

@@ -12,4 +12,5 @@ interface ConfigSharedPreferencesDatasource {
     suspend fun setFlagUpdate(): EmptyResult
     suspend fun getFlagUpdate(): Result<Boolean>
     suspend fun getStatusSend(): Result<StatusSend>
+    suspend fun setStatusSend(statusSend: StatusSend): EmptyResult
 }

@@ -14,4 +14,8 @@ class IWitnessRoomDatasource @Inject constructor(
         result(getClassAndMethod()) {
             witnessDao.insert(model).toInt()
         }
+
+    override suspend fun listByIdCard(idCard: Int): Result<List<WitnessRoomModel>> {
+        TODO("Not yet implemented")
+    }
 }

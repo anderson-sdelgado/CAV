@@ -19,7 +19,7 @@ class ICardRepositoryTest {
         recoverDataRepository = mock(),
         updateRepository = mock(),
         deleteRepository = mock(),
-        saveAndSendCardRepository = mock(),
+        sendCardRepository = mock(),
         cardSharedPreferencesDatasource = cardSharedPreferencesDatasource
     )
 

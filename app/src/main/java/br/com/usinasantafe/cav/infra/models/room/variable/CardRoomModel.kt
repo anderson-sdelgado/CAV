@@ -6,6 +6,7 @@ import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferen
 import br.com.usinasantafe.cav.lib.StatusSend
 import br.com.usinasantafe.cav.lib.TB_CARD
 import br.com.usinasantafe.cav.utils.required
+import java.util.Date
 
 @Entity(tableName = TB_CARD)
 data class CardRoomModel(
@@ -22,6 +23,7 @@ data class CardRoomModel(
     val idSupportTeamsList: List<Int>,
     val urlPhotoList: List<String>,
     val obs: String?,
+    val dateHour: Date = Date(),
     var statusSend: StatusSend = StatusSend.SEND,
     var idServ: Int? = null,
 )

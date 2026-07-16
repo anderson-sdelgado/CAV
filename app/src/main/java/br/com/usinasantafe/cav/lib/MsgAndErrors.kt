@@ -38,6 +38,36 @@ fun errors(errors: Errors, failure: String, value: String = ""): String {
                 value
             )
         }
+        Errors.NON_EXISTENT_LOCAL -> {
+            stringResource(
+                id = R.string.text_non_existent_local,
+                value
+            )
+        }
+        Errors.NON_EXISTENT_DATA_LOCAL -> {
+            stringResource(
+                id = R.string.text_non_existent_data_local,
+                value
+            )
+        }
+        Errors.NON_EXISTENT_NATURE -> {
+            stringResource(
+                id = R.string.text_non_existent_data_local,
+                value
+            )
+        }
+        Errors.NON_EXISTENT_TYPE_ACCIDENT -> {
+            stringResource(
+                id = R.string.text_non_existent_type_accident,
+                value
+            )
+        }
+        Errors.NON_EXISTENT_VEHICLE_OWN -> {
+            stringResource(
+                id = R.string.text_non_existent_vehicle_own,
+                value
+            )
+        }
         else -> stringResource(
             id = R.string.text_failure,
             failure

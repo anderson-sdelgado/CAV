@@ -16,4 +16,8 @@ class IPassengerColabRoomDatasource @Inject constructor(
             passengerColabDao.insert(model).toInt()
         }
 
+    override suspend fun listByIdVehicleList(idVehicleList: List<Int>): Result<List<PassengerColabRoomModel>> {
+        TODO("Not yet implemented")
+    }
+
 }

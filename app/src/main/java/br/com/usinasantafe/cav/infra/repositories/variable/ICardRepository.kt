@@ -5,7 +5,7 @@ import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.domain.repositories.variable.DeleteCardRepository
 import br.com.usinasantafe.cav.domain.repositories.variable.InsertCardRepository
 import br.com.usinasantafe.cav.domain.repositories.variable.RecoverDataCardRepository
-import br.com.usinasantafe.cav.domain.repositories.variable.SaveAndSendCardRepository
+import br.com.usinasantafe.cav.domain.repositories.variable.SendCardRepository
 import br.com.usinasantafe.cav.domain.repositories.variable.UpdateCardRepository
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.repositories.variable.card.IBasicCardRepository
@@ -24,7 +24,7 @@ class ICardRepository @Inject constructor(
     private val recoverDataRepository: IRecoverDataCardRepository,
     private val updateRepository: IUpdateCardRepository,
     private val deleteRepository: IDeleteCardRepository,
-    private val saveAndSendCardRepository: SaveAndSendCardRepository,
+    private val sendCardRepository: SendCardRepository,
     private val cardSharedPreferencesDatasource: CardSharedPreferencesDatasource,
 ): CardRepository,
     BasicCardRepository by basicRepository,
@@ -32,7 +32,7 @@ class ICardRepository @Inject constructor(
     RecoverDataCardRepository by recoverDataRepository,
     UpdateCardRepository by updateRepository,
     DeleteCardRepository by deleteRepository,
-    SaveAndSendCardRepository by saveAndSendCardRepository {
+    SendCardRepository by sendCardRepository {
 
     override suspend fun clean(): EmptyResult =
         call(getClassAndMethod()) {

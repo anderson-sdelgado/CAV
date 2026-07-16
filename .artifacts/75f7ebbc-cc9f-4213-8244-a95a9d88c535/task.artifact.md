@@ -1,8 +1,7 @@
-- [x] Implementar `ICardRoomDatasourceTest.kt`
-- [x] Implementar `IEquipSecRoomDatasourceTest.kt`
-- [x] Implementar `IInvolvedRoomDatasourceTest.kt`
-- [x] Implementar `IPassengerColabRoomDatasourceTest.kt`
-- [x] Implementar `IPassengerInvolvedRoomDatasourceTest.kt`
-- [x] Implementar `IVehicleInvolvedRoomDatasourceTest.kt`
-- [x] Implementar `IVehicleOwnRoomDatasourceTest.kt`
-- [x] Implementar `IWitnessRoomDatasourceTest.kt`
+- [ ] Adicionar mock de `CardRetrofitDatasource` em `ISendCardRepositoryTest.kt`
+- [ ] Implementar testes de falha para o método `send()`
+    - [ ] Falha em `cardRoomDatasource.getSend()`
+    - [ ] Falha em `vehicleOwnRoomDatasource.listByIdCard()`
+    - [ ] Falha em `cardRetrofitDatasource.send()`
+- [ ] Implementar teste de sucesso para o método `send()`
+- [ ] Verificar execução dos testes

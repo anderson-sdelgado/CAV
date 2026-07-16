@@ -73,22 +73,32 @@ class VehicleOwnDataViewModel @Inject constructor(
     }
 
     fun recoverData() = viewModelScope.launch {
+
+        data class RecoverVehicleOwn(
+            val equip: String,
+            val equipSec: String,
+            val driver: String,
+            val passengers: String
+        )
+
         runCatching {
-            val equip = getDescEquip(FlowNote.EQUIP, state.idMain).getOrThrow()
-            val equipSec = getDescEquipSec(state.idMain).getOrThrow()
-            val driver = getDescColab(FlowNote.COLAB, state.idMain).getOrThrow()
-            val passengers = getDescPassengers(FlowNote.PASSENGER_COLAB, state.idMain).getOrThrow()
-            VehicleOwnDataState(
-                idMain = state.idMain,
-                equip = equip,
-                equipSec = equipSec,
-                driver = driver,
-                passengers = passengers
+            RecoverVehicleOwn(
+                equip = getDescEquip(FlowNote.EQUIP, state.idMain).getOrThrow(),
+                equipSec = getDescEquipSec(state.idMain).getOrThrow(),
+                driver = getDescColab(FlowNote.COLAB, state.idMain).getOrThrow(),
+                passengers = getDescPassengers(FlowNote.PASSENGER_COLAB, state.idMain).getOrThrow()
             )
+
         }
-            .onSuccess { newState ->
+            .onSuccess {
                 updateState {
-                    newState.copy(status = status.copy(flagFailure = false))
+                    copy(
+                        equip = it.equip,
+                        equipSec = it.equipSec,
+                        driver = it.driver,
+                        passengers = it.passengers,
+                        status = status.copy(flagFailure = false)
+                    )
                 }
             }
             .onFailureState(getClassAndMethod(), ::updateState)

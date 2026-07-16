@@ -16,4 +16,8 @@ class IEquipSecRoomDatasource @Inject constructor(
             equipSecDao.insert(model).toInt()
         }
 
+    override suspend fun listByIdVehicleList(idVehicleList: List<Int>): Result<List<EquipSecRoomModel>> {
+        TODO("Not yet implemented")
+    }
+
 }

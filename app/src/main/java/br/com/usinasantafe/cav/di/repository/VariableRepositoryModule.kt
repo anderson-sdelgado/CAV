@@ -43,6 +43,6 @@ interface VariableRepositoryModule {
 
     @Binds
     @Singleton
-    fun bindSaveCardRepository(repository: ISaveAndSendCardRepository): SaveAndSendCardRepository
+    fun bindSaveCardRepository(repository: ISendCardRepository): SendCardRepository
 
 }

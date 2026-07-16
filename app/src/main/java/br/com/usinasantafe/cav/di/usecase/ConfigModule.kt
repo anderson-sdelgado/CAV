@@ -35,4 +35,8 @@ interface ConfigModule {
     @Singleton
     fun bindCheckAccessInitial(usecase: ICheckAccessInitial): CheckAccessInitial
 
+    @Binds
+    @Singleton
+    fun bindSetStatusSend(usecase: ISetStatusSend): SetStatusSend
+
 }

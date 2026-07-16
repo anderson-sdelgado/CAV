@@ -2,7 +2,13 @@ package br.com.usinasantafe.cav.presenter.view.card.photo
 
 import br.com.usinasantafe.cav.MainCoroutineRule
 import br.com.usinasantafe.cav.domain.usecases.card.DeletePhoto
+import br.com.usinasantafe.cav.domain.usecases.card.HasDataLocal
+import br.com.usinasantafe.cav.domain.usecases.card.HasLocal
+import br.com.usinasantafe.cav.domain.usecases.card.HasNature
+import br.com.usinasantafe.cav.domain.usecases.card.HasTypeAccident
+import br.com.usinasantafe.cav.domain.usecases.card.HasVehicleOwn
 import br.com.usinasantafe.cav.domain.usecases.card.ListPhoto
+import br.com.usinasantafe.cav.domain.usecases.card.SaveCard
 import br.com.usinasantafe.cav.domain.usecases.card.SetPhoto
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -25,10 +31,23 @@ class PhotoViewModelTest {
     private val listPhoto = mock<ListPhoto>()
     private val setPhoto = mock<SetPhoto>()
     private val deletePhoto = mock<DeletePhoto>()
+    private val hasLocal = mock<HasLocal>()
+    private val hasNature = mock<HasNature>()
+    private val hasTypeAccident = mock<HasTypeAccident>()
+    private val hasDataLocal = mock<HasDataLocal>()
+    private val hasVehicleOwn = mock<HasVehicleOwn>()
+    private val saveCard = mock<SaveCard>()
+
     private val viewModel = PhotoViewModel(
         listPhoto = listPhoto,
         setPhoto = setPhoto,
-        deletePhoto = deletePhoto
+        deletePhoto = deletePhoto,
+        hasLocal = hasLocal,
+        hasNature = hasNature,
+        hasTypeAccident = hasTypeAccident,
+        hasDataLocal = hasDataLocal,
+        hasVehicleOwn = hasVehicleOwn,
+        saveCard = saveCard
     )
 
     @Test

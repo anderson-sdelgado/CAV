@@ -1,8 +1,6 @@
 package br.com.usinasantafe.cav.domain.repositories.variable
 
 import br.com.usinasantafe.cav.domain.entities.variable.Config
-import br.com.usinasantafe.cav.lib.FlagUpdate
-import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.StatusSend
 import br.com.usinasantafe.cav.utils.EmptyResult
 
@@ -15,4 +13,5 @@ interface ConfigRepository {
     suspend fun getFlagUpdate(): Result<Boolean>
     suspend fun setFlagUpdate(): EmptyResult
     suspend fun getStatusSend(): Result<StatusSend>
+    suspend fun setStatusSend(statusSend: StatusSend): EmptyResult
 }

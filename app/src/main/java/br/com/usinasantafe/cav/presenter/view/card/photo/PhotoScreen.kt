@@ -47,7 +47,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.presenter.theme.TitleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
+import br.com.usinasantafe.cav.presenter.theme.MsgErrors
 import br.com.usinasantafe.cav.presenter.theme.TextButtonDesign
+import br.com.usinasantafe.cav.utils.UiStatusState
 import coil.compose.AsyncImage
 import java.io.File
 
@@ -55,6 +57,7 @@ import java.io.File
 fun PhotoScreen(
     viewModel: PhotoViewModel = hiltViewModel(),
     onNavObs: () -> Unit,
+    onNavSplash: () -> Unit
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -70,7 +73,10 @@ fun PhotoScreen(
                 addPhoto = viewModel::addPhoto,
                 removePhoto = viewModel::removePhoto,
                 setNewPhoto = viewModel::setNewPhoto,
+                onCloseDialog = viewModel::onCloseDialog,
+                status = uiState.status,
                 onNavObs = onNavObs,
+                onNavSplash = onNavSplash,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -84,7 +90,10 @@ fun PhotoContent(
     addPhoto: (String) -> Unit,
     removePhoto: (String) -> Unit,
     setNewPhoto: (String) -> Unit,
+    onCloseDialog: () -> Unit,
+    status: UiStatusState,
     onNavObs: () -> Unit,
+    onNavSplash: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -251,6 +260,17 @@ fun PhotoContent(
                 )
             }
         }
+
+        if(status.flagDialog) {
+            MsgErrors(status.errors, onCloseDialog, status.failure)
+        }
+
+    }
+
+    LaunchedEffect(status.flagAccess) {
+        if (status.flagAccess) {
+            onNavSplash()
+        }
     }
 
 }
@@ -266,7 +286,10 @@ fun PhotoPagePreview() {
                 addPhoto = {},
                 setNewPhoto = {},
                 removePhoto = {},
+                onCloseDialog = {},
+                status = UiStatusState(),
                 onNavObs = {},
+                onNavSplash = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

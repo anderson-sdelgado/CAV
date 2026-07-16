@@ -75,4 +75,11 @@ class IConfigSharedPreferencesDatasource @Inject constructor(
             get().getOrThrow().statusSend
         }
 
+    override suspend fun setStatusSend(statusSend: StatusSend): EmptyResult =
+        result(getClassAndMethod()) {
+            val model = get().getOrThrow()
+            model.statusSend = statusSend
+            save(model).getOrThrow()
+        }
+
 }

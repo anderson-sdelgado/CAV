@@ -4,4 +4,5 @@ import br.com.usinasantafe.cav.infra.models.room.variable.VehicleInvolvedRoomMod
 
 interface VehicleInvolvedRoomDatasource {
     suspend fun add(model: VehicleInvolvedRoomModel): Result<Int>
+    suspend fun listByIdCard(idCard: Int): Result<List<VehicleInvolvedRoomModel>>
 }

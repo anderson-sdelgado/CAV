@@ -15,15 +15,16 @@ interface CardRepository :
     RecoverDataCardRepository,
     UpdateCardRepository,
     DeleteCardRepository,
-    SaveAndSendCardRepository {
+    SendCardRepository {
 
     suspend fun clean(): EmptyResult
     suspend fun has(): Result<Boolean>
 }
 
-interface SaveAndSendCardRepository {
+interface SendCardRepository {
     suspend fun save(): EmptyResult
-    suspend fun send(): EmptyResult
+    suspend fun send(token: String): EmptyResult
+    suspend fun hasSend(): Result<Boolean>
 }
 
 interface BasicCardRepository{

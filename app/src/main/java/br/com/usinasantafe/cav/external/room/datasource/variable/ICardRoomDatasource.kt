@@ -3,6 +3,7 @@ package br.com.usinasantafe.cav.external.room.datasource.variable
 import br.com.usinasantafe.cav.external.room.dao.variable.CardDao
 import br.com.usinasantafe.cav.infra.datasource.room.variable.CardRoomDatasource
 import br.com.usinasantafe.cav.infra.models.room.variable.CardRoomModel
+import br.com.usinasantafe.cav.lib.StatusSend
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import br.com.usinasantafe.cav.utils.result
 import javax.inject.Inject
@@ -14,6 +15,16 @@ class ICardRoomDatasource @Inject constructor(
    override suspend fun add(model: CardRoomModel): Result<Int> =
       result(getClassAndMethod()) {
          cardDao.insert(model).toInt()
+      }
+
+   override suspend fun hasSend(): Result<Boolean> =
+      result(getClassAndMethod()) {
+         cardDao.hasSend(StatusSend.SEND)
+      }
+
+   override suspend fun getSend(): Result<CardRoomModel> =
+      result(getClassAndMethod()) {
+          cardDao.oldest()
       }
 
 }

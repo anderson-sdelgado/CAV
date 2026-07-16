@@ -1201,6 +1201,9 @@ fun NavigationGraph(
             PhotoScreen(
                 onNavObs = {
                     navActions.navigateToObs()
+                },
+                onNavSplash = {
+                    navActions.navigateToSplash()
                 }
             )
         }

@@ -12,6 +12,7 @@ import org.junit.Before
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import java.util.Date
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -81,4 +82,96 @@ class ICardRoomDatasourceTest {
         )
         assertEquals(savedModel, modelAfter)
     }
+    
+    @Test
+    fun `hasSend - Check return false if has not send`() =
+        runTest {
+            val result = datasource.hasSend()
+            assertTrue(result.isSuccess)
+            assertEquals(false, result.getOrNull()!!)
+        }
+
+    @Test
+    fun `hasSend - Check return true if has send`() =
+        runTest {
+            val model = CardRoomModel(
+                regAttendant = 1L,
+                idCar = 1,
+                address = "Test Address",
+                latitude = -20.0,
+                longitude = -48.0,
+                idNatureList = listOf(1, 2),
+                idTypeAccidentList = listOf(3),
+                idDataLocalList = listOf(4),
+                idSupportTeamsList = listOf(5),
+                urlPhotoList = listOf("url1"),
+                obs = "Observation"
+            )
+            cardDao.insert(model)
+            val result = datasource.hasSend()
+            assertTrue(result.isSuccess)
+            assertEquals(true, result.getOrNull()!!)
+        }
+
+    @Test
+    fun `getSend - Check return null if has not send`() = runTest {
+        val result = datasource.getSend()
+        assertTrue(result.isSuccess)
+        assertEquals(null, result.getOrNull())
+    }
+
+    @Test
+    fun `getSend - Check return correct if has send`() = runTest {
+        val model1 = CardRoomModel(
+            regAttendant = 1L,
+            idCar = 1,
+            address = "Test Address",
+            latitude = -20.0,
+            longitude = -48.0,
+            idNatureList = listOf(1, 2),
+            idTypeAccidentList = listOf(3),
+            idDataLocalList = listOf(4),
+            idSupportTeamsList = listOf(5),
+            urlPhotoList = listOf("url1"),
+            obs = "Observation",
+            dateHour = Date(1784224761)
+        )
+        val model2 = CardRoomModel(
+            regAttendant = 2L,
+            idCar = 2,
+            address = "Test Address",
+            latitude = -02.0,
+            longitude = -38.0,
+            idNatureList = listOf(2, 3),
+            idTypeAccidentList = listOf(1, 3),
+            idDataLocalList = listOf(2),
+            idSupportTeamsList = listOf(5),
+            urlPhotoList = listOf("url2"),
+            obs = "Observation2",
+            dateHour = Date(1784073600)
+        )
+        cardDao.insert(model1)
+        cardDao.insert(model2)
+        val result = datasource.getSend()
+        assertTrue(result.isSuccess)
+        val modelAfter = CardRoomModel(
+            id = 2,
+            regAttendant = 2L,
+            idCar = 2,
+            address = "Test Address",
+            latitude = -02.0,
+            longitude = -38.0,
+            idNatureList = listOf(2, 3),
+            idTypeAccidentList = listOf(1, 3),
+            idDataLocalList = listOf(2),
+            idSupportTeamsList = listOf(5),
+            urlPhotoList = listOf("url2"),
+            obs = "Observation2",
+            dateHour = Date(1784073600)
+        )
+        assertEquals(modelAfter, result.getOrNull()!!)
+    }
+
+
+
 }

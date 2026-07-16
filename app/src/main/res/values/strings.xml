@@ -119,4 +119,9 @@
     <string name="text_delete_photo">EXCLUIR FOTOS</string>
     <string name="text_name_photo">photo_</string>
     <string name="text_extension_photo">.jpg</string>
+    <string name="text_non_existent_local">POR FAVOR, ADICIONE O LOCAL DO ACIDENTE PARA QUE POSSA FINALIZAR O APONTAMENTO.</string>
+    <string name="text_non_existent_data_local">POR FAVOR, ADICIONE DADO(S) DO LOCAL DO ACIDENTE PARA QUE POSSA FINALIZAR O APONTAMENTO.</string>
+    <string name="text_non_existent_nature">POR FAVOR, ADICIONE A NATUREZA DO ATENDIMENTO DO ACIDENTE PARA QUE POSSA FINALIZAR O APONTAMENTO.</string>
+    <string name="text_non_existent_type_accident">POR FAVOR, ADICIONE O TIPO DO ACIDENTE PARA QUE POSSA FINALIZAR O APONTAMENTO.</string>
+    <string name="text_non_existent_vehicle_own">POR FAVOR, ADICIONE O VEÍCULO PRÓPRIO ENVOLVIDO NO ACIDENTE PARA QUE POSSA FINALIZAR O APONTAMENTO.</string>
 </resources>

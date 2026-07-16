@@ -1,8 +1,28 @@
 package br.com.usinasantafe.cav.infra.repositories.variable.card
 
-import br.com.usinasantafe.cav.infra.datasource.room.variable.*
+import br.com.usinasantafe.cav.infra.datasource.retrofit.variable.CardRetrofitDatasource
+import br.com.usinasantafe.cav.infra.datasource.room.variable.CardRoomDatasource
+import br.com.usinasantafe.cav.infra.datasource.room.variable.EquipSecRoomDatasource
+import br.com.usinasantafe.cav.infra.datasource.room.variable.InvolvedRoomDatasource
+import br.com.usinasantafe.cav.infra.datasource.room.variable.PassengerColabRoomDatasource
+import br.com.usinasantafe.cav.infra.datasource.room.variable.PassengerInvolvedRoomDatasource
+import br.com.usinasantafe.cav.infra.datasource.room.variable.VehicleInvolvedRoomDatasource
+import br.com.usinasantafe.cav.infra.datasource.room.variable.VehicleOwnRoomDatasource
+import br.com.usinasantafe.cav.infra.datasource.room.variable.WitnessRoomDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.*
+import br.com.usinasantafe.cav.infra.models.room.variable.CardRoomModel
+import br.com.usinasantafe.cav.infra.models.room.variable.InvolvedRoomModel
+import br.com.usinasantafe.cav.infra.models.room.variable.VehicleInvolvedRoomModel
+import br.com.usinasantafe.cav.infra.models.room.variable.VehicleOwnRoomModel
+import br.com.usinasantafe.cav.infra.models.room.variable.WitnessRoomModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabCardSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipCardSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.LocalSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleOwnSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.State
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.test.runTest
@@ -14,7 +34,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class ISaveCardRepositoryTest {
+class ISendCardRepositoryTest {
 
     private val cardSharedPreferencesDatasource = mock<CardSharedPreferencesDatasource>()
     private val involvedRoomDatasource = mock<InvolvedRoomDatasource>()
@@ -25,17 +45,19 @@ class ISaveCardRepositoryTest {
     private val vehicleOwnRoomDatasource = mock<VehicleOwnRoomDatasource>()
     private val witnessRoomDatasource = mock<WitnessRoomDatasource>()
     private val cardRoomDatasource = mock<CardRoomDatasource>()
+    private val cardRetrofitDatasource = mock<CardRetrofitDatasource>()
 
-    private val repository = ISaveAndSendCardRepository(
-        cardSharedPreferencesDatasource,
-        involvedRoomDatasource,
-        vehicleInvolvedRoomDatasource,
-        passengerColabRoomDatasource,
-        passengerInvolvedRoomDatasource,
-        equipSecRoomDatasource,
-        vehicleOwnRoomDatasource,
-        witnessRoomDatasource,
-        cardRoomDatasource
+    private val repository = ISendCardRepository(
+        cardSharedPreferencesDatasource = cardSharedPreferencesDatasource,
+        cardRoomDatasource = cardRoomDatasource,
+        cardRetrofitDatasource = cardRetrofitDatasource,
+        vehicleOwnRoomDatasource = vehicleOwnRoomDatasource,
+        passengerColabRoomDatasource = passengerColabRoomDatasource,
+        equipSecRoomDatasource = equipSecRoomDatasource,
+        vehicleInvolvedRoomDatasource = vehicleInvolvedRoomDatasource,
+        passengerInvolvedRoomDatasource = passengerInvolvedRoomDatasource,
+        involvedRoomDatasource = involvedRoomDatasource,
+        witnessRoomDatasource = witnessRoomDatasource,
     )
 
     @Test
@@ -47,7 +69,7 @@ class ISaveCardRepositoryTest {
         val result = repository.save()
 
         assertTrue(result.isFailure)
-        assertEquals("ISaveCardRepository.save -> CardSharedPreferencesDatasource.get", result.exceptionOrNull()!!.message)
+        assertEquals("ISendCardRepository.save -> CardSharedPreferencesDatasource.get", result.exceptionOrNull()!!.message)
     }
 
     @Test
@@ -59,7 +81,7 @@ class ISaveCardRepositoryTest {
         val result = repository.save()
 
         assertTrue(result.isFailure)
-        assertEquals("ISaveCardRepository.save -> regAttendant is required", result.exceptionOrNull()!!.message)
+        assertEquals("ISendCardRepository.save -> regAttendant is required", result.exceptionOrNull()!!.message)
     }
 
     @Test
@@ -71,7 +93,7 @@ class ISaveCardRepositoryTest {
         val result = repository.save()
 
         assertTrue(result.isFailure)
-        assertEquals("ISaveCardRepository.save -> idCar is required", result.exceptionOrNull()!!.message)
+        assertEquals("ISendCardRepository.save -> idCar is required", result.exceptionOrNull()!!.message)
     }
 
     @Test
@@ -83,7 +105,7 @@ class ISaveCardRepositoryTest {
         val result = repository.save()
 
         assertTrue(result.isFailure)
-        assertEquals("ISaveCardRepository.save -> local is required", result.exceptionOrNull()!!.message)
+        assertEquals("ISendCardRepository.save -> local is required", result.exceptionOrNull()!!.message)
     }
 
     @Test
@@ -101,7 +123,7 @@ class ISaveCardRepositoryTest {
         val result = repository.save()
 
         assertTrue(result.isFailure)
-        assertEquals("ISaveCardRepository.save -> CardRoomDatasource.add", result.exceptionOrNull()!!.message)
+        assertEquals("ISendCardRepository.save -> CardRoomDatasource.add", result.exceptionOrNull()!!.message)
     }
 
     @Test
@@ -112,7 +134,7 @@ class ISaveCardRepositoryTest {
             local = LocalSharedPreferencesModel(address = "Test"),
             vehicleOwnList = listOf(VehicleOwnSharedPreferencesModel(
                 equip = EquipCardSharedPreferencesModel(idEquip = 1),
-                colab = ColabCardSharedPreferencesModel(reg = 1, state = State.UNHARMED)
+                colab = ColabCardSharedPreferencesModel(reg = 1, state = br.com.usinasantafe.cav.lib.State.UNHARMED)
             ))
         )
         whenever(cardSharedPreferencesDatasource.get()).thenReturn(Result.success(model))
@@ -124,7 +146,7 @@ class ISaveCardRepositoryTest {
         val result = repository.save()
 
         assertTrue(result.isFailure)
-        assertEquals("ISaveCardRepository.save -> VehicleOwnRoomDatasource.add", result.exceptionOrNull()!!.message)
+        assertEquals("ISendCardRepository.save -> VehicleOwnRoomDatasource.add", result.exceptionOrNull()!!.message)
     }
 
     @Test
@@ -135,8 +157,8 @@ class ISaveCardRepositoryTest {
             local = LocalSharedPreferencesModel(address = "Test"),
             vehicleOwnList = listOf(VehicleOwnSharedPreferencesModel(
                 equip = EquipCardSharedPreferencesModel(idEquip = 1),
-                colab = ColabCardSharedPreferencesModel(reg = 1, state = State.UNHARMED),
-                passengerColabList = listOf(ColabCardSharedPreferencesModel(reg = 2, state = State.UNHARMED))
+                colab = ColabCardSharedPreferencesModel(reg = 1, state = br.com.usinasantafe.cav.lib.State.UNHARMED),
+                passengerColabList = listOf(ColabCardSharedPreferencesModel(reg = 2, state = br.com.usinasantafe.cav.lib.State.UNHARMED))
             ))
         )
         whenever(cardSharedPreferencesDatasource.get()).thenReturn(Result.success(model))
@@ -149,7 +171,7 @@ class ISaveCardRepositoryTest {
         val result = repository.save()
 
         assertTrue(result.isFailure)
-        assertEquals("ISaveCardRepository.save -> PassengerColabRoomDatasource.add", result.exceptionOrNull()!!.message)
+        assertEquals("ISendCardRepository.save -> PassengerColabRoomDatasource.add", result.exceptionOrNull()!!.message)
     }
 
     @Test
@@ -160,7 +182,7 @@ class ISaveCardRepositoryTest {
             local = LocalSharedPreferencesModel(address = "Test"),
             vehicleOwnList = listOf(VehicleOwnSharedPreferencesModel(
                 equip = EquipCardSharedPreferencesModel(idEquip = 1),
-                colab = ColabCardSharedPreferencesModel(reg = 1, state = State.UNHARMED),
+                colab = ColabCardSharedPreferencesModel(reg = 1, state = br.com.usinasantafe.cav.lib.State.UNHARMED),
                 equipSecList = listOf(EquipCardSharedPreferencesModel(idEquip = 2))
             ))
         )
@@ -174,7 +196,7 @@ class ISaveCardRepositoryTest {
         val result = repository.save()
 
         assertTrue(result.isFailure)
-        assertEquals("ISaveCardRepository.save -> EquipSecRoomDatasource.add", result.exceptionOrNull()!!.message)
+        assertEquals("ISendCardRepository.save -> EquipSecRoomDatasource.add", result.exceptionOrNull()!!.message)
     }
 
     @Test
@@ -185,7 +207,7 @@ class ISaveCardRepositoryTest {
             local = LocalSharedPreferencesModel(address = "Test"),
             vehicleInvolvedList = listOf(VehicleInvolvedSharedPreferencesModel(
                 vehicle = VehicleSharedPreferencesModel(plate = "ABC1234", brand = "Test"),
-                driver = InvolvedSharedPreferencesModel(name = "Test", phone = "123", state = State.UNHARMED)
+                driver = InvolvedSharedPreferencesModel(name = "Test", phone = "123", state = br.com.usinasantafe.cav.lib.State.UNHARMED)
             ))
         )
         whenever(cardSharedPreferencesDatasource.get()).thenReturn(Result.success(model))
@@ -197,7 +219,7 @@ class ISaveCardRepositoryTest {
         val result = repository.save()
 
         assertTrue(result.isFailure)
-        assertEquals("ISaveCardRepository.save -> VehicleInvolvedRoomDatasource.add", result.exceptionOrNull()!!.message)
+        assertEquals("ISendCardRepository.save -> VehicleInvolvedRoomDatasource.add", result.exceptionOrNull()!!.message)
     }
 
     @Test
@@ -208,7 +230,7 @@ class ISaveCardRepositoryTest {
             local = LocalSharedPreferencesModel(address = "Test"),
             vehicleInvolvedList = listOf(VehicleInvolvedSharedPreferencesModel(
                 vehicle = VehicleSharedPreferencesModel(plate = "ABC1234", brand = "Test"),
-                driver = InvolvedSharedPreferencesModel(name = "Test", phone = "123", state = State.UNHARMED),
+                driver = InvolvedSharedPreferencesModel(name = "Test", phone = "123", state = br.com.usinasantafe.cav.lib.State.UNHARMED),
                 passengerInvolvedList = listOf(InvolvedSharedPreferencesModel(name = "Pass", phone = "456"))
             ))
         )
@@ -222,7 +244,7 @@ class ISaveCardRepositoryTest {
         val result = repository.save()
 
         assertTrue(result.isFailure)
-        assertEquals("ISaveCardRepository.save -> PassengerInvolvedRoomDatasource.add", result.exceptionOrNull()!!.message)
+        assertEquals("ISendCardRepository.save -> PassengerInvolvedRoomDatasource.add", result.exceptionOrNull()!!.message)
     }
 
     @Test
@@ -242,7 +264,7 @@ class ISaveCardRepositoryTest {
         val result = repository.save()
 
         assertTrue(result.isFailure)
-        assertEquals("ISaveCardRepository.save -> InvolvedRoomDatasource.add", result.exceptionOrNull()!!.message)
+        assertEquals("ISendCardRepository.save -> InvolvedRoomDatasource.add", result.exceptionOrNull()!!.message)
     }
 
     @Test
@@ -262,7 +284,7 @@ class ISaveCardRepositoryTest {
         val result = repository.save()
 
         assertTrue(result.isFailure)
-        assertEquals("ISaveCardRepository.save -> WitnessRoomDatasource.add", result.exceptionOrNull()!!.message)
+        assertEquals("ISendCardRepository.save -> WitnessRoomDatasource.add", result.exceptionOrNull()!!.message)
     }
 
     @Test
@@ -273,8 +295,8 @@ class ISaveCardRepositoryTest {
             local = LocalSharedPreferencesModel(address = "Test"),
             vehicleOwnList = listOf(VehicleOwnSharedPreferencesModel(
                 equip = EquipCardSharedPreferencesModel(idEquip = 1),
-                colab = ColabCardSharedPreferencesModel(reg = 1, state = State.UNHARMED),
-                passengerColabList = listOf(ColabCardSharedPreferencesModel(reg = 2, state = State.UNHARMED)),
+                colab = ColabCardSharedPreferencesModel(reg = 1, state = br.com.usinasantafe.cav.lib.State.UNHARMED),
+                passengerColabList = listOf(ColabCardSharedPreferencesModel(reg = 2, state = br.com.usinasantafe.cav.lib.State.UNHARMED)),
                 equipSecList = listOf(EquipCardSharedPreferencesModel(idEquip = 2))
             )),
             vehicleInvolvedList = listOf(VehicleInvolvedSharedPreferencesModel(
@@ -308,4 +330,122 @@ class ISaveCardRepositoryTest {
         verify(involvedRoomDatasource).add(any())
         verify(witnessRoomDatasource).add(any())
     }
+
+    @Test
+    fun `hasSend - Check return failure if have error in CardRoomDatasource hasSend`() =
+        runTest {
+            whenever(
+                cardRoomDatasource.hasSend()
+            ).thenReturn(
+                resultFailure(
+                    "ICardRoomDatasource.hasSend",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.hasSend()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "ISendCardRepository.hasSend -> ICardRoomDatasource.hasSend"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `hasSend - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                cardRoomDatasource.hasSend()
+            ).thenReturn(
+                Result.success(false)
+            )
+            val result = repository.hasSend()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                false
+            )
+        }
+
+    @Test
+    fun `send - Check return failure if have error in CardRoomDatasource getSend`() = runTest {
+        whenever(cardRoomDatasource.getSend()).thenReturn(
+            resultFailure("CardRoomDatasource.getSend", Exception())
+        )
+
+        val result = repository.send("token")
+
+        assertTrue(result.isFailure)
+        assertEquals("ISendCardRepository.send -> CardRoomDatasource.getSend", result.exceptionOrNull()!!.message)
+    }
+
+    @Test
+    fun `send - Check return failure if card id is null`() = runTest {
+        whenever(cardRoomDatasource.getSend()).thenReturn(
+            Result.success(CardRoomModel(id = null, regAttendant = 1L, idCar = 1, address = "Test", latitude = 0.0, longitude = 0.0, idNatureList = emptyList(), idTypeAccidentList = emptyList(), idDataLocalList = emptyList(), idSupportTeamsList = emptyList(), urlPhotoList = emptyList(), obs = "Test"))
+        )
+
+        val result = repository.send("token")
+
+        assertTrue(result.isFailure)
+        assertEquals("ISendCardRepository.send -> id is required", result.exceptionOrNull()!!.message)
+    }
+
+    @Test
+    fun `send - Check return failure if have error in CardRetrofitDatasource send`() = runTest {
+        val cardModel = CardRoomModel(id = 1, regAttendant = 1L, idCar = 1, address = "Test", latitude = 0.0, longitude = 0.0, idNatureList = emptyList(), idTypeAccidentList = emptyList(), idDataLocalList = emptyList(), idSupportTeamsList = emptyList(), urlPhotoList = emptyList(), obs = "Test")
+        whenever(cardRoomDatasource.getSend()).thenReturn(Result.success(cardModel))
+        whenever(vehicleOwnRoomDatasource.listByIdCard(1)).thenReturn(Result.success(emptyList()))
+        whenever(vehicleInvolvedRoomDatasource.listByIdCard(1)).thenReturn(Result.success(emptyList()))
+        whenever(involvedRoomDatasource.listByIdCard(1)).thenReturn(Result.success(emptyList()))
+        whenever(witnessRoomDatasource.listByIdCard(1)).thenReturn(Result.success(emptyList()))
+        whenever(passengerColabRoomDatasource.listByIdVehicleList(any())).thenReturn(Result.success(emptyList()))
+        whenever(passengerInvolvedRoomDatasource.listByIdVehicleList(any())).thenReturn(Result.success(emptyList()))
+        whenever(equipSecRoomDatasource.listByIdVehicleList(any())).thenReturn(Result.success(emptyList()))
+
+        whenever(cardRetrofitDatasource.send(any(), any())).thenReturn(
+            resultFailure("CardRetrofitDatasource.send", Exception())
+        )
+
+        val result = repository.send("token")
+
+        assertTrue(result.isFailure)
+        assertEquals("ISendCardRepository.send -> CardRetrofitDatasource.send", result.exceptionOrNull()!!.message)
+    }
+
+    @Test
+    fun `send - Check return success if all data sent successfully`() = runTest {
+        val cardModel = CardRoomModel(id = 1, regAttendant = 1L, idCar = 1, address = "Test", latitude = 0.0, longitude = 0.0, idNatureList = emptyList(), idTypeAccidentList = emptyList(), idDataLocalList = emptyList(), idSupportTeamsList = emptyList(), urlPhotoList = emptyList(), obs = "Test")
+        val vehicleOwnModel = VehicleOwnRoomModel(id = 1, idCard = 1, idEquip = 1, detailEquip = "Test", reg = 1L, state = State.UNHARMED, detailColab = "Test")
+        val vehicleInvolvedModel = VehicleInvolvedRoomModel(id = 2, idCard = 1, document = "123", name = "Test", phone = "456", address = "Test", state = State.UNHARMED, detailDriver = "Test", plate = "ABC", brand = "Test", detailVehicle = "Test")
+        val involvedModel = InvolvedRoomModel(id = 3, idCard = 1, document = "123", name = "Test", phone = "456", address = "Test", state = State.UNHARMED, detail = "Test")
+        val witnessModel = WitnessRoomModel(id = 4, idCard = 1, name = "Test", phone = "456", detail = "Test")
+
+        whenever(cardRoomDatasource.getSend()).thenReturn(Result.success(cardModel))
+        whenever(vehicleOwnRoomDatasource.listByIdCard(1)).thenReturn(Result.success(listOf(vehicleOwnModel)))
+        whenever(vehicleInvolvedRoomDatasource.listByIdCard(1)).thenReturn(Result.success(listOf(vehicleInvolvedModel)))
+        whenever(involvedRoomDatasource.listByIdCard(1)).thenReturn(Result.success(listOf(involvedModel)))
+        whenever(witnessRoomDatasource.listByIdCard(1)).thenReturn(Result.success(listOf(witnessModel)))
+        whenever(passengerColabRoomDatasource.listByIdVehicleList(listOf(1))).thenReturn(Result.success(emptyList()))
+        whenever(passengerInvolvedRoomDatasource.listByIdVehicleList(listOf(2))).thenReturn(Result.success(emptyList()))
+        whenever(equipSecRoomDatasource.listByIdVehicleList(listOf(1))).thenReturn(Result.success(emptyList()))
+
+        whenever(cardRetrofitDatasource.send(any(), any())).thenReturn(Result.success(mock()))
+
+        val result = repository.send("token")
+
+        assertTrue(result.isSuccess)
+        verify(cardRetrofitDatasource).send(any(), any())
+    }
+
 }

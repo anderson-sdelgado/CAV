@@ -271,4 +271,32 @@ interface CardModule {
     @Singleton
     fun bindSaveCard(usecase: ISaveCard): SaveCard
 
+    @Binds
+    @Singleton
+    fun bindHasDataLocal(usecase: IHasDataLocal): HasDataLocal
+
+    @Binds
+    @Singleton
+    fun bindHasLocal(usecase: IHasLocal): HasLocal
+
+    @Binds
+    @Singleton
+    fun bindHasNature(usecase: IHasNature): HasNature
+
+    @Binds
+    @Singleton
+    fun bindHasTypeAccident(usecase: IHasTypeAccident): HasTypeAccident
+
+    @Binds
+    @Singleton
+    fun bindHasVehicleOwn(usecase: IHasVehicleOwn): HasVehicleOwn
+
+    @Binds
+    @Singleton
+    fun bindHasSendCard(usecase: IHasSendCard): HasSendCard
+
+    @Binds
+    @Singleton
+    fun bindSendCard(usecase: ISendCard): SendCard
+
 }

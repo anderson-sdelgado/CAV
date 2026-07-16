@@ -89,31 +89,27 @@ fun Result<*>.onFailureHandled(
     }
 }
 
-inline fun handleFailure(
-    classAndMethod: String,
-    error: Errors = Errors.INVALID,
-    crossinline onError: (String, Errors) -> Unit,
-    failure: String = ""
-) {
-    val failure = failure.ifEmpty { failure(error) }
-    handleFailure(failure, classAndMethod) {
-        onError(it, error)
-    }
-}
-
-inline fun handleFailure(
-    classAndMethod: String,
-    failure: String,
-    crossinline onError: (String, Errors) -> Unit,
-) {
-    handleFailure(failure, classAndMethod) {
-        onError(it, Errors.INVALID)
-    }
-}
-
 
 fun failure(error: Errors): String {
     return when(error){
         else -> error.toString()
     }
+}
+
+
+fun handleFailure(
+    failure: String,
+    classAndMethod: String,
+) {
+    val fail = "$classAndMethod -> $failure"
+    Timber.e(fail)
+}
+
+fun handleFailure(
+    error: Throwable,
+    classAndMethod: String,
+) {
+    val cause = if(error.cause != null) " -> ${error.cause.toString()}" else ""
+    val failure = "${error.message}$cause"
+    handleFailure(failure, classAndMethod)
 }
