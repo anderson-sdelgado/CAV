@@ -21,6 +21,7 @@ class ISaveCard @Inject constructor(
             if(cardRepository.listIdDataLocal().getOrThrow().isEmpty()) return@call false
             if(cardRepository.listVehicleOwn().getOrThrow().isEmpty()) return@call false
             cardRepository.save().getOrThrow()
+            cardRepository.clean().getOrThrow()
             true
         }
 

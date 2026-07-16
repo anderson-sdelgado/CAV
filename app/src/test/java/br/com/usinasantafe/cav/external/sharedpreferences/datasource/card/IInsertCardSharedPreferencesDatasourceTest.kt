@@ -6,8 +6,8 @@ import androidx.test.core.app.ApplicationProvider
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabCardSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipCardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleOwnSharedPreferencesModel
@@ -85,7 +85,7 @@ class IInsertCardSharedPreferencesDatasourceTest {
             val vehicleOwn = VehicleOwnSharedPreferencesModel(id = 1)
             cardDatasource.save(CardSharedPreferencesModel(vehicleOwnList = listOf(vehicleOwn)))
             
-            val equip = EquipSharedPreferencesModel()
+            val equip = EquipCardSharedPreferencesModel()
             val result = datasource.addEquipSec(equip, 1)
             
             assertEquals(result.isSuccess, true)
@@ -102,7 +102,7 @@ class IInsertCardSharedPreferencesDatasourceTest {
             val vehicleOwn = VehicleOwnSharedPreferencesModel(id = 1)
             cardDatasource.save(CardSharedPreferencesModel(vehicleOwnList = listOf(vehicleOwn)))
             
-            val colab = ColabSharedPreferencesModel()
+            val colab = ColabCardSharedPreferencesModel()
             val result = datasource.addPassengerColab(colab, 1)
             
             assertEquals(result.isSuccess, true)

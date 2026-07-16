@@ -128,16 +128,23 @@ class IBasicCardSharedPreferencesDatasource @Inject constructor(
     override suspend fun setPhoto(url: String): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                val list = photoList.toMutableList()
+                val list = urlPhotoList.toMutableList()
                 list.add(url)
-                this.photoList = list
+                this.urlPhotoList = list
             }
         }
 
     override suspend fun listPhoto(): Result<List<String>> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                photoList
+                urlPhotoList
+            }
+        }
+
+    override suspend fun hasLocal(): Result<Boolean> =
+        result(getClassAndMethod()) {
+            datasource.get().readModel {
+                local != null
             }
         }
 

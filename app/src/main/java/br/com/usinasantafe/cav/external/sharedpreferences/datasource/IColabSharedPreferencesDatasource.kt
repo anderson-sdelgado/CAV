@@ -3,13 +3,12 @@ package br.com.usinasantafe.cav.external.sharedpreferences.datasource
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.ColabSharedPreferencesDatasource
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabCardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.sharedPreferencesModelToEntity
 import br.com.usinasantafe.cav.lib.BASE_SHARED_PREFERENCES_TABLE_COLLABORATOR
 import br.com.usinasantafe.cav.lib.State
 import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.getClassAndMethod
-import br.com.usinasantafe.cav.utils.required
 import br.com.usinasantafe.cav.utils.result
 import com.google.gson.Gson
 import javax.inject.Inject
@@ -18,20 +17,20 @@ class IColabSharedPreferencesDatasource @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ): ColabSharedPreferencesDatasource {
 
-    suspend fun updateModel(block: ColabSharedPreferencesModel.() -> Unit) {
+    suspend fun updateModel(block: ColabCardSharedPreferencesModel.() -> Unit) {
         val model = get().getOrThrow()
         model.block()
         save(model).getOrThrow()
     }
 
     suspend fun <T> readModel(
-        block: ColabSharedPreferencesModel.() -> T
+        block: ColabCardSharedPreferencesModel.() -> T
     ): T =
         get()
             .getOrThrow()
             .block()
 
-    suspend fun save(model: ColabSharedPreferencesModel): EmptyResult =
+    suspend fun save(model: ColabCardSharedPreferencesModel): EmptyResult =
         result(getClassAndMethod()) {
             sharedPreferences.edit {
                 putString(
@@ -41,16 +40,16 @@ class IColabSharedPreferencesDatasource @Inject constructor(
             }
         }
 
-    override suspend fun get(): Result<ColabSharedPreferencesModel> =
+    override suspend fun get(): Result<ColabCardSharedPreferencesModel> =
         result(getClassAndMethod()) {
             val data = sharedPreferences.getString(
                 BASE_SHARED_PREFERENCES_TABLE_COLLABORATOR,
                 null
             )
-            if (data.isNullOrEmpty()) return@result ColabSharedPreferencesModel()
+            if (data.isNullOrEmpty()) return@result ColabCardSharedPreferencesModel()
             val model = Gson().fromJson(
                 data,
-                ColabSharedPreferencesModel::class.java
+                ColabCardSharedPreferencesModel::class.java
             )
             model.sharedPreferencesModelToEntity()
             model

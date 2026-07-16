@@ -1,11 +1,11 @@
 package br.com.usinasantafe.cav.infra.datasource.sharedpreferences
 
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabCardSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.State
 import br.com.usinasantafe.cav.utils.EmptyResult
 
 interface ColabSharedPreferencesDatasource {
-    suspend fun get(): Result<ColabSharedPreferencesModel>
+    suspend fun get(): Result<ColabCardSharedPreferencesModel>
     suspend fun clean(): EmptyResult
     suspend fun setRegColab(reg: Long): EmptyResult
     suspend fun setState(state: State): EmptyResult

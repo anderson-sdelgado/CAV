@@ -419,6 +419,59 @@ class ISaveCardTest {
         }
 
     @Test
+    fun `Check return failure if have error in CardRepository clean`() =
+        runTest {
+            whenever(
+                cardRepository.hasLocal()
+            ).thenReturn(
+                Result.success(true)
+            )
+            whenever(
+                cardRepository.listIdNature()
+            ).thenReturn(
+                Result.success(listOf(1))
+            )
+            whenever(
+                cardRepository.listIdTypeAccident()
+            ).thenReturn(
+                Result.success(listOf(1))
+            )
+            whenever(
+                cardRepository.listIdDataLocal()
+            ).thenReturn(
+                Result.success(listOf(1))
+            )
+            whenever(
+                cardRepository.listVehicleOwn()
+            ).thenReturn(
+                Result.success(listOf(VehicleOwn()))
+            )
+            whenever(
+                cardRepository.clean()
+            ).thenReturn(
+                resultFailure(
+                    "ICardRepository.clean",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = usecase()
+            verify(cardRepository, atLeastOnce()).save()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "ISaveCard -> ICardRepository.clean"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
     fun `Check return correct if function execute successfully`() =
         runTest {
             whenever(
@@ -448,6 +501,7 @@ class ISaveCardTest {
             )
             val result = usecase()
             verify(cardRepository, atLeastOnce()).save()
+            verify(cardRepository, atLeastOnce()).clean()
             assertEquals(
                 result.isSuccess,
                 true

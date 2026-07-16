@@ -1,0 +1,18 @@
+package br.com.usinasantafe.cav.external.room.dao.variable
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import br.com.usinasantafe.cav.infra.models.room.variable.WitnessRoomModel
+import br.com.usinasantafe.cav.lib.TB_WITNESS
+
+@Dao
+interface WitnessDao {
+
+    @Insert
+    fun insert(model: WitnessRoomModel): Long
+
+    @Query("SELECT * FROM $TB_WITNESS")
+    fun all(): List<WitnessRoomModel>
+
+}

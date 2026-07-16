@@ -3,7 +3,7 @@ package br.com.usinasantafe.cav.external.sharedpreferences.datasource
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.test.core.app.ApplicationProvider
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabCardSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.State
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -33,7 +33,7 @@ class IColabSharedPreferencesDatasourceTest {
     @Test
     fun `setRegColab - Check alter data correct in sharedPreferences internal`() =
         runTest {
-            val data = ColabSharedPreferencesModel(
+            val data = ColabCardSharedPreferencesModel(
                 reg = 123456,
                 state = State.UNHARMED,
                 detail = "Test"
@@ -77,7 +77,7 @@ class IColabSharedPreferencesDatasourceTest {
     @Test
     fun `setState - Check alter data correct in sharedPreferences internal`() =
         runTest {
-            val data = ColabSharedPreferencesModel(
+            val data = ColabCardSharedPreferencesModel(
                 state = State.DEAD
             )
             datasource.save(data)
@@ -103,7 +103,7 @@ class IColabSharedPreferencesDatasourceTest {
     @Test
     fun `setDetail - Check alter data correct in sharedPreferences internal`() =
         runTest {
-            val data = ColabSharedPreferencesModel(
+            val data = ColabCardSharedPreferencesModel(
                 detail = "Test"
             )
             datasource.save(data)
@@ -143,7 +143,7 @@ class IColabSharedPreferencesDatasourceTest {
     @Test
     fun `getRegColab - Check return correct if function execute successfully`() =
         runTest {
-            val data = ColabSharedPreferencesModel(
+            val data = ColabCardSharedPreferencesModel(
                 reg = 123456,
                 state = State.UNHARMED,
                 detail = "Test"
@@ -177,7 +177,7 @@ class IColabSharedPreferencesDatasourceTest {
     @Test
     fun `getState - Check return correct if function execute successfully`() =
         runTest {
-            val data = ColabSharedPreferencesModel(
+            val data = ColabCardSharedPreferencesModel(
                 reg = 123456,
                 state = State.UNHARMED,
                 detail = "Test"
@@ -211,7 +211,7 @@ class IColabSharedPreferencesDatasourceTest {
     @Test
     fun `getDetail - Check return correct if function execute successfully`() =
         runTest {
-            val data = ColabSharedPreferencesModel(
+            val data = ColabCardSharedPreferencesModel(
                 reg = 123456,
                 state = State.UNHARMED,
                 detail = "Test"

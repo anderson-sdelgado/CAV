@@ -1,7 +1,5 @@
 package br.com.usinasantafe.cav.domain.usecases.card
 
-import android.net.Uri
-import androidx.core.net.toUri
 import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod

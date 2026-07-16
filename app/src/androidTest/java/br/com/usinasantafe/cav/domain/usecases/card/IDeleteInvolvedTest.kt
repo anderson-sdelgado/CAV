@@ -2,7 +2,7 @@ package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabCardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleOwnSharedPreferencesModel
@@ -40,7 +40,7 @@ class IDeleteInvolvedTest {
                 VehicleOwnSharedPreferencesModel(
                     id = 1,
                     passengerColabList = listOf(
-                        ColabSharedPreferencesModel(id = 10)
+                        ColabCardSharedPreferencesModel(id = 10)
                     )
                 )
             )

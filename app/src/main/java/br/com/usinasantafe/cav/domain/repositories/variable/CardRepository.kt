@@ -14,12 +14,16 @@ interface CardRepository :
     InsertCardRepository,
     RecoverDataCardRepository,
     UpdateCardRepository,
-    DeleteCardRepository {
+    DeleteCardRepository,
+    SaveAndSendCardRepository {
 
     suspend fun clean(): EmptyResult
     suspend fun has(): Result<Boolean>
-    suspend fun hasLocal(): Result<Boolean>
+}
+
+interface SaveAndSendCardRepository {
     suspend fun save(): EmptyResult
+    suspend fun send(): EmptyResult
 }
 
 interface BasicCardRepository{
@@ -41,6 +45,7 @@ interface BasicCardRepository{
     suspend fun setObs(text: String): EmptyResult
     suspend fun setPhoto(url: String): EmptyResult
     suspend fun listPhoto(): Result<List<String>>
+    suspend fun hasLocal(): Result<Boolean>
 }
 
 interface InsertCardRepository {

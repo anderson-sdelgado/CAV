@@ -19,6 +19,7 @@ class ICardRepositoryTest {
         recoverDataRepository = mock(),
         updateRepository = mock(),
         deleteRepository = mock(),
+        saveAndSendCardRepository = mock(),
         cardSharedPreferencesDatasource = cardSharedPreferencesDatasource
     )
 
@@ -57,6 +58,52 @@ class ICardRepositoryTest {
                 .clean()
             assertEquals(
                 result.isSuccess,
+                true
+            )
+        }
+
+    @Test
+    fun `has - Check return failure if have error in CardSharedPreferencesDatasource has`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.has()
+            ).thenReturn(
+                resultFailure(
+                    "ICardSharedPreferencesDatasource.has",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.has()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "ICardRepository.has -> ICardSharedPreferencesDatasource.has"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `has - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.has()
+            ).thenReturn(
+                Result.success(true)
+            )
+            val result = repository.has()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
                 true
             )
         }

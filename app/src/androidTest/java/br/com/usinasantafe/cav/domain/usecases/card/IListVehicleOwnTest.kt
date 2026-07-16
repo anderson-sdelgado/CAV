@@ -6,8 +6,8 @@ import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardShared
 import br.com.usinasantafe.cav.infra.models.room.stable.ColabRoomModel
 import br.com.usinasantafe.cav.infra.models.room.stable.EquipRoomModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabCardSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipCardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleOwnSharedPreferencesModel
 import br.com.usinasantafe.cav.presenter.model.VehicleScreenModel
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -51,8 +51,8 @@ class IListVehicleOwnTest {
             vehicleOwnList = listOf(
                 VehicleOwnSharedPreferencesModel(
                     id = 1,
-                    equip = EquipSharedPreferencesModel(idEquip = 10),
-                    colab = ColabSharedPreferencesModel(reg = 100)
+                    equip = EquipCardSharedPreferencesModel(idEquip = 10),
+                    colab = ColabCardSharedPreferencesModel(reg = 100)
                 )
             )
         )

@@ -2,13 +2,13 @@ package br.com.usinasantafe.cav.infra.models.sharedpreferences
 
 import br.com.usinasantafe.cav.domain.entities.variable.EquipCard
 
-data class EquipSharedPreferencesModel(
+data class EquipCardSharedPreferencesModel(
     var id: Int? = null,
     var idEquip: Int? = null,
     var detail: String? = null,
 )
 
-fun EquipSharedPreferencesModel.sharedPreferencesModelToEntity(): EquipCard {
+fun EquipCardSharedPreferencesModel.sharedPreferencesModelToEntity(): EquipCard {
     return with(this) {
         EquipCard(
             id = id,
@@ -18,9 +18,9 @@ fun EquipSharedPreferencesModel.sharedPreferencesModelToEntity(): EquipCard {
     }
 }
 
-fun EquipCard.entityToSharedPreferencesModel(): EquipSharedPreferencesModel {
+fun EquipCard.entityToSharedPreferencesModel(): EquipCardSharedPreferencesModel {
     return with(this) {
-        EquipSharedPreferencesModel(
+        EquipCardSharedPreferencesModel(
             id = id,
             idEquip = idEquip,
             detail = detail

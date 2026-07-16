@@ -14,7 +14,7 @@ data class CardSharedPreferencesModel(
     var vehicleInvolvedList: List<VehicleInvolvedSharedPreferencesModel> = emptyList(),
     var involvedList: List<InvolvedSharedPreferencesModel> = emptyList(),
     var witnessList: List<InvolvedSharedPreferencesModel> = emptyList(),
-    var photoList: List<String> = emptyList(),
+    var urlPhotoList: List<String> = emptyList(),
     var obs: String? = null,
 )
 
@@ -33,7 +33,7 @@ fun CardSharedPreferencesModel.sharedPreferencesModelToEntity(): Card {
             vehicleInvolvedList = vehicleInvolvedList.map { it.sharedPreferencesModelToEntity() },
             involvedList = involvedList.map { it.sharedPreferencesModelToEntity() },
             witnessList = witnessList.map { it.sharedPreferencesModelToEntity() },
-            photoList = photoList,
+            photoList = urlPhotoList,
             obs = obs
         )
     }
@@ -52,7 +52,7 @@ fun Card.entityToSharedPreferencesModel(): CardSharedPreferencesModel {
             vehicleInvolvedList = vehicleInvolvedList.map { it.entityToSharedPreferencesModel() },
             involvedList = involvedList.map { it.entityToSharedPreferencesModel() },
             witnessList = witnessList.map { it.entityToSharedPreferencesModel() },
-            photoList = photoList,
+            urlPhotoList = photoList,
             obs = obs
         )
     }

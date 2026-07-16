@@ -668,7 +668,7 @@ class IBasicCardRepositoryTest {
                 cardSharedPreferencesDatasource.setPhoto("test")
             ).thenReturn(
                 resultFailure(
-                    "ICardSharedPreferencesDatasource.setPhotoList",
+                    "ICardSharedPreferencesDatasource.setPhoto",
                     "-",
                     Exception()
                 )
@@ -680,7 +680,7 @@ class IBasicCardRepositoryTest {
             )
             assertEquals(
                 result.exceptionOrNull()!!.message,
-                "IBasicCardRepository.setPhotoList -> ICardSharedPreferencesDatasource.setPhotoList"
+                "IBasicCardRepository.setPhoto -> ICardSharedPreferencesDatasource.setPhoto"
             )
             assertEquals(
                 result.exceptionOrNull()!!.cause.toString(),
@@ -696,6 +696,52 @@ class IBasicCardRepositoryTest {
                 .setPhoto("test")
             assertEquals(
                 result.isSuccess,
+                true
+            )
+        }
+    
+    @Test
+    fun `hasLocal - Check return failure if have error in CardSharedPreferencesDatasource hasLocal`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.hasLocal()
+            ).thenReturn(
+                resultFailure(
+                    "ICardSharedPreferencesDatasource.hasLocal",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.hasLocal()
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IBasicCardRepository.hasLocal -> ICardSharedPreferencesDatasource.hasLocal"
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.cause.toString(),
+                "java.lang.Exception"
+            )
+        }
+
+    @Test
+    fun `hasLocal - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(
+                cardSharedPreferencesDatasource.hasLocal()
+            ).thenReturn(
+                Result.success(true)
+            )
+            val result = repository.hasLocal()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
                 true
             )
         }

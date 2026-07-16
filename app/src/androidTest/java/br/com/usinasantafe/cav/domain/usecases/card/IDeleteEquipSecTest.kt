@@ -2,7 +2,7 @@ package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipCardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleOwnSharedPreferencesModel
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -37,7 +37,7 @@ class IDeleteEquipSecTest {
                 VehicleOwnSharedPreferencesModel(
                     id = 1,
                     equipSecList = listOf(
-                        EquipSharedPreferencesModel(id = 10, idEquip = 100)
+                        EquipCardSharedPreferencesModel(id = 10, idEquip = 100)
                     )
                 )
             )

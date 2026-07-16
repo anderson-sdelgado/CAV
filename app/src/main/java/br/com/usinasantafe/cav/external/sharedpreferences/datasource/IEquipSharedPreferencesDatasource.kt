@@ -3,14 +3,11 @@ package br.com.usinasantafe.cav.external.sharedpreferences.datasource
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.EquipSharedPreferencesDatasource
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipCardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.sharedPreferencesModelToEntity
-import br.com.usinasantafe.cav.lib.BASE_SHARED_PREFERENCES_TABLE_COLLABORATOR
 import br.com.usinasantafe.cav.lib.BASE_SHARED_PREFERENCES_TABLE_EQUIP
 import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.getClassAndMethod
-import br.com.usinasantafe.cav.utils.required
 import br.com.usinasantafe.cav.utils.result
 import com.google.gson.Gson
 import javax.inject.Inject
@@ -19,20 +16,20 @@ class IEquipSharedPreferencesDatasource @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ): EquipSharedPreferencesDatasource {
 
-    suspend fun updateModel(block: EquipSharedPreferencesModel.() -> Unit) {
+    suspend fun updateModel(block: EquipCardSharedPreferencesModel.() -> Unit) {
         val model = get().getOrThrow()
         model.block()
         save(model).getOrThrow()
     }
 
     suspend fun <T> readModel(
-        block: EquipSharedPreferencesModel.() -> T
+        block: EquipCardSharedPreferencesModel.() -> T
     ): T =
         get()
             .getOrThrow()
             .block()
 
-    suspend fun save(model: EquipSharedPreferencesModel): EmptyResult =
+    suspend fun save(model: EquipCardSharedPreferencesModel): EmptyResult =
         result(getClassAndMethod()) {
             sharedPreferences.edit {
                 putString(
@@ -42,16 +39,16 @@ class IEquipSharedPreferencesDatasource @Inject constructor(
             }
         }
 
-    override suspend fun get(): Result<EquipSharedPreferencesModel> =
+    override suspend fun get(): Result<EquipCardSharedPreferencesModel> =
         result(getClassAndMethod()) {
             val data = sharedPreferences.getString(
                 BASE_SHARED_PREFERENCES_TABLE_EQUIP,
                 null
             )
-            if (data.isNullOrEmpty()) return@result EquipSharedPreferencesModel()
+            if (data.isNullOrEmpty()) return@result EquipCardSharedPreferencesModel()
             val model = Gson().fromJson(
                 data,
-                EquipSharedPreferencesModel::class.java
+                EquipCardSharedPreferencesModel::class.java
             )
             model.sharedPreferencesModelToEntity()
             model

@@ -4,7 +4,7 @@ import br.com.usinasantafe.cav.external.room.dao.stable.ColabDao
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.room.stable.ColabRoomModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabCardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleOwnSharedPreferencesModel
@@ -49,8 +49,8 @@ class IGetDescPassengersTest {
                 VehicleOwnSharedPreferencesModel(
                     id = 1,
                     passengerColabList = listOf(
-                        ColabSharedPreferencesModel(reg = 123),
-                        ColabSharedPreferencesModel(reg = 456)
+                        ColabCardSharedPreferencesModel(reg = 123),
+                        ColabCardSharedPreferencesModel(reg = 456)
                     )
                 )
             )

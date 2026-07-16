@@ -198,7 +198,7 @@ class ISetDetailTest {
     @Test
     fun check_edit_detail_equip() = runTest {
         cardSharedPreferencesDatasource.save(CardSharedPreferencesModel(
-            vehicleOwnList = listOf(VehicleOwnSharedPreferencesModel(id = 1, equip = EquipSharedPreferencesModel(detail = "OLD")))
+            vehicleOwnList = listOf(VehicleOwnSharedPreferencesModel(id = 1, equip = EquipCardSharedPreferencesModel(detail = "OLD")))
         ))
         val result = usecase("NEW", Option.EDIT, FlowNote.EQUIP, 1, 0)
         assertTrue(result.isSuccess)
@@ -208,7 +208,7 @@ class ISetDetailTest {
     @Test
     fun check_edit_detail_equip_sec() = runTest {
         cardSharedPreferencesDatasource.save(CardSharedPreferencesModel(
-            vehicleOwnList = listOf(VehicleOwnSharedPreferencesModel(id = 1, equipSecList = listOf(EquipSharedPreferencesModel(id = 10, detail = "OLD"))))
+            vehicleOwnList = listOf(VehicleOwnSharedPreferencesModel(id = 1, equipSecList = listOf(EquipCardSharedPreferencesModel(id = 10, detail = "OLD"))))
         ))
         val result = usecase("NEW", Option.EDIT, FlowNote.EQUIP_SEC, 1, 10)
         assertTrue(result.isSuccess)
@@ -218,7 +218,7 @@ class ISetDetailTest {
     @Test
     fun check_edit_detail_colab() = runTest {
         cardSharedPreferencesDatasource.save(CardSharedPreferencesModel(
-            vehicleOwnList = listOf(VehicleOwnSharedPreferencesModel(id = 1, colab = ColabSharedPreferencesModel(detail = "OLD")))
+            vehicleOwnList = listOf(VehicleOwnSharedPreferencesModel(id = 1, colab = ColabCardSharedPreferencesModel(detail = "OLD")))
         ))
         val result = usecase("NEW", Option.EDIT, FlowNote.COLAB, 1, 0)
         assertTrue(result.isSuccess)
@@ -228,7 +228,7 @@ class ISetDetailTest {
     @Test
     fun check_edit_detail_passenger_colab() = runTest {
         cardSharedPreferencesDatasource.save(CardSharedPreferencesModel(
-            vehicleOwnList = listOf(VehicleOwnSharedPreferencesModel(id = 1, passengerColabList = listOf(ColabSharedPreferencesModel(id = 10, detail = "OLD"))))
+            vehicleOwnList = listOf(VehicleOwnSharedPreferencesModel(id = 1, passengerColabList = listOf(ColabCardSharedPreferencesModel(id = 10, detail = "OLD"))))
         ))
         val result = usecase("NEW", Option.EDIT, FlowNote.PASSENGER_COLAB, 1, 10)
         assertTrue(result.isSuccess)

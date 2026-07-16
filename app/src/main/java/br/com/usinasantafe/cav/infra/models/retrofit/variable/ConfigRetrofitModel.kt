@@ -4,8 +4,8 @@ import br.com.usinasantafe.cav.domain.entities.variable.Config
 import br.com.usinasantafe.cav.utils.required
 
 data class ConfigRetrofitModelOutput(
-    var number: Long,
-    var version: String,
+    val number: Long,
+    val version: String,
 )
 
 data class ConfigRetrofitModelInput(

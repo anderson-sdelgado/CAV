@@ -4,7 +4,7 @@ import br.com.usinasantafe.cav.external.room.dao.stable.EquipDao
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.room.stable.EquipRoomModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipCardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleOwnSharedPreferencesModel
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -46,8 +46,8 @@ class IGetDescEquipSecTest {
                 VehicleOwnSharedPreferencesModel(
                     id = 1,
                     equipSecList = listOf(
-                        EquipSharedPreferencesModel(id = 100, idEquip = 10),
-                        EquipSharedPreferencesModel(id = 200, idEquip = 20)
+                        EquipCardSharedPreferencesModel(id = 100, idEquip = 10),
+                        EquipCardSharedPreferencesModel(id = 200, idEquip = 20)
                     )
                 )
             )

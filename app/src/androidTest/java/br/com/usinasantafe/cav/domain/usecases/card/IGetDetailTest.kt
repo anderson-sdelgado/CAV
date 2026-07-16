@@ -3,7 +3,7 @@ package br.com.usinasantafe.cav.domain.usecases.card
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.EquipSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipCardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleOwnSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
@@ -54,7 +54,7 @@ class IGetDetailTest {
                 VehicleOwnSharedPreferencesModel(
                     id = 1,
                     equipSecList = listOf(
-                        EquipSharedPreferencesModel(id = 10, detail = "DETAIL SEC")
+                        EquipCardSharedPreferencesModel(id = 10, detail = "DETAIL SEC")
                     )
                 )
             )

@@ -11,7 +11,6 @@ import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.ColabSharedPre
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.EquipSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.InvolvedSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.VehicleSharedPreferencesDatasource
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.State
 import br.com.usinasantafe.cav.utils.resultFailure
 import kotlinx.coroutines.test.runTest

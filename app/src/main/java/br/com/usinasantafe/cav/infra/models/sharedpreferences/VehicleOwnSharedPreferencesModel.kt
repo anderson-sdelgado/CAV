@@ -4,10 +4,10 @@ import br.com.usinasantafe.cav.domain.entities.variable.VehicleOwn
 
 data class VehicleOwnSharedPreferencesModel(
     var id: Int? = null,
-    var equip: EquipSharedPreferencesModel = EquipSharedPreferencesModel(),
-    var equipSecList: List<EquipSharedPreferencesModel> = emptyList(),
-    var colab: ColabSharedPreferencesModel = ColabSharedPreferencesModel(),
-    var passengerColabList: List<ColabSharedPreferencesModel> = emptyList()
+    var equip: EquipCardSharedPreferencesModel = EquipCardSharedPreferencesModel(),
+    var equipSecList: List<EquipCardSharedPreferencesModel> = emptyList(),
+    var colab: ColabCardSharedPreferencesModel = ColabCardSharedPreferencesModel(),
+    var passengerColabList: List<ColabCardSharedPreferencesModel> = emptyList()
 )
 
 fun VehicleOwnSharedPreferencesModel.sharedPreferencesModelToEntity(): VehicleOwn {

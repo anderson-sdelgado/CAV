@@ -37,7 +37,7 @@ class ISetPhotoTest {
         assertEquals(result.isSuccess, true)
 
         val modelAfter = cardSharedPreferencesDatasource.get().getOrThrow()
-        assertEquals(modelAfter.photoList[0], Uri.parse("file://test.jpg").toString())
+        assertEquals(modelAfter.urlPhotoList[0], Uri.parse("file://test.jpg").toString())
     }
 
 }

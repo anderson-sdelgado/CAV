@@ -58,8 +58,8 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getIdEquip - Check return correct idEquip`() =
         runTest {
             val list = listOf(
-                VehicleOwnSharedPreferencesModel(id = 1, equip = EquipSharedPreferencesModel(idEquip = 10)),
-                VehicleOwnSharedPreferencesModel(id = 2, equip = EquipSharedPreferencesModel(idEquip = 20))
+                VehicleOwnSharedPreferencesModel(id = 1, equip = EquipCardSharedPreferencesModel(idEquip = 10)),
+                VehicleOwnSharedPreferencesModel(id = 2, equip = EquipCardSharedPreferencesModel(idEquip = 20))
             )
             cardDatasource.save(CardSharedPreferencesModel(vehicleOwnList = list))
             
@@ -78,8 +78,8 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
                 VehicleOwnSharedPreferencesModel(
                     id = 1, 
                     equipSecList = listOf(
-                        EquipSharedPreferencesModel(id = 10, idEquip = 100),
-                        EquipSharedPreferencesModel(id = 20, idEquip = 200)
+                        EquipCardSharedPreferencesModel(id = 10, idEquip = 100),
+                        EquipCardSharedPreferencesModel(id = 20, idEquip = 200)
                     )
                 )
             )
@@ -97,8 +97,8 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getDetailEquip - Check return correct detail`() =
         runTest {
             val list = listOf(
-                VehicleOwnSharedPreferencesModel(id = 1, equip = EquipSharedPreferencesModel(detail = "detail 1")),
-                VehicleOwnSharedPreferencesModel(id = 2, equip = EquipSharedPreferencesModel(detail = "detail 2"))
+                VehicleOwnSharedPreferencesModel(id = 1, equip = EquipCardSharedPreferencesModel(detail = "detail 1")),
+                VehicleOwnSharedPreferencesModel(id = 2, equip = EquipCardSharedPreferencesModel(detail = "detail 2"))
             )
             cardDatasource.save(CardSharedPreferencesModel(vehicleOwnList = list))
             
@@ -113,7 +113,7 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
                 VehicleOwnSharedPreferencesModel(
                     id = 1, 
                     equipSecList = listOf(
-                        EquipSharedPreferencesModel(id = 10, detail = "sec detail 1")
+                        EquipCardSharedPreferencesModel(id = 10, detail = "sec detail 1")
                     )
                 )
             )
@@ -127,7 +127,7 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getDetailColab - Check return correct detail from colab`() =
         runTest {
             val list = listOf(
-                VehicleOwnSharedPreferencesModel(id = 1, colab = ColabSharedPreferencesModel(detail = "colab detail"))
+                VehicleOwnSharedPreferencesModel(id = 1, colab = ColabCardSharedPreferencesModel(detail = "colab detail"))
             )
             cardDatasource.save(CardSharedPreferencesModel(vehicleOwnList = list))
             
@@ -142,7 +142,7 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
                 VehicleOwnSharedPreferencesModel(
                     id = 1, 
                     passengerColabList = listOf(
-                        ColabSharedPreferencesModel(id = 10, detail = "pass detail")
+                        ColabCardSharedPreferencesModel(id = 10, detail = "pass detail")
                     )
                 )
             )
@@ -221,7 +221,7 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getRegColab - Check return correct reg`() =
         runTest {
             val list = listOf(
-                VehicleOwnSharedPreferencesModel(id = 1, colab = ColabSharedPreferencesModel(reg = 123456L))
+                VehicleOwnSharedPreferencesModel(id = 1, colab = ColabCardSharedPreferencesModel(reg = 123456L))
             )
             cardDatasource.save(CardSharedPreferencesModel(vehicleOwnList = list))
             
@@ -236,7 +236,7 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
                 VehicleOwnSharedPreferencesModel(
                     id = 1, 
                     passengerColabList = listOf(
-                        ColabSharedPreferencesModel(id = 10, reg = 654321L)
+                        ColabCardSharedPreferencesModel(id = 10, reg = 654321L)
                     )
                 )
             )
@@ -250,7 +250,7 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getStateColab - Check return correct state`() =
         runTest {
             val list = listOf(
-                VehicleOwnSharedPreferencesModel(id = 1, colab = ColabSharedPreferencesModel(state = State.DEAD))
+                VehicleOwnSharedPreferencesModel(id = 1, colab = ColabCardSharedPreferencesModel(state = State.DEAD))
             )
             cardDatasource.save(CardSharedPreferencesModel(vehicleOwnList = list))
             
@@ -265,7 +265,7 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
                 VehicleOwnSharedPreferencesModel(
                     id = 1, 
                     passengerColabList = listOf(
-                        ColabSharedPreferencesModel(id = 10, state = State.INJURED)
+                        ColabCardSharedPreferencesModel(id = 10, state = State.INJURED)
                     )
                 )
             )
@@ -446,8 +446,8 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
                 VehicleOwnSharedPreferencesModel(
                     id = 1, 
                     equipSecList = listOf(
-                        EquipSharedPreferencesModel(id = 10),
-                        EquipSharedPreferencesModel(id = 20)
+                        EquipCardSharedPreferencesModel(id = 10),
+                        EquipCardSharedPreferencesModel(id = 20)
                     )
                 )
             )
@@ -464,8 +464,8 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
                 VehicleOwnSharedPreferencesModel(
                     id = 1, 
                     passengerColabList = listOf(
-                        ColabSharedPreferencesModel(id = 10, reg = 123L),
-                        ColabSharedPreferencesModel(id = 20, reg = 456L)
+                        ColabCardSharedPreferencesModel(id = 10, reg = 123L),
+                        ColabCardSharedPreferencesModel(id = 20, reg = 456L)
                     )
                 )
             )
@@ -624,8 +624,8 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `listVehicleOwn - Check return correct list of VehicleOwn`() =
         runTest {
             val list = listOf(
-                VehicleOwnSharedPreferencesModel(id = 1, equip = EquipSharedPreferencesModel(idEquip = 10)),
-                VehicleOwnSharedPreferencesModel(id = 2, equip = EquipSharedPreferencesModel(idEquip = 20))
+                VehicleOwnSharedPreferencesModel(id = 1, equip = EquipCardSharedPreferencesModel(idEquip = 10)),
+                VehicleOwnSharedPreferencesModel(id = 2, equip = EquipCardSharedPreferencesModel(idEquip = 20))
             )
             cardDatasource.save(CardSharedPreferencesModel(vehicleOwnList = list))
             

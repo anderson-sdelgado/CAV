@@ -6,8 +6,8 @@ import br.com.usinasantafe.cav.domain.entities.variable.Involved
 import br.com.usinasantafe.cav.domain.entities.variable.VehicleInvolved
 import br.com.usinasantafe.cav.domain.entities.variable.VehicleOwn
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabCardSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipCardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.LocalSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
@@ -52,12 +52,13 @@ interface BasicCardSharedPreferencesDatasource {
     suspend fun setObs(text: String): EmptyResult
     suspend fun setPhoto(url: String): EmptyResult
     suspend fun listPhoto(): Result<List<String>>
+    suspend fun hasLocal(): Result<Boolean>
 }
 
 interface InsertCardSharedPreferencesDatasource {
     suspend fun addVehicleOwn(entity: VehicleOwnSharedPreferencesModel): Result<Int>
-    suspend fun addEquipSec(equipSharedPreferencesModel: EquipSharedPreferencesModel, idMain: Int): Result<Int>
-    suspend fun addPassengerColab(colabSharedPreferencesModel: ColabSharedPreferencesModel, idMain: Int): Result<Int>
+    suspend fun addEquipSec(equipCardSharedPreferencesModel: EquipCardSharedPreferencesModel, idMain: Int): Result<Int>
+    suspend fun addPassengerColab(colabCardSharedPreferencesModel: ColabCardSharedPreferencesModel, idMain: Int): Result<Int>
     suspend fun addVehicleInvolved(entity: VehicleInvolvedSharedPreferencesModel): Result<Int>
     suspend fun addInvolved(entity: InvolvedSharedPreferencesModel): Result<Int>
     suspend fun addWitness(entity: InvolvedSharedPreferencesModel): Result<Int>

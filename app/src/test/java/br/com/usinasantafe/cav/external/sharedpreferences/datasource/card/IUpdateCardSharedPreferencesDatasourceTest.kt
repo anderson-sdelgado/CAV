@@ -56,7 +56,7 @@ class IUpdateCardSharedPreferencesDatasourceTest {
     @Test
     fun `updateIdEquip - Check update data correct`() =
         runTest {
-            val list = listOf(VehicleOwnSharedPreferencesModel(id = 1, equip = EquipSharedPreferencesModel(idEquip = 10)))
+            val list = listOf(VehicleOwnSharedPreferencesModel(id = 1, equip = EquipCardSharedPreferencesModel(idEquip = 10)))
             cardDatasource.save(CardSharedPreferencesModel(vehicleOwnList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
@@ -75,7 +75,7 @@ class IUpdateCardSharedPreferencesDatasourceTest {
             val list = listOf(
                 VehicleOwnSharedPreferencesModel(
                     id = 1, 
-                    equipSecList = listOf(EquipSharedPreferencesModel(id = 10, idEquip = 100))
+                    equipSecList = listOf(EquipCardSharedPreferencesModel(id = 10, idEquip = 100))
                 )
             )
             cardDatasource.save(CardSharedPreferencesModel(vehicleOwnList = list))
@@ -93,7 +93,7 @@ class IUpdateCardSharedPreferencesDatasourceTest {
     @Test
     fun `updateDetailEquip - Check update data correct`() =
         runTest {
-            val list = listOf(VehicleOwnSharedPreferencesModel(id = 1, equip = EquipSharedPreferencesModel(detail = "old")))
+            val list = listOf(VehicleOwnSharedPreferencesModel(id = 1, equip = EquipCardSharedPreferencesModel(detail = "old")))
             cardDatasource.save(CardSharedPreferencesModel(vehicleOwnList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
@@ -112,7 +112,7 @@ class IUpdateCardSharedPreferencesDatasourceTest {
             val list = listOf(
                 VehicleOwnSharedPreferencesModel(
                     id = 1, 
-                    equipSecList = listOf(EquipSharedPreferencesModel(id = 10, detail = "old"))
+                    equipSecList = listOf(EquipCardSharedPreferencesModel(id = 10, detail = "old"))
                 )
             )
             cardDatasource.save(CardSharedPreferencesModel(vehicleOwnList = list))
@@ -130,7 +130,7 @@ class IUpdateCardSharedPreferencesDatasourceTest {
     @Test
     fun `updateDetailColab - Check update data correct`() =
         runTest {
-            val list = listOf(VehicleOwnSharedPreferencesModel(id = 1, colab = ColabSharedPreferencesModel(detail = "old")))
+            val list = listOf(VehicleOwnSharedPreferencesModel(id = 1, colab = ColabCardSharedPreferencesModel(detail = "old")))
             cardDatasource.save(CardSharedPreferencesModel(vehicleOwnList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
@@ -165,7 +165,7 @@ class IUpdateCardSharedPreferencesDatasourceTest {
             val list = listOf(
                 VehicleOwnSharedPreferencesModel(
                     id = 1, 
-                    passengerColabList = listOf(ColabSharedPreferencesModel(id = 10, detail = "old"))
+                    passengerColabList = listOf(ColabCardSharedPreferencesModel(id = 10, detail = "old"))
                 )
             )
             cardDatasource.save(CardSharedPreferencesModel(vehicleOwnList = list))
@@ -252,7 +252,7 @@ class IUpdateCardSharedPreferencesDatasourceTest {
     @Test
     fun `updateRegColab - Check update data correct`() =
         runTest {
-            val list = listOf(VehicleOwnSharedPreferencesModel(id = 1, colab = ColabSharedPreferencesModel(reg = 10L)))
+            val list = listOf(VehicleOwnSharedPreferencesModel(id = 1, colab = ColabCardSharedPreferencesModel(reg = 10L)))
             cardDatasource.save(CardSharedPreferencesModel(vehicleOwnList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
@@ -271,7 +271,7 @@ class IUpdateCardSharedPreferencesDatasourceTest {
             val list = listOf(
                 VehicleOwnSharedPreferencesModel(
                     id = 1, 
-                    passengerColabList = listOf(ColabSharedPreferencesModel(id = 10, reg = 100L))
+                    passengerColabList = listOf(ColabCardSharedPreferencesModel(id = 10, reg = 100L))
                 )
             )
             cardDatasource.save(CardSharedPreferencesModel(vehicleOwnList = list))
@@ -289,7 +289,7 @@ class IUpdateCardSharedPreferencesDatasourceTest {
     @Test
     fun `updateStateColab - Check update data correct`() =
         runTest {
-            val list = listOf(VehicleOwnSharedPreferencesModel(id = 1, colab = ColabSharedPreferencesModel(state = State.UNHARMED)))
+            val list = listOf(VehicleOwnSharedPreferencesModel(id = 1, colab = ColabCardSharedPreferencesModel(state = State.UNHARMED)))
             cardDatasource.save(CardSharedPreferencesModel(vehicleOwnList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
@@ -308,7 +308,7 @@ class IUpdateCardSharedPreferencesDatasourceTest {
             val list = listOf(
                 VehicleOwnSharedPreferencesModel(
                     id = 1, 
-                    passengerColabList = listOf(ColabSharedPreferencesModel(id = 10, state = State.UNHARMED))
+                    passengerColabList = listOf(ColabCardSharedPreferencesModel(id = 10, state = State.UNHARMED))
                 )
             )
             cardDatasource.save(CardSharedPreferencesModel(vehicleOwnList = list))

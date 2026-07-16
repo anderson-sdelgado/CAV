@@ -6,8 +6,8 @@ import androidx.test.core.app.ApplicationProvider
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabCardSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipCardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleOwnSharedPreferencesModel
@@ -114,13 +114,13 @@ class IDeleteCardSharedPreferencesDatasourceTest {
                 VehicleOwnSharedPreferencesModel(
                     id = 1,
                     equipSecList = listOf(
-                        EquipSharedPreferencesModel(
+                        EquipCardSharedPreferencesModel(
                             id = 1
                         ),
-                        EquipSharedPreferencesModel(
+                        EquipCardSharedPreferencesModel(
                             id = 2
                         ),
-                        EquipSharedPreferencesModel(
+                        EquipCardSharedPreferencesModel(
                             id = 3
                         )
                     )
@@ -128,10 +128,10 @@ class IDeleteCardSharedPreferencesDatasourceTest {
                 VehicleOwnSharedPreferencesModel(
                     id = 2,
                     equipSecList = listOf(
-                        EquipSharedPreferencesModel(
+                        EquipCardSharedPreferencesModel(
                             id = 1
                         ),
-                        EquipSharedPreferencesModel(
+                        EquipCardSharedPreferencesModel(
                             id = 2
                         )
                     )
@@ -159,10 +159,10 @@ class IDeleteCardSharedPreferencesDatasourceTest {
                 VehicleOwnSharedPreferencesModel(
                     id = 1,
                     equipSecList = listOf(
-                        EquipSharedPreferencesModel(
+                        EquipCardSharedPreferencesModel(
                             id = 1
                         ),
-                        EquipSharedPreferencesModel(
+                        EquipCardSharedPreferencesModel(
                             id = 3
                         )
                     )
@@ -170,10 +170,10 @@ class IDeleteCardSharedPreferencesDatasourceTest {
                 VehicleOwnSharedPreferencesModel(
                     id = 2,
                     equipSecList = listOf(
-                        EquipSharedPreferencesModel(
+                        EquipCardSharedPreferencesModel(
                             id = 1
                         ),
-                        EquipSharedPreferencesModel(
+                        EquipCardSharedPreferencesModel(
                             id = 2
                         )
                     )
@@ -321,13 +321,13 @@ class IDeleteCardSharedPreferencesDatasourceTest {
                 VehicleOwnSharedPreferencesModel(
                     id = 1,
                     passengerColabList = listOf(
-                        ColabSharedPreferencesModel(
+                        ColabCardSharedPreferencesModel(
                             id = 1
                         ),
-                        ColabSharedPreferencesModel(
+                        ColabCardSharedPreferencesModel(
                             id = 2
                         ),
-                        ColabSharedPreferencesModel(
+                        ColabCardSharedPreferencesModel(
                             id = 3
                         )
                     )
@@ -335,10 +335,10 @@ class IDeleteCardSharedPreferencesDatasourceTest {
                 VehicleOwnSharedPreferencesModel(
                     id = 2,
                     passengerColabList = listOf(
-                        ColabSharedPreferencesModel(
+                        ColabCardSharedPreferencesModel(
                             id = 1
                         ),
-                        ColabSharedPreferencesModel(
+                        ColabCardSharedPreferencesModel(
                             id = 2
                         ),
                     )
@@ -366,10 +366,10 @@ class IDeleteCardSharedPreferencesDatasourceTest {
                 VehicleOwnSharedPreferencesModel(
                     id = 1,
                     passengerColabList = listOf(
-                        ColabSharedPreferencesModel(
+                        ColabCardSharedPreferencesModel(
                             id = 1
                         ),
-                        ColabSharedPreferencesModel(
+                        ColabCardSharedPreferencesModel(
                             id = 3
                         )
                     )
@@ -377,10 +377,10 @@ class IDeleteCardSharedPreferencesDatasourceTest {
                 VehicleOwnSharedPreferencesModel(
                     id = 2,
                     passengerColabList = listOf(
-                        ColabSharedPreferencesModel(
+                        ColabCardSharedPreferencesModel(
                             id = 1
                         ),
-                        ColabSharedPreferencesModel(
+                        ColabCardSharedPreferencesModel(
                             id = 2
                         ),
                     )
@@ -481,12 +481,12 @@ class IDeleteCardSharedPreferencesDatasourceTest {
         runTest {
             val list = listOf("test1", "test2", "test3")
             val data = CardSharedPreferencesModel(
-                photoList = list
+                urlPhotoList = list
             )
             cardDatasource.save(data)
             val modelBefore = cardDatasource.get().getOrThrow()
             assertEquals(
-                modelBefore.photoList,
+                modelBefore.urlPhotoList,
                 list
             )
             val result =  datasource.deletePhoto("test2")
@@ -496,7 +496,7 @@ class IDeleteCardSharedPreferencesDatasourceTest {
             )
             val modelAfter = cardDatasource.get().getOrThrow()
             assertEquals(
-                modelAfter.photoList,
+                modelAfter.urlPhotoList,
                 listOf("test1", "test3")
             )
         }

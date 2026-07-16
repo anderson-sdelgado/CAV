@@ -5,8 +5,8 @@ import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.ColabSharedPre
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.EquipSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.InvolvedSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.VehicleSharedPreferencesDatasource
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabCardSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipCardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleOwnSharedPreferencesModel
@@ -176,7 +176,7 @@ class IInsertCardRepositoryTest {
                 equipSharedPreferencesDatasource.get()
             ).thenReturn(
                 Result.success(
-                    EquipSharedPreferencesModel()
+                    EquipCardSharedPreferencesModel()
                 )
             )
             whenever(
@@ -211,14 +211,14 @@ class IInsertCardRepositoryTest {
                 equipSharedPreferencesDatasource.get()
             ).thenReturn(
                 Result.success(
-                    EquipSharedPreferencesModel()
+                    EquipCardSharedPreferencesModel()
                 )
             )
             whenever(
                 colabSharedPreferencesDatasource.get()
             ).thenReturn(
                 Result.success(
-                    ColabSharedPreferencesModel()
+                    ColabCardSharedPreferencesModel()
                 )
             )
             whenever(
@@ -253,14 +253,14 @@ class IInsertCardRepositoryTest {
                 equipSharedPreferencesDatasource.get()
             ).thenReturn(
                 Result.success(
-                    EquipSharedPreferencesModel()
+                    EquipCardSharedPreferencesModel()
                 )
             )
             whenever(
                 colabSharedPreferencesDatasource.get()
             ).thenReturn(
                 Result.success(
-                    ColabSharedPreferencesModel()
+                    ColabCardSharedPreferencesModel()
                 )
             )
             whenever(
@@ -292,8 +292,8 @@ class IInsertCardRepositoryTest {
     @Test
     fun `setDetailColab - Check return failure if have error in CardSharedPreferencesDatasource setVehicleOwn`() =
         runTest {
-            val equipCard = EquipSharedPreferencesModel()
-            val colabCard = ColabSharedPreferencesModel()
+            val equipCard = EquipCardSharedPreferencesModel()
+            val colabCard = ColabCardSharedPreferencesModel()
             whenever(
                 equipSharedPreferencesDatasource.get()
             ).thenReturn(
@@ -340,8 +340,8 @@ class IInsertCardRepositoryTest {
     @Test
     fun `setDetailColab - Check return correct if function execute successfully`() =
         runTest {
-            val equipCard = EquipSharedPreferencesModel()
-            val colabCard = ColabSharedPreferencesModel()
+            val equipCard = EquipCardSharedPreferencesModel()
+            val colabCard = ColabCardSharedPreferencesModel()
             whenever(
                 equipSharedPreferencesDatasource.get()
             ).thenReturn(
@@ -477,7 +477,7 @@ class IInsertCardRepositoryTest {
                 equipSharedPreferencesDatasource.get()
             ).thenReturn(
                 Result.success(
-                    EquipSharedPreferencesModel()
+                    EquipCardSharedPreferencesModel()
                 )
             )
             whenever(
@@ -508,7 +508,7 @@ class IInsertCardRepositoryTest {
     @Test
     fun `setDetailEquipSec - Check return failure if have error in CardSharedPreferencesDatasource addEquipSec`() =
         runTest {
-            val equipCard = EquipSharedPreferencesModel()
+            val equipCard = EquipCardSharedPreferencesModel()
             whenever(
                 equipSharedPreferencesDatasource.get()
             ).thenReturn(
@@ -548,7 +548,7 @@ class IInsertCardRepositoryTest {
     @Test
     fun `setDetailEquipSec - Check return correct if function execute successfully`() =
         runTest {
-            val equipCard = EquipSharedPreferencesModel()
+            val equipCard = EquipCardSharedPreferencesModel()
             whenever(
                 equipSharedPreferencesDatasource.get()
             ).thenReturn(
@@ -890,7 +890,7 @@ class IInsertCardRepositoryTest {
     @Test
     fun `setDetailPassengerColab - Check return failure if have error in CardSharedPreferencesDatasource addPassengerColab`() =
         runTest {
-            val colabCard = ColabSharedPreferencesModel()
+            val colabCard = ColabCardSharedPreferencesModel()
             whenever(
                 colabSharedPreferencesDatasource.get()
             ).thenReturn(
@@ -929,7 +929,7 @@ class IInsertCardRepositoryTest {
     @Test
     fun `setDetailPassengerColab - Check return correct if function execute successfully`() =
         runTest {
-            val colabCard = ColabSharedPreferencesModel()
+            val colabCard = ColabCardSharedPreferencesModel()
             whenever(
                 colabSharedPreferencesDatasource.get()
             ).thenReturn(

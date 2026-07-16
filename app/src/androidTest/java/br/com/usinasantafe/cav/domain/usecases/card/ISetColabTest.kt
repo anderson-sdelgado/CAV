@@ -3,7 +3,7 @@ package br.com.usinasantafe.cav.domain.usecases.card
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.ColabSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabCardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleOwnSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
@@ -52,7 +52,7 @@ class ISetColabTest {
             vehicleOwnList = listOf(
                 VehicleOwnSharedPreferencesModel(
                     id = 1,
-                    colab = ColabSharedPreferencesModel(reg = 10L)
+                    colab = ColabCardSharedPreferencesModel(reg = 10L)
                 )
             )
         )

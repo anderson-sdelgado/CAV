@@ -4,7 +4,6 @@ import br.com.usinasantafe.cav.domain.repositories.stable.EquipRepository
 import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
-import br.com.usinasantafe.cav.utils.required
 import javax.inject.Inject
 
 interface GetNroCar {

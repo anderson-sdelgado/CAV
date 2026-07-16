@@ -3,7 +3,6 @@ package br.com.usinasantafe.cav.external.sharedpreferences.datasource
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.InvolvedSharedPreferencesDatasource
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.sharedPreferencesModelToEntity
 import br.com.usinasantafe.cav.lib.BASE_SHARED_PREFERENCES_TABLE_INVOLVED

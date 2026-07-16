@@ -4,7 +4,7 @@ import br.com.usinasantafe.cav.external.room.dao.stable.ColabDao
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.room.stable.ColabRoomModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabCardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleOwnSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.FlowNote
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -43,7 +43,7 @@ class IGetDescColabTest {
             vehicleOwnList = listOf(
                 VehicleOwnSharedPreferencesModel(
                     id = 1,
-                    colab = ColabSharedPreferencesModel(reg = 12345)
+                    colab = ColabCardSharedPreferencesModel(reg = 12345)
                 )
             )
         )

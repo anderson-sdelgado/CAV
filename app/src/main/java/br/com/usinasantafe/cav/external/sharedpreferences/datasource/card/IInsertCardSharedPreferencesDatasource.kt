@@ -3,8 +3,8 @@ package br.com.usinasantafe.cav.external.sharedpreferences.datasource.card
 import android.util.Log
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.InsertCardSharedPreferencesDatasource
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabCardSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipCardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleOwnSharedPreferencesModel
@@ -31,7 +31,7 @@ class IInsertCardSharedPreferencesDatasource @Inject constructor(
         }
 
     override suspend fun addEquipSec(
-        equipSharedPreferencesModel: EquipSharedPreferencesModel,
+        equipCardSharedPreferencesModel: EquipCardSharedPreferencesModel,
         idMain: Int
     ): Result<Int> =
         result(getClassAndMethod()) {
@@ -40,8 +40,8 @@ class IInsertCardSharedPreferencesDatasource @Inject constructor(
                 vehicleOwnList.find { it.id == idMain }?.let { vehicleOwn ->
                     val list = vehicleOwn.equipSecList.toMutableList()
                     id = (list.mapNotNull { it.id }.maxOrNull() ?: 0) + 1
-                    equipSharedPreferencesModel.id = id
-                    list.add(equipSharedPreferencesModel)
+                    equipCardSharedPreferencesModel.id = id
+                    list.add(equipCardSharedPreferencesModel)
                     vehicleOwn.equipSecList = list
                 }
             }
@@ -49,7 +49,7 @@ class IInsertCardSharedPreferencesDatasource @Inject constructor(
         }
 
     override suspend fun addPassengerColab(
-        colabSharedPreferencesModel: ColabSharedPreferencesModel,
+        colabCardSharedPreferencesModel: ColabCardSharedPreferencesModel,
         idMain: Int
     ): Result<Int> =
         result(getClassAndMethod()) {
@@ -58,8 +58,8 @@ class IInsertCardSharedPreferencesDatasource @Inject constructor(
                 vehicleOwnList.find { it.id == idMain }?.let { vehicleOwn ->
                     val list = vehicleOwn.passengerColabList.toMutableList()
                     id = (list.mapNotNull { it.id }.maxOrNull() ?: 0) + 1
-                    colabSharedPreferencesModel.id = id
-                    list.add(colabSharedPreferencesModel)
+                    colabCardSharedPreferencesModel.id = id
+                    list.add(colabCardSharedPreferencesModel)
                     vehicleOwn.passengerColabList = list
                 }
             }

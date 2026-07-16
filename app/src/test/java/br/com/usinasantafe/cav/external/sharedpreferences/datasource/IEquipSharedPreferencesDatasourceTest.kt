@@ -3,8 +3,7 @@ package br.com.usinasantafe.cav.external.sharedpreferences.datasource
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.test.core.app.ApplicationProvider
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipSharedPreferencesModel
-import br.com.usinasantafe.cav.lib.State
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipCardSharedPreferencesModel
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.runner.RunWith
@@ -32,7 +31,7 @@ class IEquipSharedPreferencesDatasourceTest {
     @Test
     fun `setIdEquip - Check alter data correct in sharedPreferences internal`() =
         runTest {
-            val data = EquipSharedPreferencesModel(
+            val data = EquipCardSharedPreferencesModel(
                 idEquip = 1,
                 detail = "Test"
             )
@@ -65,7 +64,7 @@ class IEquipSharedPreferencesDatasourceTest {
     @Test
     fun `setDetail - Check alter data correct in sharedPreferences internal`() =
         runTest {
-            val data = EquipSharedPreferencesModel(
+            val data = EquipCardSharedPreferencesModel(
                 detail = "Test"
             )
             datasource.save(data)
@@ -104,7 +103,7 @@ class IEquipSharedPreferencesDatasourceTest {
     fun `getIdEquip - Check return correct if function execute successfully`() =
         runTest {
 
-            val data = EquipSharedPreferencesModel(
+            val data = EquipCardSharedPreferencesModel(
                 idEquip = 1,
                 detail = "Test"
             )
@@ -137,7 +136,7 @@ class IEquipSharedPreferencesDatasourceTest {
     @Test
     fun `getDetail - Check return correct if function execute successfully`() =
         runTest {
-            val data = EquipSharedPreferencesModel(
+            val data = EquipCardSharedPreferencesModel(
                 idEquip = 1,
                 detail = "Test"
             )

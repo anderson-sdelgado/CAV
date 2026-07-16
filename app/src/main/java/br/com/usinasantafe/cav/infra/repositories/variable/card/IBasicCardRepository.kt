@@ -105,4 +105,9 @@ class IBasicCardRepository @Inject constructor(
             cardSharedPreferencesDatasource.listPhoto().getOrThrow()
         }
 
+    override suspend fun hasLocal(): Result<Boolean> =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.hasLocal().getOrThrow()
+        }
+
 }

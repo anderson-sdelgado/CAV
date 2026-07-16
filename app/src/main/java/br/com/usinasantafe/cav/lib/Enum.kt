@@ -3,8 +3,7 @@ package br.com.usinasantafe.cav.lib
 enum class StatusSend { STARTED, SEND, SENT }
 enum class Errors { FIELD_EMPTY, TOKEN, UPDATE, EXCEPTION, INVALID, LIST_EMPTY, CPF_INVALID }
 enum class TypeButton { NUMERIC, CLEAN, OK, UPDATE }
-enum class FlagUpdate { OUTDATED, UPDATED }
-enum class Status { OPEN, CLOSE, FINISH }
+
 enum class LevelUpdate { RECOVERY, CLEAN, SAVE, GET_TOKEN, SAVE_TOKEN, FINISH_UPDATE_INITIAL, FINISH_UPDATE_COMPLETED }
 
 enum class Option { INSERT, EDIT }

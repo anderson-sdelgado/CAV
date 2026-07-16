@@ -5,6 +5,7 @@ import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.domain.repositories.variable.DeleteCardRepository
 import br.com.usinasantafe.cav.domain.repositories.variable.InsertCardRepository
 import br.com.usinasantafe.cav.domain.repositories.variable.RecoverDataCardRepository
+import br.com.usinasantafe.cav.domain.repositories.variable.SaveAndSendCardRepository
 import br.com.usinasantafe.cav.domain.repositories.variable.UpdateCardRepository
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.repositories.variable.card.IBasicCardRepository
@@ -23,13 +24,15 @@ class ICardRepository @Inject constructor(
     private val recoverDataRepository: IRecoverDataCardRepository,
     private val updateRepository: IUpdateCardRepository,
     private val deleteRepository: IDeleteCardRepository,
+    private val saveAndSendCardRepository: SaveAndSendCardRepository,
     private val cardSharedPreferencesDatasource: CardSharedPreferencesDatasource,
 ): CardRepository,
     BasicCardRepository by basicRepository,
     InsertCardRepository by insertRepository,
     RecoverDataCardRepository by recoverDataRepository,
     UpdateCardRepository by updateRepository,
-    DeleteCardRepository by deleteRepository {
+    DeleteCardRepository by deleteRepository,
+    SaveAndSendCardRepository by saveAndSendCardRepository {
 
     override suspend fun clean(): EmptyResult =
         call(getClassAndMethod()) {
@@ -40,13 +43,5 @@ class ICardRepository @Inject constructor(
         call(getClassAndMethod()) {
             cardSharedPreferencesDatasource.has().getOrThrow()
         }
-
-    override suspend fun hasLocal(): Result<Boolean> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun save(): EmptyResult {
-        TODO("Not yet implemented")
-    }
 
 }

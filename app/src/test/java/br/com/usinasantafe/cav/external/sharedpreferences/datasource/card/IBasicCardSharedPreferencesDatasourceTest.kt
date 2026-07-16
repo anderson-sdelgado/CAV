@@ -585,7 +585,7 @@ class IBasicCardSharedPreferencesDatasourceTest {
         }
 
     @Test
-    fun `setPhotoList - Check alter data correct in SharedPreferences internal`() =
+    fun `setPhoto - Check alter data correct in SharedPreferences internal`() =
         runTest {
             val result = datasource.setPhoto("test2")
             assertEquals(
@@ -595,9 +595,40 @@ class IBasicCardSharedPreferencesDatasourceTest {
             val modelAfter =
                 cardDatasource.get().getOrThrow()
             assertEquals(
-                modelAfter.photoList,
+                modelAfter.urlPhotoList,
                 listOf("test2")
             )
         }
 
+    @Test
+    fun `hasLocal - Check return false if local is null`() =
+        runTest {
+            val result = datasource.hasLocal()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull(),
+                false
+            )
+        }
+
+    @Test
+    fun `hasLocal - Check return true if local is not null`() =
+        runTest {
+            val data = CardSharedPreferencesModel(
+                local = LocalSharedPreferencesModel()
+            )
+            cardDatasource.save(data)
+            val result = datasource.hasLocal()
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull(),
+                true
+            )
+        }
 }

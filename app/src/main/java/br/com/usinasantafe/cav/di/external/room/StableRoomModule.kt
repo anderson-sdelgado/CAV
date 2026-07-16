@@ -1,14 +1,7 @@
 package br.com.usinasantafe.cav.di.external.room
 
 import br.com.usinasantafe.cav.external.room.dao.DatabaseRoom
-import br.com.usinasantafe.cav.external.room.dao.stable.ColabDao
-import br.com.usinasantafe.cav.external.room.dao.stable.EquipDao
-import br.com.usinasantafe.cav.external.room.dao.stable.ItemDataLocalDao
-import br.com.usinasantafe.cav.external.room.dao.stable.NatureDao
-import br.com.usinasantafe.cav.external.room.dao.stable.OptionDataLocalDao
-import br.com.usinasantafe.cav.external.room.dao.stable.DataLocalDao
-import br.com.usinasantafe.cav.external.room.dao.stable.SupportTeamsDao
-import br.com.usinasantafe.cav.external.room.dao.stable.TypeAccidentDao
+import br.com.usinasantafe.cav.external.room.dao.stable.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
