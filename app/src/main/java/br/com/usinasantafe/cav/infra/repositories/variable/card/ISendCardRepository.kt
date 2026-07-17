@@ -20,6 +20,7 @@ import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import br.com.usinasantafe.cav.utils.required
+import br.com.usinasantafe.cav.utils.tryCatch
 import javax.inject.Inject
 
 class ISendCardRepository @Inject constructor(
@@ -114,7 +115,16 @@ class ISendCardRepository @Inject constructor(
                 involvedList = involvedRetrofitList,
                 witnessList = witnessRetrofitList,
             )
-            cardRetrofitDatasource.send(token,modelRetrofit).getOrThrow()
+            val model = cardRetrofitDatasource.send(token,modelRetrofit).getOrThrow()
+            cardRoomDatasource.update(idCard, model.idServ).getOrThrow()
+            cardRoomModel.urlPhotoList.forEach { path ->
+                tryCatch("deletePhoto") {
+                    val file = java.io.File(path)
+                    if (file.exists()) {
+                        file.delete()
+                    }
+                }
+            }
         }
 
     override suspend fun hasSend(): Result<Boolean> =

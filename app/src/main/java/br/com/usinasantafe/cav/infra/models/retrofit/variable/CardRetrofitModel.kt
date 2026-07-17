@@ -1,6 +1,9 @@
 package br.com.usinasantafe.cav.infra.models.retrofit.variable
 
+import br.com.usinasantafe.cav.domain.entities.variable.Card
+import br.com.usinasantafe.cav.domain.entities.variable.Config
 import br.com.usinasantafe.cav.infra.models.room.variable.CardRoomModel
+import br.com.usinasantafe.cav.utils.required
 
 data class CardRetrofitModelOutput(
     val id: Int,
@@ -51,4 +54,11 @@ fun CardRoomModel.roomModelToRetrofitModel(
             obs = obs
         )
     }
+}
+
+
+fun CardRetrofitModelInput.retrofitToEntity(): Card {
+    return Card(
+        idServ = ::idServ.required(),
+    )
 }

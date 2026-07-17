@@ -39,3 +39,4 @@ const val WEB_ALL_SUPPORT_TEAMS = "support-teams.php"
 const val WEB_ALL_TYPE_ACCIDENT = "type-accident.php"
 
 const val WEB_SAVE_TOKEN = "find-token.php"
+const val WEB_SAVE_CARD = "save-card.php"

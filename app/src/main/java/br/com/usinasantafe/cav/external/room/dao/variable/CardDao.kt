@@ -13,6 +13,9 @@ interface CardDao {
     @Insert
     fun insert(model: CardRoomModel): Long
 
+    @Query("UPDATE $TB_CARD SET statusSend = :statusSend, idServ = :idServ WHERE id = :id")
+    fun update(id: Int, idServ: Int, statusSend: StatusSend): Boolean
+
     @Query("SELECT * FROM $TB_CARD")
     fun all(): List<CardRoomModel>
 
@@ -25,5 +28,7 @@ interface CardDao {
         LIMIT 1
     """)
     fun oldest(): CardRoomModel
+
+
 
 }

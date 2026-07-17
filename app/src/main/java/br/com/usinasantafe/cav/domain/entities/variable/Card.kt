@@ -14,4 +14,5 @@ data class Card(
     var witnessList: List<Involved> = emptyList(),
     var photoList: List<String> = emptyList(),
     var obs: String? = null,
+    var idServ: Int? = null,
 )
