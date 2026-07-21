@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.presenter.view.card.vehicleFull
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -126,6 +127,7 @@ fun VehicleForeignDataContent(
         }
         Spacer(modifier = Modifier.padding(vertical = 4.dp))
         ButtonMaxWidth(R.string.text_pattern_return) { onNavMenu() }
+        BackHandler {}
 
         if(flagDialogCheck){
             AlertDialogCheckDesign(

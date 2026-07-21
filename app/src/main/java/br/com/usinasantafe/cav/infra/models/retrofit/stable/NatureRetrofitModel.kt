@@ -4,14 +4,14 @@ import br.com.usinasantafe.cav.domain.entities.stable.Nature
 
 data class NatureRetrofitModel(
     val id: Int,
-    val desc: String
+    val description: String
 )
 
 fun NatureRetrofitModel.retrofitModelToEntity(): Nature {
     return with(this) {
         Nature(
             id = id,
-            description = desc
+            description = description
         )
     }
 }

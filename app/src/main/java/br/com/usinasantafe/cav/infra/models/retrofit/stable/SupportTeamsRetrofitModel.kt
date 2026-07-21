@@ -4,14 +4,14 @@ import br.com.usinasantafe.cav.domain.entities.stable.SupportTeams
 
 data class SupportTeamsRetrofitModel(
     val id: Int,
-    val desc: String
+    val description: String
 )
 
 fun SupportTeamsRetrofitModel.retrofitModelToEntity(): SupportTeams {
     return with(this) {
         SupportTeams(
             id = id,
-            description = desc
+            description = description
         )
     }
 }

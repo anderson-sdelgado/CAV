@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.presenter.view.card.vehicle.brand
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -131,6 +132,7 @@ fun BrandContent(
                 )
             }
         }
+        BackHandler {}
 
         if(status.flagDialog) {
             MsgErrors(status.errors, onCloseDialog, status.failure)

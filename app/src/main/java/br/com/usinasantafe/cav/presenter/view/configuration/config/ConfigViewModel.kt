@@ -104,34 +104,38 @@ class ConfigViewModel @Inject constructor(
             updateState { withFailure(getClassAndMethod(), Errors.FIELD_EMPTY) }
             return@launch
         }
-        token().collect { state ->
-            _uiState.value = state
-            if (!state.status.flagFailure && state.status.currentProgress == 1f) {
-                updateAllDatabase().onCompletion {
-                    if(!state.status.flagFailure){
-                        setFinishUpdateAllTable().fold(
-                            onSuccess = {
-                                emit(
-                                    state.copy(
-                                        status = state.status.copy(
-                                            tableUpdate = "",
-                                            flagDialog = true,
-                                            flagProgress = true,
-                                            flagFailure = false,
-                                            levelUpdate = LevelUpdate.FINISH_UPDATE_COMPLETED,
-                                            currentProgress = 1f
-                                        )
-                                    )
-                                )
-                            },
-                            onFailure = {
-                                val newState = state.withFailure(getClassAndMethod(), it, flagProgress = true)
-                                emit(newState)
-                                _uiState.value = newState
-                            }
-                        )
+        token().collect { stateToken ->
+            _uiState.value = stateToken
+            if (!stateToken.status.flagFailure && stateToken.status.currentProgress == 1f) {
+
+                updateAllDatabase()
+                    .collect {
+                        _uiState.value = it
                     }
-                }.collect { _uiState.value = it }
+
+                val stateUpdate = _uiState.value
+
+                if (!stateUpdate.status.flagFailure) {
+
+                    setFinishUpdateAllTable().fold(
+                        onSuccess = {
+                            _uiState.value = stateUpdate.copy(
+                                status = stateUpdate.status.copy(
+                                    tableUpdate = "",
+                                    flagDialog = true,
+                                    flagProgress = false,
+                                    flagFailure = false,
+                                    levelUpdate = LevelUpdate.FINISH_UPDATE_COMPLETED,
+                                    currentProgress = 1f
+                                )
+                            )
+                        },
+                        onFailure = {
+                            _uiState.value =
+                                stateUpdate.withFailure(getClassAndMethod(), it)
+                        }
+                    )
+                }
             }
         }
     }

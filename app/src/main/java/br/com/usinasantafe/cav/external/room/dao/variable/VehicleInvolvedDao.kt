@@ -15,4 +15,7 @@ interface VehicleInvolvedDao {
     @Query("SELECT * FROM $TB_VEHICLE_INVOLVED")
     fun all(): List<VehicleInvolvedRoomModel>
 
+    @Query("SELECT * FROM $TB_VEHICLE_INVOLVED WHERE idCard = :idCard ORDER BY id ASC")
+    fun listByIdCard(idCard: Int): List<VehicleInvolvedRoomModel>
+
 }

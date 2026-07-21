@@ -17,4 +17,7 @@ interface VehicleOwnDao {
     @Query("SELECT * FROM $TB_VEHICLE_OWN")
     fun all(): List<VehicleOwnRoomModel>
 
+    @Query("SELECT * FROM $TB_VEHICLE_OWN WHERE idCard = :idCard ORDER BY id ASC")
+    fun listByIdCard(idCard: Int): List<VehicleOwnRoomModel>
+
 }

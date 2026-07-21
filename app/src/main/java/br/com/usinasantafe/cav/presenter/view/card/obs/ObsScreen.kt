@@ -1,11 +1,13 @@
 package br.com.usinasantafe.cav.presenter.view.card.obs
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
@@ -77,6 +79,7 @@ fun ObsContent(
     Column(
         modifier = modifier
             .padding(16.dp)
+            .imePadding()
     ) {
         TitleDesign(
             text = stringResource(
@@ -121,6 +124,7 @@ fun ObsContent(
                 )
             }
         }
+        BackHandler {}
 
         if(status.flagDialog) {
             MsgErrors(status.errors, onCloseDialog, status.failure)

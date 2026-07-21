@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.presenter.view.card.local
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -111,6 +112,7 @@ fun InputLocalContent(
         }
 
     }
+    BackHandler {}
 
     LaunchedEffect(status.flagAccess) {
         if(status.flagAccess) {

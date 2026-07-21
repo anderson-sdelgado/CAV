@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.presenter.view.card.involved.data
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -207,6 +208,7 @@ fun InvolvedDataContent(
                 else -> onNavMenu()
             }
         }
+        BackHandler {}
 
         if(flagDialogCheck){
             AlertDialogCheckDesign(

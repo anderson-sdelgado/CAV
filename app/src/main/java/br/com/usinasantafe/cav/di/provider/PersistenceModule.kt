@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.di.provider
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.room.Room
@@ -17,8 +18,13 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.security.SecureRandom
+import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -26,30 +32,13 @@ object PersistenceModule {
 
     @Singleton
     @Provides
-    fun provideHttpClient(): OkHttpClient {
-
-        val logging = HttpLoggingInterceptor()
-        logging.level = HttpLoggingInterceptor.Level.BODY
-
-        return OkHttpClient.Builder()
-            .connectTimeout(1, TimeUnit.MINUTES)
-            .writeTimeout(1, TimeUnit.MINUTES)
-            .readTimeout(1, TimeUnit.MINUTES)
-            .addInterceptor(logging)
-            .build()
-    }
-
-    @Singleton
-    @Provides
     fun provideRetrofit(
-        client: OkHttpClient,
         url: String
     ): Retrofit = Retrofit.Builder()
         .baseUrl(url)
         .addConverterFactory(GsonConverterFactory.create())
-        .client(client)
+        .client(getUnsafeOkHttpClient())
         .build()
-
 
     @Singleton
     @Provides
@@ -85,4 +74,44 @@ object BaseUrlModule {
     @Provides
     @Singleton
     fun provideUrl(@ApplicationContext appContext: Context): String = appContext.getString(R.string.base_url)
+}
+
+fun getUnsafeOkHttpClient(): OkHttpClient {
+
+    val logging = HttpLoggingInterceptor()
+    logging.level = HttpLoggingInterceptor.Level.BODY
+
+    val trustAllCertificates = arrayOf<TrustManager>(
+        @SuppressLint("CustomX509TrustManager")
+        object : X509TrustManager {
+            @SuppressLint("TrustAllX509TrustManager")
+            override fun checkClientTrusted(
+                chain: Array<out X509Certificate>?,
+                authType: String?
+            ) {}
+
+            @SuppressLint("TrustAllX509TrustManager")
+            override fun checkServerTrusted(
+                chain: Array<out X509Certificate>?,
+                authType: String?
+            ) {}
+
+            override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
+        }
+    )
+
+    val sslContext = SSLContext.getInstance("TLS")
+    sslContext.init(null, trustAllCertificates, SecureRandom())
+
+    return OkHttpClient.Builder()
+        .sslSocketFactory(
+            sslContext.socketFactory,
+            trustAllCertificates[0] as X509TrustManager
+        )
+        .hostnameVerifier { _, _ -> true }
+        .addInterceptor(logging)
+        .connectTimeout(1, TimeUnit.MINUTES)
+        .readTimeout(1, TimeUnit.MINUTES)
+        .writeTimeout(1, TimeUnit.MINUTES)
+        .build()
 }

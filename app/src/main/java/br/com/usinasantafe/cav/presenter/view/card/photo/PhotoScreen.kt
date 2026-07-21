@@ -2,6 +2,7 @@ package br.com.usinasantafe.cav.presenter.view.card.photo
 
 import android.Manifest
 import android.content.pm.PackageManager
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -73,6 +74,7 @@ fun PhotoScreen(
                 addPhoto = viewModel::addPhoto,
                 removePhoto = viewModel::removePhoto,
                 setNewPhoto = viewModel::setNewPhoto,
+                save = viewModel::save,
                 onCloseDialog = viewModel::onCloseDialog,
                 status = uiState.status,
                 onNavObs = onNavObs,
@@ -90,6 +92,7 @@ fun PhotoContent(
     addPhoto: (String) -> Unit,
     removePhoto: (String) -> Unit,
     setNewPhoto: (String) -> Unit,
+    save: () -> Unit,
     onCloseDialog: () -> Unit,
     status: UiStatusState,
     onNavObs: () -> Unit,
@@ -251,7 +254,7 @@ fun PhotoContent(
                 )
             }
             Button(
-                onClick = {},
+                onClick = save,
                 modifier = Modifier.weight(1f),
             ) {
                 TextButtonDesign(
@@ -260,6 +263,7 @@ fun PhotoContent(
                 )
             }
         }
+        BackHandler {}
 
         if(status.flagDialog) {
             MsgErrors(status.errors, onCloseDialog, status.failure)
@@ -286,6 +290,7 @@ fun PhotoPagePreview() {
                 addPhoto = {},
                 setNewPhoto = {},
                 removePhoto = {},
+                save = {},
                 onCloseDialog = {},
                 status = UiStatusState(),
                 onNavObs = {},

@@ -79,7 +79,7 @@ class PhotoViewModel @Inject constructor(
                 newPhoto = null
             )
         }
-        save(path)
+        set(path)
     }
 
     fun removePhoto(path: String) {
@@ -101,9 +101,17 @@ class PhotoViewModel @Inject constructor(
         }
     }
 
-    private fun save(path: String) = viewModelScope.launch {
+
+    private fun set(path: String) = viewModelScope.launch {
         runCatching {
             setPhoto(path).getOrThrow()
+        }
+            .onFailureState(getClassAndMethod(), ::updateState)
+    }
+
+
+    fun save() = viewModelScope.launch {
+        runCatching {
             if(!validate()) return@launch
             saveCard().getOrThrow()
         }

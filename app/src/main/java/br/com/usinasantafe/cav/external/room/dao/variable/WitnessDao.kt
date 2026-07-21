@@ -15,4 +15,7 @@ interface WitnessDao {
     @Query("SELECT * FROM $TB_WITNESS")
     fun all(): List<WitnessRoomModel>
 
+    @Query("SELECT * FROM $TB_WITNESS WHERE idCard = :idCard ORDER BY id ASC")
+    fun listByIdCard(idCard: Int): List<WitnessRoomModel>
+
 }

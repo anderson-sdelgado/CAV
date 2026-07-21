@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.presenter.view.card.menu
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -153,6 +154,7 @@ fun InvolvedWitnessContent(
                 )
             }
         }
+        BackHandler {}
 
         if(status.flagDialog) {
             MsgErrors(status.errors, onCloseDialog, status.failure)

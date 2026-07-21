@@ -16,8 +16,9 @@ class IVehicleInvolvedRoomDatasource @Inject constructor(
             vehicleInvolvedDao.insert(model).toInt()
         }
 
-    override suspend fun listByIdCard(idCard: Int): Result<List<VehicleInvolvedRoomModel>> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun listByIdCard(idCard: Int): Result<List<VehicleInvolvedRoomModel>> =
+        result(getClassAndMethod()) {
+            vehicleInvolvedDao.listByIdCard(idCard)
+        }
 
 }

@@ -49,10 +49,8 @@ fun UiStatusStateUpdate.toUiStatus(
         ?.let { "$classAndMethod -> $it" }
         ?: ""
 
-    var flag = true
     if (failMsg.isNotEmpty()) {
         Timber.e(failMsg)
-        flag = false
     }
 
     return current.copy(
@@ -60,7 +58,7 @@ fun UiStatusStateUpdate.toUiStatus(
         flagFailure = flagFailure,
         errors = errors,
         failure = failMsg,
-        flagProgress = flag,
+        flagProgress = flagProgress,
         currentProgress = currentProgress,
         levelUpdate = levelUpdate,
         tableUpdate = tableUpdate

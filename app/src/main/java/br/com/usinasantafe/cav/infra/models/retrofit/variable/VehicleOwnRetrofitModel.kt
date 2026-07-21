@@ -9,7 +9,7 @@ data class VehicleOwnRetrofitModel(
     val detailEquip: String?,
     val equipSecList: List<EquipSecRetrofitModel>,
     val reg: Long,
-    val state: State,
+    val state: Int,
     val detailColab: String?,
     val passengerColabList: List<PassengerColabRetrofitModel>
 )
@@ -22,7 +22,7 @@ fun VehicleOwnRoomModel.roomModelToRetrofitModel(): VehicleOwnRetrofitModel {
             detailEquip = detailEquip,
             equipSecList = emptyList(),
             reg = reg,
-            state = state,
+            state = state.id,
             detailColab = detailColab,
             passengerColabList = emptyList()
         )

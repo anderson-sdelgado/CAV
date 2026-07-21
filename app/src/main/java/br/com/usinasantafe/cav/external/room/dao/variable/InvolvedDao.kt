@@ -17,4 +17,7 @@ interface InvolvedDao {
     @Query("SELECT * FROM $TB_INVOLVED")
     fun all(): List<InvolvedRoomModel>
 
+    @Query("SELECT * FROM $TB_INVOLVED WHERE idCard = :idCard ORDER BY id ASC")
+    fun listByIdCard(idCard: Int): List<InvolvedRoomModel>
+
 }

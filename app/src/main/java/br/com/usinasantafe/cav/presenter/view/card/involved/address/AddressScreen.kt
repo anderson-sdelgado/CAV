@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.presenter.view.card.involved.address
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -117,6 +118,7 @@ fun AddressContent(
                 )
             }
         }
+        BackHandler {}
 
         if(status.flagDialog) {
             MsgErrors(status.errors, onCloseDialog, status.failure)

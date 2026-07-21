@@ -118,7 +118,6 @@ fun PassengerListContent(
         }
         BackHandler {}
 
-
         if(status.flagDialog) {
             MsgErrors(status.errors, onCloseDialog, status.failure)
         }

@@ -5,7 +5,7 @@ import br.com.usinasantafe.cav.domain.entities.stable.Equip
 data class EquipRetrofitModel(
     val id: Int,
     val nro: Long,
-    val desc: String
+    val description: String
 )
 
 fun EquipRetrofitModel.retrofitModelToEntity(): Equip {
@@ -13,7 +13,7 @@ fun EquipRetrofitModel.retrofitModelToEntity(): Equip {
         Equip(
             id = id,
             nro = nro,
-            description = desc
+            description = description
         )
     }
 }

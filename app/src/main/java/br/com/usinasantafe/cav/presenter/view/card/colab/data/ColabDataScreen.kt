@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.presenter.view.card.colab.data
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -18,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.lib.FlowNote
+import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.State
 import br.com.usinasantafe.cav.presenter.theme.AlertDialogCheckDesign
 import br.com.usinasantafe.cav.presenter.theme.ButtonMaxWidth
@@ -154,6 +156,7 @@ fun ColabDataContent(
                 else -> onNavPassengerList()
             }
         }
+        BackHandler {}
 
         if(flagDialogCheck){
             AlertDialogCheckDesign(

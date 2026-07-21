@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.di.external.retrofit
 
+import br.com.usinasantafe.cav.external.retrofit.api.variable.CardApi
 import br.com.usinasantafe.cav.external.retrofit.api.variable.ConfigApi
 import dagger.Module
 import dagger.Provides
@@ -18,4 +19,9 @@ object VariableRetrofitModule {
         retrofit: Retrofit
     ): ConfigApi = retrofit.create(ConfigApi::class.java)
 
+    @Provides
+    @Singleton
+    fun cardApiApiRetrofit(
+        retrofit: Retrofit
+    ): CardApi = retrofit.create(CardApi::class.java)
 }

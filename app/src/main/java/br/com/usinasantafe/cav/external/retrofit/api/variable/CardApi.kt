@@ -16,9 +16,7 @@ interface CardApi {
     @POST(WEB_SAVE_CARD)
     suspend fun send(
         @Header("Authorization") auth: String,
-        @Part("card")
-        card: RequestBody,
-        @Part("photos")
-        photos: List<MultipartBody.Part>
+        @Part("card") card: RequestBody,
+        @Part photos: List<MultipartBody.Part>
     ): Response<CardRetrofitModelInput>
 }

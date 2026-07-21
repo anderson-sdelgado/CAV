@@ -8,7 +8,10 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale("pt", "BR"))
+val formatter = SimpleDateFormat(
+    "dd/MM/yyyy HH:mm",
+    Locale.forLanguageTag("pt-BR")
+)
 
 data class CardRetrofitModelOutput(
     val id: Int,

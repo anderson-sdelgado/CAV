@@ -122,7 +122,6 @@ fun TypeAccidentContent(
                 )
             }
         }
-
         BackHandler {}
 
         if (status.flagDialog) {

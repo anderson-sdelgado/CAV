@@ -32,6 +32,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Address
 import android.location.Geocoder
+import androidx.activity.compose.BackHandler
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -222,6 +223,7 @@ fun LocalScreenContent(
         ) {
             Text(stringResource(id = R.string.text_pattern_return))
         }
+        BackHandler {}
 
         if(flagDialogCheck){
             AlertDialogCheckDesign(

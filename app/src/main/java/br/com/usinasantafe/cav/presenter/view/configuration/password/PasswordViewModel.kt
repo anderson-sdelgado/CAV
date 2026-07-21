@@ -48,7 +48,7 @@ class PasswordViewModel @Inject constructor(
             runCatching {
                 checkPassword(state.password).getOrThrow()
             }
-                .onSuccessStateAccess(::updateState)
+                .onSuccess { updateState { copy(status = status.copy(flagAccess = it)) } }
                 .onFailureState(getClassAndMethod(), ::updateState)
         }
 

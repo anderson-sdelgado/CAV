@@ -122,7 +122,6 @@ fun SupportTeamsScreenContent(
                 )
             }
         }
-
         BackHandler {}
 
         if (status.flagDialog) {

@@ -4,14 +4,14 @@ import br.com.usinasantafe.cav.domain.entities.stable.ItemDataLocal
 
 data class ItemDataLocalRetrofitModel(
     val id: Int,
-    val desc: String
+    val description: String
 )
 
 fun ItemDataLocalRetrofitModel.retrofitModelToEntity(): ItemDataLocal {
     return with(this) {
         ItemDataLocal(
             id = id,
-            description = desc
+            description = description
         )
     }
 }

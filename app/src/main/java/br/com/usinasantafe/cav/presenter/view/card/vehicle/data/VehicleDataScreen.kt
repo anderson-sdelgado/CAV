@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.presenter.view.card.vehicle.data
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -111,6 +112,7 @@ fun VehicleDataContent(
             }
         }
         ButtonMaxWidth(R.string.text_pattern_return) { onNavData() }
+        BackHandler {}
 
         if(status.flagDialog) {
             MsgErrors(status.errors, onCloseDialog, status.failure)

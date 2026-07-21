@@ -15,4 +15,7 @@ interface PassengerColabDao {
     @Query("SELECT * FROM $TB_PASSENGER_COLAB")
     fun all(): List<PassengerColabRoomModel>
 
+    @Query("SELECT * FROM $TB_PASSENGER_COLAB WHERE idVehicle IN (:idVehicleList) ORDER BY id asc")
+    fun listByIdVehicleList(idVehicleList: List<Int>): List<PassengerColabRoomModel>
+
 }
