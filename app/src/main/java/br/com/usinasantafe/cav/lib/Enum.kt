@@ -11,4 +11,8 @@ enum class FlowNote { EQUIP, EQUIP_SEC, COLAB, PASSENGER_COLAB, VEHICLE, DRIVER,
 enum class TypeVehicle { OWN, INVOLVED }
 enum class TypePeople { INVOLVED, WITNESS }
 
-enum class State { UNHARMED, INJURED, DEAD }
+enum class State(val id: Int) {
+    UNHARMED(1),
+    INJURED(2),
+    DEAD(3)
+}

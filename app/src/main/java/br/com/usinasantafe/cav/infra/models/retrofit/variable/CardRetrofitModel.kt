@@ -4,6 +4,11 @@ import br.com.usinasantafe.cav.domain.entities.variable.Card
 import br.com.usinasantafe.cav.domain.entities.variable.Config
 import br.com.usinasantafe.cav.infra.models.room.variable.CardRoomModel
 import br.com.usinasantafe.cav.utils.required
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
+val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale("pt", "BR"))
 
 data class CardRetrofitModelOutput(
     val id: Int,
@@ -21,7 +26,8 @@ data class CardRetrofitModelOutput(
     val involvedList: List<InvolvedRetrofitModel>,
     val witnessList: List<WitnessRetrofitModel>,
     val urlPhotoList: List<String>,
-    val obs: String?
+    val obs: String?,
+    val dateHour: String
 )
 
 data class CardRetrofitModelInput(
@@ -51,7 +57,8 @@ fun CardRoomModel.roomModelToRetrofitModel(
             involvedList = involvedList,
             witnessList = witnessList,
             urlPhotoList = urlPhotoList,
-            obs = obs
+            obs = obs,
+            dateHour = formatter.format(dateHour)
         )
     }
 }

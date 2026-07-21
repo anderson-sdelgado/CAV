@@ -9,7 +9,7 @@ data class PassengerInvolvedRetrofitModel(
     val name: String,
     val phone: String,
     val address: String?,
-    val state: State?,
+    val state: Int,
     val detail: String?
 )
 
@@ -21,7 +21,7 @@ fun PassengerInvolvedRoomModel.roomModelToRetrofitModel(): PassengerInvolvedRetr
             name = name,
             phone = phone,
             address = address,
-            state = state,
+            state = state.id,
             detail = detail
         )
     }

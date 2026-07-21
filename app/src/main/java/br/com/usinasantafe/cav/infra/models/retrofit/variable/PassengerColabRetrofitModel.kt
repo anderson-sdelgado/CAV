@@ -6,7 +6,7 @@ import br.com.usinasantafe.cav.lib.State
 data class PassengerColabRetrofitModel(
     val id: Int,
     val reg: Long,
-    val state: State,
+    val state: Int,
     val detail: String?,
 )
 
@@ -15,7 +15,7 @@ fun PassengerColabRoomModel.roomModelToRetrofitModel(): PassengerColabRetrofitMo
         PassengerColabRetrofitModel(
             id = id!!,
             reg = reg,
-            state = state,
+            state = state.id,
             detail = detail
         )
     }

@@ -16,7 +16,7 @@ data class InvolvedRoomModel(
     val name: String,
     val phone: String,
     val address: String?,
-    val state: State?,
+    val state: State,
     val detail: String?
 )
 
@@ -30,7 +30,7 @@ fun InvolvedSharedPreferencesModel.sharedPreferencesModelToInvolvedRoomModel(
             name = ::name.required(),
             phone = ::phone.required(),
             address = address,
-            state = state,
+            state = ::state.required(),
             detail = detail
         )
     }
