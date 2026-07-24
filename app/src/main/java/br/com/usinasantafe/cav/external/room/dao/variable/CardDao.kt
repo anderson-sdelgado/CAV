@@ -6,6 +6,7 @@ import androidx.room.Query
 import br.com.usinasantafe.cav.infra.models.room.variable.CardRoomModel
 import br.com.usinasantafe.cav.lib.StatusSend
 import br.com.usinasantafe.cav.lib.TB_CARD
+import java.util.Date
 
 @Dao
 interface CardDao {
@@ -15,6 +16,9 @@ interface CardDao {
 
     @Query("UPDATE $TB_CARD SET statusSend = :statusSend, idServ = :idServ WHERE id = :id")
     fun update(id: Int, idServ: Int, statusSend: StatusSend)
+
+    @Query("DELETE FROM $TB_CARD WHERE id = :id")
+    fun deleteById(id: Int)
 
     @Query("SELECT * FROM $TB_CARD")
     fun all(): List<CardRoomModel>
@@ -29,6 +33,7 @@ interface CardDao {
     """)
     fun oldest(): CardRoomModel
 
-
+    @Query("SELECT * FROM $TB_CARD WHERE statusSend = :statusSend AND dateHour < :dateHour")
+    fun listDelete(statusSend: StatusSend, dateHour: Date): List<CardRoomModel>
 
 }

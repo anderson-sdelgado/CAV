@@ -67,4 +67,35 @@ class IWitnessRoomDatasourceTest {
         )
         assertEquals(savedModel, modelAfter)
     }
+
+    @Test
+    fun `listByIdCard - Check return list correct`() = runTest {
+        val model1 = WitnessRoomModel(idCard = 1, name = "N1", phone = "P1", detail = null)
+        val model2 = WitnessRoomModel(idCard = 1, name = "N2", phone = "P2", detail = null)
+        val model3 = WitnessRoomModel(idCard = 2, name = "N3", phone = "P3", detail = null)
+
+        witnessDao.insert(model1)
+        witnessDao.insert(model2)
+        witnessDao.insert(model3)
+
+        val result = datasource.listByIdCard(1)
+        assertTrue(result.isSuccess)
+        assertEquals(2, result.getOrNull()!!.size)
+    }
+
+    @Test
+    fun `deleteByIdCard - Check execution correct`() = runTest {
+        val model1 = WitnessRoomModel(idCard = 1, name = "N1", phone = "P1", detail = null)
+        val model2 = WitnessRoomModel(idCard = 2, name = "N2", phone = "P2", detail = null)
+
+        witnessDao.insert(model1)
+        witnessDao.insert(model2)
+
+        assertEquals(2, witnessDao.all().size)
+
+        val result = datasource.deleteByIdCard(1)
+        assertTrue(result.isSuccess)
+        assertEquals(1, witnessDao.all().size)
+    }
+
 }

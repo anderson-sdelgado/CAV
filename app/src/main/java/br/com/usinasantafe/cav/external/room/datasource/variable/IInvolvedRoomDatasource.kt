@@ -23,4 +23,9 @@ class IInvolvedRoomDatasource @Inject constructor(
             involvedDao.listByIdCard(idCard)
         }
 
+    override suspend fun deleteByIdCard(idCard: Int): EmptyResult =
+        result(getClassAndMethod()) {
+            involvedDao.deleteByIdCard(idCard)
+        }
+
 }

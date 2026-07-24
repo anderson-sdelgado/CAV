@@ -25,12 +25,12 @@ import javax.inject.Inject
 
 class ISendCardRepository @Inject constructor(
     private val cardSharedPreferencesDatasource: CardSharedPreferencesDatasource,
-    private val involvedRoomDatasource: InvolvedRoomDatasource,
+    private val vehicleOwnRoomDatasource: VehicleOwnRoomDatasource,
     private val vehicleInvolvedRoomDatasource: VehicleInvolvedRoomDatasource,
     private val passengerColabRoomDatasource: PassengerColabRoomDatasource,
     private val passengerInvolvedRoomDatasource: PassengerInvolvedRoomDatasource,
     private val equipSecRoomDatasource: EquipSecRoomDatasource,
-    private val vehicleOwnRoomDatasource: VehicleOwnRoomDatasource,
+    private val involvedRoomDatasource: InvolvedRoomDatasource,
     private val witnessRoomDatasource: WitnessRoomDatasource,
     private val cardRoomDatasource: CardRoomDatasource,
     private val cardRetrofitDatasource: CardRetrofitDatasource
@@ -38,6 +38,7 @@ class ISendCardRepository @Inject constructor(
 
     override suspend fun save(): EmptyResult =
         call(getClassAndMethod()) {
+
             val cardSharedPreferencesModel = cardSharedPreferencesDatasource.get().getOrThrow()
             val model = cardSharedPreferencesModel.sharedPreferencesModelToRoomModel()
             val idCard = cardRoomDatasource.add(model).getOrThrow()
@@ -115,21 +116,43 @@ class ISendCardRepository @Inject constructor(
                 involvedList = involvedRetrofitList,
                 witnessList = witnessRetrofitList,
             )
-            val model = cardRetrofitDatasource.send(token,modelRetrofit).getOrThrow()
+            val model = cardRetrofitDatasource.send(token, modelRetrofit).getOrThrow()
             cardRoomDatasource.update(idCard, model.idServ).getOrThrow()
-            cardRoomModel.urlPhotoList.forEach { path ->
-                tryCatch("deletePhoto") {
-                    val file = java.io.File(path)
-                    if (file.exists()) {
-                        file.delete()
-                    }
-                }
-            }
+
         }
 
     override suspend fun hasSend(): Result<Boolean> =
         call(getClassAndMethod()) {
             cardRoomDatasource.hasSend().getOrThrow()
+        }
+
+    override suspend fun delete(): EmptyResult =
+        call(getClassAndMethod()) {
+            val list = cardRoomDatasource.listDelete().getOrThrow()
+            list.forEach { card ->
+                val idCard = card::id.required()
+                val vehicleOwnRoomModelList = vehicleOwnRoomDatasource.listByIdCard(idCard).getOrThrow()
+                val vehicleInvolvedRoomModelList = vehicleInvolvedRoomDatasource.listByIdCard(idCard).getOrThrow()
+                val idVehicleOwnList = vehicleOwnRoomModelList.map { it::id.required() }
+                val idVehicleInvolvedList = vehicleInvolvedRoomModelList.map { it::id.required() }
+                equipSecRoomDatasource.deleteByIdVehicleList(idVehicleOwnList).getOrThrow()
+                passengerColabRoomDatasource.deleteByIdVehicleList(idVehicleOwnList).getOrThrow()
+                passengerInvolvedRoomDatasource.deleteByIdVehicleList(idVehicleInvolvedList).getOrThrow()
+                involvedRoomDatasource.deleteByIdCard(idCard).getOrThrow()
+                witnessRoomDatasource.deleteByIdCard(idCard)
+                vehicleInvolvedRoomDatasource.deleteByIdCard(idCard).getOrThrow()
+                vehicleOwnRoomDatasource.deleteByIdCard(idCard).getOrThrow()
+                card.urlPhotoList.forEach { path ->
+                    tryCatch("deletePhoto") {
+                        val file = java.io.File(path)
+                        if (file.exists()) {
+                            file.delete()
+                        }
+                    }
+                }
+                cardRoomDatasource.deleteById(idCard).getOrThrow()
+            }
+
         }
 
 }

@@ -18,4 +18,7 @@ interface PassengerInvolvedDao {
     @Query("SELECT * FROM $TB_PASSENGER_INVOLVED WHERE idVehicle IN (:idVehicleList) ORDER BY id asc")
     fun listByIdVehicleList(idVehicleList: List<Int>): List<PassengerInvolvedRoomModel>
 
+    @Query("DELETE FROM $TB_PASSENGER_INVOLVED WHERE idVehicle IN (:idVehicleList)")
+    fun deleteByIdVehicleList(idVehicleList: List<Int>)
+
 }

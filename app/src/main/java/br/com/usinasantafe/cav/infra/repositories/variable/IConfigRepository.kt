@@ -11,7 +11,9 @@ import br.com.usinasantafe.cav.infra.models.sharedpreferences.sharedPreferencesM
 import br.com.usinasantafe.cav.lib.StatusSend
 import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.call
+import br.com.usinasantafe.cav.utils.callFlow
 import br.com.usinasantafe.cav.utils.getClassAndMethod
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import kotlin.text.get
 
@@ -58,9 +60,9 @@ class IConfigRepository @Inject constructor(
             configSharedPreferencesDatasource.setFlagUpdate().getOrThrow()
         }
 
-    override suspend fun getStatusSend(): Result<StatusSend> =
-        call(getClassAndMethod()) {
-            configSharedPreferencesDatasource.getStatusSend().getOrThrow()
+    override fun getStatusSend(): Flow<StatusSend> =
+        callFlow(getClassAndMethod()) {
+            configSharedPreferencesDatasource.getStatusSend()
         }
 
     override suspend fun setStatusSend(statusSend: StatusSend): EmptyResult =

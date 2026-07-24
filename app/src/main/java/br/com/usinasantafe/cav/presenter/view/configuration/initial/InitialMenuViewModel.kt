@@ -13,6 +13,7 @@ import br.com.usinasantafe.cav.utils.onSuccessStateAccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -42,19 +43,36 @@ class InitialMenuViewModel @Inject constructor(
 
     fun setCloseDialog() = updateState { copy(status = status.copy(flagDialog = false)) }
 
-    fun recoverStatusSend() = viewModelScope.launch {
-        runCatching {
-            getStatusSend().getOrThrow()
-        }
-            .onSuccess { updateState { copy(statusSend = it) } }
-            .onFailureState(getClassAndMethod(), ::updateState)
+    init {
+        observeStatusSend()
     }
+
+    private fun observeStatusSend() =
+        viewModelScope.launch {
+            getStatusSend()
+                .catch {
+                    updateState {
+                        copy(
+                            status = status.copy(
+                                flagDialog = true,
+                                flagFailure = true,
+                                failure = it.message ?: ""
+                            )
+                        )
+                    }
+                }
+                .collect { statusSend ->
+                    updateState {
+                        copy(statusSend = statusSend)
+                    }
+                }
+        }
 
     fun onCheckAccess() = viewModelScope.launch {
         runCatching {
             checkAccessInitial().getOrThrow()
         }
-            .onSuccessStateAccess(::updateState)
+            .onSuccess { updateState { copy(status = status.copy(flagAccess = it)) } }
             .onFailureState(getClassAndMethod(), ::updateState)
     }
 

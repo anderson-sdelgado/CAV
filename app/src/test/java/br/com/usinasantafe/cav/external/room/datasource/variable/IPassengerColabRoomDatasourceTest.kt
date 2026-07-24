@@ -68,4 +68,22 @@ class IPassengerColabRoomDatasourceTest {
         )
         assertEquals(savedModel, modelAfter)
     }
+
+    @Test
+    fun `deleteByIdVehicleList - Check execution correct`() = runTest {
+        val model1 = PassengerColabRoomModel(idVehicle = 1, reg = 1L, state = State.UNHARMED, detail = null)
+        val model2 = PassengerColabRoomModel(idVehicle = 1, reg = 2L, state = State.UNHARMED, detail = null)
+        val model3 = PassengerColabRoomModel(idVehicle = 2, reg = 3L, state = State.UNHARMED, detail = null)
+
+        passengerColabDao.insert(model1)
+        passengerColabDao.insert(model2)
+        passengerColabDao.insert(model3)
+
+        assertEquals(3, passengerColabDao.all().size)
+
+        val result = datasource.deleteByIdVehicleList(listOf(1))
+        assertTrue(result.isSuccess)
+        assertEquals(1, passengerColabDao.all().size)
+    }
+
 }

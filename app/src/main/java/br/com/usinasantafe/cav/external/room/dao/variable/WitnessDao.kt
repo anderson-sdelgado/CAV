@@ -18,4 +18,7 @@ interface WitnessDao {
     @Query("SELECT * FROM $TB_WITNESS WHERE idCard = :idCard ORDER BY id ASC")
     fun listByIdCard(idCard: Int): List<WitnessRoomModel>
 
+    @Query("DELETE FROM $TB_WITNESS WHERE idCard = :idCard")
+    fun deleteByIdCard(idCard: Int)
+
 }

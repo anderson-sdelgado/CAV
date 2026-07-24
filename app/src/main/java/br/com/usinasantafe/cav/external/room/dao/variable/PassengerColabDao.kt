@@ -18,4 +18,7 @@ interface PassengerColabDao {
     @Query("SELECT * FROM $TB_PASSENGER_COLAB WHERE idVehicle IN (:idVehicleList) ORDER BY id asc")
     fun listByIdVehicleList(idVehicleList: List<Int>): List<PassengerColabRoomModel>
 
+    @Query("DELETE FROM $TB_PASSENGER_COLAB WHERE idVehicle IN (:idVehicleList)")
+    fun deleteByIdVehicleList(idVehicleList: List<Int>)
+
 }

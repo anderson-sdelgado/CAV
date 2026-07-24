@@ -29,6 +29,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.presenter.theme.AlertDialogSimpleDesign
 import br.com.usinasantafe.cav.presenter.theme.CAVTheme
+import br.com.usinasantafe.cav.utils.UiStatusState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -36,6 +37,7 @@ import kotlinx.coroutines.launch
 fun SplashScreen(
     viewModel: SplashViewModel = hiltViewModel(),
     onNavInitialMenu: () -> Unit,
+    onNavMenuDataInitial: () -> Unit
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -46,11 +48,11 @@ fun SplashScreen(
             }
 
             SplashContent(
+                flagAccessCard = uiState.flagAccessCard,
                 setCloseDialog = viewModel::setCloseDialog,
-                flagAccess = uiState.flagAccess,
-                flagDialog = uiState.flagDialog,
-                failure = uiState.failure,
+                status = uiState.status,
                 onNavInitialMenu = onNavInitialMenu,
+                onNavMenuDataInitial = onNavMenuDataInitial,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -59,11 +61,11 @@ fun SplashScreen(
 
 @Composable
 fun SplashContent(
+    flagAccessCard: Boolean,
     setCloseDialog: () -> Unit,
-    flagAccess: Boolean,
-    flagDialog: Boolean,
-    failure: String,
+    status: UiStatusState,
     onNavInitialMenu: () -> Unit,
+    onNavMenuDataInitial: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var visibility by remember { mutableStateOf(true) }
@@ -95,17 +97,17 @@ fun SplashContent(
         }
     }
 
-    if(flagDialog) {
+    if(status.flagDialog) {
         AlertDialogSimpleDesign(
-            text = stringResource(id = R.string.text_failure, failure),
+            text = stringResource(id = R.string.text_failure, status.failure),
             setCloseDialog = setCloseDialog,
             setActionButtonOK = onNavInitialMenu
         )
     }
 
-    LaunchedEffect(flagAccess) {
-        if(flagAccess) {
-           onNavInitialMenu()
+    LaunchedEffect(status.flagAccess) {
+        if(status.flagAccess) {
+            if(flagAccessCard) onNavMenuDataInitial() else onNavInitialMenu()
         }
     }
 }
@@ -116,11 +118,11 @@ fun SplashPagePreview() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             SplashContent(
+                flagAccessCard = true,
                 setCloseDialog = {},
-                flagAccess = false,
-                flagDialog = false,
-                failure = "",
+                status = UiStatusState(),
                 onNavInitialMenu = {},
+                onNavMenuDataInitial = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

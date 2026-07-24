@@ -41,12 +41,12 @@ class ProcessWorkManager @AssistedInject constructor(
             handleFailure(it, getClassAndMethod())
         }
 
-        val sendSuccess = sendCard().getOrElse {
+        val checkSend = sendCard().getOrElse {
             handleFailure(it, getClassAndMethod())
             return Result.retry()
         }
 
-        if(!sendSuccess) return Result.retry()
+        if(checkSend) return Result.retry()
 
         setStatusSend(StatusSend.SENT).onFailure {
             handleFailure(it, getClassAndMethod())

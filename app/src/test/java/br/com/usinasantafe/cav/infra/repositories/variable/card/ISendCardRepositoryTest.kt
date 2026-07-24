@@ -448,4 +448,48 @@ class ISendCardRepositoryTest {
         verify(cardRetrofitDatasource).send(any(), any())
     }
 
+    @Test
+    fun `delete - Check return failure if have error in CardRoomDatasource listDelete`() = runTest {
+        whenever(cardRoomDatasource.listDelete()).thenReturn(
+            resultFailure("CardRoomDatasource.listDelete", Exception())
+        )
+
+        val result = repository.delete()
+
+        assertTrue(result.isFailure)
+        assertEquals("ISendCardRepository.delete -> CardRoomDatasource.listDelete", result.exceptionOrNull()!!.message)
+    }
+
+    @Test
+    fun `delete - Check return success if delete process execute successfully`() = runTest {
+        val cardModel = CardRoomModel(id = 1, regAttendant = 1L, idCar = 1, address = "Test", latitude = 0.0, longitude = 0.0, idNatureList = emptyList(), idTypeAccidentList = emptyList(), idDataLocalList = emptyList(), idSupportTeamsList = emptyList(), urlPhotoList = listOf("path/to/photo.jpg"), obs = "Test")
+        val vehicleOwnModel = VehicleOwnRoomModel(id = 10, idCard = 1, idEquip = 1, detailEquip = "Test", reg = 1L, state = State.UNHARMED, detailColab = "Test")
+        val vehicleInvolvedModel = VehicleInvolvedRoomModel(id = 20, idCard = 1, document = "123", name = "Test", phone = "456", address = "Test", state = State.UNHARMED, detailDriver = "Test", plate = "ABC", brand = "Test", detailVehicle = "Test")
+
+        whenever(cardRoomDatasource.listDelete()).thenReturn(Result.success(listOf(cardModel)))
+        whenever(vehicleOwnRoomDatasource.listByIdCard(1)).thenReturn(Result.success(listOf(vehicleOwnModel)))
+        whenever(vehicleInvolvedRoomDatasource.listByIdCard(1)).thenReturn(Result.success(listOf(vehicleInvolvedModel)))
+        
+        whenever(equipSecRoomDatasource.deleteByIdVehicleList(listOf(10))).thenReturn(Result.success(Unit))
+        whenever(passengerColabRoomDatasource.deleteByIdVehicleList(listOf(10))).thenReturn(Result.success(Unit))
+        whenever(passengerInvolvedRoomDatasource.deleteByIdVehicleList(listOf(20))).thenReturn(Result.success(Unit))
+        whenever(involvedRoomDatasource.deleteByIdCard(1)).thenReturn(Result.success(Unit))
+        whenever(witnessRoomDatasource.deleteByIdCard(1)).thenReturn(Result.success(Unit))
+        whenever(vehicleInvolvedRoomDatasource.deleteByIdCard(1)).thenReturn(Result.success(Unit))
+        whenever(vehicleOwnRoomDatasource.deleteByIdCard(1)).thenReturn(Result.success(Unit))
+        whenever(cardRoomDatasource.deleteById(1)).thenReturn(Result.success(Unit))
+
+        val result = repository.delete()
+
+        assertTrue(result.isSuccess)
+        verify(equipSecRoomDatasource).deleteByIdVehicleList(listOf(10))
+        verify(passengerColabRoomDatasource).deleteByIdVehicleList(listOf(10))
+        verify(passengerInvolvedRoomDatasource).deleteByIdVehicleList(listOf(20))
+        verify(involvedRoomDatasource).deleteByIdCard(1)
+        verify(witnessRoomDatasource).deleteByIdCard(1)
+        verify(vehicleInvolvedRoomDatasource).deleteByIdCard(1)
+        verify(vehicleOwnRoomDatasource).deleteByIdCard(1)
+        verify(cardRoomDatasource).deleteById(1)
+    }
+
 }

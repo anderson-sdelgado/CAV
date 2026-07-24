@@ -12,6 +12,10 @@ import br.com.usinasantafe.cav.utils.getClassAndMethod
 import br.com.usinasantafe.cav.utils.required
 import br.com.usinasantafe.cav.utils.result
 import com.google.gson.Gson
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class IConfigSharedPreferencesDatasource @Inject constructor(
@@ -70,10 +74,26 @@ class IConfigSharedPreferencesDatasource @Inject constructor(
             get().getOrThrow().flagUpdate
         }
 
-    override suspend fun getStatusSend(): Result<StatusSend> =
-        result(getClassAndMethod()) {
-            get().getOrThrow().statusSend
+    override fun getStatusSend(): Flow<StatusSend> = callbackFlow {
+        suspend fun sendCurrentStatus() {
+            trySend(get().getOrThrow().statusSend)
         }
+        launch {
+            sendCurrentStatus()
+        }
+        val listener =
+            SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+                if (key == BASE_SHARED_PREFERENCES_TABLE_CONFIG) {
+                    launch {
+                        sendCurrentStatus()
+                    }
+                }
+            }
+        sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
+        awaitClose {
+            sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener)
+        }
+    }
 
     override suspend fun setStatusSend(statusSend: StatusSend): EmptyResult =
         result(getClassAndMethod()) {

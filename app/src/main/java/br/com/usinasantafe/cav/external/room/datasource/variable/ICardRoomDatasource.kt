@@ -5,8 +5,10 @@ import br.com.usinasantafe.cav.infra.datasource.room.variable.CardRoomDatasource
 import br.com.usinasantafe.cav.infra.models.room.variable.CardRoomModel
 import br.com.usinasantafe.cav.lib.StatusSend
 import br.com.usinasantafe.cav.utils.EmptyResult
+import br.com.usinasantafe.cav.utils.dateOneWeekAgo
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import br.com.usinasantafe.cav.utils.result
+import java.util.Date
 import javax.inject.Inject
 
 class ICardRoomDatasource @Inject constructor(
@@ -31,6 +33,16 @@ class ICardRoomDatasource @Inject constructor(
    override suspend fun getSend(): Result<CardRoomModel> =
       result(getClassAndMethod()) {
           cardDao.oldest()
+      }
+
+   override suspend fun listDelete(): Result<List<CardRoomModel>> =
+      result(getClassAndMethod()) {
+         cardDao.listDelete(StatusSend.SENT, dateOneWeekAgo())
+      }
+
+   override suspend fun deleteById(id: Int): EmptyResult =
+      result(getClassAndMethod()) {
+         cardDao.deleteById(id)
       }
 
 }

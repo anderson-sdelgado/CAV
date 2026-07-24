@@ -25,6 +25,7 @@ interface SendCardRepository {
     suspend fun save(): EmptyResult
     suspend fun send(token: String): EmptyResult
     suspend fun hasSend(): Result<Boolean>
+    suspend fun delete(): EmptyResult
 }
 
 interface BasicCardRepository{

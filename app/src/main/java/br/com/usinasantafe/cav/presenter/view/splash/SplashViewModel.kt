@@ -2,24 +2,31 @@ package br.com.usinasantafe.cav.presenter.view.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.usinasantafe.cav.domain.usecases.common.StartFlow
+import br.com.usinasantafe.cav.utils.UiStateWithStatus
+import br.com.usinasantafe.cav.utils.UiStatusState
 import br.com.usinasantafe.cav.utils.getClassAndMethod
-import br.com.usinasantafe.cav.utils.onFailureHandled
+import br.com.usinasantafe.cav.utils.onFailureState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 data class SplashState(
-    val flagAccess: Boolean = false,
-    val flagDialog: Boolean = false,
-    val failure: String = "",
-)
+    val flagAccessCard: Boolean = false,
+    override val status: UiStatusState = UiStatusState()
+) : UiStateWithStatus<SplashState> {
+
+    override fun copyWithStatus(status: UiStatusState): SplashState =
+        copy(status = status)
+
+}
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
+    private val startFlow: StartFlow
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(SplashState())
@@ -31,13 +38,15 @@ class SplashViewModel @Inject constructor(
         _uiState.update(block)
     }
 
-    fun setCloseDialog() = updateState { copy(flagDialog = false) }
+    fun setCloseDialog() = updateState { copy(status = status.copy(flagDialog = false, flagFailure = false)) }
 
     fun startApp() = viewModelScope.launch {
-        onSuccess()
+        runCatching {
+            startFlow().getOrThrow()
+        }
+            .onSuccess { updateState { copy(flagAccessCard = it, status = status.copy(flagAccess = true)) } }
+            .onFailureState(getClassAndMethod(), ::updateState)
     }
 
-    private fun onSuccess() = updateState { copy(flagAccess = true) }
-    private fun onError(error: String) = updateState { copy(flagDialog = true, failure = error) }
 
 }

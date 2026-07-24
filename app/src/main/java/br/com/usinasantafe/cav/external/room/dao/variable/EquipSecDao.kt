@@ -20,4 +20,7 @@ interface EquipSecDao {
     @Query("SELECT * FROM $TB_EQUIP_SEC WHERE idVehicle IN (:idVehicleList) ORDER BY id asc")
     fun listByIdVehicleList(idVehicleList: List<Int>): List<EquipSecRoomModel>
 
+    @Query("DELETE FROM $TB_EQUIP_SEC WHERE idVehicle IN (:idVehicleList)")
+    fun deleteByIdVehicleList(idVehicleList: List<Int>)
+
 }

@@ -27,4 +27,8 @@ interface CommonModule {
     @Singleton
     fun bindHasNroEquip(usecase: IHasNroEquip): HasNroEquip
 
+    @Binds
+    @Singleton
+    fun bindCheckFlow(usecase: IStartFlow): StartFlow
+
 }

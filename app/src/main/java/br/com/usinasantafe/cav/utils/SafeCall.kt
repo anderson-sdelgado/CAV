@@ -1,6 +1,8 @@
 package br.com.usinasantafe.cav.utils
 
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.catch
 
 suspend fun <T> call (
     context: String,
@@ -39,6 +41,14 @@ suspend fun FlowCollector<UiStatusStateUpdate>.flowCall(
         emitFailure(failure)
     }
 }
+
+fun <T> callFlow(
+    context: String,
+    block: () -> Flow<T>
+): Flow<T> =
+    block().catch { e ->
+        throw resultFailure(context, e).exceptionOrNull() ?: e
+    }
 
 suspend fun <T> tryCatch (
     context: String,

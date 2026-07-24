@@ -74,4 +74,35 @@ class IInvolvedRoomDatasourceTest {
         )
         assertEquals(savedModel, modelAfter)
     }
+
+    @Test
+    fun `listByIdCard - Check return list correct`() = runTest {
+        val model1 = InvolvedRoomModel(idCard = 1, name = "N1", phone = "P1", address = null, state = State.UNHARMED, detail = null, document = null)
+        val model2 = InvolvedRoomModel(idCard = 1, name = "N2", phone = "P2", address = null, state = State.UNHARMED, detail = null, document = null)
+        val model3 = InvolvedRoomModel(idCard = 2, name = "N3", phone = "P3", address = null, state = State.UNHARMED, detail = null, document = null)
+
+        involvedDao.insert(model1)
+        involvedDao.insert(model2)
+        involvedDao.insert(model3)
+
+        val result = datasource.listByIdCard(1)
+        assertTrue(result.isSuccess)
+        assertEquals(2, result.getOrNull()!!.size)
+    }
+
+    @Test
+    fun `deleteByIdCard - Check execution correct`() = runTest {
+        val model1 = InvolvedRoomModel(idCard = 1, name = "N1", phone = "P1", address = null, state = State.UNHARMED, detail = null, document = null)
+        val model2 = InvolvedRoomModel(idCard = 2, name = "N2", phone = "P2", address = null, state = State.UNHARMED, detail = null, document = null)
+
+        involvedDao.insert(model1)
+        involvedDao.insert(model2)
+
+        assertEquals(2, involvedDao.all().size)
+
+        val result = datasource.deleteByIdCard(1)
+        assertTrue(result.isSuccess)
+        assertEquals(1, involvedDao.all().size)
+    }
+
 }

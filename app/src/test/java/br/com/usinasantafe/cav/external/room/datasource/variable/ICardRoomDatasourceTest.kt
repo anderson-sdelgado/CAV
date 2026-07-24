@@ -6,6 +6,7 @@ import androidx.test.core.app.ApplicationProvider
 import br.com.usinasantafe.cav.external.room.dao.DatabaseRoom
 import br.com.usinasantafe.cav.external.room.dao.variable.CardDao
 import br.com.usinasantafe.cav.infra.models.room.variable.CardRoomModel
+import br.com.usinasantafe.cav.lib.StatusSend
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -172,6 +173,51 @@ class ICardRoomDatasourceTest {
         assertEquals(modelAfter, result.getOrNull()!!)
     }
 
+    @Test
+    fun `listDelete - Check return list correct`() = runTest {
+        val now = Date()
+        val twoWeeksAgo = Date(now.time - (14 * 24 * 60 * 60 * 1000L))
+        
+        val model1 = CardRoomModel(
+            regAttendant = 1L, idCar = 1, address = "A1", latitude = 0.0, longitude = 0.0,
+            idNatureList = emptyList(), idTypeAccidentList = emptyList(), idDataLocalList = emptyList(), idSupportTeamsList = emptyList(),
+            urlPhotoList = emptyList(), obs = "O1", dateHour = twoWeeksAgo, statusSend = StatusSend.SENT
+        )
+        val model2 = CardRoomModel(
+            regAttendant = 2L, idCar = 2, address = "A2", latitude = 0.0, longitude = 0.0,
+            idNatureList = emptyList(), idTypeAccidentList = emptyList(), idDataLocalList = emptyList(), idSupportTeamsList = emptyList(),
+            urlPhotoList = emptyList(), obs = "O2", dateHour = now, statusSend = StatusSend.SENT
+        )
+        val model3 = CardRoomModel(
+            regAttendant = 3L, idCar = 3, address = "A3", latitude = 0.0, longitude = 0.0,
+            idNatureList = emptyList(), idTypeAccidentList = emptyList(), idDataLocalList = emptyList(), idSupportTeamsList = emptyList(),
+            urlPhotoList = emptyList(), obs = "O3", dateHour = twoWeeksAgo, statusSend = StatusSend.SEND
+        )
 
+        cardDao.insert(model1)
+        cardDao.insert(model2)
+        cardDao.insert(model3)
+
+        val result = datasource.listDelete()
+        assertTrue(result.isSuccess)
+        assertEquals(1, result.getOrNull()!!.size)
+        assertEquals(1L, result.getOrNull()!![0].regAttendant)
+    }
+
+    @Test
+    fun `deleteById - Check execution correct`() = runTest {
+        val model = CardRoomModel(
+            regAttendant = 1L, idCar = 1, address = "A1", latitude = 0.0, longitude = 0.0,
+            idNatureList = emptyList(), idTypeAccidentList = emptyList(), idDataLocalList = emptyList(), idSupportTeamsList = emptyList(),
+            urlPhotoList = emptyList(), obs = "O1"
+        )
+        val id = cardDao.insert(model).toInt()
+        
+        assertEquals(1, cardDao.all().size)
+        
+        val result = datasource.deleteById(id)
+        assertTrue(result.isSuccess)
+        assertEquals(0, cardDao.all().size)
+    }
 
 }

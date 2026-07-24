@@ -72,4 +72,35 @@ class IVehicleOwnRoomDatasourceTest {
         )
         assertEquals(savedModel, modelAfter)
     }
+
+    @Test
+    fun `listByIdCard - Check return list correct`() = runTest {
+        val model1 = VehicleOwnRoomModel(idCard = 1, idEquip = 1, reg = 1L, state = State.UNHARMED, detailEquip = null, detailColab = null)
+        val model2 = VehicleOwnRoomModel(idCard = 1, idEquip = 2, reg = 2L, state = State.UNHARMED, detailEquip = null, detailColab = null)
+        val model3 = VehicleOwnRoomModel(idCard = 2, idEquip = 3, reg = 3L, state = State.UNHARMED, detailEquip = null, detailColab = null)
+
+        vehicleOwnDao.insert(model1)
+        vehicleOwnDao.insert(model2)
+        vehicleOwnDao.insert(model3)
+
+        val result = datasource.listByIdCard(1)
+        assertTrue(result.isSuccess)
+        assertEquals(2, result.getOrNull()!!.size)
+    }
+
+    @Test
+    fun `deleteByIdCard - Check execution correct`() = runTest {
+        val model1 = VehicleOwnRoomModel(idCard = 1, idEquip = 1, reg = 1L, state = State.UNHARMED, detailEquip = null, detailColab = null)
+        val model2 = VehicleOwnRoomModel(idCard = 2, idEquip = 2, reg = 2L, state = State.UNHARMED, detailEquip = null, detailColab = null)
+
+        vehicleOwnDao.insert(model1)
+        vehicleOwnDao.insert(model2)
+
+        assertEquals(2, vehicleOwnDao.all().size)
+
+        val result = datasource.deleteByIdCard(1)
+        assertTrue(result.isSuccess)
+        assertEquals(1, vehicleOwnDao.all().size)
+    }
+
 }

@@ -3,6 +3,7 @@ package br.com.usinasantafe.cav.external.room.datasource.variable
 import br.com.usinasantafe.cav.external.room.dao.variable.PassengerColabDao
 import br.com.usinasantafe.cav.infra.datasource.room.variable.PassengerColabRoomDatasource
 import br.com.usinasantafe.cav.infra.models.room.variable.PassengerColabRoomModel
+import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import br.com.usinasantafe.cav.utils.result
 import javax.inject.Inject
@@ -19,6 +20,11 @@ class IPassengerColabRoomDatasource @Inject constructor(
     override suspend fun listByIdVehicleList(idVehicleList: List<Int>): Result<List<PassengerColabRoomModel>> =
         result(getClassAndMethod()) {
             passengerColabDao.listByIdVehicleList(idVehicleList)
+        }
+
+    override suspend fun deleteByIdVehicleList(idVehicleList: List<Int>): EmptyResult =
+        result(getClassAndMethod()) {
+            passengerColabDao.deleteByIdVehicleList(idVehicleList)
         }
 
 }

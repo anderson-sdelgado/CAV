@@ -110,7 +110,9 @@ fun NavigationGraph(
             SplashScreen(
                 onNavInitialMenu = {
                     navActions.navigateToInitialMenu()
-//                    navActions.navigateToPhoto()
+                },
+                onNavMenuDataInitial = {
+                    navActions.navigateToDataInitial()
                 }
             )
         }

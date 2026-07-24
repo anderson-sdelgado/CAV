@@ -42,10 +42,6 @@ fun InitialMenuScreen(
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-            LaunchedEffect(Unit) {
-                viewModel.recoverStatusSend()
-            }
-
             InitialMenuContent(
                 statusSend = uiState.statusSend,
                 onCheckAccess = viewModel::onCheckAccess,

@@ -8,4 +8,6 @@ interface CardRoomDatasource {
     suspend fun update(id: Int, idServ: Int): EmptyResult
     suspend fun hasSend():  Result<Boolean>
     suspend fun getSend(): Result<CardRoomModel>
+    suspend fun listDelete(): Result<List<CardRoomModel>>
+    suspend fun deleteById(id: Int): EmptyResult
 }

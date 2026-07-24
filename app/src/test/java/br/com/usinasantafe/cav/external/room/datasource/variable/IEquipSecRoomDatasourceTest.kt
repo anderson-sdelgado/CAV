@@ -65,4 +65,22 @@ class IEquipSecRoomDatasourceTest {
         )
         assertEquals(savedModel, modelAfter)
     }
+
+    @Test
+    fun `deleteByIdVehicleList - Check execution correct`() = runTest {
+        val model1 = EquipSecRoomModel(idVehicle = 1, idEquip = 1, detail = null)
+        val model2 = EquipSecRoomModel(idVehicle = 1, idEquip = 2, detail = null)
+        val model3 = EquipSecRoomModel(idVehicle = 2, idEquip = 3, detail = null)
+
+        equipSecDao.insert(model1)
+        equipSecDao.insert(model2)
+        equipSecDao.insert(model3)
+
+        assertEquals(3, equipSecDao.all().size)
+
+        val result = datasource.deleteByIdVehicleList(listOf(1))
+        assertTrue(result.isSuccess)
+        assertEquals(1, equipSecDao.all().size)
+    }
+
 }
