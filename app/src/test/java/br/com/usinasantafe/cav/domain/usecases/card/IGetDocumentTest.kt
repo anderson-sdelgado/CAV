@@ -31,7 +31,7 @@ class IGetDocumentTest {
             )
             val result = usecase(
                 option = Option.INSERT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -59,7 +59,7 @@ class IGetDocumentTest {
             )
             val result = usecase(
                 option = Option.INSERT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -83,7 +83,7 @@ class IGetDocumentTest {
             )
             val result = usecase(
                 option = Option.INSERT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -191,7 +191,7 @@ class IGetDocumentTest {
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -219,7 +219,7 @@ class IGetDocumentTest {
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -243,7 +243,7 @@ class IGetDocumentTest {
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -262,7 +262,7 @@ class IGetDocumentTest {
     fun `Check return failure if have error in CardRepository getDocumentPassengerInvolved - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getDocumentPassengerInvolved(1, 2)
+                cardRepository.getDocumentPassengerExternal(1, 2)
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.getDocumentPassengerInvolved",
@@ -272,7 +272,7 @@ class IGetDocumentTest {
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 1,
                 idSecondary = 2
             )
@@ -294,13 +294,13 @@ class IGetDocumentTest {
     fun `Check return hyphen if function execute successfully and return is null - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getDocumentPassengerInvolved(1, 2)
+                cardRepository.getDocumentPassengerExternal(1, 2)
             ).thenReturn(
                 Result.success(null)
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 1,
                 idSecondary = 2
             )
@@ -318,13 +318,13 @@ class IGetDocumentTest {
     fun `Check return correct if function execute successfully - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getDocumentPassengerInvolved(1, 2)
+                cardRepository.getDocumentPassengerExternal(1, 2)
             ).thenReturn(
                 Result.success("123456")
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 1,
                 idSecondary = 2
             )

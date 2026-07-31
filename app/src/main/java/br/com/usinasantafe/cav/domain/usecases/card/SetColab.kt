@@ -34,6 +34,8 @@ class ISetColab @Inject constructor(
             when {
                 option == Option.INSERT -> cardRepository.setRegColab(regColabLong)
                 flowNote == FlowNote.COLAB -> cardRepository.updateRegColab(regColabLong, idMain)
+                flowNote == FlowNote.WITNESS_COLAB -> cardRepository.updateRegColabWitness(regColabLong, idMain)
+                flowNote == FlowNote.INVOLVED_COLAB -> cardRepository.updateRegColabInvolved(regColabLong, idMain)
                 else -> cardRepository.updateRegPassengerColab(regColabLong, idMain, idSecondary)
             }.getOrThrow()
         }

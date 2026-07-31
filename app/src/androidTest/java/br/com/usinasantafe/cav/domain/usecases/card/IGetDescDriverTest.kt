@@ -2,8 +2,8 @@ package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.PeopleExternalSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleExternalSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.FlowNote
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -34,10 +34,10 @@ class IGetDescDriverTest {
     @Test
     fun check_get_desc_driver() = runTest {
         val data = CardSharedPreferencesModel(
-            vehicleInvolvedList = listOf(
-                VehicleInvolvedSharedPreferencesModel(
+            vehicleExternalList = listOf(
+                VehicleExternalSharedPreferencesModel(
                     id = 1,
-                    driver = InvolvedSharedPreferencesModel(document = "123", name = "DRIVER TEST")
+                    driver = PeopleExternalSharedPreferencesModel(document = "123", name = "DRIVER TEST")
                 )
             )
         )

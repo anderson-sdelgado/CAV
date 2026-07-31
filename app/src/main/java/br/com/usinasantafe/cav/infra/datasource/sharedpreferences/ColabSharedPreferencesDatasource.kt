@@ -13,4 +13,9 @@ interface ColabSharedPreferencesDatasource {
     suspend fun getRegColab(): Result<Long?>
     suspend fun getState(): Result<State?>
     suspend fun getDetail(): Result<String?>
+    suspend fun getResultBreathalyzer(): Result<Boolean?>
+    suspend fun getRealizedBreathalyzer(): Result<Boolean?>
+    suspend fun getCountBreathalyzer(): Result<Double?>
+    suspend fun setDataInitialBreathalyzer(flagRealized: Boolean?, flagResult: Boolean?): EmptyResult
+    suspend fun setCountBreathalyzer(count: Double?): EmptyResult
 }

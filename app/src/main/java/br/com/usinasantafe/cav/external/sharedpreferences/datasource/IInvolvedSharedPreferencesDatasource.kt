@@ -3,7 +3,7 @@ package br.com.usinasantafe.cav.external.sharedpreferences.datasource
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.InvolvedSharedPreferencesDatasource
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.PeopleExternalSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.sharedPreferencesModelToEntity
 import br.com.usinasantafe.cav.lib.BASE_SHARED_PREFERENCES_TABLE_INVOLVED
 import br.com.usinasantafe.cav.lib.State
@@ -17,20 +17,20 @@ class IInvolvedSharedPreferencesDatasource @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ): InvolvedSharedPreferencesDatasource {
 
-    suspend fun updateModel(block: InvolvedSharedPreferencesModel.() -> Unit) {
+    suspend fun updateModel(block: PeopleExternalSharedPreferencesModel.() -> Unit) {
         val model = get().getOrThrow()
         model.block()
         save(model).getOrThrow()
     }
 
     suspend fun <T> readModel(
-        block: InvolvedSharedPreferencesModel.() -> T
+        block: PeopleExternalSharedPreferencesModel.() -> T
     ): T =
         get()
             .getOrThrow()
             .block()
 
-    suspend fun save(model: InvolvedSharedPreferencesModel): EmptyResult =
+    suspend fun save(model: PeopleExternalSharedPreferencesModel): EmptyResult =
         result(getClassAndMethod()) {
             sharedPreferences.edit {
                 putString(
@@ -40,16 +40,16 @@ class IInvolvedSharedPreferencesDatasource @Inject constructor(
             }
         }
 
-    override suspend fun get(): Result<InvolvedSharedPreferencesModel> =
+    override suspend fun get(): Result<PeopleExternalSharedPreferencesModel> =
         result(getClassAndMethod()) {
             val data = sharedPreferences.getString(
                 BASE_SHARED_PREFERENCES_TABLE_INVOLVED,
                 null
             )
-            if (data.isNullOrEmpty()) return@result InvolvedSharedPreferencesModel()
+            if (data.isNullOrEmpty()) return@result PeopleExternalSharedPreferencesModel()
             val model = Gson().fromJson(
                 data,
-                InvolvedSharedPreferencesModel::class.java
+                PeopleExternalSharedPreferencesModel::class.java
             )
             model.sharedPreferencesModelToEntity()
             model

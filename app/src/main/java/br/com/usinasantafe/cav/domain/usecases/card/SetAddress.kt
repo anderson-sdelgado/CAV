@@ -29,7 +29,7 @@ class ISetAddress @Inject constructor(
             with(cardRepository) {
                 when(flowNote) {
                     FlowNote.DRIVER -> updateAddressDriver(address, idMain)
-                    FlowNote.INVOLVED -> updateAddressInvolved(address, idMain)
+                    FlowNote.INVOLVED_EXTERNAL -> updateAddressInvolved(address, idMain)
                     else -> updateAddressPassengerInvolved(address, idMain, idSecondary)
                 }.getOrThrow()
             }

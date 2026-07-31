@@ -9,13 +9,13 @@ interface DeleteVehicleInvolved {
     suspend operator fun invoke(id: Int): Result<Unit>
 }
 
-class IDeleteVehicleInvolved @Inject constructor(
+class IDeleteVehicleExternal @Inject constructor(
     private val cardRepository: CardRepository
 ): DeleteVehicleInvolved {
 
     override suspend fun invoke(id: Int): Result<Unit> =
         call(getClassAndMethod()) {
-            cardRepository.deleteVehicleInvolved(id).getOrThrow()
+            cardRepository.deleteVehicleExternal(id).getOrThrow()
         }
 
 }

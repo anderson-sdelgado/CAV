@@ -1,10 +1,3 @@
-- [x] Implementar `IStartFlowTest.kt`
-- [x] Implementar testes para `delete()` em `ISendCardRepositoryTest.kt`
-- [x] Atualizar `ICardRoomDatasourceTest.kt` com `listDelete` e `deleteById`
-- [x] Atualizar `IVehicleOwnRoomDatasourceTest.kt` com `listByIdCard` e `deleteByIdCard`
-- [x] Atualizar `IEquipSecRoomDatasourceTest.kt` com `deleteByIdVehicleList`
-- [x] Atualizar `IInvolvedRoomDatasourceTest.kt` com `listByIdCard` e `deleteByIdCard`
-- [x] Atualizar `IWitnessRoomDatasourceTest.kt` com `listByIdCard` e `deleteByIdCard`
-- [x] Atualizar `IPassengerColabRoomDatasourceTest.kt` com `deleteByIdVehicleList`
-- [x] Atualizar `IPassengerInvolvedRoomDatasourceTest.kt` com `deleteByIdVehicleList`
-- [x] Atualizar `IVehicleInvolvedRoomDatasourceTest.kt` com `listByIdCard` e `deleteByIdCard`
+- [x] Corrigir lógica na `CheckBreathalyzerViewModel.kt` para suportar toggle
+- [x] Refatorar `CheckBreathalyzerScreen.kt` para garantir desmarcação correta
+- [x] Validar comportamento de reset de estado

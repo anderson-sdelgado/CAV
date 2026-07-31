@@ -185,7 +185,7 @@ class ISetStateTest {
             val result = usecase(
                 state = State.INJURED,
                 option = Option.INSERT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 10,
                 idSecondary = 0
             )
@@ -209,7 +209,7 @@ class ISetStateTest {
             val result = usecase(
                 state = State.INJURED,
                 option = Option.INSERT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 10,
                 idSecondary = 0
             )
@@ -235,7 +235,7 @@ class ISetStateTest {
             val result = usecase(
                 state = State.INJURED,
                 option = Option.INSERT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -259,7 +259,7 @@ class ISetStateTest {
             val result = usecase(
                 state = State.INJURED,
                 option = Option.INSERT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -285,7 +285,7 @@ class ISetStateTest {
             val result = usecase(
                 state = State.INJURED,
                 option = Option.INSERT,
-                flowNote = FlowNote.WITNESS,
+                flowNote = FlowNote.WITNESS_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -309,7 +309,7 @@ class ISetStateTest {
             val result = usecase(
                 state = State.INJURED,
                 option = Option.INSERT,
-                flowNote = FlowNote.WITNESS,
+                flowNote = FlowNote.WITNESS_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -474,7 +474,7 @@ class ISetStateTest {
     fun `Check return failure if have error in CardRepository updateStatePassengerInvolved - Option EDIT - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.updateStatePassengerInvolved(State.INJURED, 10, 20)
+                cardRepository.updateStatePassengerExternal(State.INJURED, 10, 20)
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.updateStatePassengerInvolved",
@@ -485,7 +485,7 @@ class ISetStateTest {
             val result = usecase(
                 state = State.INJURED,
                 option = Option.EDIT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 10,
                 idSecondary = 20
             )
@@ -509,11 +509,11 @@ class ISetStateTest {
             val result = usecase(
                 state = State.INJURED,
                 option = Option.EDIT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 10,
                 idSecondary = 20
             )
-            verify(cardRepository, atLeastOnce()).updateStatePassengerInvolved(State.INJURED, 10, 20)
+            verify(cardRepository, atLeastOnce()).updateStatePassengerExternal(State.INJURED, 10, 20)
             assertEquals(
                 result.isSuccess,
                 true
@@ -524,7 +524,7 @@ class ISetStateTest {
     fun `Check return failure if have error in CardRepository updateStateInvolved - Option EDIT - FlowNote INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.updateStateInvolved(State.INJURED, 10)
+                cardRepository.updateStateInvolvedExternal(State.INJURED, 10)
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.updateStateInvolved",
@@ -535,7 +535,7 @@ class ISetStateTest {
             val result = usecase(
                 state = State.INJURED,
                 option = Option.EDIT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 10,
                 idSecondary = 0
             )
@@ -559,11 +559,11 @@ class ISetStateTest {
             val result = usecase(
                 state = State.INJURED,
                 option = Option.EDIT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 10,
                 idSecondary = 0
             )
-            verify(cardRepository, atLeastOnce()).updateStateInvolved(State.INJURED, 10)
+            verify(cardRepository, atLeastOnce()).updateStateInvolvedExternal(State.INJURED, 10)
             assertEquals(
                 result.isSuccess,
                 true
@@ -574,7 +574,7 @@ class ISetStateTest {
     fun `Check return failure if have error in CardRepository updateStateWitness - Option EDIT - FlowNote WITNESS`() =
         runTest {
             whenever(
-                cardRepository.updateStateWitness(State.INJURED, 10)
+                cardRepository.updateStateWitnessExternal(State.INJURED, 10)
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.updateStateWitness",
@@ -585,7 +585,7 @@ class ISetStateTest {
             val result = usecase(
                 state = State.INJURED,
                 option = Option.EDIT,
-                flowNote = FlowNote.WITNESS,
+                flowNote = FlowNote.WITNESS_EXTERNAL,
                 idMain = 10,
                 idSecondary = 0
             )
@@ -609,11 +609,11 @@ class ISetStateTest {
             val result = usecase(
                 state = State.INJURED,
                 option = Option.EDIT,
-                flowNote = FlowNote.WITNESS,
+                flowNote = FlowNote.WITNESS_EXTERNAL,
                 idMain = 10,
                 idSecondary = 0
             )
-            verify(cardRepository, atLeastOnce()).updateStateWitness(State.INJURED, 10)
+            verify(cardRepository, atLeastOnce()).updateStateWitnessExternal(State.INJURED, 10)
             assertEquals(
                 result.isSuccess,
                 true

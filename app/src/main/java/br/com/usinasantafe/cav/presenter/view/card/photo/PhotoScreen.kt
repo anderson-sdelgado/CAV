@@ -187,7 +187,7 @@ fun PhotoContent(
         val prefix = stringResource(id = R.string.text_name_photo)
         val suffix = stringResource(id = R.string.text_extension_photo)
         Button(
-            enabled = photos.size < 4,
+            enabled = photos.size < MAX_PHOTOS,
             modifier = Modifier
                 .fillMaxWidth()
             ,

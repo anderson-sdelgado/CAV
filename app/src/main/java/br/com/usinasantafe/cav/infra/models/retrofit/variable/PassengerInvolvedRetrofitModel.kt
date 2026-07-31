@@ -1,7 +1,7 @@
 package br.com.usinasantafe.cav.infra.models.retrofit.variable
 
-import br.com.usinasantafe.cav.infra.models.room.variable.PassengerInvolvedRoomModel
-import br.com.usinasantafe.cav.lib.State
+import br.com.usinasantafe.cav.infra.models.room.variable.PassengerExternalRoomModel
+import br.com.usinasantafe.cav.utils.required
 
 data class PassengerInvolvedRetrofitModel(
     val id: Int,
@@ -13,10 +13,10 @@ data class PassengerInvolvedRetrofitModel(
     val detail: String?
 )
 
-fun PassengerInvolvedRoomModel.roomModelToRetrofitModel(): PassengerInvolvedRetrofitModel {
+fun PassengerExternalRoomModel.roomModelToRetrofitModel(): PassengerInvolvedRetrofitModel {
     return with(this) {
         PassengerInvolvedRetrofitModel(
-            id = id!!,
+            id = ::id.required(),
             document = document,
             name = name,
             phone = phone,

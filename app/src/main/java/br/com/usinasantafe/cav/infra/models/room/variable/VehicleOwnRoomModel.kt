@@ -16,10 +16,13 @@ data class VehicleOwnRoomModel(
     val detailEquip: String?,
     val reg: Long,
     val state: State,
+    val flagRealizedBreathalyzer: Boolean,
+    val flagResultBreathalyzer: Boolean?,
+    val countBreathalyzer: Double?,
     val detailColab: String?
 )
 
-fun VehicleOwnSharedPreferencesModel.sharedPreferencesModelToInvolvedRoomModel(
+fun VehicleOwnSharedPreferencesModel.sharedPreferencesModelToInvolvedExternalRoomModel(
     idCard: Int,
 ): VehicleOwnRoomModel {
     return with(this) {
@@ -29,6 +32,9 @@ fun VehicleOwnSharedPreferencesModel.sharedPreferencesModelToInvolvedRoomModel(
             detailEquip = equip.detail,
             reg = colab::reg.required(),
             state = colab::state.required(),
+            flagRealizedBreathalyzer = colab::flagRealizedBreathalyzer.required(),
+            flagResultBreathalyzer = colab.flagResultBreathalyzer,
+            countBreathalyzer = colab.countBreathalyzer,
             detailColab = colab.detail,
         )
     }

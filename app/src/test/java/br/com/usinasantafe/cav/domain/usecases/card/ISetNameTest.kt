@@ -177,7 +177,7 @@ class ISetNameTest {
 			val result = usecase(
 				name = "NAME",
 				option = Option.EDIT,
-				flowNote = FlowNote.INVOLVED,
+				flowNote = FlowNote.INVOLVED_EXTERNAL,
 				idMain = 2,
 				idSecondary = 0
 			)
@@ -216,7 +216,7 @@ class ISetNameTest {
 			val result = usecase(
 				name = "NAME",
 				option = Option.EDIT,
-				flowNote = FlowNote.INVOLVED,
+				flowNote = FlowNote.INVOLVED_EXTERNAL,
 				idMain = 2,
 				idSecondary = 0
 			)
@@ -243,7 +243,7 @@ class ISetNameTest {
 			val result = usecase(
 				name = "NAME",
 				option = Option.EDIT,
-				flowNote = FlowNote.WITNESS,
+				flowNote = FlowNote.WITNESS_EXTERNAL,
 				idMain = 3,
 				idSecondary = 0
 			)
@@ -282,7 +282,7 @@ class ISetNameTest {
 			val result = usecase(
 				name = "NAME",
 				option = Option.EDIT,
-				flowNote = FlowNote.WITNESS,
+				flowNote = FlowNote.WITNESS_EXTERNAL,
 				idMain = 3,
 				idSecondary = 0
 			)
@@ -309,7 +309,7 @@ class ISetNameTest {
 			val result = usecase(
 				name = "NAME",
 				option = Option.EDIT,
-				flowNote = FlowNote.PASSENGER_INVOLVED,
+				flowNote = FlowNote.PASSENGER_EXTERNAL,
 				idMain = 4,
 				idSecondary = 5
 			)
@@ -347,7 +347,7 @@ class ISetNameTest {
 			val result = usecase(
 				name = "NAME",
 				option = Option.EDIT,
-				flowNote = FlowNote.PASSENGER_INVOLVED,
+				flowNote = FlowNote.PASSENGER_EXTERNAL,
 				idMain = 4,
 				idSecondary = 5
 			)

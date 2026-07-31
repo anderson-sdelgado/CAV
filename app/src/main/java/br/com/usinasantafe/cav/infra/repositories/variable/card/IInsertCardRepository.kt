@@ -6,7 +6,7 @@ import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.ColabSharedPre
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.EquipSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.InvolvedSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.VehicleSharedPreferencesDatasource
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleExternalSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleOwnSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.State
 import br.com.usinasantafe.cav.utils.EmptyResult
@@ -46,10 +46,10 @@ class IInsertCardRepository @Inject constructor(
             involvedSharedPreferencesDatasource.setDetail(text).getOrThrow()
             val vehicle = vehicleSharedPreferencesDatasource.get().getOrThrow()
             val involved = involvedSharedPreferencesDatasource.get().getOrThrow()
-            val model = VehicleInvolvedSharedPreferencesModel(vehicle = vehicle, driver = involved)
+            val model = VehicleExternalSharedPreferencesModel(vehicle = vehicle, driver = involved)
             vehicleSharedPreferencesDatasource.clean().getOrThrow()
             involvedSharedPreferencesDatasource.clean().getOrThrow()
-            cardSharedPreferencesDatasource.addVehicleInvolved(model).getOrThrow()
+            cardSharedPreferencesDatasource.addVehicleExternal(model).getOrThrow()
         }
 
     override suspend fun setDetailColab(text: String): Result<Int> =
@@ -66,9 +66,9 @@ class IInsertCardRepository @Inject constructor(
     override suspend fun setDetailPassengerColab(text: String, idMain: Int): Result<Int> =
         call(getClassAndMethod()) {
             colabSharedPreferencesDatasource.setDetail(text).getOrThrow()
-            val colabCard = colabSharedPreferencesDatasource.get().getOrThrow()
+            val model = colabSharedPreferencesDatasource.get().getOrThrow()
             colabSharedPreferencesDatasource.clean().getOrThrow()
-            cardSharedPreferencesDatasource.addPassengerColab(colabCard, idMain).getOrThrow()
+            cardSharedPreferencesDatasource.addPassengerColab(model, idMain).getOrThrow()
         }
 
     override suspend fun setDetailVehicle(text: String): EmptyResult =
@@ -76,31 +76,44 @@ class IInsertCardRepository @Inject constructor(
             vehicleSharedPreferencesDatasource.setDetail(text).getOrThrow()
         }
 
-    override suspend fun setDetailInvolved(text: String): Result<Int> =
+    override suspend fun setDetailInvolvedExternal(text: String): Result<Int> =
         call(getClassAndMethod()) {
             involvedSharedPreferencesDatasource.setDetail(text).getOrThrow()
-            val vehicle = involvedSharedPreferencesDatasource.get().getOrThrow()
+            val model = involvedSharedPreferencesDatasource.get().getOrThrow()
             involvedSharedPreferencesDatasource.clean().getOrThrow()
-            cardSharedPreferencesDatasource.addInvolved(vehicle).getOrThrow()
+            cardSharedPreferencesDatasource.addInvolvedExternal(model).getOrThrow()
         }
 
-    override suspend fun setDetailWitness(text: String): Result<Int> =
+    override suspend fun setDetailWitnessExternal(text: String): Result<Int> =
         call(getClassAndMethod()) {
             involvedSharedPreferencesDatasource.setDetail(text).getOrThrow()
-            val vehicle = involvedSharedPreferencesDatasource.get().getOrThrow()
+            val model = involvedSharedPreferencesDatasource.get().getOrThrow()
             involvedSharedPreferencesDatasource.clean().getOrThrow()
-            cardSharedPreferencesDatasource.addWitness(vehicle).getOrThrow()
+            cardSharedPreferencesDatasource.addWitnessExternal(model).getOrThrow()
         }
 
-    override suspend fun setDetailPassengerInvolved(
-        text: String,
-        idMain: Int
-    ): Result<Int> =
+    override suspend fun setDetailPassengerExternal(text: String, idMain: Int): Result<Int> =
         call(getClassAndMethod()) {
             involvedSharedPreferencesDatasource.setDetail(text).getOrThrow()
-            val vehicle = involvedSharedPreferencesDatasource.get().getOrThrow()
+            val model = involvedSharedPreferencesDatasource.get().getOrThrow()
             involvedSharedPreferencesDatasource.clean().getOrThrow()
-            cardSharedPreferencesDatasource.addPassengerInvolved(vehicle, idMain).getOrThrow()
+            cardSharedPreferencesDatasource.addPassengerExternal(model, idMain).getOrThrow()
+        }
+
+    override suspend fun setDetailInvolvedColab(text: String): Result<Int> =
+        call(getClassAndMethod()) {
+            colabSharedPreferencesDatasource.setDetail(text).getOrThrow()
+            val model = colabSharedPreferencesDatasource.get().getOrThrow()
+            colabSharedPreferencesDatasource.clean().getOrThrow()
+            cardSharedPreferencesDatasource.addInvolvedColab(model).getOrThrow()
+        }
+
+    override suspend fun setDetailWitnessColab(text: String): Result<Int> =
+        call(getClassAndMethod()) {
+            colabSharedPreferencesDatasource.setDetail(text).getOrThrow()
+            val model = colabSharedPreferencesDatasource.get().getOrThrow()
+            colabSharedPreferencesDatasource.clean().getOrThrow()
+            cardSharedPreferencesDatasource.addWitnessColab(model).getOrThrow()
         }
 
     override suspend fun setRegColab(regColab: Long): EmptyResult =
@@ -144,6 +157,16 @@ class IInsertCardRepository @Inject constructor(
     override suspend fun setPhone(text: String): EmptyResult =
         call(getClassAndMethod()) {
             involvedSharedPreferencesDatasource.setPhone(text).getOrThrow()
+        }
+
+    override suspend fun setDataInitialBreathalyzer(flagRealized: Boolean?, flagResult: Boolean?): EmptyResult =
+        call(getClassAndMethod()) {
+            colabSharedPreferencesDatasource.setDataInitialBreathalyzer(flagRealized, flagResult).getOrThrow()
+        }
+
+    override suspend fun setCountBreathalyzer(count: Double?): EmptyResult =
+        call(getClassAndMethod()) {
+            colabSharedPreferencesDatasource.setCountBreathalyzer(count).getOrThrow()
         }
 
 }

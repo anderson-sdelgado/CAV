@@ -160,7 +160,13 @@ fun ItemDataLocalPagePreview() {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             ItemDataLocalContent(
                 title = "LOMBADA",
-                list = emptyList(),
+                list = listOf(
+                    ItemCheckBoxScreenModel(
+                        id = 1,
+                        desc = "LOMBADA 1",
+                        flag = false
+                    ),
+                ),
                 onCheckChange = { _, _ -> },
                 updateDatabase = {},
                 save = {},

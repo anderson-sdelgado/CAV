@@ -9,6 +9,7 @@ import br.com.usinasantafe.cav.external.sharedpreferences.datasource.card.IInser
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.card.IRecoverDataCardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.card.IUpdateCardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabCardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.LocalSharedPreferencesModel
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -96,6 +97,32 @@ class ICardSharedPreferencesDatasourceTest {
 
             val resultHasAfter = datasource.has()
             assertEquals(resultHasAfter.getOrNull(), false)
+        }
+
+    @Test
+    fun `listInvolvedColab - Check return correct list`() =
+        runTest {
+            val data = CardSharedPreferencesModel(
+                involvedColabList = listOf(ColabCardSharedPreferencesModel(id = 1, reg = 123L))
+            )
+            datasource.save(data)
+            val result = datasource.listInvolvedColab()
+            assertEquals(result.isSuccess, true)
+            assertEquals(1, result.getOrNull()!!.size)
+            assertEquals(123L, result.getOrNull()!![0].reg)
+        }
+
+    @Test
+    fun `listWitnessColab - Check return correct list`() =
+        runTest {
+            val data = CardSharedPreferencesModel(
+                witnessColabList = listOf(ColabCardSharedPreferencesModel(id = 1, reg = 123L))
+            )
+            datasource.save(data)
+            val result = datasource.listWitnessColab()
+            assertEquals(result.isSuccess, true)
+            assertEquals(1, result.getOrNull()!!.size)
+            assertEquals(123L, result.getOrNull()!![0].reg)
         }
 
 }

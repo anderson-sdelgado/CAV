@@ -7,6 +7,9 @@ data class ColabCardSharedPreferencesModel(
     var id: Int? = null,
     var reg: Long? = null,
     var state: State? = null,
+    var flagRealizedBreathalyzer: Boolean? = null,
+    var flagResultBreathalyzer: Boolean? = null,
+    var countBreathalyzer: Double? = null,
     var detail: String? = null
 )
 
@@ -16,6 +19,9 @@ fun ColabCardSharedPreferencesModel.sharedPreferencesModelToEntity(): ColabCard 
             id = id,
             reg = reg,
             state = state,
+            flagRealizedBreathalyzer = flagRealizedBreathalyzer,
+            flagResultBreathalyzer = flagResultBreathalyzer,
+            countBreathalyzer = countBreathalyzer,
             detail = detail
         )
     }
@@ -27,6 +33,9 @@ fun ColabCard.entityToSharedPreferencesModel(): ColabCardSharedPreferencesModel 
             id = id,
             reg = reg,
             state = state,
+            flagRealizedBreathalyzer = flagRealizedBreathalyzer,
+            flagResultBreathalyzer = flagResultBreathalyzer,
+            countBreathalyzer = countBreathalyzer,
             detail = detail
         )
     }

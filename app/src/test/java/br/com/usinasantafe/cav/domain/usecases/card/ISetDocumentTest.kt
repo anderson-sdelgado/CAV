@@ -165,7 +165,7 @@ class ISetDocumentTest {
 			val result = usecase(
 				cpf = "12345678900",
 				option = Option.EDIT,
-				flowNote = FlowNote.INVOLVED,
+				flowNote = FlowNote.INVOLVED_EXTERNAL,
 				idMain = 2,
 				idSecondary = 0
 			)
@@ -197,7 +197,7 @@ class ISetDocumentTest {
 			val result = usecase(
 				cpf = "12345678900",
 				option = Option.EDIT,
-				flowNote = FlowNote.INVOLVED,
+				flowNote = FlowNote.INVOLVED_EXTERNAL,
 				idMain = 2,
 				idSecondary = 0
 			)
@@ -230,7 +230,7 @@ class ISetDocumentTest {
 			val result = usecase(
 				cpf = "12345678900",
 				option = Option.EDIT,
-				flowNote = FlowNote.PASSENGER_INVOLVED,
+				flowNote = FlowNote.PASSENGER_EXTERNAL,
 				idMain = 3,
 				idSecondary = 4
 			)
@@ -262,7 +262,7 @@ class ISetDocumentTest {
 			val result = usecase(
 				cpf = "12345678900",
 				option = Option.EDIT,
-				flowNote = FlowNote.PASSENGER_INVOLVED,
+				flowNote = FlowNote.PASSENGER_EXTERNAL,
 				idMain = 3,
 				idSecondary = 4
 			)

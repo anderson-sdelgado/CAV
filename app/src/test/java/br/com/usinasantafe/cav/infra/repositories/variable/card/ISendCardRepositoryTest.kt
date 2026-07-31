@@ -3,24 +3,24 @@ package br.com.usinasantafe.cav.infra.repositories.variable.card
 import br.com.usinasantafe.cav.infra.datasource.retrofit.variable.CardRetrofitDatasource
 import br.com.usinasantafe.cav.infra.datasource.room.variable.CardRoomDatasource
 import br.com.usinasantafe.cav.infra.datasource.room.variable.EquipSecRoomDatasource
-import br.com.usinasantafe.cav.infra.datasource.room.variable.InvolvedRoomDatasource
+import br.com.usinasantafe.cav.infra.datasource.room.variable.InvolvedExternalRoomDatasource
 import br.com.usinasantafe.cav.infra.datasource.room.variable.PassengerColabRoomDatasource
-import br.com.usinasantafe.cav.infra.datasource.room.variable.PassengerInvolvedRoomDatasource
-import br.com.usinasantafe.cav.infra.datasource.room.variable.VehicleInvolvedRoomDatasource
+import br.com.usinasantafe.cav.infra.datasource.room.variable.PassengerExternalRoomDatasource
+import br.com.usinasantafe.cav.infra.datasource.room.variable.VehicleExternalRoomDatasource
 import br.com.usinasantafe.cav.infra.datasource.room.variable.VehicleOwnRoomDatasource
-import br.com.usinasantafe.cav.infra.datasource.room.variable.WitnessRoomDatasource
+import br.com.usinasantafe.cav.infra.datasource.room.variable.WitnessExternalRoomDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.room.variable.CardRoomModel
-import br.com.usinasantafe.cav.infra.models.room.variable.InvolvedRoomModel
-import br.com.usinasantafe.cav.infra.models.room.variable.VehicleInvolvedRoomModel
+import br.com.usinasantafe.cav.infra.models.room.variable.InvolvedExternalRoomModel
+import br.com.usinasantafe.cav.infra.models.room.variable.VehicleExternalRoomModel
 import br.com.usinasantafe.cav.infra.models.room.variable.VehicleOwnRoomModel
-import br.com.usinasantafe.cav.infra.models.room.variable.WitnessRoomModel
+import br.com.usinasantafe.cav.infra.models.room.variable.WitnessExternalRoomModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabCardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipCardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.PeopleExternalSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.LocalSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleExternalSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleOwnSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.State
@@ -37,13 +37,13 @@ import kotlin.test.assertTrue
 class ISendCardRepositoryTest {
 
     private val cardSharedPreferencesDatasource = mock<CardSharedPreferencesDatasource>()
-    private val involvedRoomDatasource = mock<InvolvedRoomDatasource>()
-    private val vehicleInvolvedRoomDatasource = mock<VehicleInvolvedRoomDatasource>()
+    private val involvedExternalRoomDatasource = mock<InvolvedExternalRoomDatasource>()
+    private val vehicleExternalRoomDatasource = mock<VehicleExternalRoomDatasource>()
     private val passengerColabRoomDatasource = mock<PassengerColabRoomDatasource>()
-    private val passengerInvolvedRoomDatasource = mock<PassengerInvolvedRoomDatasource>()
+    private val passengerExternalRoomDatasource = mock<PassengerExternalRoomDatasource>()
     private val equipSecRoomDatasource = mock<EquipSecRoomDatasource>()
     private val vehicleOwnRoomDatasource = mock<VehicleOwnRoomDatasource>()
-    private val witnessRoomDatasource = mock<WitnessRoomDatasource>()
+    private val witnessExternalRoomDatasource = mock<WitnessExternalRoomDatasource>()
     private val cardRoomDatasource = mock<CardRoomDatasource>()
     private val cardRetrofitDatasource = mock<CardRetrofitDatasource>()
 
@@ -54,10 +54,10 @@ class ISendCardRepositoryTest {
         vehicleOwnRoomDatasource = vehicleOwnRoomDatasource,
         passengerColabRoomDatasource = passengerColabRoomDatasource,
         equipSecRoomDatasource = equipSecRoomDatasource,
-        vehicleInvolvedRoomDatasource = vehicleInvolvedRoomDatasource,
-        passengerInvolvedRoomDatasource = passengerInvolvedRoomDatasource,
-        involvedRoomDatasource = involvedRoomDatasource,
-        witnessRoomDatasource = witnessRoomDatasource,
+        vehicleExternalRoomDatasource = vehicleExternalRoomDatasource,
+        passengerExternalRoomDatasource = passengerExternalRoomDatasource,
+        involvedExternalRoomDatasource = involvedExternalRoomDatasource,
+        witnessExternalRoomDatasource = witnessExternalRoomDatasource,
     )
 
     @Test
@@ -205,14 +205,14 @@ class ISendCardRepositoryTest {
             regAttendant = 1L,
             idCar = 1,
             local = LocalSharedPreferencesModel(address = "Test"),
-            vehicleInvolvedList = listOf(VehicleInvolvedSharedPreferencesModel(
+            vehicleExternalList = listOf(VehicleExternalSharedPreferencesModel(
                 vehicle = VehicleSharedPreferencesModel(plate = "ABC1234", brand = "Test"),
-                driver = InvolvedSharedPreferencesModel(name = "Test", phone = "123", state = br.com.usinasantafe.cav.lib.State.UNHARMED)
+                driver = PeopleExternalSharedPreferencesModel(name = "Test", phone = "123", state = br.com.usinasantafe.cav.lib.State.UNHARMED)
             ))
         )
         whenever(cardSharedPreferencesDatasource.get()).thenReturn(Result.success(model))
         whenever(cardRoomDatasource.add(any())).thenReturn(Result.success(1))
-        whenever(vehicleInvolvedRoomDatasource.add(any())).thenReturn(
+        whenever(vehicleExternalRoomDatasource.add(any())).thenReturn(
             resultFailure("VehicleInvolvedRoomDatasource.add", Exception())
         )
 
@@ -228,16 +228,16 @@ class ISendCardRepositoryTest {
             regAttendant = 1L,
             idCar = 1,
             local = LocalSharedPreferencesModel(address = "Test"),
-            vehicleInvolvedList = listOf(VehicleInvolvedSharedPreferencesModel(
+            vehicleExternalList = listOf(VehicleExternalSharedPreferencesModel(
                 vehicle = VehicleSharedPreferencesModel(plate = "ABC1234", brand = "Test"),
-                driver = InvolvedSharedPreferencesModel(name = "Test", phone = "123", state = br.com.usinasantafe.cav.lib.State.UNHARMED),
-                passengerInvolvedList = listOf(InvolvedSharedPreferencesModel(name = "Pass", phone = "456"))
+                driver = PeopleExternalSharedPreferencesModel(name = "Test", phone = "123", state = br.com.usinasantafe.cav.lib.State.UNHARMED),
+                passengerInvolvedList = listOf(PeopleExternalSharedPreferencesModel(name = "Pass", phone = "456"))
             ))
         )
         whenever(cardSharedPreferencesDatasource.get()).thenReturn(Result.success(model))
         whenever(cardRoomDatasource.add(any())).thenReturn(Result.success(1))
-        whenever(vehicleInvolvedRoomDatasource.add(any())).thenReturn(Result.success(1))
-        whenever(passengerInvolvedRoomDatasource.add(any())).thenReturn(
+        whenever(vehicleExternalRoomDatasource.add(any())).thenReturn(Result.success(1))
+        whenever(passengerExternalRoomDatasource.add(any())).thenReturn(
             resultFailure("PassengerInvolvedRoomDatasource.add", Exception())
         )
 
@@ -253,11 +253,11 @@ class ISendCardRepositoryTest {
             regAttendant = 1L,
             idCar = 1,
             local = LocalSharedPreferencesModel(address = "Test"),
-            involvedList = listOf(InvolvedSharedPreferencesModel(name = "Inv", phone = "789"))
+            involvedExternalList = listOf(PeopleExternalSharedPreferencesModel(name = "Inv", phone = "789"))
         )
         whenever(cardSharedPreferencesDatasource.get()).thenReturn(Result.success(model))
         whenever(cardRoomDatasource.add(any())).thenReturn(Result.success(1))
-        whenever(involvedRoomDatasource.add(any())).thenReturn(
+        whenever(involvedExternalRoomDatasource.add(any())).thenReturn(
             resultFailure("InvolvedRoomDatasource.add", Exception())
         )
 
@@ -273,11 +273,11 @@ class ISendCardRepositoryTest {
             regAttendant = 1L,
             idCar = 1,
             local = LocalSharedPreferencesModel(address = "Test"),
-            witnessList = listOf(InvolvedSharedPreferencesModel(name = "Wit", phone = "000"))
+            witnessExternalList = listOf(PeopleExternalSharedPreferencesModel(name = "Wit", phone = "000"))
         )
         whenever(cardSharedPreferencesDatasource.get()).thenReturn(Result.success(model))
         whenever(cardRoomDatasource.add(any())).thenReturn(Result.success(1))
-        whenever(witnessRoomDatasource.add(any())).thenReturn(
+        whenever(witnessExternalRoomDatasource.add(any())).thenReturn(
             resultFailure("WitnessRoomDatasource.add", Exception())
         )
 
@@ -299,13 +299,13 @@ class ISendCardRepositoryTest {
                 passengerColabList = listOf(ColabCardSharedPreferencesModel(reg = 2, state = br.com.usinasantafe.cav.lib.State.UNHARMED)),
                 equipSecList = listOf(EquipCardSharedPreferencesModel(idEquip = 2))
             )),
-            vehicleInvolvedList = listOf(VehicleInvolvedSharedPreferencesModel(
+            vehicleExternalList = listOf(VehicleExternalSharedPreferencesModel(
                 vehicle = VehicleSharedPreferencesModel(plate = "ABC1234", brand = "Test"),
-                driver = InvolvedSharedPreferencesModel(name = "Driver", phone = "123", state = State.UNHARMED),
-                passengerInvolvedList = listOf(InvolvedSharedPreferencesModel(name = "passenger", phone = "456"))
+                driver = PeopleExternalSharedPreferencesModel(name = "Driver", phone = "123", state = State.UNHARMED),
+                passengerInvolvedList = listOf(PeopleExternalSharedPreferencesModel(name = "passenger", phone = "456"))
             )),
-            involvedList = listOf(InvolvedSharedPreferencesModel(name = "Inv", phone = "789")),
-            witnessList = listOf(InvolvedSharedPreferencesModel(name = "Wit", phone = "000"))
+            involvedExternalList = listOf(PeopleExternalSharedPreferencesModel(name = "Inv", phone = "789")),
+            witnessExternalList = listOf(PeopleExternalSharedPreferencesModel(name = "Wit", phone = "000"))
         )
 
         whenever(cardSharedPreferencesDatasource.get()).thenReturn(Result.success(model))
@@ -313,10 +313,10 @@ class ISendCardRepositoryTest {
         whenever(vehicleOwnRoomDatasource.add(any())).thenReturn(Result.success(1))
         whenever(passengerColabRoomDatasource.add(any())).thenReturn(Result.success(1))
         whenever(equipSecRoomDatasource.add(any())).thenReturn(Result.success(1))
-        whenever(vehicleInvolvedRoomDatasource.add(any())).thenReturn(Result.success(1))
-        whenever(passengerInvolvedRoomDatasource.add(any())).thenReturn(Result.success(1))
-        whenever(involvedRoomDatasource.add(any())).thenReturn(Result.success(1))
-        whenever(witnessRoomDatasource.add(any())).thenReturn(Result.success(1))
+        whenever(vehicleExternalRoomDatasource.add(any())).thenReturn(Result.success(1))
+        whenever(passengerExternalRoomDatasource.add(any())).thenReturn(Result.success(1))
+        whenever(involvedExternalRoomDatasource.add(any())).thenReturn(Result.success(1))
+        whenever(witnessExternalRoomDatasource.add(any())).thenReturn(Result.success(1))
 
         val result = repository.save()
 
@@ -325,10 +325,10 @@ class ISendCardRepositoryTest {
         verify(vehicleOwnRoomDatasource).add(any())
         verify(passengerColabRoomDatasource).add(any())
         verify(equipSecRoomDatasource).add(any())
-        verify(vehicleInvolvedRoomDatasource).add(any())
-        verify(passengerInvolvedRoomDatasource).add(any())
-        verify(involvedRoomDatasource).add(any())
-        verify(witnessRoomDatasource).add(any())
+        verify(vehicleExternalRoomDatasource).add(any())
+        verify(passengerExternalRoomDatasource).add(any())
+        verify(involvedExternalRoomDatasource).add(any())
+        verify(witnessExternalRoomDatasource).add(any())
     }
 
     @Test
@@ -406,11 +406,11 @@ class ISendCardRepositoryTest {
         val cardModel = CardRoomModel(id = 1, regAttendant = 1L, idCar = 1, address = "Test", latitude = 0.0, longitude = 0.0, idNatureList = emptyList(), idTypeAccidentList = emptyList(), idDataLocalList = emptyList(), idSupportTeamsList = emptyList(), urlPhotoList = emptyList(), obs = "Test")
         whenever(cardRoomDatasource.getSend()).thenReturn(Result.success(cardModel))
         whenever(vehicleOwnRoomDatasource.listByIdCard(1)).thenReturn(Result.success(emptyList()))
-        whenever(vehicleInvolvedRoomDatasource.listByIdCard(1)).thenReturn(Result.success(emptyList()))
-        whenever(involvedRoomDatasource.listByIdCard(1)).thenReturn(Result.success(emptyList()))
-        whenever(witnessRoomDatasource.listByIdCard(1)).thenReturn(Result.success(emptyList()))
+        whenever(vehicleExternalRoomDatasource.listByIdCard(1)).thenReturn(Result.success(emptyList()))
+        whenever(involvedExternalRoomDatasource.listByIdCard(1)).thenReturn(Result.success(emptyList()))
+        whenever(witnessExternalRoomDatasource.listByIdCard(1)).thenReturn(Result.success(emptyList()))
         whenever(passengerColabRoomDatasource.listByIdVehicleList(any())).thenReturn(Result.success(emptyList()))
-        whenever(passengerInvolvedRoomDatasource.listByIdVehicleList(any())).thenReturn(Result.success(emptyList()))
+        whenever(passengerExternalRoomDatasource.listByIdVehicleList(any())).thenReturn(Result.success(emptyList()))
         whenever(equipSecRoomDatasource.listByIdVehicleList(any())).thenReturn(Result.success(emptyList()))
 
         whenever(cardRetrofitDatasource.send(any(), any())).thenReturn(
@@ -427,17 +427,17 @@ class ISendCardRepositoryTest {
     fun `send - Check return success if all data sent successfully`() = runTest {
         val cardModel = CardRoomModel(id = 1, regAttendant = 1L, idCar = 1, address = "Test", latitude = 0.0, longitude = 0.0, idNatureList = emptyList(), idTypeAccidentList = emptyList(), idDataLocalList = emptyList(), idSupportTeamsList = emptyList(), urlPhotoList = emptyList(), obs = "Test")
         val vehicleOwnModel = VehicleOwnRoomModel(id = 1, idCard = 1, idEquip = 1, detailEquip = "Test", reg = 1L, state = State.UNHARMED, detailColab = "Test")
-        val vehicleInvolvedModel = VehicleInvolvedRoomModel(id = 2, idCard = 1, document = "123", name = "Test", phone = "456", address = "Test", state = State.UNHARMED, detailDriver = "Test", plate = "ABC", brand = "Test", detailVehicle = "Test")
-        val involvedModel = InvolvedRoomModel(id = 3, idCard = 1, document = "123", name = "Test", phone = "456", address = "Test", state = State.UNHARMED, detail = "Test")
-        val witnessModel = WitnessRoomModel(id = 4, idCard = 1, name = "Test", phone = "456", detail = "Test")
+        val vehicleInvolvedModel = VehicleExternalRoomModel(id = 2, idCard = 1, document = "123", name = "Test", phone = "456", address = "Test", state = State.UNHARMED, detailDriver = "Test", plate = "ABC", brand = "Test", detailVehicle = "Test")
+        val involvedModel = InvolvedExternalRoomModel(id = 3, idCard = 1, document = "123", name = "Test", phone = "456", address = "Test", state = State.UNHARMED, detail = "Test")
+        val witnessModel = WitnessExternalRoomModel(id = 4, idCard = 1, name = "Test", phone = "456", detail = "Test")
 
         whenever(cardRoomDatasource.getSend()).thenReturn(Result.success(cardModel))
         whenever(vehicleOwnRoomDatasource.listByIdCard(1)).thenReturn(Result.success(listOf(vehicleOwnModel)))
-        whenever(vehicleInvolvedRoomDatasource.listByIdCard(1)).thenReturn(Result.success(listOf(vehicleInvolvedModel)))
-        whenever(involvedRoomDatasource.listByIdCard(1)).thenReturn(Result.success(listOf(involvedModel)))
-        whenever(witnessRoomDatasource.listByIdCard(1)).thenReturn(Result.success(listOf(witnessModel)))
+        whenever(vehicleExternalRoomDatasource.listByIdCard(1)).thenReturn(Result.success(listOf(vehicleInvolvedModel)))
+        whenever(involvedExternalRoomDatasource.listByIdCard(1)).thenReturn(Result.success(listOf(involvedModel)))
+        whenever(witnessExternalRoomDatasource.listByIdCard(1)).thenReturn(Result.success(listOf(witnessModel)))
         whenever(passengerColabRoomDatasource.listByIdVehicleList(listOf(1))).thenReturn(Result.success(emptyList()))
-        whenever(passengerInvolvedRoomDatasource.listByIdVehicleList(listOf(2))).thenReturn(Result.success(emptyList()))
+        whenever(passengerExternalRoomDatasource.listByIdVehicleList(listOf(2))).thenReturn(Result.success(emptyList()))
         whenever(equipSecRoomDatasource.listByIdVehicleList(listOf(1))).thenReturn(Result.success(emptyList()))
 
         whenever(cardRetrofitDatasource.send(any(), any())).thenReturn(Result.success(mock()))
@@ -464,18 +464,18 @@ class ISendCardRepositoryTest {
     fun `delete - Check return success if delete process execute successfully`() = runTest {
         val cardModel = CardRoomModel(id = 1, regAttendant = 1L, idCar = 1, address = "Test", latitude = 0.0, longitude = 0.0, idNatureList = emptyList(), idTypeAccidentList = emptyList(), idDataLocalList = emptyList(), idSupportTeamsList = emptyList(), urlPhotoList = listOf("path/to/photo.jpg"), obs = "Test")
         val vehicleOwnModel = VehicleOwnRoomModel(id = 10, idCard = 1, idEquip = 1, detailEquip = "Test", reg = 1L, state = State.UNHARMED, detailColab = "Test")
-        val vehicleInvolvedModel = VehicleInvolvedRoomModel(id = 20, idCard = 1, document = "123", name = "Test", phone = "456", address = "Test", state = State.UNHARMED, detailDriver = "Test", plate = "ABC", brand = "Test", detailVehicle = "Test")
+        val vehicleInvolvedModel = VehicleExternalRoomModel(id = 20, idCard = 1, document = "123", name = "Test", phone = "456", address = "Test", state = State.UNHARMED, detailDriver = "Test", plate = "ABC", brand = "Test", detailVehicle = "Test")
 
         whenever(cardRoomDatasource.listDelete()).thenReturn(Result.success(listOf(cardModel)))
         whenever(vehicleOwnRoomDatasource.listByIdCard(1)).thenReturn(Result.success(listOf(vehicleOwnModel)))
-        whenever(vehicleInvolvedRoomDatasource.listByIdCard(1)).thenReturn(Result.success(listOf(vehicleInvolvedModel)))
+        whenever(vehicleExternalRoomDatasource.listByIdCard(1)).thenReturn(Result.success(listOf(vehicleInvolvedModel)))
         
         whenever(equipSecRoomDatasource.deleteByIdVehicleList(listOf(10))).thenReturn(Result.success(Unit))
         whenever(passengerColabRoomDatasource.deleteByIdVehicleList(listOf(10))).thenReturn(Result.success(Unit))
-        whenever(passengerInvolvedRoomDatasource.deleteByIdVehicleList(listOf(20))).thenReturn(Result.success(Unit))
-        whenever(involvedRoomDatasource.deleteByIdCard(1)).thenReturn(Result.success(Unit))
-        whenever(witnessRoomDatasource.deleteByIdCard(1)).thenReturn(Result.success(Unit))
-        whenever(vehicleInvolvedRoomDatasource.deleteByIdCard(1)).thenReturn(Result.success(Unit))
+        whenever(passengerExternalRoomDatasource.deleteByIdVehicleList(listOf(20))).thenReturn(Result.success(Unit))
+        whenever(involvedExternalRoomDatasource.deleteByIdCard(1)).thenReturn(Result.success(Unit))
+        whenever(witnessExternalRoomDatasource.deleteByIdCard(1)).thenReturn(Result.success(Unit))
+        whenever(vehicleExternalRoomDatasource.deleteByIdCard(1)).thenReturn(Result.success(Unit))
         whenever(vehicleOwnRoomDatasource.deleteByIdCard(1)).thenReturn(Result.success(Unit))
         whenever(cardRoomDatasource.deleteById(1)).thenReturn(Result.success(Unit))
 
@@ -484,10 +484,10 @@ class ISendCardRepositoryTest {
         assertTrue(result.isSuccess)
         verify(equipSecRoomDatasource).deleteByIdVehicleList(listOf(10))
         verify(passengerColabRoomDatasource).deleteByIdVehicleList(listOf(10))
-        verify(passengerInvolvedRoomDatasource).deleteByIdVehicleList(listOf(20))
-        verify(involvedRoomDatasource).deleteByIdCard(1)
-        verify(witnessRoomDatasource).deleteByIdCard(1)
-        verify(vehicleInvolvedRoomDatasource).deleteByIdCard(1)
+        verify(passengerExternalRoomDatasource).deleteByIdVehicleList(listOf(20))
+        verify(involvedExternalRoomDatasource).deleteByIdCard(1)
+        verify(witnessExternalRoomDatasource).deleteByIdCard(1)
+        verify(vehicleExternalRoomDatasource).deleteByIdCard(1)
         verify(vehicleOwnRoomDatasource).deleteByIdCard(1)
         verify(cardRoomDatasource).deleteById(1)
     }

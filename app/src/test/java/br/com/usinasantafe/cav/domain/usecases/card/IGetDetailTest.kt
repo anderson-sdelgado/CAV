@@ -431,7 +431,7 @@ class IGetDetailTest {
     fun `Check return failure if have error in CardRepository getDetailInvolved - Option INSERT - FlowNote DRIVER`() =
         runTest {
             whenever(
-                cardRepository.getDetailInvolved()
+                cardRepository.getDetailInvolvedExternal()
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.getDetailInvolved",
@@ -463,7 +463,7 @@ class IGetDetailTest {
     fun `Check return empty if function execute successfully and return is null - Option INSERT - FlowNote DRIVER`() =
         runTest {
             whenever(
-                cardRepository.getDetailInvolved()
+                cardRepository.getDetailInvolvedExternal()
             ).thenReturn(
                 Result.success(null)
             )
@@ -487,7 +487,7 @@ class IGetDetailTest {
     fun `Check return correct if function execute successfully - Option INSERT - FlowNote DRIVER`() =
         runTest {
             whenever(
-                cardRepository.getDetailInvolved()
+                cardRepository.getDetailInvolvedExternal()
             ).thenReturn(
                 Result.success("Test")
             )
@@ -513,7 +513,7 @@ class IGetDetailTest {
     fun `Check return failure if have error in CardRepository getDetailInvolved - Option INSERT - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getDetailInvolved()
+                cardRepository.getDetailInvolvedExternal()
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.getDetailInvolved",
@@ -523,7 +523,7 @@ class IGetDetailTest {
             )
             val result = usecase(
                 option = Option.INSERT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -545,13 +545,13 @@ class IGetDetailTest {
     fun `Check return empty if function execute successfully and return is null - Option INSERT - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getDetailInvolved()
+                cardRepository.getDetailInvolvedExternal()
             ).thenReturn(
                 Result.success(null)
             )
             val result = usecase(
                 option = Option.INSERT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -569,13 +569,13 @@ class IGetDetailTest {
     fun `Check return correct if function execute successfully - Option INSERT - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getDetailInvolved()
+                cardRepository.getDetailInvolvedExternal()
             ).thenReturn(
                 Result.success("Test")
             )
             val result = usecase(
                 option = Option.INSERT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -595,7 +595,7 @@ class IGetDetailTest {
     fun `Check return failure if have error in CardRepository getDetailInvolved - Option INSERT - FlowNote INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getDetailInvolved()
+                cardRepository.getDetailInvolvedExternal()
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.getDetailInvolved",
@@ -605,7 +605,7 @@ class IGetDetailTest {
             )
             val result = usecase(
                 option = Option.INSERT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -627,13 +627,13 @@ class IGetDetailTest {
     fun `Check return empty if function execute successfully and return is null - Option INSERT - FlowNote INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getDetailInvolved()
+                cardRepository.getDetailInvolvedExternal()
             ).thenReturn(
                 Result.success(null)
             )
             val result = usecase(
                 option = Option.INSERT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -651,13 +651,13 @@ class IGetDetailTest {
     fun `Check return correct if function execute successfully - Option INSERT - FlowNote INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getDetailInvolved()
+                cardRepository.getDetailInvolvedExternal()
             ).thenReturn(
                 Result.success("Test")
             )
             val result = usecase(
                 option = Option.INSERT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -677,7 +677,7 @@ class IGetDetailTest {
     fun `Check return failure if have error in CardRepository getDetailInvolved - Option INSERT - FlowNote WITNESS`() =
         runTest {
             whenever(
-                cardRepository.getDetailInvolved()
+                cardRepository.getDetailInvolvedExternal()
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.getDetailInvolved",
@@ -687,7 +687,7 @@ class IGetDetailTest {
             )
             val result = usecase(
                 option = Option.INSERT,
-                flowNote = FlowNote.WITNESS,
+                flowNote = FlowNote.WITNESS_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -709,13 +709,13 @@ class IGetDetailTest {
     fun `Check return empty if function execute successfully and return is null - Option INSERT - FlowNote WITNESS`() =
         runTest {
             whenever(
-                cardRepository.getDetailInvolved()
+                cardRepository.getDetailInvolvedExternal()
             ).thenReturn(
                 Result.success(null)
             )
             val result = usecase(
                 option = Option.INSERT,
-                flowNote = FlowNote.WITNESS,
+                flowNote = FlowNote.WITNESS_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -733,13 +733,13 @@ class IGetDetailTest {
     fun `Check return correct if function execute successfully - Option INSERT - FlowNote WITNESS`() =
         runTest {
             whenever(
-                cardRepository.getDetailInvolved()
+                cardRepository.getDetailInvolvedExternal()
             ).thenReturn(
                 Result.success("Test")
             )
             val result = usecase(
                 option = Option.INSERT,
-                flowNote = FlowNote.WITNESS,
+                flowNote = FlowNote.WITNESS_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -1251,7 +1251,7 @@ class IGetDetailTest {
     fun `Check return failure if have error in CardRepository getDetailDriver - Option EDIT - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getDetailPassengerInvolved(1, 2)
+                cardRepository.getDetailPassengerExternal(1, 2)
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.getDetailPassengerInvolved",
@@ -1261,7 +1261,7 @@ class IGetDetailTest {
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 1,
                 idSecondary = 2
             )
@@ -1283,13 +1283,13 @@ class IGetDetailTest {
     fun `Check return empty if function execute successfully and return is null - Option EDIT - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getDetailPassengerInvolved(1, 2)
+                cardRepository.getDetailPassengerExternal(1, 2)
             ).thenReturn(
                 Result.success(null)
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 1,
                 idSecondary = 2
             )
@@ -1307,13 +1307,13 @@ class IGetDetailTest {
     fun `Check return correct if function execute successfully - Option EDIT - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getDetailPassengerInvolved(1, 2)
+                cardRepository.getDetailPassengerExternal(1, 2)
             ).thenReturn(
                 Result.success("Test")
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 1,
                 idSecondary = 2
             )
@@ -1333,7 +1333,7 @@ class IGetDetailTest {
     fun `Check return failure if have error in CardRepository getDetailInvolved - Option EDIT - FlowNote INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getDetailInvolved(1)
+                cardRepository.getDetailInvolvedExternal(1)
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.getDetailInvolved",
@@ -1343,7 +1343,7 @@ class IGetDetailTest {
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -1365,13 +1365,13 @@ class IGetDetailTest {
     fun `Check return empty if function execute successfully and return is null - Option EDIT - FlowNote INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getDetailInvolved(1)
+                cardRepository.getDetailInvolvedExternal(1)
             ).thenReturn(
                 Result.success(null)
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -1389,13 +1389,13 @@ class IGetDetailTest {
     fun `Check return correct if function execute successfully - Option EDIT - FlowNote INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getDetailInvolved(1)
+                cardRepository.getDetailInvolvedExternal(1)
             ).thenReturn(
                 Result.success("Test")
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -1415,7 +1415,7 @@ class IGetDetailTest {
     fun `Check return failure if have error in CardRepository getDetailInvolved - Option EDIT - flowNote is WITNESS`() =
         runTest {
             whenever(
-                cardRepository.getDetailWitness(1)
+                cardRepository.getDetailWitnessExternal(1)
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.getDetailWitness",
@@ -1425,7 +1425,7 @@ class IGetDetailTest {
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.WITNESS,
+                flowNote = FlowNote.WITNESS_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -1447,13 +1447,13 @@ class IGetDetailTest {
     fun `Check return empty if function execute successfully and return is null - Option EDIT - flowNote is WITNESS`() =
         runTest {
             whenever(
-                cardRepository.getDetailWitness(1)
+                cardRepository.getDetailWitnessExternal(1)
             ).thenReturn(
                 Result.success(null)
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.WITNESS,
+                flowNote = FlowNote.WITNESS_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -1471,13 +1471,13 @@ class IGetDetailTest {
     fun `Check return correct if function execute successfully - Option EDIT - flowNote is WITNESS`() =
         runTest {
             whenever(
-                cardRepository.getDetailWitness(1)
+                cardRepository.getDetailWitnessExternal(1)
             ).thenReturn(
                 Result.success("Test")
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.WITNESS,
+                flowNote = FlowNote.WITNESS_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )

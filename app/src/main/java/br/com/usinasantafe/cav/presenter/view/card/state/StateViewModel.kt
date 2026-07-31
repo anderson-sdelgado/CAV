@@ -85,7 +85,6 @@ class StateViewModel @Inject constructor(
 
     fun set() = viewModelScope.launch {
         runCatching {
-            Log.d("TestDebug", "Flownote: ${state.flowNote}")
             setState(state.stateSelection, state.option, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
         }
             .onSuccessStateAccess(::updateState)

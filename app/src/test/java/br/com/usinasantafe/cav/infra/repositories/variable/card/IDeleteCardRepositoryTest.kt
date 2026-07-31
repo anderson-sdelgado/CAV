@@ -99,7 +99,7 @@ class IDeleteCardRepositoryTest {
     fun `deleteVehicleInvolved - Check return failure if have error in CardSharedPreferencesDatasource deleteVehicleInvolved`() =
         runTest {
             whenever(
-                cardSharedPreferencesDatasource.deleteVehicleInvolved(1)
+                cardSharedPreferencesDatasource.deleteVehicleExternal(1)
             ).thenReturn(
                 resultFailure(
                     "ICardSharedPreferencesDatasource.deleteVehicleInvolved",
@@ -107,7 +107,7 @@ class IDeleteCardRepositoryTest {
                     Exception()
                 )
             )
-            val result = repository.deleteVehicleInvolved(1)
+            val result = repository.deleteVehicleExternal(1)
             assertEquals(
                 result.isFailure,
                 true
@@ -125,9 +125,9 @@ class IDeleteCardRepositoryTest {
     @Test
     fun `deleteVehicleInvolved - Check return correct if function execute successfully`() =
         runTest {
-            val result = repository.deleteVehicleInvolved(1)
+            val result = repository.deleteVehicleExternal(1)
             verify(cardSharedPreferencesDatasource, atLeastOnce())
-                .deleteVehicleInvolved(1)
+                .deleteVehicleExternal(1)
             assertEquals(
                 result.isSuccess,
                 true
@@ -138,7 +138,7 @@ class IDeleteCardRepositoryTest {
     fun `deleteInvolved - Check return failure if have error in CardSharedPreferencesDatasource deleteInvolved`() =
         runTest {
             whenever(
-                cardSharedPreferencesDatasource.deleteInvolved(1)
+                cardSharedPreferencesDatasource.deleteInvolvedExternal(1)
             ).thenReturn(
                 resultFailure(
                     "ICardSharedPreferencesDatasource.deleteInvolved",
@@ -146,7 +146,7 @@ class IDeleteCardRepositoryTest {
                     Exception()
                 )
             )
-            val result = repository.deleteInvolved(1)
+            val result = repository.deleteInvolvedExternal(1)
             assertEquals(
                 result.isFailure,
                 true
@@ -164,9 +164,9 @@ class IDeleteCardRepositoryTest {
     @Test
     fun `deleteInvolved - Check return correct if function execute successfully`() =
         runTest {
-            val result = repository.deleteInvolved(1)
+            val result = repository.deleteInvolvedExternal(1)
             verify(cardSharedPreferencesDatasource, atLeastOnce())
-                .deleteInvolved(1)
+                .deleteInvolvedExternal(1)
             assertEquals(
                 result.isSuccess,
                 true
@@ -177,7 +177,7 @@ class IDeleteCardRepositoryTest {
     fun `deleteWitness - Check return failure if have error in CardSharedPreferencesDatasource deleteWitness`() =
         runTest {
             whenever(
-                cardSharedPreferencesDatasource.deleteWitness(1)
+                cardSharedPreferencesDatasource.deleteWitnessExternal(1)
                 ).thenReturn(
                 resultFailure(
                     "ICardSharedPreferencesDatasource.deleteWitness",
@@ -185,7 +185,7 @@ class IDeleteCardRepositoryTest {
                     Exception()
                 )
             )
-            val result = repository.deleteWitness(1)
+            val result = repository.deleteWitnessExternal(1)
             assertEquals(
                 result.isFailure,
                 true
@@ -203,9 +203,9 @@ class IDeleteCardRepositoryTest {
     @Test
     fun `deleteWitness - Check return correct if function execute successfully`() =
         runTest {
-            val result = repository.deleteWitness(1)
+            val result = repository.deleteWitnessExternal(1)
             verify(cardSharedPreferencesDatasource, atLeastOnce())
-                .deleteWitness(1)
+                .deleteWitnessExternal(1)
             assertEquals(
                 result.isSuccess,
                 true
@@ -263,7 +263,7 @@ class IDeleteCardRepositoryTest {
                     Exception()
                 )
             )
-            val result = repository.deletePassengerInvolved(1, 2)
+            val result = repository.deletePassengerExternal(1, 2)
             assertEquals(
                 result.isFailure,
                 true
@@ -281,7 +281,7 @@ class IDeleteCardRepositoryTest {
     @Test
     fun `deletePassengerInvolved - Check return correct if function execute successfully`() =
         runTest {
-            val result = repository.deletePassengerInvolved(1, 2)
+            val result = repository.deletePassengerExternal(1, 2)
             verify(cardSharedPreferencesDatasource, atLeastOnce())
                 .deletePassengerInvolved(1, 2)
             assertEquals(

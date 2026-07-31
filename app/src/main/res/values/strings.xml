@@ -68,10 +68,12 @@
     <string name="text_driver">MOTORISTA</string>
     <string name="text_vehicle_third">VEÍCULO DE TERCEIROS</string>
     <string name="text_vehicle">VEÍCULO</string>
-    <string name="text_title_involved">ENVOLVIDOS</string>
+    <string name="text_title_involved_external">ENVOLVIDO(S) - EXTERNO</string>
+    <string name="text_title_involved_colab">ENVOLVIDO(S) - COLABORADOR</string>
     <string name="text_involved">ENVOLVIDO</string>
     <string name="text_treatment">TRATAMENTO</string>
-    <string name="text_title_witness">TESTEMUNHA(S)</string>
+    <string name="text_title_witness_external">TESTEMUNHA(S) - EXTERNO</string>
+    <string name="text_title_witness_colab">TESTEMUNHA(S) - COLABORADOR</string>
     <string name="text_witness">TESTEMUNHA</string>
     <string name="text_close_card">DESEJA REALMENTE CANCELAR A FICHA? ISSO APAGARÁ DOS DADOS JÁ INSERIDO NA FICHA.</string>
     <string name="text_list_empty">POR FAVOR, SELECIONE PELO MENOS UMA OPÇÃO PARA QUE POSSA SER SALVO .</string>
@@ -113,7 +115,7 @@
     <string name="text_data_involved">DADOS DO ENVOLVIDO</string>
     <string name="text_data_witness">DADOS DA TESTEMUNHA</string>
     <string name="text_item_involved">TELEFONE - NOME</string>
-    <string name="text_obs">OBSERVAÇÃO</string>
+    <string name="text_obs">DESCRIÇÃO SUMÁRIA DO ACIDENTE</string>
     <string name="text_take_photo">TIRAR FOTOS</string>
     <string name="text_title_photo">FOTO(S)</string>
     <string name="text_delete_photo">EXCLUIR FOTOS</string>
@@ -124,4 +126,9 @@
     <string name="text_non_existent_nature">POR FAVOR, ADICIONE A NATUREZA DO ATENDIMENTO DO ACIDENTE PARA QUE POSSA FINALIZAR O APONTAMENTO.</string>
     <string name="text_non_existent_type_accident">POR FAVOR, ADICIONE O TIPO DO ACIDENTE PARA QUE POSSA FINALIZAR O APONTAMENTO.</string>
     <string name="text_non_existent_vehicle_own">POR FAVOR, ADICIONE O VEÍCULO PRÓPRIO ENVOLVIDO NO ACIDENTE PARA QUE POSSA FINALIZAR O APONTAMENTO.</string>
+    <string name="text_breathalyzer">BAFÔMETRO</string>
+    <string name="text_pattern_yes">SIM</string>
+    <string name="text_pattern_no">NÃO</string>
+    <string name="text_pattern_negative">NEGATIVO</string>
+    <string name="text_pattern_positive">POSITIVO</string>
 </resources>

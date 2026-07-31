@@ -26,11 +26,11 @@ interface VariableRoomDatasourceModule {
 
     @Binds
     @Singleton
-    fun bindInvolvedRoomDatasource(datasource: IInvolvedRoomDatasource): InvolvedRoomDatasource
+    fun bindInvolvedExternalRoomDatasource(datasource: IInvolvedExternalRoomDatasource): InvolvedExternalRoomDatasource
 
     @Binds
     @Singleton
-    fun bindVehicleInvolvedRoomDatasource(datasource: IVehicleInvolvedRoomDatasource): VehicleInvolvedRoomDatasource
+    fun bindVehicleExternalRoomDatasource(datasource: IVehicleExternalRoomDatasource): VehicleExternalRoomDatasource
 
     @Binds
     @Singleton
@@ -38,10 +38,18 @@ interface VariableRoomDatasourceModule {
 
     @Binds
     @Singleton
-    fun bindWitnessRoomDatasource(datasource: IWitnessRoomDatasource): WitnessRoomDatasource
+    fun bindWitnessExternalRoomDatasource(datasource: IWitnessExternalRoomDatasource): WitnessExternalRoomDatasource
 
     @Binds
     @Singleton
-    fun bindPassengerInvolvedRoomDatasource(datasource: IPassengerInvolvedRoomDatasource): PassengerInvolvedRoomDatasource
+    fun bindPassengerExternalRoomDatasource(datasource: IPassengerExternalRoomDatasource): PassengerExternalRoomDatasource
+
+    @Binds
+    @Singleton
+    fun bindInvolvedColabRoomDatasource(datasource: IInvolvedColabRoomDatasource): InvolvedColabRoomDatasource
+
+    @Binds
+    @Singleton
+    fun bindWitnessColabRoomDatasource(datasource: IWitnessColabRoomDatasource): WitnessColabRoomDatasource
 
 }

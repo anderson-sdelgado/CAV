@@ -26,11 +26,13 @@ import java.util.Date
         CardRoomModel::class,
         PassengerColabRoomModel::class,
         EquipSecRoomModel::class,
-        InvolvedRoomModel::class,
-        VehicleInvolvedRoomModel::class,
+        InvolvedExternalRoomModel::class,
+        VehicleExternalRoomModel::class,
         VehicleOwnRoomModel::class,
-        PassengerInvolvedRoomModel::class,
-        WitnessRoomModel::class
+        PassengerExternalRoomModel::class,
+        WitnessExternalRoomModel::class,
+        InvolvedColabRoomModel::class,
+        WitnessColabRoomModel::class
     ],
     version = VERSION_DB, exportSchema = true,
 )
@@ -47,11 +49,13 @@ abstract class DatabaseRoom : RoomDatabase() {
     abstract fun cardDao(): CardDao
     abstract fun colabCardDao(): PassengerColabDao
     abstract fun equipCardDao(): EquipSecDao
-    abstract fun involvedDao(): InvolvedDao
-    abstract fun vehicleInvolvedDao(): VehicleInvolvedDao
+    abstract fun involvedExternalDao(): InvolvedExternalDao
+    abstract fun vehicleExternalDao(): VehicleExternalDao
     abstract fun vehicleOwnDao(): VehicleOwnDao
-    abstract fun passengerInvolvedDao(): PassengerInvolvedDao
-    abstract fun witnessDao(): WitnessDao
+    abstract fun passengerExternalDao(): PassengerExternalDao
+    abstract fun witnessExternalDao(): WitnessExternalDao
+    abstract fun involvedColabDao(): InvolvedColabDao
+    abstract fun witnessColabDao(): WitnessColabDao
 }
 
 class Converters {

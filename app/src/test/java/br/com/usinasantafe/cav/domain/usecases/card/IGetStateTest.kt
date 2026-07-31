@@ -186,7 +186,7 @@ class IGetStateTest {
     fun `Check return failure if have error in CardRepository getStateColab - Option INSERT - FlowNote DRIVER`() =
         runTest {
             whenever(
-                cardRepository.getStateInvolved()
+                cardRepository.getStateInvolvedExternal()
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.getStateInvolved",
@@ -218,7 +218,7 @@ class IGetStateTest {
     fun `Check return correct if function execute successfully and return null - Option INSERT - FlowNote DRIVER`() =
         runTest {
             whenever(
-                cardRepository.getStateInvolved()
+                cardRepository.getStateInvolvedExternal()
             ).thenReturn(
                 Result.success(null)
             )
@@ -242,7 +242,7 @@ class IGetStateTest {
     fun `Check return correct if function execute successfully - Option INSERT - FlowNote DRIVER`() =
         runTest {
             whenever(
-                cardRepository.getStateInvolved()
+                cardRepository.getStateInvolvedExternal()
             ).thenReturn(
                 Result.success(State.INJURED)
             )
@@ -268,7 +268,7 @@ class IGetStateTest {
     fun `Check return failure if have error in CardRepository getStateColab - Option INSERT - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getStateInvolved()
+                cardRepository.getStateInvolvedExternal()
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.getStateInvolved",
@@ -278,7 +278,7 @@ class IGetStateTest {
             )
             val result = usecase(
                 option = Option.INSERT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -300,13 +300,13 @@ class IGetStateTest {
     fun `Check return correct if function execute successfully and return null - Option INSERT - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getStateInvolved()
+                cardRepository.getStateInvolvedExternal()
             ).thenReturn(
                 Result.success(null)
             )
             val result = usecase(
                 option = Option.INSERT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -324,13 +324,13 @@ class IGetStateTest {
     fun `Check return correct if function execute successfully - Option INSERT - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getStateInvolved()
+                cardRepository.getStateInvolvedExternal()
             ).thenReturn(
                 Result.success(State.INJURED)
             )
             val result = usecase(
                 option = Option.INSERT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -350,7 +350,7 @@ class IGetStateTest {
     fun `Check return failure if have error in CardRepository getStateColab - Option INSERT - FlowNote INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getStateInvolved()
+                cardRepository.getStateInvolvedExternal()
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.getStateInvolved",
@@ -360,7 +360,7 @@ class IGetStateTest {
             )
             val result = usecase(
                 option = Option.INSERT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -382,13 +382,13 @@ class IGetStateTest {
     fun `Check return correct if function execute successfully and return null - Option INSERT - FlowNote INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getStateInvolved()
+                cardRepository.getStateInvolvedExternal()
             ).thenReturn(
                 Result.success(null)
             )
             val result = usecase(
                 option = Option.INSERT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -406,13 +406,13 @@ class IGetStateTest {
     fun `Check return correct if function execute successfully - Option INSERT - FlowNote INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getStateInvolved()
+                cardRepository.getStateInvolvedExternal()
             ).thenReturn(
                 Result.success(State.INJURED)
             )
             val result = usecase(
                 option = Option.INSERT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -544,7 +544,7 @@ class IGetStateTest {
     fun `Check return failure if have error in CardRepository getIdStateDriver - Option EDIT - FlowNote DRIVER`() =
         runTest {
             whenever(
-                cardRepository.getStateDriver(2)
+                cardRepository.getStateDriverExternal(2)
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.getIdStateDriver",
@@ -576,7 +576,7 @@ class IGetStateTest {
     fun `Check return correct if function execute successfully - Option EDIT - FlowNote DRIVER`() =
         runTest {
             whenever(
-                cardRepository.getStateDriver(1)
+                cardRepository.getStateDriverExternal(1)
             ).thenReturn(
                 Result.success(State.INJURED)
             )
@@ -600,7 +600,7 @@ class IGetStateTest {
     fun `Check return failure if have error in CardRepository getIdStatePassengerInvolved - Option EDIT - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getStatePassengerInvolved(1, 1)
+                cardRepository.getStatePassengerExternal(1, 1)
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.getIdStatePassengerInvolved",
@@ -610,7 +610,7 @@ class IGetStateTest {
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 1,
                 idSecondary = 1
             )
@@ -632,13 +632,13 @@ class IGetStateTest {
     fun `Check return correct if function execute successfully - Option EDIT - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getStatePassengerInvolved(1, 1)
+                cardRepository.getStatePassengerExternal(1, 1)
             ).thenReturn(
                 Result.success(State.INJURED)
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 1,
                 idSecondary = 1
             )
@@ -656,7 +656,7 @@ class IGetStateTest {
     fun `Check return failure if have error in CardRepository getIdStateInvolved - Option EDIT - FlowNote INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getStateInvolved(1)
+                cardRepository.getStateInvolvedExternal(1)
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.getIdStateInvolved",
@@ -666,7 +666,7 @@ class IGetStateTest {
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -688,13 +688,13 @@ class IGetStateTest {
     fun `Check return correct if function execute successfully - Option EDIT - FlowNote INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getStateInvolved(3)
+                cardRepository.getStateInvolvedExternal(3)
             ).thenReturn(
                 Result.success(State.INJURED)
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 3,
                 idSecondary = 0
             )

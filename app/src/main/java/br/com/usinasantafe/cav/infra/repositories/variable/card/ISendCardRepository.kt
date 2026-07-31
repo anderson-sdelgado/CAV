@@ -5,17 +5,21 @@ import br.com.usinasantafe.cav.infra.datasource.retrofit.variable.CardRetrofitDa
 import br.com.usinasantafe.cav.infra.datasource.room.variable.CardRoomDatasource
 import br.com.usinasantafe.cav.infra.datasource.room.variable.PassengerColabRoomDatasource
 import br.com.usinasantafe.cav.infra.datasource.room.variable.EquipSecRoomDatasource
-import br.com.usinasantafe.cav.infra.datasource.room.variable.InvolvedRoomDatasource
-import br.com.usinasantafe.cav.infra.datasource.room.variable.PassengerInvolvedRoomDatasource
-import br.com.usinasantafe.cav.infra.datasource.room.variable.VehicleInvolvedRoomDatasource
+import br.com.usinasantafe.cav.infra.datasource.room.variable.InvolvedColabRoomDatasource
+import br.com.usinasantafe.cav.infra.datasource.room.variable.InvolvedExternalRoomDatasource
+import br.com.usinasantafe.cav.infra.datasource.room.variable.PassengerExternalRoomDatasource
+import br.com.usinasantafe.cav.infra.datasource.room.variable.VehicleExternalRoomDatasource
 import br.com.usinasantafe.cav.infra.datasource.room.variable.VehicleOwnRoomDatasource
-import br.com.usinasantafe.cav.infra.datasource.room.variable.WitnessRoomDatasource
+import br.com.usinasantafe.cav.infra.datasource.room.variable.WitnessColabRoomDatasource
+import br.com.usinasantafe.cav.infra.datasource.room.variable.WitnessExternalRoomDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.retrofit.variable.roomModelToRetrofitModel
-import br.com.usinasantafe.cav.infra.models.room.variable.sharedPreferencesModelToInvolvedRoomModel
+import br.com.usinasantafe.cav.infra.models.room.variable.sharedPreferencesModelToInvolvedColabRoomModel
+import br.com.usinasantafe.cav.infra.models.room.variable.sharedPreferencesModelToInvolvedExternalRoomModel
 import br.com.usinasantafe.cav.infra.models.room.variable.sharedPreferencesModelToPassengerInvolvedRoomModel
 import br.com.usinasantafe.cav.infra.models.room.variable.sharedPreferencesModelToRoomModel
-import br.com.usinasantafe.cav.infra.models.room.variable.sharedPreferencesModelToWitnessRoomModel
+import br.com.usinasantafe.cav.infra.models.room.variable.sharedPreferencesModelToWitnessColabRoomModel
+import br.com.usinasantafe.cav.infra.models.room.variable.sharedPreferencesModelToWitnessExternalRoomModel
 import br.com.usinasantafe.cav.utils.EmptyResult
 import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
@@ -26,14 +30,16 @@ import javax.inject.Inject
 class ISendCardRepository @Inject constructor(
     private val cardSharedPreferencesDatasource: CardSharedPreferencesDatasource,
     private val vehicleOwnRoomDatasource: VehicleOwnRoomDatasource,
-    private val vehicleInvolvedRoomDatasource: VehicleInvolvedRoomDatasource,
+    private val vehicleExternalRoomDatasource: VehicleExternalRoomDatasource,
     private val passengerColabRoomDatasource: PassengerColabRoomDatasource,
-    private val passengerInvolvedRoomDatasource: PassengerInvolvedRoomDatasource,
+    private val passengerExternalRoomDatasource: PassengerExternalRoomDatasource,
     private val equipSecRoomDatasource: EquipSecRoomDatasource,
-    private val involvedRoomDatasource: InvolvedRoomDatasource,
-    private val witnessRoomDatasource: WitnessRoomDatasource,
+    private val involvedExternalRoomDatasource: InvolvedExternalRoomDatasource,
+    private val witnessExternalRoomDatasource: WitnessExternalRoomDatasource,
     private val cardRoomDatasource: CardRoomDatasource,
-    private val cardRetrofitDatasource: CardRetrofitDatasource
+    private val cardRetrofitDatasource: CardRetrofitDatasource,
+    private val involvedColabRoomDatasource: InvolvedColabRoomDatasource,
+    private val witnessColabRoomDatasource: WitnessColabRoomDatasource
 ): SendCardRepository {
 
     override suspend fun save(): EmptyResult =
@@ -44,35 +50,45 @@ class ISendCardRepository @Inject constructor(
             val idCard = cardRoomDatasource.add(model).getOrThrow()
 
             cardSharedPreferencesModel.vehicleOwnList.forEach { vehicleOwn ->
-                val model = vehicleOwn.sharedPreferencesModelToInvolvedRoomModel(idCard)
+                val model = vehicleOwn.sharedPreferencesModelToInvolvedExternalRoomModel(idCard)
                 val idVehicle = vehicleOwnRoomDatasource.add(model).getOrThrow()
                 vehicleOwn.passengerColabList.forEach {
-                    val model = it.sharedPreferencesModelToInvolvedRoomModel(idVehicle)
+                    val model = it.sharedPreferencesModelToInvolvedExternalRoomModel(idVehicle)
                     passengerColabRoomDatasource.add(model).getOrThrow()
                 }
                 vehicleOwn.equipSecList.forEach {
-                    val model = it.sharedPreferencesModelToInvolvedRoomModel(idVehicle)
+                    val model = it.sharedPreferencesModelToInvolvedExternalRoomModel(idVehicle)
                     equipSecRoomDatasource.add(model).getOrThrow()
                 }
             }
 
-            cardSharedPreferencesModel.vehicleInvolvedList.forEach { vehicleInvolved ->
-                val model = vehicleInvolved.sharedPreferencesModelToInvolvedRoomModel(idCard)
-                val idVehicle = vehicleInvolvedRoomDatasource.add(model).getOrThrow()
+            cardSharedPreferencesModel.vehicleExternalList.forEach { vehicleInvolved ->
+                val model = vehicleInvolved.sharedPreferencesModelToInvolvedExternalRoomModel(idCard)
+                val idVehicle = vehicleExternalRoomDatasource.add(model).getOrThrow()
                 vehicleInvolved.passengerInvolvedList.forEach {
                     val model = it.sharedPreferencesModelToPassengerInvolvedRoomModel(idVehicle)
-                    passengerInvolvedRoomDatasource.add(model).getOrThrow()
+                    passengerExternalRoomDatasource.add(model).getOrThrow()
                 }
             }
 
-            cardSharedPreferencesModel.involvedList.forEach { involved ->
-                val model = involved.sharedPreferencesModelToInvolvedRoomModel(idCard)
-                involvedRoomDatasource.add(model).getOrThrow()
+            cardSharedPreferencesModel.involvedExternalList.forEach { involved ->
+                val model = involved.sharedPreferencesModelToInvolvedExternalRoomModel(idCard)
+                involvedExternalRoomDatasource.add(model).getOrThrow()
             }
 
-            cardSharedPreferencesModel.witnessList.forEach { witness ->
-                val model = witness.sharedPreferencesModelToWitnessRoomModel(idCard)
-                witnessRoomDatasource.add(model).getOrThrow()
+            cardSharedPreferencesModel.witnessExternalList.forEach { witness ->
+                val model = witness.sharedPreferencesModelToWitnessExternalRoomModel(idCard)
+                witnessExternalRoomDatasource.add(model).getOrThrow()
+            }
+
+            cardSharedPreferencesModel.involvedColabList.forEach { involved ->
+                val model = involved.sharedPreferencesModelToInvolvedColabRoomModel(idCard)
+                involvedColabRoomDatasource.add(model).getOrThrow()
+            }
+
+            cardSharedPreferencesModel.witnessColabList.forEach { witness ->
+                val model = witness.sharedPreferencesModelToWitnessColabRoomModel(idCard)
+                witnessColabRoomDatasource.add(model).getOrThrow()
             }
 
         }
@@ -82,18 +98,23 @@ class ISendCardRepository @Inject constructor(
             val cardRoomModel = cardRoomDatasource.getSend().getOrThrow()
             val idCard = cardRoomModel::id.required()
             val vehicleOwnRoomModelList = vehicleOwnRoomDatasource.listByIdCard(idCard).getOrThrow()
-            val vehicleInvolvedRoomModelList = vehicleInvolvedRoomDatasource.listByIdCard(idCard).getOrThrow()
-            val involvedRoomModelList = involvedRoomDatasource.listByIdCard(idCard).getOrThrow()
-            val witnessRoomModelList = witnessRoomDatasource.listByIdCard(idCard).getOrThrow()
+            val vehicleInvolvedRoomModelList = vehicleExternalRoomDatasource.listByIdCard(idCard).getOrThrow()
+
+            val involvedExternalRoomModelList = involvedExternalRoomDatasource.listByIdCard(idCard).getOrThrow()
+            val witnessExternalRoomModelList = witnessExternalRoomDatasource.listByIdCard(idCard).getOrThrow()
+
+            val involvedColabRoomModelList = involvedColabRoomDatasource.listByIdCard(idCard).getOrThrow()
+            val witnessColabRoomModelLis = witnessColabRoomDatasource.listByIdCard(idCard).getOrThrow()
+
             val idVehicleOwnList = vehicleOwnRoomModelList.map { it::id.required() }
             val idVehicleInvolvedList = vehicleInvolvedRoomModelList.map { it::id.required() }
             val passengerColabRoomModelList = passengerColabRoomDatasource.listByIdVehicleList(idVehicleOwnList).getOrThrow()
-            val passengerInvolvedRoomModelList = passengerInvolvedRoomDatasource.listByIdVehicleList(idVehicleInvolvedList).getOrThrow()
+            val passengerExternalRoomModelList = passengerExternalRoomDatasource.listByIdVehicleList(idVehicleInvolvedList).getOrThrow()
             val equipSecRoomModelList = equipSecRoomDatasource.listByIdVehicleList(idVehicleOwnList).getOrThrow()
 
             val equipSecGrouped = equipSecRoomModelList.groupBy { it.idVehicle }
             val passengerColabGrouped = passengerColabRoomModelList.groupBy { it.idVehicle }
-            val passengerInvolvedGrouped = passengerInvolvedRoomModelList.groupBy { it.idVehicle }
+            val passengerInvolvedGrouped = passengerExternalRoomModelList.groupBy { it.idVehicle }
 
             val vehicleOwnRetrofitList = vehicleOwnRoomModelList.map { roomModel ->
                 roomModel.roomModelToRetrofitModel().copy(
@@ -107,14 +128,19 @@ class ISendCardRepository @Inject constructor(
                     passengerInvolvedList = passengerInvolvedGrouped[roomModel.id]?.map { it.roomModelToRetrofitModel() } ?: emptyList()
                 )
             }
-            val involvedRetrofitList = involvedRoomModelList.map { it.roomModelToRetrofitModel() }
-            val witnessRetrofitList = witnessRoomModelList.map { it.roomModelToRetrofitModel() }
+            val involvedRetrofitList = involvedExternalRoomModelList.map { it.roomModelToRetrofitModel() }
+            val witnessRetrofitList = witnessExternalRoomModelList.map { it.roomModelToRetrofitModel() }
+
+            val involvedColabRetrofitList = involvedColabRoomModelList.map { it.roomModelToRetrofitModel() }
+            val witnessColabRetrofitList = witnessColabRoomModelLis.map { it.roomModelToRetrofitModel() }
 
             val modelRetrofit = cardRoomModel.roomModelToRetrofitModel(
                 vehicleOwnList = vehicleOwnRetrofitList,
                 vehicleInvolvedList = vehicleInvolvedRetrofitList,
-                involvedList = involvedRetrofitList,
-                witnessList = witnessRetrofitList,
+                involvedExternalList = involvedRetrofitList,
+                witnessExternalList = witnessRetrofitList,
+                involvedColabList = involvedColabRetrofitList,
+                witnessColabList = witnessColabRetrofitList
             )
             val model = cardRetrofitDatasource.send(token, modelRetrofit).getOrThrow()
             cardRoomDatasource.update(idCard, model.idServ).getOrThrow()
@@ -132,15 +158,17 @@ class ISendCardRepository @Inject constructor(
             list.forEach { card ->
                 val idCard = card::id.required()
                 val vehicleOwnRoomModelList = vehicleOwnRoomDatasource.listByIdCard(idCard).getOrThrow()
-                val vehicleInvolvedRoomModelList = vehicleInvolvedRoomDatasource.listByIdCard(idCard).getOrThrow()
+                val vehicleInvolvedRoomModelList = vehicleExternalRoomDatasource.listByIdCard(idCard).getOrThrow()
                 val idVehicleOwnList = vehicleOwnRoomModelList.map { it::id.required() }
                 val idVehicleInvolvedList = vehicleInvolvedRoomModelList.map { it::id.required() }
                 equipSecRoomDatasource.deleteByIdVehicleList(idVehicleOwnList).getOrThrow()
                 passengerColabRoomDatasource.deleteByIdVehicleList(idVehicleOwnList).getOrThrow()
-                passengerInvolvedRoomDatasource.deleteByIdVehicleList(idVehicleInvolvedList).getOrThrow()
-                involvedRoomDatasource.deleteByIdCard(idCard).getOrThrow()
-                witnessRoomDatasource.deleteByIdCard(idCard)
-                vehicleInvolvedRoomDatasource.deleteByIdCard(idCard).getOrThrow()
+                passengerExternalRoomDatasource.deleteByIdVehicleList(idVehicleInvolvedList).getOrThrow()
+                involvedExternalRoomDatasource.deleteByIdCard(idCard).getOrThrow()
+                witnessExternalRoomDatasource.deleteByIdCard(idCard).getOrThrow()
+                involvedColabRoomDatasource.deleteByIdCard(idCard).getOrThrow()
+                witnessColabRoomDatasource.deleteByIdCard(idCard).getOrThrow()
+                vehicleExternalRoomDatasource.deleteByIdCard(idCard).getOrThrow()
                 vehicleOwnRoomDatasource.deleteByIdCard(idCard).getOrThrow()
                 card.urlPhotoList.forEach { path ->
                     tryCatch("deletePhoto") {

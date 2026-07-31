@@ -4,8 +4,8 @@ import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardShared
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.ColabSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.InvolvedSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.PeopleExternalSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleExternalSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.State
@@ -55,21 +55,21 @@ class IGetStateTest {
     @Test
     fun check_get_state_insert_involved() = runTest {
         involvedSharedPreferencesDatasource.clean()
-        val result = usecase(Option.INSERT, FlowNote.INVOLVED, 0, 0)
+        val result = usecase(Option.INSERT, FlowNote.INVOLVED_EXTERNAL, 0, 0)
         assertEquals(result.getOrNull(), State.UNHARMED)
         
         involvedSharedPreferencesDatasource.setState(State.INJURED)
-        val result2 = usecase(Option.INSERT, FlowNote.INVOLVED, 0, 0)
+        val result2 = usecase(Option.INSERT, FlowNote.INVOLVED_EXTERNAL, 0, 0)
         assertEquals(result2.getOrNull(), State.INJURED)
     }
 
     @Test
     fun check_get_state_edit_driver() = runTest {
         val data = CardSharedPreferencesModel(
-            vehicleInvolvedList = listOf(
-                VehicleInvolvedSharedPreferencesModel(
+            vehicleExternalList = listOf(
+                VehicleExternalSharedPreferencesModel(
                     id = 1,
-                    driver = InvolvedSharedPreferencesModel(state = State.DEAD)
+                    driver = PeopleExternalSharedPreferencesModel(state = State.DEAD)
                 )
             )
         )

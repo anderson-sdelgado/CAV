@@ -36,22 +36,26 @@ class ISetDetail @Inject constructor(
                         FlowNote.EQUIP_SEC -> setDetailEquipSec(text, idMain)
                         FlowNote.COLAB -> setDetailColab(text)
                         FlowNote.PASSENGER_COLAB -> setDetailPassengerColab(text, idMain)
+                        FlowNote.INVOLVED_COLAB -> setDetailInvolvedColab(text)
+                        FlowNote.WITNESS_COLAB -> setDetailWitnessColab(text)
                         FlowNote.VEHICLE -> setDetailVehicle(text)
                         FlowNote.DRIVER -> setDetailDriver(text)
-                        FlowNote.PASSENGER_INVOLVED -> setDetailPassengerInvolved(text, idMain)
-                        FlowNote.INVOLVED -> setDetailInvolved(text)
-                        FlowNote.WITNESS -> setDetailWitness(text)
+                        FlowNote.PASSENGER_EXTERNAL -> setDetailPassengerExternal(text, idMain)
+                        FlowNote.INVOLVED_EXTERNAL -> setDetailInvolvedExternal(text)
+                        FlowNote.WITNESS_EXTERNAL -> setDetailWitnessExternal(text)
                     }
                     Option.EDIT -> when (flowNote) {
                         FlowNote.EQUIP -> updateDetailEquip(text, idMain)
                         FlowNote.EQUIP_SEC -> updateDetailEquipSecondary(text, idMain, idSecondary)
                         FlowNote.COLAB -> updateDetailColab(text, idMain)
                         FlowNote.PASSENGER_COLAB -> updateDetailPassengerColab(text, idMain, idSecondary)
+                        FlowNote.INVOLVED_COLAB -> updateDetailInvolvedColab(text, idMain)
+                        FlowNote.WITNESS_COLAB -> updateDetailWitnessColab(text, idMain)
                         FlowNote.VEHICLE -> updateDetailVehicle(text, idMain)
                         FlowNote.DRIVER -> updateDetailDriver(text, idMain)
-                        FlowNote.PASSENGER_INVOLVED -> updateDetailPassengerInvolved(text, idMain, idSecondary)
-                        FlowNote.INVOLVED -> updateDetailInvolved(text, idMain)
-                        FlowNote.WITNESS -> updateDetailWitness(text, idMain)
+                        FlowNote.PASSENGER_EXTERNAL -> updateDetailPassengerExternal(text, idMain, idSecondary)
+                        FlowNote.INVOLVED_EXTERNAL -> updateDetailInvolvedExternal(text, idMain)
+                        FlowNote.WITNESS_EXTERNAL -> updateDetailWitnessExternal(text, idMain)
                     }
                 }
                 result.getOrThrow().let { it as? Int }

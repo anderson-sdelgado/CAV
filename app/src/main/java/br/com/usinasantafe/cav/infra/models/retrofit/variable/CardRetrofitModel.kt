@@ -1,11 +1,9 @@
 package br.com.usinasantafe.cav.infra.models.retrofit.variable
 
 import br.com.usinasantafe.cav.domain.entities.variable.Card
-import br.com.usinasantafe.cav.domain.entities.variable.Config
 import br.com.usinasantafe.cav.infra.models.room.variable.CardRoomModel
 import br.com.usinasantafe.cav.utils.required
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 
 val formatter = SimpleDateFormat(
@@ -26,8 +24,10 @@ data class CardRetrofitModelOutput(
     val idSupportTeamsList: List<Int>,
     val vehicleInvolvedList: List<VehicleInvolvedRetrofitModel>,
     val vehicleOwnList: List<VehicleOwnRetrofitModel>,
-    val involvedList: List<InvolvedRetrofitModel>,
-    val witnessList: List<WitnessRetrofitModel>,
+    val involvedExternalList: List<InvolvedExternalRetrofitModel>,
+    val witnessExternalList: List<WitnessExternalRetrofitModel>,
+    val involvedColabList: List<ColabRetrofitModel>,
+    val witnessColabList: List<WitnessColabRetrofitModel>,
     val urlPhotoList: List<String>,
     val obs: String?,
     val dateHour: String
@@ -40,12 +40,14 @@ data class CardRetrofitModelInput(
 fun CardRoomModel.roomModelToRetrofitModel(
     vehicleInvolvedList: List<VehicleInvolvedRetrofitModel>,
     vehicleOwnList: List<VehicleOwnRetrofitModel>,
-    involvedList: List<InvolvedRetrofitModel>,
-    witnessList: List<WitnessRetrofitModel>
+    involvedExternalList: List<InvolvedExternalRetrofitModel>,
+    witnessExternalList: List<WitnessExternalRetrofitModel>,
+    involvedColabList: List<ColabRetrofitModel>,
+    witnessColabList: List<WitnessColabRetrofitModel>
 ): CardRetrofitModelOutput {
     return with(this) {
         CardRetrofitModelOutput(
-            id = id!!,
+            id = ::id.required(),
             regAttendant = regAttendant,
             idCar = idCar,
             address = address,
@@ -57,8 +59,10 @@ fun CardRoomModel.roomModelToRetrofitModel(
             idSupportTeamsList = idSupportTeamsList,
             vehicleInvolvedList = vehicleInvolvedList,
             vehicleOwnList = vehicleOwnList,
-            involvedList = involvedList,
-            witnessList = witnessList,
+            involvedExternalList = involvedExternalList,
+            witnessExternalList = witnessExternalList,
+            involvedColabList = involvedColabList,
+            witnessColabList = witnessColabList,
             urlPhotoList = urlPhotoList,
             obs = obs,
             dateHour = formatter.format(dateHour)

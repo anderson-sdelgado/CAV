@@ -64,23 +64,33 @@ class IUpdateCardRepository @Inject constructor(
             cardSharedPreferencesDatasource.updateDetailVehicle(text, id).getOrThrow()
         }
 
-    override suspend fun updateDetailPassengerInvolved(
+    override suspend fun updateDetailPassengerExternal(
         text: String,
         idMain: Int,
         idSecondary: Int
     ): EmptyResult =
         call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.updateDetailPassengerInvolved(text, idMain, idSecondary).getOrThrow()
+            cardSharedPreferencesDatasource.updateDetailPassengerExternal(text, idMain, idSecondary).getOrThrow()
         }
 
-    override suspend fun updateDetailInvolved(text: String, id: Int): EmptyResult =
+    override suspend fun updateDetailInvolvedExternal(text: String, id: Int): EmptyResult =
         call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.updateDetailInvolved(text, id).getOrThrow()
+            cardSharedPreferencesDatasource.updateDetailInvolvedExternal(text, id).getOrThrow()
         }
 
-    override suspend fun updateDetailWitness(text: String, id: Int): EmptyResult =
+    override suspend fun updateDetailWitnessExternal(text: String, id: Int): EmptyResult =
         call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.updateDetailWitness(text, id).getOrThrow()
+            cardSharedPreferencesDatasource.updateDetailWitnessExternal(text, id).getOrThrow()
+        }
+
+    override suspend fun updateDetailInvolvedColab(text: String, id: Int): EmptyResult =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.updateDetailInvolvedColab(text, id).getOrThrow()
+        }
+
+    override suspend fun updateDetailWitnessColab(text: String, id: Int): EmptyResult =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.updateDetailWitnessColab(text, id).getOrThrow()
         }
 
     override suspend fun updateRegColab(regColab: Long, idMain: Int): EmptyResult =
@@ -95,6 +105,22 @@ class IUpdateCardRepository @Inject constructor(
     ): EmptyResult =
         call(getClassAndMethod()) {
             cardSharedPreferencesDatasource.updateRegPassengerColab(regColab, idMain, idSecondary).getOrThrow()
+        }
+
+    override suspend fun updateRegColabInvolved(
+        regColab: Long,
+        idMain: Int
+    ): EmptyResult =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.updateRegColabInvolved(regColab, idMain).getOrThrow()
+        }
+
+    override suspend fun updateRegColabWitness(
+        regColab: Long,
+        idMain: Int
+    ): EmptyResult =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.updateRegColabWitness(regColab, idMain).getOrThrow()
         }
 
     override suspend fun updateStateColab(
@@ -122,29 +148,46 @@ class IUpdateCardRepository @Inject constructor(
             cardSharedPreferencesDatasource.updateStateDriver(state, idMain).getOrThrow()
         }
 
-    override suspend fun updateStatePassengerInvolved(
+    override suspend fun updateStatePassengerExternal(
         state: State,
         idMain: Int,
         idSecondary: Int
     ): EmptyResult =
         call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.updateStatePassengerInvolved(state, idMain, idSecondary).getOrThrow()
+            cardSharedPreferencesDatasource.updateStatePassengerExternal(state, idMain, idSecondary).getOrThrow()
         }
 
-    override suspend fun updateStateInvolved(
+    override suspend fun updateStateInvolvedExternal(
         state: State,
         idMain: Int
     ): EmptyResult =
         call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.updateStateInvolved(state, idMain).getOrThrow()
+            cardSharedPreferencesDatasource.updateStateInvolvedExternal(state, idMain).getOrThrow()
         }
 
-    override suspend fun updateStateWitness(
+    override suspend fun updateStateWitnessExternal(
         state: State,
         idMain: Int
     ): EmptyResult =
         call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.updateStateWitness(state, idMain).getOrThrow()
+            cardSharedPreferencesDatasource.updateStateWitnessExternal(state, idMain).getOrThrow()
+        }
+
+    override suspend fun updateStateInvolvedColab(
+        state: State,
+        idMain: Int
+    ): EmptyResult =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.updateStateInvolvedColab(state, idMain).getOrThrow()
+        }
+
+
+    override suspend fun updateStateWitnessColab(
+        state: State,
+        idMain: Int
+    ): EmptyResult =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.updateStateWitnessColab(state, idMain).getOrThrow()
         }
 
     override suspend fun updateAddressPassengerInvolved(
@@ -277,6 +320,23 @@ class IUpdateCardRepository @Inject constructor(
     ): EmptyResult =
         call(getClassAndMethod()) {
             cardSharedPreferencesDatasource.updatePhonePassengerInvolved(text, idMain, idSecondary).getOrThrow()
+        }
+
+    override suspend fun updateDataInitialBreathalyzer(
+        flagRealized: Boolean?,
+        flagResult: Boolean?,
+        idMain: Int
+    ): EmptyResult =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.updateDataInitialBreathalyzer(flagRealized, flagResult, idMain).getOrThrow()
+        }
+
+    override suspend fun updateCountBreathalyzer(
+        count: Double?,
+        idMain: Int
+    ): EmptyResult =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.updateCountBreathalyzer(count, idMain).getOrThrow()
         }
 
 }

@@ -29,6 +29,7 @@ class IBasicCardSharedPreferencesDatasource @Inject constructor(
 
     override suspend fun setLocal(model: LocalSharedPreferencesModel): EmptyResult =
         result(getClassAndMethod()) {
+
             datasource.get().updateModel {
                 local = model
             }

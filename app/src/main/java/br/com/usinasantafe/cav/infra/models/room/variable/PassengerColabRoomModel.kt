@@ -14,10 +14,13 @@ data class PassengerColabRoomModel(
     val idVehicle: Int,
     val reg: Long,
     val state: State,
+    val flagRealizedBreathalyzer: Boolean,
+    val flagResultBreathalyzer: Boolean?,
+    val countBreathalyzer: Double?,
     val detail: String?,
 )
 
-fun ColabCardSharedPreferencesModel.sharedPreferencesModelToInvolvedRoomModel(
+fun ColabCardSharedPreferencesModel.sharedPreferencesModelToInvolvedExternalRoomModel(
     idVehicle: Int
 ): PassengerColabRoomModel {
     return with(this) {
@@ -25,6 +28,9 @@ fun ColabCardSharedPreferencesModel.sharedPreferencesModelToInvolvedRoomModel(
             idVehicle = idVehicle,
             reg = ::reg.required(),
             state = ::state.required(),
+            flagRealizedBreathalyzer = ::flagRealizedBreathalyzer.required(),
+            flagResultBreathalyzer = flagResultBreathalyzer,
+            countBreathalyzer = countBreathalyzer,
             detail = detail
         )
     }

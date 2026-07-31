@@ -3,8 +3,7 @@ package br.com.usinasantafe.cav.domain.usecases.card
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.InvolvedSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.PeopleExternalSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -49,16 +48,16 @@ class ISetDocumentTest {
     @Test
     fun check_update_document_involved() = runTest {
         val data = CardSharedPreferencesModel(
-            involvedList = listOf(
-                InvolvedSharedPreferencesModel(id = 1, document = "OLD")
+            involvedExternalList = listOf(
+                PeopleExternalSharedPreferencesModel(id = 1, document = "OLD")
             )
         )
         cardSharedPreferencesDatasource.save(data)
         
-        val result = usecase("NEW", Option.EDIT, FlowNote.INVOLVED, 1, 0)
+        val result = usecase("NEW", Option.EDIT, FlowNote.INVOLVED_EXTERNAL, 1, 0)
         assertEquals(result.isSuccess, true)
         
         val modelAfter = cardSharedPreferencesDatasource.get().getOrThrow()
-        assertEquals(modelAfter.involvedList[0].document, "NEW")
+        assertEquals(modelAfter.involvedExternalList[0].document, "NEW")
     }
 }

@@ -33,8 +33,8 @@ class ISetName @Inject constructor(
                 when {
                     option == Option.INSERT -> setName(name)
                     flowNote == FlowNote.DRIVER -> updateNameDriver(name, idMain)
-                    flowNote == FlowNote.INVOLVED -> updateNameInvolved(name, idMain)
-                    flowNote == FlowNote.WITNESS -> updateNameWitness(name, idMain)
+                    flowNote == FlowNote.INVOLVED_EXTERNAL -> updateNameInvolved(name, idMain)
+                    flowNote == FlowNote.WITNESS_EXTERNAL -> updateNameWitness(name, idMain)
                     else -> updateNamePassengerInvolved(name, idMain, idSecondary)
                 }.getOrThrow()
             }

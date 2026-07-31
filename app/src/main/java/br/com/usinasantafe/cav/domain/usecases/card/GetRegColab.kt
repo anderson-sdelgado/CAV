@@ -30,6 +30,8 @@ class IGetRegColab @Inject constructor(
             when {
                 option == Option.INSERT -> cardRepository.getRegColab()
                 flowNote == FlowNote.COLAB -> cardRepository.getRegColab(idMain)
+                flowNote == FlowNote.INVOLVED_COLAB -> cardRepository.getRegColabInvolved(idMain)
+                flowNote == FlowNote.WITNESS_COLAB -> cardRepository.getRegColabWitness(idMain)
                 else -> cardRepository.getRegPassengerColab(idMain, idSecondary)
             }.getOrThrow()?.toString() ?: ""
         }

@@ -2,7 +2,7 @@ package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.domain.entities.stable.Colab
 import br.com.usinasantafe.cav.domain.entities.variable.ColabCard
-import br.com.usinasantafe.cav.domain.entities.variable.Involved
+import br.com.usinasantafe.cav.domain.entities.variable.PeopleExternal
 import br.com.usinasantafe.cav.domain.repositories.stable.ColabRepository
 import br.com.usinasantafe.cav.domain.repositories.variable.CardRepository
 import br.com.usinasantafe.cav.lib.FlowNote
@@ -174,7 +174,7 @@ class IGetDescPassengersTest {
     fun `Check return failure if have error in CardRepository listPassengerInvolved - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.listPassengerInvolved(1)
+                cardRepository.listPassengerExternal(1)
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.listPassengerInvolved",
@@ -183,7 +183,7 @@ class IGetDescPassengersTest {
                 )
             )
             val result = usecase(
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 1
             )
             assertEquals(
@@ -204,12 +204,12 @@ class IGetDescPassengersTest {
     fun `Check return empty string if function execute successfully with empty list - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.listPassengerInvolved(1)
+                cardRepository.listPassengerExternal(1)
             ).thenReturn(
                 Result.success(emptyList())
             )
             val result = usecase(
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 1
             )
             assertEquals(
@@ -226,17 +226,17 @@ class IGetDescPassengersTest {
     fun `Check return correct formatted string if function execute successfully - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.listPassengerInvolved(1)
+                cardRepository.listPassengerExternal(1)
             ).thenReturn(
                 Result.success(
                     listOf(
-                        Involved(id = 1, document = "123", name = "INVOLVED 1"),
-                        Involved(id = 2, document = null, name = "INVOLVED 2")
+                        PeopleExternal(id = 1, document = "123", name = "INVOLVED 1"),
+                        PeopleExternal(id = 2, document = null, name = "INVOLVED 2")
                     )
                 )
             )
             val result = usecase(
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 1
             )
             assertEquals(

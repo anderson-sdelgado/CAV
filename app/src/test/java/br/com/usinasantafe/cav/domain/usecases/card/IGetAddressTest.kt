@@ -108,7 +108,7 @@ class IGetAddressTest {
                 )
             )
             val result = usecase(
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 1,
                 idSecondary = 2
             )
@@ -135,7 +135,7 @@ class IGetAddressTest {
                 Result.success(null)
             )
             val result = usecase(
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 1,
                 idSecondary = 2
             )
@@ -158,7 +158,7 @@ class IGetAddressTest {
                 Result.success("Test")
             )
             val result = usecase(
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 1,
                 idSecondary = 2
             )
@@ -178,7 +178,7 @@ class IGetAddressTest {
     fun `Check return failure if have error in CardRepository getAddressInvolved - FlowNote INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getAddressInvolved(1)
+                cardRepository.getAddressExternal(1)
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.getAddressInvolved",
@@ -187,7 +187,7 @@ class IGetAddressTest {
                 )
             )
             val result = usecase(
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -209,12 +209,12 @@ class IGetAddressTest {
     fun `Check return empty if function execute successfully and return is null - FlowNote INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getAddressInvolved(1)
+                cardRepository.getAddressExternal(1)
             ).thenReturn(
                 Result.success(null)
             )
             val result = usecase(
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -232,12 +232,12 @@ class IGetAddressTest {
     fun `Check return correct if function execute successfully - FlowNote INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getAddressInvolved(1)
+                cardRepository.getAddressExternal(1)
             ).thenReturn(
                 Result.success("Test")
             )
             val result = usecase(
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )

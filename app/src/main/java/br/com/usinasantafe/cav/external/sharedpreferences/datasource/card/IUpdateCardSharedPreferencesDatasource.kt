@@ -71,7 +71,7 @@ class IUpdateCardSharedPreferencesDatasource @Inject constructor(
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                vehicleInvolvedList.find { it.id == idMain }?.driver?.detail = text
+                vehicleExternalList.find { it.id == idMain }?.driver?.detail = text
             }
         }
 
@@ -92,38 +92,58 @@ class IUpdateCardSharedPreferencesDatasource @Inject constructor(
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                vehicleInvolvedList.find { it.id == idMain }?.vehicle?.detail = text
+                vehicleExternalList.find { it.id == idMain }?.vehicle?.detail = text
             }
         }
 
-    override suspend fun updateDetailPassengerInvolved(
+    override suspend fun updateDetailPassengerExternal(
         text: String,
         idMain: Int,
         idSecondary: Int
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                vehicleInvolvedList.find { it.id == idMain }?.passengerInvolvedList?.find { it.id == idSecondary }?.detail = text
+                vehicleExternalList.find { it.id == idMain }?.passengerInvolvedList?.find { it.id == idSecondary }?.detail = text
             }
         }
 
-    override suspend fun updateDetailInvolved(
+    override suspend fun updateDetailInvolvedExternal(
         text: String,
         idMain: Int
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                involvedList.find { it.id == idMain }?.detail = text
+                involvedExternalList.find { it.id == idMain }?.detail = text
             }
         }
 
-    override suspend fun updateDetailWitness(
+    override suspend fun updateDetailWitnessExternal(
         text: String,
         idMain: Int
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                witnessList.find { it.id == idMain }?.detail = text
+                witnessExternalList.find { it.id == idMain }?.detail = text
+            }
+        }
+
+    override suspend fun updateDetailInvolvedColab(
+        text: String,
+        idMain: Int
+    ): EmptyResult =
+        result(getClassAndMethod()) {
+            datasource.get().updateModel {
+                involvedColabList.find { it.id == idMain }?.detail = text
+            }
+        }
+
+    override suspend fun updateDetailWitnessColab(
+        text: String,
+        idMain: Int
+    ): EmptyResult =
+        result(getClassAndMethod()) {
+            datasource.get().updateModel {
+                witnessColabList.find { it.id == idMain }?.detail = text
             }
         }
 
@@ -145,6 +165,26 @@ class IUpdateCardSharedPreferencesDatasource @Inject constructor(
         result(getClassAndMethod()) {
             datasource.get().updateModel {
                 vehicleOwnList.find { it.id == idMain }?.passengerColabList?.find { it.id == idSecondary }?.reg = regColab
+            }
+        }
+
+    override suspend fun updateRegColabInvolved(
+        regColab: Long,
+        idMain: Int
+    ): EmptyResult =
+        result(getClassAndMethod()) {
+            datasource.get().updateModel {
+                involvedColabList.find { it.id == idMain }?.reg = regColab
+            }
+        }
+
+    override suspend fun updateRegColabWitness(
+        regColab: Long,
+        idMain: Int
+    ): EmptyResult =
+        result(getClassAndMethod()) {
+            datasource.get().updateModel {
+                witnessColabList.find { it.id == idMain }?.reg = regColab
             }
         }
 
@@ -175,38 +215,58 @@ class IUpdateCardSharedPreferencesDatasource @Inject constructor(
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                vehicleInvolvedList.find { it.id == idMain }?.driver?.state = state
+                vehicleExternalList.find { it.id == idMain }?.driver?.state = state
             }
         }
 
-    override suspend fun updateStatePassengerInvolved(
+    override suspend fun updateStatePassengerExternal(
         state: State,
         idMain: Int,
         idSecondary: Int
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                vehicleInvolvedList.find { it.id == idMain }?.passengerInvolvedList?.find { it.id == idSecondary }?.state = state
+                vehicleExternalList.find { it.id == idMain }?.passengerInvolvedList?.find { it.id == idSecondary }?.state = state
             }
         }
 
-    override suspend fun updateStateInvolved(
+    override suspend fun updateStateInvolvedExternal(
         state: State,
         idMain: Int
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                involvedList.find { it.id == idMain }?.state = state
+                involvedExternalList.find { it.id == idMain }?.state = state
             }
         }
 
-    override suspend fun updateStateWitness(
+    override suspend fun updateStateWitnessExternal(
         state: State,
         idMain: Int
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                witnessList.find { it.id == idMain }?.state = state
+                witnessExternalList.find { it.id == idMain }?.state = state
+            }
+        }
+
+    override suspend fun updateStateInvolvedColab(
+        state: State,
+        idMain: Int
+    ): EmptyResult =
+        result(getClassAndMethod()) {
+            datasource.get().updateModel {
+                involvedColabList.find { it.id == idMain }?.state = state
+            }
+        }
+
+    override suspend fun updateStateWitnessColab(
+        state: State,
+        idMain: Int
+    ): EmptyResult =
+        result(getClassAndMethod()) {
+            datasource.get().updateModel {
+                witnessColabList.find { it.id == idMain }?.state = state
             }
         }
 
@@ -217,7 +277,7 @@ class IUpdateCardSharedPreferencesDatasource @Inject constructor(
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                vehicleInvolvedList.find { it.id == idMain }?.passengerInvolvedList?.find { it.id == idSecondary }?.address = text
+                vehicleExternalList.find { it.id == idMain }?.passengerInvolvedList?.find { it.id == idSecondary }?.address = text
             }
         }
 
@@ -227,7 +287,7 @@ class IUpdateCardSharedPreferencesDatasource @Inject constructor(
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                involvedList.find { it.id == idMain }?.address = text
+                involvedExternalList.find { it.id == idMain }?.address = text
             }
         }
 
@@ -237,7 +297,7 @@ class IUpdateCardSharedPreferencesDatasource @Inject constructor(
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                vehicleInvolvedList.find { it.id == idMain }?.driver?.address = text
+                vehicleExternalList.find { it.id == idMain }?.driver?.address = text
             }
         }
 
@@ -247,7 +307,7 @@ class IUpdateCardSharedPreferencesDatasource @Inject constructor(
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                vehicleInvolvedList.find { it.id == idMain }?.vehicle?.brand = text
+                vehicleExternalList.find { it.id == idMain }?.vehicle?.brand = text
             }
         }
 
@@ -257,7 +317,7 @@ class IUpdateCardSharedPreferencesDatasource @Inject constructor(
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                vehicleInvolvedList.find { it.id == idMain }?.vehicle?.plate = text
+                vehicleExternalList.find { it.id == idMain }?.vehicle?.plate = text
             }
         }
 
@@ -267,7 +327,7 @@ class IUpdateCardSharedPreferencesDatasource @Inject constructor(
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                vehicleInvolvedList.find { it.id == idMain }?.driver?.document = text
+                vehicleExternalList.find { it.id == idMain }?.driver?.document = text
             }
         }
 
@@ -278,7 +338,7 @@ class IUpdateCardSharedPreferencesDatasource @Inject constructor(
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                vehicleInvolvedList.find { it.id == idMain }?.passengerInvolvedList?.find { it.id == idSecondary }?.document = text
+                vehicleExternalList.find { it.id == idMain }?.passengerInvolvedList?.find { it.id == idSecondary }?.document = text
             }
         }
 
@@ -288,7 +348,7 @@ class IUpdateCardSharedPreferencesDatasource @Inject constructor(
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                involvedList.find { it.id == idMain }?.document = text
+                involvedExternalList.find { it.id == idMain }?.document = text
             }
         }
 
@@ -298,7 +358,7 @@ class IUpdateCardSharedPreferencesDatasource @Inject constructor(
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                vehicleInvolvedList.find { it.id == idMain }?.driver?.name = text
+                vehicleExternalList.find { it.id == idMain }?.driver?.name = text
             }
         }
 
@@ -309,7 +369,7 @@ class IUpdateCardSharedPreferencesDatasource @Inject constructor(
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                vehicleInvolvedList.find { it.id == idMain }?.passengerInvolvedList?.find { it.id == idSecondary }?.name = text
+                vehicleExternalList.find { it.id == idMain }?.passengerInvolvedList?.find { it.id == idSecondary }?.name = text
             }
         }
 
@@ -319,7 +379,7 @@ class IUpdateCardSharedPreferencesDatasource @Inject constructor(
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                involvedList.find { it.id == idMain }?.name = text
+                involvedExternalList.find { it.id == idMain }?.name = text
             }
         }
 
@@ -329,7 +389,7 @@ class IUpdateCardSharedPreferencesDatasource @Inject constructor(
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                witnessList.find { it.id == idMain }?.name = text
+                witnessExternalList.find { it.id == idMain }?.name = text
             }
         }
 
@@ -339,7 +399,7 @@ class IUpdateCardSharedPreferencesDatasource @Inject constructor(
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                vehicleInvolvedList.find { it.id == idMain }?.driver?.phone = text
+                vehicleExternalList.find { it.id == idMain }?.driver?.phone = text
             }
         }
 
@@ -349,7 +409,7 @@ class IUpdateCardSharedPreferencesDatasource @Inject constructor(
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                involvedList.find { it.id == idMain }?.phone = text
+                involvedExternalList.find { it.id == idMain }?.phone = text
             }
         }
 
@@ -359,7 +419,7 @@ class IUpdateCardSharedPreferencesDatasource @Inject constructor(
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                witnessList.find { it.id == idMain }?.phone = text
+                witnessExternalList.find { it.id == idMain }?.phone = text
             }
         }
 
@@ -370,7 +430,32 @@ class IUpdateCardSharedPreferencesDatasource @Inject constructor(
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                vehicleInvolvedList.find { it.id == idMain }?.passengerInvolvedList?.find { it.id == idSecondary }?.phone = text
+                vehicleExternalList.find { it.id == idMain }?.passengerInvolvedList?.find { it.id == idSecondary }?.phone = text
+            }
+        }
+
+    override suspend fun updateDataInitialBreathalyzer(
+        flagRealized: Boolean?,
+        flagResult: Boolean?,
+        idMain: Int
+    ): EmptyResult =
+        result(getClassAndMethod()) {
+            datasource.get().updateModel {
+                vehicleOwnList.find { it.id == idMain }?.colab?.apply {
+                    flagRealizedBreathalyzer = flagRealized
+                    flagResultBreathalyzer = flagResult
+                    if(flagRealized != true) countBreathalyzer = null
+                }
+            }
+        }
+
+    override suspend fun updateCountBreathalyzer(
+        count: Double?,
+        idMain: Int
+    ): EmptyResult =
+        result(getClassAndMethod()) {
+            datasource.get().updateModel {
+                vehicleOwnList.find { it.id == idMain }?.colab?.countBreathalyzer = count
             }
         }
 

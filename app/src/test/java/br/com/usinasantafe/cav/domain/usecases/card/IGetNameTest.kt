@@ -31,7 +31,7 @@ class IGetNameTest {
             )
             val result = usecase(
                 option = Option.INSERT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -59,7 +59,7 @@ class IGetNameTest {
             )
             val result = usecase(
                 option = Option.INSERT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -83,7 +83,7 @@ class IGetNameTest {
             )
             val result = usecase(
                 option = Option.INSERT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -191,7 +191,7 @@ class IGetNameTest {
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -219,7 +219,7 @@ class IGetNameTest {
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -243,7 +243,7 @@ class IGetNameTest {
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -271,7 +271,7 @@ class IGetNameTest {
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.WITNESS,
+                flowNote = FlowNote.WITNESS_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -299,7 +299,7 @@ class IGetNameTest {
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.WITNESS,
+                flowNote = FlowNote.WITNESS_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -323,7 +323,7 @@ class IGetNameTest {
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.WITNESS,
+                flowNote = FlowNote.WITNESS_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -341,7 +341,7 @@ class IGetNameTest {
     fun `Check return failure if have error in CardRepository getNamePassengerInvolved - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getNamePassengerInvolved(1, 2)
+                cardRepository.getNamePassengerExternal(1, 2)
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.getNamePassengerInvolved",
@@ -351,7 +351,7 @@ class IGetNameTest {
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 1,
                 idSecondary = 2
             )
@@ -373,13 +373,13 @@ class IGetNameTest {
     fun `Check return hyphen if function execute successfully and return is null - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getNamePassengerInvolved(1, 2)
+                cardRepository.getNamePassengerExternal(1, 2)
             ).thenReturn(
                 Result.success(null)
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 1,
                 idSecondary = 2
             )
@@ -397,13 +397,13 @@ class IGetNameTest {
     fun `Check return correct if function execute successfully - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.getNamePassengerInvolved(1, 2)
+                cardRepository.getNamePassengerExternal(1, 2)
             ).thenReturn(
                 Result.success("Test Name")
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 1,
                 idSecondary = 2
             )

@@ -296,4 +296,48 @@ class IColabRepositoryTest {
                 "ANDERSON DA SILVA DELGADO"
             )
         }
+
+    @Test
+    fun `listColabByRegList - Check return failure if have error in ColabRoomDatasource`() =
+        runTest {
+            whenever(
+                colabRoomDatasource.listColabByRegList(listOf(1L))
+            ).thenReturn(
+                resultFailure(
+                    "IColabRoomDatasource.listColabByRegList",
+                    "-",
+                    Exception()
+                )
+            )
+            val result = repository.listColabByRegList(listOf(1L))
+            assertEquals(
+                result.isFailure,
+                true
+            )
+            assertEquals(
+                result.exceptionOrNull()!!.message,
+                "IColabRepository.listColabByRegList -> IColabRoomDatasource.listColabByRegList"
+            )
+        }
+
+    @Test
+    fun `listColabByRegList - Check return correct if function execute successfully`() =
+        runTest {
+            val roomList = listOf(ColabRoomModel(reg = 1L, name = "TEST"))
+            val entityList = listOf(Colab(reg = 1L, name = "TEST"))
+            whenever(
+                colabRoomDatasource.listColabByRegList(listOf(1L))
+            ).thenReturn(
+                Result.success(roomList)
+            )
+            val result = repository.listColabByRegList(listOf(1L))
+            assertEquals(
+                result.isSuccess,
+                true
+            )
+            assertEquals(
+                result.getOrNull()!!,
+                entityList
+            )
+        }
 }

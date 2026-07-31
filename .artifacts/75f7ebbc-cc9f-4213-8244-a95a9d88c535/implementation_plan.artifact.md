@@ -1,54 +1,20 @@
-# Implementation Plan - Testes Unitários para `StartFlow` (Fim-a-Fim)
+# Implementation Plan - Refinamento da Seleção do Bafômetro (Comportamento de Toggle)
 
-Implementar a cobertura de testes para o Use Case `StartFlow`, abrangendo desde a camada de domínio até a camada de infraestrutura (Repositório e Datasources), seguindo o padrão estabelecido no aplicativo.
+Este plano visa ajustar a lógica de seleção na tela de Bafômetro para permitir que o usuário desmarque uma opção já selecionada, voltando o estado para nulo (comportamento de toggle).
 
 ## Proposed Changes
 
-### [domain] - Use Cases
+### [presenter] - ViewModel
 
-#### [NEW] [IStartFlowTest.kt](file:///C:/Users/anderson/Documents/Kotlin/CAV/app/src/test/java/br/com/usinasantafe/cav/domain/usecases/common/IStartFlowTest.kt)
-- Testar falha no `cardRepository.delete()`.
-- Testar falha no `cardRepository.has()`.
-- Testar sucesso retornando `true` (tem dados) e `false` (não tem dados).
-
-### [infra] - Repositories
-
-#### [MODIFY] [ISendCardRepositoryTest.kt](file:///C:/Users/anderson/Documents/Kotlin/CAV/app/src/test/java/br/com/usinasantafe/cav/infra/repositories/variable/card/ISendCardRepositoryTest.kt)
-- Adicionar testes para o método `delete()`:
-    - Simular falha em cada etapa do processo de deleção (ex: `listDelete`, `listByIdCard`, `deleteByIdVehicleList`, etc.).
-    - Simular cenário de sucesso, verificando se todos os datasources de limpeza foram chamados e se os arquivos de fotos foram processados.
-
-### [external] - Datasources (Room)
-
-Atualizar as classes de teste de Datasource para incluir a validação dos novos métodos de busca por ID de card/veículo e métodos de deleção:
-
-#### [MODIFY] [ICardRoomDatasourceTest.kt](file:///C:/Users/anderson/Documents/Kotlin/CAV/app/src/test/java/br/com/usinasantafe/cav/external/room/datasource/variable/ICardRoomDatasourceTest.kt)
-- Testar `listDelete()`: Validar se retorna apenas cards com `StatusSend.SENT` e data inferior a 1 semana.
-- Testar `deleteById()`: Validar se o registro é removido do banco.
-
-#### [MODIFY] [IVehicleOwnRoomDatasourceTest.kt](file:///C:/Users/anderson/Documents/Kotlin/CAV/app/src/test/java/br/com/usinasantafe/cav/external/room/datasource/variable/IVehicleOwnRoomDatasourceTest.kt)
-- Testar `listByIdCard()` e `deleteByIdCard()`.
-
-#### [MODIFY] [IEquipSecRoomDatasourceTest.kt](file:///C:/Users/anderson/Documents/Kotlin/CAV/app/src/test/java/br/com/usinasantafe/cav/external/room/datasource/variable/IEquipSecRoomDatasourceTest.kt)
-- Testar `deleteByIdVehicleList()`.
-
-#### [MODIFY] [IInvolvedRoomDatasourceTest.kt](file:///C:/Users/anderson/Documents/Kotlin/CAV/app/src/test/java/br/com/usinasantafe/cav/external/room/datasource/variable/IInvolvedRoomDatasourceTest.kt)
-- Testar `listByIdCard()` e `deleteByIdCard()`.
-
-#### [MODIFY] [IWitnessRoomDatasourceTest.kt](file:///C:/Users/anderson/Documents/Kotlin/CAV/app/src/test/java/br/com/usinasantafe/cav/external/room/datasource/variable/IWitnessRoomDatasourceTest.kt)
-- Testar `listByIdCard()` e `deleteByIdCard()`.
-
-#### [MODIFY] [IPassengerColabRoomDatasourceTest.kt](file:///C:/Users/anderson/Documents/Kotlin/CAV/app/src/test/java/br/com/usinasantafe/cav/external/room/datasource/variable/IPassengerColabRoomDatasourceTest.kt)
-- Testar `deleteByIdVehicleList()`.
-
-#### [MODIFY] [IPassengerInvolvedRoomDatasourceTest.kt](file:///C:/Users/anderson/Documents/Kotlin/CAV/app/src/test/java/br/com/usinasantafe/cav/external/room/datasource/variable/IPassengerInvolvedRoomDatasourceTest.kt)
-- Testar `deleteByIdVehicleList()`.
-
-#### [MODIFY] [IVehicleInvolvedRoomDatasourceTest.kt](file:///C:/Users/anderson/Documents/Kotlin/CAV/app/src/test/java/br/com/usinasantafe/cav/external/room/datasource/variable/IVehicleInvolvedRoomDatasourceTest.kt)
-- Testar `listByIdCard()` e `deleteByIdCard()`.
+#### [MODIFY] [CheckBreathalyzerViewModel.kt](file:///C:/Users/anderson/Documents/Kotlin/CAV/app/src/main/java/br/com/usinasantafe/cav/presenter/view/card/breathalyzer/check/CheckBreathalyzerViewModel.kt)
+- Alterar `onChangeFlagRealized` para verificar se o valor clicado já é o atual. Se for igual, define como `null`.
+- Garantir que ao desmarcar o bafômetro (`flagRealized` se tornando `null`), o resultado (`flagResult`) também seja limpo.
+- Alterar `onChangeFlagResult` para implementar a mesma lógica de toggle (desmarcar se clicar na opção já selecionada).
 
 ## Verification Plan
 
-### Automated Tests
-- Executar a suite completa de testes:
-  `./gradlew :app:testDebugUnitTest`
+### Manual Verification
+- Abrir a tela de Bafômetro.
+- Marcar "NÃO" e clicar novamente em "NÃO": a opção deve ser desmarcada e ficar nada selecionado.
+- Marcar "SIM", marcar "POSITIVO", e depois clicar em "SIM" novamente: tanto o bafômetro quanto o resultado devem ser limpos.
+- O mesmo comportamento deve ocorrer para "POSITIVO" e "NEGATIVO".

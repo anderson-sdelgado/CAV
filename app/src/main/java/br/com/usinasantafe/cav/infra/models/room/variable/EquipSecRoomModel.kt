@@ -15,7 +15,7 @@ data class EquipSecRoomModel(
     val detail: String?
 )
 
-fun EquipCardSharedPreferencesModel.sharedPreferencesModelToInvolvedRoomModel(
+fun EquipCardSharedPreferencesModel.sharedPreferencesModelToInvolvedExternalRoomModel(
     idVehicle: Int,
 ): EquipSecRoomModel{
     return with(this) {

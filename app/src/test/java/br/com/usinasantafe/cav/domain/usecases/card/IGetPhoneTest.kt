@@ -31,7 +31,7 @@ class IGetPhoneTest {
             )
             val result = usecase(
                 option = Option.INSERT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -59,7 +59,7 @@ class IGetPhoneTest {
             )
             val result = usecase(
                 option = Option.INSERT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -83,7 +83,7 @@ class IGetPhoneTest {
             )
             val result = usecase(
                 option = Option.INSERT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -191,7 +191,7 @@ class IGetPhoneTest {
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -219,7 +219,7 @@ class IGetPhoneTest {
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -243,7 +243,7 @@ class IGetPhoneTest {
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -271,7 +271,7 @@ class IGetPhoneTest {
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.WITNESS,
+                flowNote = FlowNote.WITNESS_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -299,7 +299,7 @@ class IGetPhoneTest {
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.WITNESS,
+                flowNote = FlowNote.WITNESS_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -323,7 +323,7 @@ class IGetPhoneTest {
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.WITNESS,
+                flowNote = FlowNote.WITNESS_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -351,7 +351,7 @@ class IGetPhoneTest {
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 1,
                 idSecondary = 2
             )
@@ -379,7 +379,7 @@ class IGetPhoneTest {
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 1,
                 idSecondary = 2
             )
@@ -403,7 +403,7 @@ class IGetPhoneTest {
             )
             val result = usecase(
                 option = Option.EDIT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 1,
                 idSecondary = 2
             )

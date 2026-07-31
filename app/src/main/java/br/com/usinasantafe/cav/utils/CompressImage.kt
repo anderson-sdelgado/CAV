@@ -14,15 +14,22 @@ fun compressImage(
     imageFile: File
 ): File {
 
-    val bitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
+    val options = BitmapFactory.Options().apply {
+        inPreferredConfig = Bitmap.Config.ARGB_8888
+    }
+
+    val bitmap = BitmapFactory.decodeFile(
+        imageFile.absolutePath,
+        options
+    )
 
     val rotatedBitmap = rotateBitmapIfNeeded(
         bitmap,
         imageFile.absolutePath
     )
 
-    val width = bitmap.width
-    val height = bitmap.height
+    val width = rotatedBitmap.width
+    val height = rotatedBitmap.height
 
     val maxSize = 1280
 

@@ -92,7 +92,7 @@ class ISetAddressTest {
 			)
 			val result = usecase(
 				address = "ADDRESS",
-				flowNote = FlowNote.INVOLVED,
+				flowNote = FlowNote.INVOLVED_EXTERNAL,
 				idMain = 2,
 				idSecondary = 0
 			)
@@ -121,7 +121,7 @@ class ISetAddressTest {
 		runTest {
 			val result = usecase(
 				address = "ADDRESS",
-				flowNote = FlowNote.INVOLVED,
+				flowNote = FlowNote.INVOLVED_EXTERNAL,
 				idMain = 2,
 				idSecondary = 0
 			)
@@ -151,7 +151,7 @@ class ISetAddressTest {
 			)
 			val result = usecase(
 				address = "ADDRESS",
-				flowNote = FlowNote.PASSENGER_INVOLVED,
+				flowNote = FlowNote.PASSENGER_EXTERNAL,
 				idMain = 3,
 				idSecondary = 4
 			)
@@ -180,7 +180,7 @@ class ISetAddressTest {
 		runTest {
 			val result = usecase(
 				address = "ADDRESS",
-				flowNote = FlowNote.PASSENGER_INVOLVED,
+				flowNote = FlowNote.PASSENGER_EXTERNAL,
 				idMain = 3,
 				idSecondary = 4
 			)

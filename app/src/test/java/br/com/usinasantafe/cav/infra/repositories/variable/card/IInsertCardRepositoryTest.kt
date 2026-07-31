@@ -7,8 +7,8 @@ import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.InvolvedShared
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.VehicleSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabCardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipCardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.PeopleExternalSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleExternalSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleOwnSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.State
@@ -681,7 +681,7 @@ class IInsertCardRepositoryTest {
                 involvedSharedPreferencesDatasource.get()
             ).thenReturn(
                 Result.success(
-                    InvolvedSharedPreferencesModel()
+                    PeopleExternalSharedPreferencesModel()
                 )
             )
             whenever(
@@ -723,7 +723,7 @@ class IInsertCardRepositoryTest {
                 involvedSharedPreferencesDatasource.get()
             ).thenReturn(
                 Result.success(
-                    InvolvedSharedPreferencesModel()
+                    PeopleExternalSharedPreferencesModel()
                 )
             )
             whenever(
@@ -756,7 +756,7 @@ class IInsertCardRepositoryTest {
     fun `setDetailDriver - Check return failure if have error in CardSharedPreferencesDatasource addVehicleInvolved`() =
         runTest {
             val vehicle = VehicleSharedPreferencesModel()
-            val driver = InvolvedSharedPreferencesModel()
+            val driver = PeopleExternalSharedPreferencesModel()
             whenever(
                 vehicleSharedPreferencesDatasource.get()
             ).thenReturn(
@@ -772,8 +772,8 @@ class IInsertCardRepositoryTest {
                 )
             )
             whenever(
-                cardSharedPreferencesDatasource.addVehicleInvolved(
-                    VehicleInvolvedSharedPreferencesModel(vehicle = vehicle, driver = driver)
+                cardSharedPreferencesDatasource.addVehicleExternal(
+                    VehicleExternalSharedPreferencesModel(vehicle = vehicle, driver = driver)
                 )
             ).thenReturn(
                 resultFailure(
@@ -804,7 +804,7 @@ class IInsertCardRepositoryTest {
     fun `setDetailDriver - Check return correct if function execute successfully`() =
         runTest {
             val vehicle = VehicleSharedPreferencesModel()
-            val driver = InvolvedSharedPreferencesModel()
+            val driver = PeopleExternalSharedPreferencesModel()
             whenever(
                 vehicleSharedPreferencesDatasource.get()
             ).thenReturn(
@@ -823,8 +823,8 @@ class IInsertCardRepositoryTest {
             verify(involvedSharedPreferencesDatasource, atLeastOnce()).setDetail("test")
             verify(vehicleSharedPreferencesDatasource, atLeastOnce()).clean()
             verify(involvedSharedPreferencesDatasource, atLeastOnce()).clean()
-            verify(cardSharedPreferencesDatasource, atLeastOnce()).addVehicleInvolved(
-                VehicleInvolvedSharedPreferencesModel(vehicle = vehicle, driver = driver)
+            verify(cardSharedPreferencesDatasource, atLeastOnce()).addVehicleExternal(
+                VehicleExternalSharedPreferencesModel(vehicle = vehicle, driver = driver)
             )
             assertEquals(
                 result.isSuccess,
@@ -969,7 +969,7 @@ class IInsertCardRepositoryTest {
                     Exception()
                 )
             )
-            val result = repository.setDetailInvolved("test")
+            val result = repository.setDetailInvolvedExternal("test")
             assertEquals(
                 result.isFailure,
                 true
@@ -996,7 +996,7 @@ class IInsertCardRepositoryTest {
                     Exception()
                 )
             )
-            val result = repository.setDetailInvolved("test")
+            val result = repository.setDetailInvolvedExternal("test")
             verify(involvedSharedPreferencesDatasource, atLeastOnce()).setDetail("test")
             assertEquals(
                 result.isFailure,
@@ -1019,7 +1019,7 @@ class IInsertCardRepositoryTest {
                 involvedSharedPreferencesDatasource.get()
             ).thenReturn(
                 Result.success(
-                    InvolvedSharedPreferencesModel()
+                    PeopleExternalSharedPreferencesModel()
                 )
             )
             whenever(
@@ -1031,7 +1031,7 @@ class IInsertCardRepositoryTest {
                     Exception()
                 )
             )
-            val result = repository.setDetailInvolved("test")
+            val result = repository.setDetailInvolvedExternal("test")
             verify(involvedSharedPreferencesDatasource, atLeastOnce()).setDetail("test")
             assertEquals(
                 result.isFailure,
@@ -1050,7 +1050,7 @@ class IInsertCardRepositoryTest {
     @Test
     fun `setDetailInvolved - Check return failure if have error in CardSharedPreferencesDatasource addInvolved`() =
         runTest {
-            val involved = InvolvedSharedPreferencesModel()
+            val involved = PeopleExternalSharedPreferencesModel()
             whenever(
                 involvedSharedPreferencesDatasource.get()
             ).thenReturn(
@@ -1059,7 +1059,7 @@ class IInsertCardRepositoryTest {
                 )
             )
             whenever(
-                cardSharedPreferencesDatasource.addInvolved(
+                cardSharedPreferencesDatasource.addInvolvedExternal(
                     involved
                 )
             ).thenReturn(
@@ -1069,7 +1069,7 @@ class IInsertCardRepositoryTest {
                     Exception()
                 )
             )
-            val result = repository.setDetailInvolved("test")
+            val result = repository.setDetailInvolvedExternal("test")
             verify(involvedSharedPreferencesDatasource, atLeastOnce()).setDetail("test")
             verify(involvedSharedPreferencesDatasource, atLeastOnce()).clean()
             assertEquals(
@@ -1089,7 +1089,7 @@ class IInsertCardRepositoryTest {
     @Test
     fun `setDetailInvolved - Check return correct if function execute successfully`() =
         runTest {
-            val involved = InvolvedSharedPreferencesModel()
+            val involved = PeopleExternalSharedPreferencesModel()
             whenever(
                 involvedSharedPreferencesDatasource.get()
             ).thenReturn(
@@ -1098,13 +1098,13 @@ class IInsertCardRepositoryTest {
                 )
             )
             whenever(
-                cardSharedPreferencesDatasource.addInvolved(
+                cardSharedPreferencesDatasource.addInvolvedExternal(
                     involved
                 )
             ).thenReturn(
                 Result.success(1)
             )
-            val result = repository.setDetailInvolved("test")
+            val result = repository.setDetailInvolvedExternal("test")
             verify(involvedSharedPreferencesDatasource, atLeastOnce()).setDetail("test")
             verify(involvedSharedPreferencesDatasource, atLeastOnce()).clean()
             assertEquals(
@@ -1129,7 +1129,7 @@ class IInsertCardRepositoryTest {
                     Exception()
                 )
             )
-            val result = repository.setDetailWitness("test")
+            val result = repository.setDetailWitnessExternal("test")
             assertEquals(
                 result.isFailure,
                 true
@@ -1156,7 +1156,7 @@ class IInsertCardRepositoryTest {
                     Exception()
                 )
             )
-            val result = repository.setDetailWitness("test")
+            val result = repository.setDetailWitnessExternal("test")
             verify(involvedSharedPreferencesDatasource, atLeastOnce()).setDetail("test")
             assertEquals(
                 result.isFailure,
@@ -1179,7 +1179,7 @@ class IInsertCardRepositoryTest {
                 involvedSharedPreferencesDatasource.get()
             ).thenReturn(
                 Result.success(
-                    InvolvedSharedPreferencesModel()
+                    PeopleExternalSharedPreferencesModel()
                 )
             )
             whenever(
@@ -1191,7 +1191,7 @@ class IInsertCardRepositoryTest {
                     Exception()
                 )
             )
-            val result = repository.setDetailWitness("test")
+            val result = repository.setDetailWitnessExternal("test")
             verify(involvedSharedPreferencesDatasource, atLeastOnce()).setDetail("test")
             assertEquals(
                 result.isFailure,
@@ -1210,7 +1210,7 @@ class IInsertCardRepositoryTest {
     @Test
     fun `setDetailWitness - Check return failure if have error in CardSharedPreferencesDatasource addWitness`() =
         runTest {
-            val involved = InvolvedSharedPreferencesModel()
+            val involved = PeopleExternalSharedPreferencesModel()
             whenever(
                 involvedSharedPreferencesDatasource.get()
             ).thenReturn(
@@ -1219,7 +1219,7 @@ class IInsertCardRepositoryTest {
                 )
             )
             whenever(
-                cardSharedPreferencesDatasource.addWitness(
+                cardSharedPreferencesDatasource.addWitnessExternal(
                     involved
                 )
             ).thenReturn(
@@ -1229,7 +1229,7 @@ class IInsertCardRepositoryTest {
                     Exception()
                 )
             )
-            val result = repository.setDetailWitness("test")
+            val result = repository.setDetailWitnessExternal("test")
             verify(involvedSharedPreferencesDatasource, atLeastOnce()).setDetail("test")
             verify(involvedSharedPreferencesDatasource, atLeastOnce()).clean()
             assertEquals(
@@ -1249,7 +1249,7 @@ class IInsertCardRepositoryTest {
     @Test
     fun `setDetailWitness - Check return correct if function execute successfully`() =
         runTest {
-            val involved = InvolvedSharedPreferencesModel()
+            val involved = PeopleExternalSharedPreferencesModel()
             whenever(
                 involvedSharedPreferencesDatasource.get()
             ).thenReturn(
@@ -1258,13 +1258,13 @@ class IInsertCardRepositoryTest {
                 )
             )
             whenever(
-                cardSharedPreferencesDatasource.addWitness(
+                cardSharedPreferencesDatasource.addWitnessExternal(
                     involved
                 )
             ).thenReturn(
                 Result.success(1)
             )
-            val result = repository.setDetailWitness("test")
+            val result = repository.setDetailWitnessExternal("test")
             verify(involvedSharedPreferencesDatasource, atLeastOnce()).setDetail("test")
             verify(involvedSharedPreferencesDatasource, atLeastOnce()).clean()
             assertEquals(
@@ -1289,7 +1289,7 @@ class IInsertCardRepositoryTest {
                     Exception()
                 )
             )
-            val result = repository.setDetailPassengerInvolved("test", 1)
+            val result = repository.setDetailPassengerExternal("test", 1)
             assertEquals(
                 result.isFailure,
                 true
@@ -1316,7 +1316,7 @@ class IInsertCardRepositoryTest {
                     Exception()
                 )
             )
-            val result = repository.setDetailPassengerInvolved("test", 1)
+            val result = repository.setDetailPassengerExternal("test", 1)
             verify(involvedSharedPreferencesDatasource, atLeastOnce()).setDetail("test")
             assertEquals(
                 result.isFailure,
@@ -1339,7 +1339,7 @@ class IInsertCardRepositoryTest {
                 involvedSharedPreferencesDatasource.get()
             ).thenReturn(
                 Result.success(
-                    InvolvedSharedPreferencesModel()
+                    PeopleExternalSharedPreferencesModel()
                 )
             )
             whenever(
@@ -1351,7 +1351,7 @@ class IInsertCardRepositoryTest {
                     Exception()
                 )
             )
-            val result = repository.setDetailPassengerInvolved("test", 1)
+            val result = repository.setDetailPassengerExternal("test", 1)
             verify(involvedSharedPreferencesDatasource, atLeastOnce()).setDetail("test")
             assertEquals(
                 result.isFailure,
@@ -1370,7 +1370,7 @@ class IInsertCardRepositoryTest {
     @Test
     fun `setDetailPassengerInvolved - Check return failure if have error in CardSharedPreferencesDatasource addPassengerInvolved`() =
         runTest {
-            val involved = InvolvedSharedPreferencesModel()
+            val involved = PeopleExternalSharedPreferencesModel()
             whenever(
                 involvedSharedPreferencesDatasource.get()
             ).thenReturn(
@@ -1379,7 +1379,7 @@ class IInsertCardRepositoryTest {
                 )
             )
             whenever(
-                cardSharedPreferencesDatasource.addPassengerInvolved(
+                cardSharedPreferencesDatasource.addPassengerExternal(
                     involved,
                     1
                 )
@@ -1390,7 +1390,7 @@ class IInsertCardRepositoryTest {
                     Exception()
                 )
             )
-            val result = repository.setDetailPassengerInvolved("test", 1)
+            val result = repository.setDetailPassengerExternal("test", 1)
             verify(involvedSharedPreferencesDatasource, atLeastOnce()).setDetail("test")
             verify(involvedSharedPreferencesDatasource, atLeastOnce()).clean()
             assertEquals(
@@ -1410,7 +1410,7 @@ class IInsertCardRepositoryTest {
     @Test
     fun `setDetailPassengerInvolved - Check return correct if function execute successfully`() =
         runTest {
-            val involved = InvolvedSharedPreferencesModel()
+            val involved = PeopleExternalSharedPreferencesModel()
             whenever(
                 involvedSharedPreferencesDatasource.get()
             ).thenReturn(
@@ -1419,14 +1419,14 @@ class IInsertCardRepositoryTest {
                 )
             )
             whenever(
-                cardSharedPreferencesDatasource.addPassengerInvolved(
+                cardSharedPreferencesDatasource.addPassengerExternal(
                     involved,
                     1
                 )
             ).thenReturn(
                 Result.success(1)
             )
-            val result = repository.setDetailPassengerInvolved("test", 1)
+            val result = repository.setDetailPassengerExternal("test", 1)
             verify(involvedSharedPreferencesDatasource, atLeastOnce()).setDetail("test")
             verify(involvedSharedPreferencesDatasource, atLeastOnce()).clean()
             assertEquals(

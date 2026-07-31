@@ -33,7 +33,7 @@ class ISetDocument @Inject constructor(
                 when {
                     option == Option.INSERT -> setDocument(cpf)
                     flowNote == FlowNote.DRIVER -> updateDocumentDriver(cpf, idMain)
-                    flowNote == FlowNote.INVOLVED -> updateDocumentInvolved(cpf, idMain)
+                    flowNote == FlowNote.INVOLVED_EXTERNAL -> updateDocumentInvolved(cpf, idMain)
                     else -> updateDocumentPassengerInvolved(cpf, idMain, idSecondary)
                 }.getOrThrow()
             }

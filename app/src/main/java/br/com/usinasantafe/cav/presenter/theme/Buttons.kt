@@ -17,15 +17,6 @@ fun addTextField(text: String, char: String): String {
     return text + char
 }
 
-fun addTextFieldComma(text: String, digit: String): String {
-    val cleanText = text.filter { it.isDigit() } + digit
-    val valueInTenths = cleanText.toLongOrNull() ?: 0L
-    val value = valueInTenths / 10.0
-    val format = DecimalFormat("#,##0.0")
-    format.decimalFormatSymbols = DecimalFormatSymbols(Locale.Builder().setLanguage("pt").setRegion("BR").build())
-    return format.format(value)
-}
-
 fun clearTextField(text: String): String {
 
     val reduced = text.dropLast(1)
@@ -40,17 +31,38 @@ fun clearTextField(text: String): String {
 
 }
 
-fun clearTextFieldComma(text: String): String {
-    val cleanText = text.filter { it.isDigit() }
-    val reducedText = if (cleanText.length > 1) cleanText.dropLast(1) else ""
-    val valueInTenths = reducedText.toLongOrNull() ?: 0L
+fun addTextFieldComma(text: String, digit: String, decimalPlaces: Int = 1): String {
+    val cleanText = text.filter { it.isDigit() } + digit
+    val valueInTenths = cleanText.toLongOrNull() ?: 0L
     val value = valueInTenths / 10.0
-    val format = DecimalFormat("#,##0.0")
+    val pattern = buildString {
+        append("#,##0")
+        if (decimalPlaces > 0) {
+            append(".")
+            repeat(decimalPlaces) { append("0") }
+        }
+    }
+    val format = DecimalFormat(pattern)
     format.decimalFormatSymbols = DecimalFormatSymbols(Locale.Builder().setLanguage("pt").setRegion("BR").build())
     return format.format(value)
 }
 
-
+fun clearTextFieldComma(text: String, decimalPlaces: Int = 1): String {
+    val cleanText = text.filter { it.isDigit() }
+    val reducedText = if (cleanText.length > 1) cleanText.dropLast(1) else ""
+    val valueInTenths = reducedText.toLongOrNull() ?: 0L
+    val value = valueInTenths / 10.0
+    val pattern = buildString {
+        append("#,##0")
+        if (decimalPlaces > 0) {
+            append(".")
+            repeat(decimalPlaces) { append("0") }
+        }
+    }
+    val format = DecimalFormat(pattern)
+    format.decimalFormatSymbols = DecimalFormatSymbols(Locale.Builder().setLanguage("pt").setRegion("BR").build())
+    return format.format(value)
+}
 
 @Composable
 fun ButtonsGenericNumeric(

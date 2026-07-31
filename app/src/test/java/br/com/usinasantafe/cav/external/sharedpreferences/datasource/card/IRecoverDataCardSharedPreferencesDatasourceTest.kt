@@ -156,9 +156,9 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getDetailVehicle - Check return correct detail from vehicleInvolvedList`() =
         runTest {
             val list = listOf(
-                VehicleInvolvedSharedPreferencesModel(id = 1, vehicle = VehicleSharedPreferencesModel(detail = "veh detail"))
+                VehicleExternalSharedPreferencesModel(id = 1, vehicle = VehicleSharedPreferencesModel(detail = "veh detail"))
             )
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
             
             val result = datasource.getDetailVehicle(1)
             assertEquals(result.getOrNull(), "veh detail")
@@ -168,9 +168,9 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getDetailDriver - Check return correct detail from driver in vehicleInvolvedList`() =
         runTest {
             val list = listOf(
-                VehicleInvolvedSharedPreferencesModel(id = 1, driver = InvolvedSharedPreferencesModel(detail = "driver detail"))
+                VehicleExternalSharedPreferencesModel(id = 1, driver = PeopleExternalSharedPreferencesModel(detail = "driver detail"))
             )
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
             
             val result = datasource.getDetailDriver(1)
             assertEquals(result.getOrNull(), "driver detail")
@@ -180,16 +180,16 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getDetailPassengerInvolved - Check return correct detail from passengerInvolvedList`() =
         runTest {
             val list = listOf(
-                VehicleInvolvedSharedPreferencesModel(
-                    id = 1, 
+                VehicleExternalSharedPreferencesModel(
+                    id = 1,
                     passengerInvolvedList = listOf(
-                        InvolvedSharedPreferencesModel(id = 10, detail = "pass inv detail")
+                        PeopleExternalSharedPreferencesModel(id = 10, detail = "pass inv detail")
                     )
                 )
             )
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
             
-            val result = datasource.getDetailPassengerInvolved(1, 10)
+            val result = datasource.getDetailPassengerExternal(1, 10)
             assertEquals(result.getOrNull(), "pass inv detail")
         }
 
@@ -197,11 +197,11 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getDetailInvolved - Check return correct detail from involvedList`() =
         runTest {
             val list = listOf(
-                InvolvedSharedPreferencesModel(id = 1, detail = "inv detail")
+                PeopleExternalSharedPreferencesModel(id = 1, detail = "inv detail")
             )
-            cardDatasource.save(CardSharedPreferencesModel(involvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(involvedExternalList = list))
             
-            val result = datasource.getDetailInvolved(1)
+            val result = datasource.getDetailInvolvedExternal(1)
             assertEquals(result.getOrNull(), "inv detail")
         }
 
@@ -209,11 +209,11 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getDetailWitness - Check return correct detail from witnessList`() =
         runTest {
             val list = listOf(
-                InvolvedSharedPreferencesModel(id = 1, detail = "wit detail")
+                PeopleExternalSharedPreferencesModel(id = 1, detail = "wit detail")
             )
-            cardDatasource.save(CardSharedPreferencesModel(witnessList = list))
+            cardDatasource.save(CardSharedPreferencesModel(witnessExternalList = list))
             
-            val result = datasource.getDetailWitness(1)
+            val result = datasource.getDetailWitnessExternal(1)
             assertEquals(result.getOrNull(), "wit detail")
         }
 
@@ -279,14 +279,14 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getStatePassengerInvolved - Check return correct state from passengerInvolvedList`() =
         runTest {
             val list = listOf(
-                VehicleInvolvedSharedPreferencesModel(
-                    id = 1, 
+                VehicleExternalSharedPreferencesModel(
+                    id = 1,
                     passengerInvolvedList = listOf(
-                        InvolvedSharedPreferencesModel(id = 10, state = State.DEAD)
+                        PeopleExternalSharedPreferencesModel(id = 10, state = State.DEAD)
                     )
                 )
             )
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
             
             val result = datasource.getStatePassengerInvolved(1, 10)
             assertEquals(result.getOrNull(), State.DEAD)
@@ -296,11 +296,11 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getStateInvolved - Check return correct state from involvedList`() =
         runTest {
             val list = listOf(
-                InvolvedSharedPreferencesModel(id = 1, state = State.INJURED)
+                PeopleExternalSharedPreferencesModel(id = 1, state = State.INJURED)
             )
-            cardDatasource.save(CardSharedPreferencesModel(involvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(involvedExternalList = list))
             
-            val result = datasource.getStateInvolved(1)
+            val result = datasource.getStateInvolvedExternal(1)
             assertEquals(result.getOrNull(), State.INJURED)
         }
 
@@ -308,9 +308,9 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getStateDriver - Check return correct state from driver in vehicleInvolvedList`() =
         runTest {
             val list = listOf(
-                VehicleInvolvedSharedPreferencesModel(id = 1, driver = InvolvedSharedPreferencesModel(state = State.UNHARMED))
+                VehicleExternalSharedPreferencesModel(id = 1, driver = PeopleExternalSharedPreferencesModel(state = State.UNHARMED))
             )
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
             
             val result = datasource.getStateDriver(1)
             assertEquals(result.getOrNull(), State.UNHARMED)
@@ -320,16 +320,16 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getAddressPassengerInvolved - Check return correct address from passengerInvolvedList`() =
         runTest {
             val list = listOf(
-                VehicleInvolvedSharedPreferencesModel(
-                    id = 1, 
+                VehicleExternalSharedPreferencesModel(
+                    id = 1,
                     passengerInvolvedList = listOf(
-                        InvolvedSharedPreferencesModel(id = 10, address = "pass address")
+                        PeopleExternalSharedPreferencesModel(id = 10, address = "pass address")
                     )
                 )
             )
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
             
-            val result = datasource.getAddressPassengerInvolved(1, 10)
+            val result = datasource.getAddressPassengerExternal(1, 10)
             assertEquals(result.getOrNull(), "pass address")
         }
 
@@ -337,9 +337,9 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getAddressDriver - Check return correct address from driver in vehicleInvolvedList`() =
         runTest {
             val list = listOf(
-                VehicleInvolvedSharedPreferencesModel(id = 1, driver = InvolvedSharedPreferencesModel(address = "driver address"))
+                VehicleExternalSharedPreferencesModel(id = 1, driver = PeopleExternalSharedPreferencesModel(address = "driver address"))
             )
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
             
             val result = datasource.getAddressDriver(1)
             assertEquals(result.getOrNull(), "driver address")
@@ -349,9 +349,9 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getAddressInvolved - Check return correct address from involvedList`() =
         runTest {
             val list = listOf(
-                InvolvedSharedPreferencesModel(id = 1, address = "involved address")
+                PeopleExternalSharedPreferencesModel(id = 1, address = "involved address")
             )
-            cardDatasource.save(CardSharedPreferencesModel(involvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(involvedExternalList = list))
             
             val result = datasource.getAddressInvolved(1)
             assertEquals(result.getOrNull(), "involved address")
@@ -361,9 +361,9 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getBrand - Check return correct brand from vehicle in vehicleInvolvedList`() =
         runTest {
             val list = listOf(
-                VehicleInvolvedSharedPreferencesModel(id = 1, vehicle = VehicleSharedPreferencesModel(brand = "FORD"))
+                VehicleExternalSharedPreferencesModel(id = 1, vehicle = VehicleSharedPreferencesModel(brand = "FORD"))
             )
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
             
             val result = datasource.getBrand(1)
             assertEquals(result.getOrNull(), "FORD")
@@ -373,9 +373,9 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getPlate - Check return correct plate from vehicle in vehicleInvolvedList`() =
         runTest {
             val list = listOf(
-                VehicleInvolvedSharedPreferencesModel(id = 1, vehicle = VehicleSharedPreferencesModel(plate = "ABC-1234"))
+                VehicleExternalSharedPreferencesModel(id = 1, vehicle = VehicleSharedPreferencesModel(plate = "ABC-1234"))
             )
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
             
             val result = datasource.getPlate(1)
             assertEquals(result.getOrNull(), "ABC-1234")
@@ -385,9 +385,9 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getDocumentDriver - Check return correct document from driver in vehicleInvolvedList`() =
         runTest {
             val list = listOf(
-                VehicleInvolvedSharedPreferencesModel(id = 1, driver = InvolvedSharedPreferencesModel(document = "123.456.789-00"))
+                VehicleExternalSharedPreferencesModel(id = 1, driver = PeopleExternalSharedPreferencesModel(document = "123.456.789-00"))
             )
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
             
             val result = datasource.getDocumentDriver(1)
             assertEquals(result.getOrNull(), "123.456.789-00")
@@ -397,16 +397,16 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getDocumentPassengerInvolved - Check return correct document from passengerInvolvedList`() =
         runTest {
             val list = listOf(
-                VehicleInvolvedSharedPreferencesModel(
-                    id = 1, 
+                VehicleExternalSharedPreferencesModel(
+                    id = 1,
                     passengerInvolvedList = listOf(
-                        InvolvedSharedPreferencesModel(id = 10, document = "000.000.000-00")
+                        PeopleExternalSharedPreferencesModel(id = 10, document = "000.000.000-00")
                     )
                 )
             )
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
             
-            val result = datasource.getDocumentPassengerInvolved(1, 10)
+            val result = datasource.getDocumentPassengerExternal(1, 10)
             assertEquals(result.getOrNull(), "000.000.000-00")
         }
 
@@ -414,9 +414,9 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getNameDriver - Check return correct name from driver in vehicleInvolvedList`() =
         runTest {
             val list = listOf(
-                VehicleInvolvedSharedPreferencesModel(id = 1, driver = InvolvedSharedPreferencesModel(name = "DRIVER NAME"))
+                VehicleExternalSharedPreferencesModel(id = 1, driver = PeopleExternalSharedPreferencesModel(name = "DRIVER NAME"))
             )
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
             
             val result = datasource.getNameDriver(1)
             assertEquals(result.getOrNull(), "DRIVER NAME")
@@ -426,16 +426,16 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getNamePassengerInvolved - Check return correct name from passengerInvolvedList`() =
         runTest {
             val list = listOf(
-                VehicleInvolvedSharedPreferencesModel(
-                    id = 1, 
+                VehicleExternalSharedPreferencesModel(
+                    id = 1,
                     passengerInvolvedList = listOf(
-                        InvolvedSharedPreferencesModel(id = 10, name = "PASSENGER NAME")
+                        PeopleExternalSharedPreferencesModel(id = 10, name = "PASSENGER NAME")
                     )
                 )
             )
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
             
-            val result = datasource.getNamePassengerInvolved(1, 10)
+            val result = datasource.getNamePassengerExternal(1, 10)
             assertEquals(result.getOrNull(), "PASSENGER NAME")
         }
 
@@ -482,17 +482,17 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `listPassengerInvolved - Check return correct list of Involved from passengerInvolvedList`() =
         runTest {
             val list = listOf(
-                VehicleInvolvedSharedPreferencesModel(
-                    id = 1, 
+                VehicleExternalSharedPreferencesModel(
+                    id = 1,
                     passengerInvolvedList = listOf(
-                        InvolvedSharedPreferencesModel(id = 10, name = "P1"),
-                        InvolvedSharedPreferencesModel(id = 20, name = "P2")
+                        PeopleExternalSharedPreferencesModel(id = 10, name = "P1"),
+                        PeopleExternalSharedPreferencesModel(id = 20, name = "P2")
                     )
                 )
             )
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
             
-            val result = datasource.listPassengerInvolved(1)
+            val result = datasource.listPassengerExternal(1)
             val passList = result.getOrNull()!!
             assertEquals(passList.size, 2)
             assertEquals(passList[0].id, 10)
@@ -503,12 +503,12 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `listInvolved - Check return correct list of Involved from involvedList`() =
         runTest {
             val list = listOf(
-                InvolvedSharedPreferencesModel(id = 1, name = "I1"),
-                InvolvedSharedPreferencesModel(id = 2, name = "I2")
+                PeopleExternalSharedPreferencesModel(id = 1, name = "I1"),
+                PeopleExternalSharedPreferencesModel(id = 2, name = "I2")
             )
-            cardDatasource.save(CardSharedPreferencesModel(involvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(involvedExternalList = list))
             
-            val result = datasource.listInvolved()
+            val result = datasource.listInvolvedExternal()
             val invList = result.getOrNull()!!
             assertEquals(invList.size, 2)
             assertEquals(invList[0].id, 1)
@@ -519,12 +519,12 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `listWitness - Check return correct list of Involved from witnessList`() =
         runTest {
             val list = listOf(
-                InvolvedSharedPreferencesModel(id = 1, name = "W1"),
-                InvolvedSharedPreferencesModel(id = 2, name = "W2")
+                PeopleExternalSharedPreferencesModel(id = 1, name = "W1"),
+                PeopleExternalSharedPreferencesModel(id = 2, name = "W2")
             )
-            cardDatasource.save(CardSharedPreferencesModel(witnessList = list))
+            cardDatasource.save(CardSharedPreferencesModel(witnessExternalList = list))
             
-            val result = datasource.listWitness()
+            val result = datasource.listWitnessExternal()
             val witList = result.getOrNull()!!
             assertEquals(witList.size, 2)
             assertEquals(witList[0].id, 1)
@@ -535,9 +535,9 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getDocumentInvolved - Check return correct document from involvedList`() =
         runTest {
             val list = listOf(
-                InvolvedSharedPreferencesModel(id = 1, document = "DOC1")
+                PeopleExternalSharedPreferencesModel(id = 1, document = "DOC1")
             )
-            cardDatasource.save(CardSharedPreferencesModel(involvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(involvedExternalList = list))
             
             val result = datasource.getDocumentInvolved(1)
             assertEquals(result.getOrNull(), "DOC1")
@@ -547,9 +547,9 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getNameInvolved - Check return correct name from involvedList`() =
         runTest {
             val list = listOf(
-                InvolvedSharedPreferencesModel(id = 1, name = "NAME1")
+                PeopleExternalSharedPreferencesModel(id = 1, name = "NAME1")
             )
-            cardDatasource.save(CardSharedPreferencesModel(involvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(involvedExternalList = list))
             
             val result = datasource.getNameInvolved(1)
             assertEquals(result.getOrNull(), "NAME1")
@@ -559,9 +559,9 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getNameWitness - Check return correct name from witnessList`() =
         runTest {
             val list = listOf(
-                InvolvedSharedPreferencesModel(id = 1, name = "WITNAME1")
+                PeopleExternalSharedPreferencesModel(id = 1, name = "WITNAME1")
             )
-            cardDatasource.save(CardSharedPreferencesModel(witnessList = list))
+            cardDatasource.save(CardSharedPreferencesModel(witnessExternalList = list))
             
             val result = datasource.getNameWitness(1)
             assertEquals(result.getOrNull(), "WITNAME1")
@@ -571,9 +571,9 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getPhoneDriver - Check return correct phone from driver in vehicleInvolvedList`() =
         runTest {
             val list = listOf(
-                VehicleInvolvedSharedPreferencesModel(id = 1, driver = InvolvedSharedPreferencesModel(phone = "PH1"))
+                VehicleExternalSharedPreferencesModel(id = 1, driver = PeopleExternalSharedPreferencesModel(phone = "PH1"))
             )
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
             
             val result = datasource.getPhoneDriver(1)
             assertEquals(result.getOrNull(), "PH1")
@@ -583,9 +583,9 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getPhoneInvolved - Check return correct phone from involvedList`() =
         runTest {
             val list = listOf(
-                InvolvedSharedPreferencesModel(id = 1, phone = "PHINV1")
+                PeopleExternalSharedPreferencesModel(id = 1, phone = "PHINV1")
             )
-            cardDatasource.save(CardSharedPreferencesModel(involvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(involvedExternalList = list))
             
             val result = datasource.getPhoneInvolved(1)
             assertEquals(result.getOrNull(), "PHINV1")
@@ -595,9 +595,9 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getPhoneWitness - Check return correct phone from witnessList`() =
         runTest {
             val list = listOf(
-                InvolvedSharedPreferencesModel(id = 1, phone = "PHWIT1")
+                PeopleExternalSharedPreferencesModel(id = 1, phone = "PHWIT1")
             )
-            cardDatasource.save(CardSharedPreferencesModel(witnessList = list))
+            cardDatasource.save(CardSharedPreferencesModel(witnessExternalList = list))
             
             val result = datasource.getPhoneWitness(1)
             assertEquals(result.getOrNull(), "PHWIT1")
@@ -607,14 +607,14 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `getPhonePassengerInvolved - Check return correct phone from passengerInvolvedList`() =
         runTest {
             val list = listOf(
-                VehicleInvolvedSharedPreferencesModel(
-                    id = 1, 
+                VehicleExternalSharedPreferencesModel(
+                    id = 1,
                     passengerInvolvedList = listOf(
-                        InvolvedSharedPreferencesModel(id = 10, phone = "PHPASS1")
+                        PeopleExternalSharedPreferencesModel(id = 10, phone = "PHPASS1")
                     )
                 )
             )
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
             
             val result = datasource.getPhonePassengerInvolved(1, 10)
             assertEquals(result.getOrNull(), "PHPASS1")
@@ -640,12 +640,12 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
     fun `listVehicleInvolved - Check return correct list of VehicleInvolved`() =
         runTest {
             val list = listOf(
-                VehicleInvolvedSharedPreferencesModel(id = 1, vehicle = VehicleSharedPreferencesModel(plate = "P1")),
-                VehicleInvolvedSharedPreferencesModel(id = 2, vehicle = VehicleSharedPreferencesModel(plate = "P2"))
+                VehicleExternalSharedPreferencesModel(id = 1, vehicle = VehicleSharedPreferencesModel(plate = "P1")),
+                VehicleExternalSharedPreferencesModel(id = 2, vehicle = VehicleSharedPreferencesModel(plate = "P2"))
             )
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
             
-            val result = datasource.listVehicleInvolved()
+            val result = datasource.listVehicleExternal()
             val vehList = result.getOrNull()!!
             assertEquals(vehList.size, 2)
             assertEquals(vehList[0].id, 1)

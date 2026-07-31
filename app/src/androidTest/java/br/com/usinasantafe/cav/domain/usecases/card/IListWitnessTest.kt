@@ -2,7 +2,7 @@ package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.PeopleExternalSharedPreferencesModel
 import br.com.usinasantafe.cav.presenter.model.ItemListScreenModel
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -20,7 +20,7 @@ class IListWitnessTest {
     val hiltRule = HiltAndroidRule(this)
 
     @Inject
-    lateinit var usecase: ListWitness
+    lateinit var usecase: ListWitnessExternal
 
     @Inject
     lateinit var cardSharedPreferencesDatasource: ICardSharedPreferencesDatasource
@@ -33,8 +33,8 @@ class IListWitnessTest {
     @Test
     fun check_list_witness() = runTest {
         val data = CardSharedPreferencesModel(
-            witnessList = listOf(
-                InvolvedSharedPreferencesModel(id = 1, document = "W1", name = "WIT 1")
+            witnessExternalList = listOf(
+                PeopleExternalSharedPreferencesModel(id = 1, document = "W1", name = "WIT 1")
             )
         )
         cardSharedPreferencesDatasource.save(data)

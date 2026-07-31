@@ -33,7 +33,7 @@ class IGetDescPassengers @Inject constructor(
                     descList.joinToString(separator = "\n")
                 }
                 else -> {
-                    val entityList = cardRepository.listPassengerInvolved(idMain).getOrThrow()
+                    val entityList = cardRepository.listPassengerExternal(idMain).getOrThrow()
                     val descList = entityList.map {  "${it.document ?: "-"} - ${it.name}" }
                     descList.joinToString(separator = "\n")
                 }

@@ -100,7 +100,7 @@ class ISetPhoneTest {
             val result = usecase(
                 phone = "16999999999",
                 option = Option.INSERT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 2,
                 idSecondary = 0
             )
@@ -132,7 +132,7 @@ class ISetPhoneTest {
             val result = usecase(
                 phone = "16999999999",
                 option = Option.INSERT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 2,
                 idSecondary = 0
             )
@@ -165,7 +165,7 @@ class ISetPhoneTest {
             val result = usecase(
                 phone = "16999999999",
                 option = Option.INSERT,
-                flowNote = FlowNote.WITNESS,
+                flowNote = FlowNote.WITNESS_EXTERNAL,
                 idMain = 3,
                 idSecondary = 0
             )
@@ -197,7 +197,7 @@ class ISetPhoneTest {
             val result = usecase(
                 phone = "16999999999",
                 option = Option.INSERT,
-                flowNote = FlowNote.WITNESS,
+                flowNote = FlowNote.WITNESS_EXTERNAL,
                 idMain = 3,
                 idSecondary = 0
             )
@@ -230,7 +230,7 @@ class ISetPhoneTest {
             val result = usecase(
                 phone = "16999999999",
                 option = Option.INSERT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 4,
                 idSecondary = 5
             )
@@ -262,7 +262,7 @@ class ISetPhoneTest {
             val result = usecase(
                 phone = "16999999999",
                 option = Option.INSERT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 4,
                 idSecondary = 5
             )

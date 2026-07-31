@@ -16,7 +16,7 @@ interface SetLocal {
 }
 
 class ISetLocal @Inject constructor(
-    private val cardRepository: CardRepository
+    private val cardRepository: CardRepository,
 ): SetLocal {
 
     override suspend fun invoke(
@@ -25,11 +25,10 @@ class ISetLocal @Inject constructor(
         longitude: Double?
     ): EmptyResult =
         call(getClassAndMethod()) {
-            val entity = Local(
-                address = address,
-                latitude = latitude,
-                longitude = longitude
-            )
+            val entity = cardRepository.getLocal().getOrThrow() ?: Local()
+            entity.address = address
+            entity.latitude = latitude ?: entity.latitude
+            entity.longitude = longitude ?: entity.longitude
             cardRepository.setLocal(entity).getOrThrow()
         }
 

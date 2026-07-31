@@ -34,16 +34,16 @@ class IListPassenger @Inject constructor(
                         val fullData = entityList.find { it.reg == colabCard.reg }
                         ItemListScreenModel(
                             id = colabCard.id!!,
-                            desc = "${colabCard.reg} - ${fullData?.name ?: "-"}"
+                            desc = "${colabCard.reg} - ${fullData?.name}"
                         )
                     }
                 }
                 else -> {
-                    val entityList = cardRepository.listPassengerInvolved(idMain).getOrThrow()
+                    val entityList = cardRepository.listPassengerExternal(idMain).getOrThrow()
                     entityList.map {
                         ItemListScreenModel(
                             id = it.id!!,
-                            desc = "${it.document ?: "-"} - ${it.name ?: "-"}"
+                            desc = "${it.phone} - ${it.name}"
                         )
                     }
                 }

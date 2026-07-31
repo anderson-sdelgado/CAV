@@ -2,8 +2,8 @@ package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.PeopleExternalSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleExternalSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.FlowNote
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -34,10 +34,10 @@ class IGetAddressTest {
     @Test
     fun check_get_address_driver() = runTest {
         val data = CardSharedPreferencesModel(
-            vehicleInvolvedList = listOf(
-                VehicleInvolvedSharedPreferencesModel(
+            vehicleExternalList = listOf(
+                VehicleExternalSharedPreferencesModel(
                     id = 1,
-                    driver = InvolvedSharedPreferencesModel(address = "ADDR DRIVER")
+                    driver = PeopleExternalSharedPreferencesModel(address = "ADDR DRIVER")
                 )
             )
         )
@@ -50,13 +50,13 @@ class IGetAddressTest {
     @Test
     fun check_get_address_involved() = runTest {
         val data = CardSharedPreferencesModel(
-            involvedList = listOf(
-                InvolvedSharedPreferencesModel(id = 1, address = "ADDR INVOLVED")
+            involvedExternalList = listOf(
+                PeopleExternalSharedPreferencesModel(id = 1, address = "ADDR INVOLVED")
             )
         )
         cardSharedPreferencesDatasource.save(data)
         
-        val result = usecase(FlowNote.INVOLVED, 1, 0)
+        val result = usecase(FlowNote.INVOLVED_EXTERNAL, 1, 0)
         assertEquals(result.getOrNull(), "ADDR INVOLVED")
     }
 }

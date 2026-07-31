@@ -299,7 +299,7 @@ class ISetDetailTest {
     fun `Check return failure if have error in CardRepository setDetailInvolved - Option INSERT - FlowNote DRIVER`() =
         runTest {
             whenever(
-                cardRepository.setDetailInvolved("Test")
+                cardRepository.setDetailInvolvedExternal("Test")
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.setDetailInvolved",
@@ -332,7 +332,7 @@ class ISetDetailTest {
     fun `Check return correct if function execute successfully - Option INSERT - FlowNote DRIVER`() =
         runTest {
             whenever(
-                cardRepository.setDetailInvolved("Test")
+                cardRepository.setDetailInvolvedExternal("Test")
             ).thenReturn(
                 Result.success(60)
             )
@@ -359,7 +359,7 @@ class ISetDetailTest {
     fun `Check return failure if have error in CardRepository setDetailInvolved - Option INSERT - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.setDetailInvolved("Test")
+                cardRepository.setDetailInvolvedExternal("Test")
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.setDetailInvolved",
@@ -370,7 +370,7 @@ class ISetDetailTest {
             val result = usecase(
                 text = "Test",
                 option = Option.INSERT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -392,14 +392,14 @@ class ISetDetailTest {
     fun `Check return correct if function execute successfully - Option INSERT - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.setDetailInvolved("Test")
+                cardRepository.setDetailInvolvedExternal("Test")
             ).thenReturn(
                 Result.success(70)
             )
             val result = usecase(
                 text = "Test",
                 option = Option.INSERT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -419,7 +419,7 @@ class ISetDetailTest {
     fun `Check return failure if have error in CardRepository setDetailInvolved - Option INSERT - FlowNote INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.setDetailInvolved("Test")
+                cardRepository.setDetailInvolvedExternal("Test")
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.setDetailInvolved",
@@ -430,7 +430,7 @@ class ISetDetailTest {
             val result = usecase(
                 text = "Test",
                 option = Option.INSERT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -452,14 +452,14 @@ class ISetDetailTest {
     fun `Check return correct if function execute successfully - Option INSERT - FlowNote INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.setDetailInvolved("Test")
+                cardRepository.setDetailInvolvedExternal("Test")
             ).thenReturn(
                 Result.success(30)
             )
             val result = usecase(
                 text = "Test",
                 option = Option.INSERT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -479,7 +479,7 @@ class ISetDetailTest {
     fun `Check return failure if have error in CardRepository setDetailInvolved - Option INSERT - FlowNote WITNESS`() =
         runTest {
             whenever(
-                cardRepository.setDetailInvolved("Test")
+                cardRepository.setDetailInvolvedExternal("Test")
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.setDetailInvolved",
@@ -490,7 +490,7 @@ class ISetDetailTest {
             val result = usecase(
                 text = "Test",
                 option = Option.INSERT,
-                flowNote = FlowNote.WITNESS,
+                flowNote = FlowNote.WITNESS_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -512,14 +512,14 @@ class ISetDetailTest {
     fun `Check return correct if function execute successfully - Option INSERT - FlowNote WITNESS`() =
         runTest {
             whenever(
-                cardRepository.setDetailInvolved("Test")
+                cardRepository.setDetailInvolvedExternal("Test")
             ).thenReturn(
                 Result.success(80)
             )
             val result = usecase(
                 text = "Test",
                 option = Option.INSERT,
-                flowNote = FlowNote.WITNESS,
+                flowNote = FlowNote.WITNESS_EXTERNAL,
                 idMain = 0,
                 idSecondary = 0
             )
@@ -851,7 +851,7 @@ class ISetDetailTest {
     fun `Check return failure if have error in CardRepository updateDetailPassengerInvolved - Option EDIT - FlowNote PASSENGER_INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.updateDetailPassengerInvolved("Test", 1, 2)
+                cardRepository.updateDetailPassengerExternal("Test", 1, 2)
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.updateDetailPassengerInvolved",
@@ -862,7 +862,7 @@ class ISetDetailTest {
             val result = usecase(
                 text = "Test",
                 option = Option.EDIT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 1,
                 idSecondary = 2
             )
@@ -886,11 +886,11 @@ class ISetDetailTest {
             val result = usecase(
                 text = "Test",
                 option = Option.EDIT,
-                flowNote = FlowNote.PASSENGER_INVOLVED,
+                flowNote = FlowNote.PASSENGER_EXTERNAL,
                 idMain = 1,
                 idSecondary = 2
             )
-            verify(cardRepository, atLeastOnce()).updateDetailPassengerInvolved("Test", 1, 2)
+            verify(cardRepository, atLeastOnce()).updateDetailPassengerExternal("Test", 1, 2)
             assertEquals(
                 result.isSuccess,
                 true
@@ -903,7 +903,7 @@ class ISetDetailTest {
     fun `Check return failure if have error in CardRepository updateDetailInvolved - Option EDIT - FlowNote INVOLVED`() =
         runTest {
             whenever(
-                cardRepository.updateDetailInvolved("Test", 1)
+                cardRepository.updateDetailInvolvedExternal("Test", 1)
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.updateDetailInvolved",
@@ -914,7 +914,7 @@ class ISetDetailTest {
             val result = usecase(
                 text = "Test",
                 option = Option.EDIT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -938,11 +938,11 @@ class ISetDetailTest {
             val result = usecase(
                 text = "Test",
                 option = Option.EDIT,
-                flowNote = FlowNote.INVOLVED,
+                flowNote = FlowNote.INVOLVED_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
-            verify(cardRepository, atLeastOnce()).updateDetailInvolved("Test", 1)
+            verify(cardRepository, atLeastOnce()).updateDetailInvolvedExternal("Test", 1)
             assertEquals(
                 result.isSuccess,
                 true
@@ -955,7 +955,7 @@ class ISetDetailTest {
     fun `Check return failure if have error in CardRepository updateDetailWitness - Option EDIT - FlowNote WITNESS`() =
         runTest {
             whenever(
-                cardRepository.updateDetailWitness("Test", 1)
+                cardRepository.updateDetailWitnessExternal("Test", 1)
             ).thenReturn(
                 resultFailure(
                     "ICardRepository.updateDetailWitness",
@@ -966,7 +966,7 @@ class ISetDetailTest {
             val result = usecase(
                 text = "Test",
                 option = Option.EDIT,
-                flowNote = FlowNote.WITNESS,
+                flowNote = FlowNote.WITNESS_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
@@ -990,11 +990,11 @@ class ISetDetailTest {
             val result = usecase(
                 text = "Test",
                 option = Option.EDIT,
-                flowNote = FlowNote.WITNESS,
+                flowNote = FlowNote.WITNESS_EXTERNAL,
                 idMain = 1,
                 idSecondary = 0
             )
-            verify(cardRepository, atLeastOnce()).updateDetailWitness("Test", 1)
+            verify(cardRepository, atLeastOnce()).updateDetailWitnessExternal("Test", 1)
             assertEquals(
                 result.isSuccess,
                 true

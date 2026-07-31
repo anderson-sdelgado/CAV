@@ -2,6 +2,7 @@ package br.com.usinasantafe.cav.presenter.view.card.local
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.usinasantafe.cav.domain.usecases.card.GetLocal
 import br.com.usinasantafe.cav.domain.usecases.card.SetLocal
 import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.utils.UiStateWithStatus
@@ -29,6 +30,7 @@ data class InputLocalState(
 
 @HiltViewModel
 class InputLocalViewModel @Inject constructor(
+    private val getLocal: GetLocal,
     private val setLocal: SetLocal
 ) : ViewModel() {
 
@@ -47,6 +49,14 @@ class InputLocalViewModel @Inject constructor(
         _uiState.update {
             it.copy(address = address)
         }
+    }
+
+    fun recoverData() = viewModelScope.launch {
+        runCatching {
+            getLocal().getOrThrow().address
+        }
+            .onSuccess { updateState { copy(address = it) } }
+            .onFailureState(getClassAndMethod(), ::updateState)
     }
 
     fun set() = viewModelScope.launch {

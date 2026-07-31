@@ -48,7 +48,8 @@ fun StateScreen(
     onNavPhone: () -> Unit,
     onNavDetail: () -> Unit,
     onNavDataColab: () -> Unit,
-    onNavDataInvolved: () -> Unit
+    onNavDataInvolved: () -> Unit,
+    onNavCheckBreathalyzer: () -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -71,6 +72,7 @@ fun StateScreen(
                 onNavDetail = onNavDetail,
                 onNavDataColab = onNavDataColab,
                 onNavDataInvolved = onNavDataInvolved,
+                onNavCheckBreathalyzer = onNavCheckBreathalyzer,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -91,6 +93,7 @@ fun StateContent(
     onNavDetail: () -> Unit,
     onNavDataColab: () -> Unit,
     onNavDataInvolved: () -> Unit,
+    onNavCheckBreathalyzer: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -203,13 +206,14 @@ fun StateContent(
                                 FlowNote.EQUIP,
                                 FlowNote.EQUIP_SEC,
                                 FlowNote.COLAB,
+                                FlowNote.INVOLVED_COLAB,
+                                FlowNote.WITNESS_COLAB,
                                 FlowNote.PASSENGER_COLAB -> onNavColab()
                                 FlowNote.DRIVER,
-                                FlowNote.PASSENGER_INVOLVED,
+                                FlowNote.PASSENGER_EXTERNAL,
                                 FlowNote.VEHICLE,
-                                FlowNote.WITNESS,
-                                FlowNote.INVOLVED -> onNavPhone()
-
+                                FlowNote.WITNESS_EXTERNAL,
+                                FlowNote.INVOLVED_EXTERNAL -> onNavPhone()
                             }
                         }
                         Option.EDIT -> {
@@ -217,12 +221,15 @@ fun StateContent(
                                 FlowNote.EQUIP,
                                 FlowNote.EQUIP_SEC,
                                 FlowNote.COLAB,
+                                FlowNote.INVOLVED_COLAB,
+                                FlowNote.WITNESS_COLAB,
                                 FlowNote.PASSENGER_COLAB -> onNavDataColab()
                                 FlowNote.DRIVER,
-                                FlowNote.PASSENGER_INVOLVED,
+                                FlowNote.PASSENGER_EXTERNAL,
                                 FlowNote.VEHICLE,
-                                FlowNote.INVOLVED,
-                                FlowNote.WITNESS -> onNavDataInvolved()
+                                FlowNote.INVOLVED_EXTERNAL,
+                                FlowNote.WITNESS_EXTERNAL -> onNavDataInvolved()
+
                             }
                         }
                     }
@@ -254,18 +261,25 @@ fun StateContent(
     LaunchedEffect(status.flagAccess) {
         if(status.flagAccess) {
             when(option){
-                Option.INSERT -> onNavDetail()
+                Option.INSERT -> {
+                    when(flowNote){
+                        FlowNote.COLAB -> onNavCheckBreathalyzer()
+                        else -> onNavDetail()
+                    }
+                }
                 Option.EDIT -> {
                     when(flowNote){
                         FlowNote.EQUIP,
                         FlowNote.EQUIP_SEC,
                         FlowNote.COLAB,
+                        FlowNote.INVOLVED_COLAB,
+                        FlowNote.WITNESS_COLAB,
                         FlowNote.PASSENGER_COLAB -> onNavDataColab()
                         FlowNote.DRIVER,
-                        FlowNote.PASSENGER_INVOLVED,
+                        FlowNote.PASSENGER_EXTERNAL,
                         FlowNote.VEHICLE,
-                        FlowNote.INVOLVED,
-                        FlowNote.WITNESS -> onNavDataInvolved()
+                        FlowNote.INVOLVED_EXTERNAL,
+                        FlowNote.WITNESS_EXTERNAL -> onNavDataInvolved()
                     }
                 }
             }
@@ -292,6 +306,7 @@ fun StatePagePreview() {
                 onNavDataColab = {},
                 onNavPhone = {},
                 onNavDataInvolved = {},
+                onNavCheckBreathalyzer = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

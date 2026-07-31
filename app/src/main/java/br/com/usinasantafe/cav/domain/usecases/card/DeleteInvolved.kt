@@ -6,7 +6,7 @@ import br.com.usinasantafe.cav.utils.call
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import javax.inject.Inject
 
-interface DeleteInvolved {
+interface DeleteInvolvedExternal {
     suspend operator fun invoke(
         flowNote: FlowNote,
         idMain: Int,
@@ -14,9 +14,9 @@ interface DeleteInvolved {
     ): Result<Unit>
 }
 
-class IDeleteInvolved @Inject constructor(
+class IDeleteInvolvedExternal @Inject constructor(
     private val cardRepository: CardRepository
-): DeleteInvolved {
+): DeleteInvolvedExternal {
 
     override suspend fun invoke(
         flowNote: FlowNote,
@@ -26,10 +26,12 @@ class IDeleteInvolved @Inject constructor(
         call(getClassAndMethod()) {
             with(cardRepository){
                 when (flowNote) {
-                    FlowNote.WITNESS -> cardRepository.deleteWitness(idMain).getOrThrow()
-                    FlowNote.INVOLVED -> cardRepository.deleteInvolved(idMain).getOrThrow()
                     FlowNote.PASSENGER_COLAB -> deletePassengerColab(idMain, idSecondary).getOrThrow()
-                    else -> deletePassengerInvolved(idMain, idSecondary).getOrThrow()
+                    FlowNote.INVOLVED_COLAB -> deleteInvolvedColab(idMain).getOrThrow()
+                    FlowNote.WITNESS_COLAB -> deleteWitnessColab(idMain).getOrThrow()
+                    FlowNote.WITNESS_EXTERNAL -> deleteWitnessExternal(idMain).getOrThrow()
+                    FlowNote.INVOLVED_EXTERNAL -> deleteInvolvedExternal(idMain).getOrThrow()
+                    else -> deletePassengerExternal(idMain, idSecondary).getOrThrow()
                 }
             }
 

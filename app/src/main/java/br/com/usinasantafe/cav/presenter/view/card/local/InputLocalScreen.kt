@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
@@ -42,6 +43,11 @@ fun InputLocalScreen(
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+            LaunchedEffect(Unit) {
+                viewModel.recoverData()
+            }
+
             InputLocalContent(
                 address = uiState.address,
                 onAddressChanged = viewModel::onAddressChanged,
@@ -68,6 +74,7 @@ fun InputLocalContent(
     Column(
         modifier = modifier
             .padding(16.dp)
+            .imePadding()
     ) {
         TitleDesign(
             text = stringResource(

@@ -3,8 +3,7 @@ package br.com.usinasantafe.cav.domain.usecases.card
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.InvolvedSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.PeopleExternalSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -50,13 +49,13 @@ class IGetDocumentTest {
     @Test
     fun check_get_document_edit_witness() = runTest {
         val data = CardSharedPreferencesModel(
-            witnessList = listOf(
-                InvolvedSharedPreferencesModel(id = 1, document = "987654321")
+            witnessExternalList = listOf(
+                PeopleExternalSharedPreferencesModel(id = 1, document = "987654321")
             )
         )
         cardSharedPreferencesDatasource.save(data)
         
-        val result = usecase(Option.EDIT, FlowNote.WITNESS, 1, 0)
+        val result = usecase(Option.EDIT, FlowNote.WITNESS_EXTERNAL, 1, 0)
         assertEquals(result.getOrNull(), "987654321")
     }
 }

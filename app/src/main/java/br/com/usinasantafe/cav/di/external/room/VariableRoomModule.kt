@@ -2,7 +2,7 @@ package br.com.usinasantafe.cav.di.external.room
 
 import br.com.usinasantafe.cav.external.room.dao.DatabaseRoom
 import br.com.usinasantafe.cav.external.room.dao.variable.*
-import br.com.usinasantafe.cav.external.room.dao.variable.PassengerInvolvedDao
+import br.com.usinasantafe.cav.external.room.dao.variable.PassengerExternalDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,14 +33,14 @@ object VariableRoomModule {
 
     @Provides
     @Singleton
-    fun provideInvolvedDao(database: DatabaseRoom): InvolvedDao {
-        return database.involvedDao()
+    fun provideInvolvedExternalDao(database: DatabaseRoom): InvolvedExternalDao {
+        return database.involvedExternalDao()
     }
 
     @Provides
     @Singleton
-    fun provideVehicleInvolvedDao(database: DatabaseRoom): VehicleInvolvedDao {
-        return database.vehicleInvolvedDao()
+    fun provideVehicleExternalDao(database: DatabaseRoom): VehicleExternalDao {
+        return database.vehicleExternalDao()
     }
 
     @Provides
@@ -51,14 +51,26 @@ object VariableRoomModule {
 
     @Provides
     @Singleton
-    fun providePassengerInvolvedDao(database: DatabaseRoom): PassengerInvolvedDao {
-        return database.passengerInvolvedDao()
+    fun providePassengerExternalDao(database: DatabaseRoom): PassengerExternalDao {
+        return database.passengerExternalDao()
     }
 
     @Provides
     @Singleton
-    fun provideWitnessDao(database: DatabaseRoom): WitnessDao {
-        return database.witnessDao()
+    fun provideWitnessExternalDao(database: DatabaseRoom): WitnessExternalDao {
+        return database.witnessExternalDao()
     }
 
+    @Provides
+    @Singleton
+    fun provideInvolvedColabDao(database: DatabaseRoom): InvolvedColabDao {
+        return database.involvedColabDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideWitnessColabDao(database: DatabaseRoom): WitnessColabDao {
+        return database.witnessColabDao()
+    }
 }
+

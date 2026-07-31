@@ -5,8 +5,8 @@ import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardShared
 import br.com.usinasantafe.cav.infra.models.room.stable.ColabRoomModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabCardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.PeopleExternalSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleExternalSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleOwnSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.presenter.model.ItemListScreenModel
@@ -63,18 +63,18 @@ class IListPassengerTest {
     @Test
     fun check_list_passenger_involved() = runTest {
         val data = CardSharedPreferencesModel(
-            vehicleInvolvedList = listOf(
-                VehicleInvolvedSharedPreferencesModel(
+            vehicleExternalList = listOf(
+                VehicleExternalSharedPreferencesModel(
                     id = 1,
                     passengerInvolvedList = listOf(
-                        InvolvedSharedPreferencesModel(id = 200, document = "456", name = "P2")
+                        PeopleExternalSharedPreferencesModel(id = 200, document = "456", name = "P2")
                     )
                 )
             )
         )
         cardSharedPreferencesDatasource.save(data)
         
-        val result = usecase(FlowNote.PASSENGER_INVOLVED, 1)
+        val result = usecase(FlowNote.PASSENGER_EXTERNAL, 1)
         val list = result.getOrNull()!!
         assertEquals(list.size, 1)
         assertEquals(list[0], ItemListScreenModel(id = 200, desc = "456 - P2"))

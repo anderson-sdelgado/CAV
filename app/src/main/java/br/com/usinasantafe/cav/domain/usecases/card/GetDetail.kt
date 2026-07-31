@@ -33,13 +33,15 @@ class IGetDetail @Inject constructor(
                         when (flowNote) {
                             FlowNote.EQUIP,
                             FlowNote.EQUIP_SEC -> getDetailEquip()
+                            FlowNote.INVOLVED_COLAB,
+                            FlowNote.WITNESS_COLAB,
                             FlowNote.COLAB,
                             FlowNote.PASSENGER_COLAB -> getDetailColab()
                             FlowNote.VEHICLE -> getDetailVehicle()
                             FlowNote.DRIVER,
-                            FlowNote.PASSENGER_INVOLVED,
-                            FlowNote.INVOLVED,
-                            FlowNote.WITNESS -> getDetailInvolved()
+                            FlowNote.PASSENGER_EXTERNAL,
+                            FlowNote.INVOLVED_EXTERNAL,
+                            FlowNote.WITNESS_EXTERNAL -> getDetailInvolvedExternal()
                         }
                     }
                     Option.EDIT -> {
@@ -48,11 +50,13 @@ class IGetDetail @Inject constructor(
                             FlowNote.EQUIP_SEC -> getDetailEquipSecondary(idMain, idSecondary)
                             FlowNote.COLAB -> getDetailColab(idMain)
                             FlowNote.PASSENGER_COLAB -> getDetailPassengerColab(idMain, idSecondary)
+                            FlowNote.INVOLVED_COLAB -> getDetailInvolvedColab(idMain)
+                            FlowNote.WITNESS_COLAB -> getDetailWitnessColab(idMain)
                             FlowNote.VEHICLE -> getDetailVehicle(idMain)
                             FlowNote.DRIVER -> getDetailDriver(idMain)
-                            FlowNote.PASSENGER_INVOLVED -> getDetailPassengerInvolved(idMain, idSecondary)
-                            FlowNote.INVOLVED -> getDetailInvolved(idMain)
-                            FlowNote.WITNESS -> getDetailWitness(idMain)
+                            FlowNote.PASSENGER_EXTERNAL -> getDetailPassengerExternal(idMain, idSecondary)
+                            FlowNote.INVOLVED_EXTERNAL -> getDetailInvolvedExternal(idMain)
+                            FlowNote.WITNESS_EXTERNAL -> getDetailWitnessExternal(idMain)
                         }
                     }
                 }.getOrThrow() ?: ""

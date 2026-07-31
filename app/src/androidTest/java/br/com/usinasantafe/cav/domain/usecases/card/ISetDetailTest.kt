@@ -129,13 +129,13 @@ class ISetDetailTest {
     fun check_insert_detail_involved() = runTest {
         involvedSharedPreferencesDatasource.setDocument("123")
         
-        val result = usecase("DET INVOLVED", Option.INSERT, FlowNote.INVOLVED, 0, 0)
+        val result = usecase("DET INVOLVED", Option.INSERT, FlowNote.INVOLVED_EXTERNAL, 0, 0)
         assertTrue(result.isSuccess)
         assertEquals(result.getOrNull(), 1)
         
         val model = cardSharedPreferencesDatasource.get().getOrThrow()
-        assertEquals(model.involvedList[0].detail, "DET INVOLVED")
-        assertEquals(model.involvedList[0].document, "123")
+        assertEquals(model.involvedExternalList[0].detail, "DET INVOLVED")
+        assertEquals(model.involvedExternalList[0].document, "123")
         
         assertNull(involvedSharedPreferencesDatasource.get().getOrNull()?.document)
     }
@@ -144,13 +144,13 @@ class ISetDetailTest {
     fun check_insert_detail_witness() = runTest {
         involvedSharedPreferencesDatasource.setDocument("123")
         
-        val result = usecase("DET WITNESS", Option.INSERT, FlowNote.WITNESS, 0, 0)
+        val result = usecase("DET WITNESS", Option.INSERT, FlowNote.WITNESS_EXTERNAL, 0, 0)
         assertTrue(result.isSuccess)
         assertEquals(result.getOrNull(), 1)
         
         val model = cardSharedPreferencesDatasource.get().getOrThrow()
-        assertEquals(model.witnessList[0].detail, "DET WITNESS")
-        assertEquals(model.witnessList[0].document, "123")
+        assertEquals(model.witnessExternalList[0].detail, "DET WITNESS")
+        assertEquals(model.witnessExternalList[0].document, "123")
         
         assertNull(involvedSharedPreferencesDatasource.get().getOrNull()?.document)
     }
@@ -158,17 +158,17 @@ class ISetDetailTest {
     @Test
     fun check_insert_detail_passenger_involved() = runTest {
         cardSharedPreferencesDatasource.save(CardSharedPreferencesModel(
-            vehicleInvolvedList = listOf(VehicleInvolvedSharedPreferencesModel(id = 1))
+            vehicleExternalList = listOf(VehicleExternalSharedPreferencesModel(id = 1))
         ))
         involvedSharedPreferencesDatasource.setDocument("123")
         
-        val result = usecase("DET PASS INV", Option.INSERT, FlowNote.PASSENGER_INVOLVED, 1, 0)
+        val result = usecase("DET PASS INV", Option.INSERT, FlowNote.PASSENGER_EXTERNAL, 1, 0)
         assertTrue(result.isSuccess)
         assertEquals(result.getOrNull(), 1)
         
         val model = cardSharedPreferencesDatasource.get().getOrThrow()
-        assertEquals(model.vehicleInvolvedList[0].passengerInvolvedList[0].detail, "DET PASS INV")
-        assertEquals(model.vehicleInvolvedList[0].passengerInvolvedList[0].document, "123")
+        assertEquals(model.vehicleExternalList[0].passengerInvolvedList[0].detail, "DET PASS INV")
+        assertEquals(model.vehicleExternalList[0].passengerInvolvedList[0].document, "123")
         
         assertNull(involvedSharedPreferencesDatasource.get().getOrNull()?.document)
     }
@@ -183,9 +183,9 @@ class ISetDetailTest {
         assertEquals(result.getOrNull(), 1)
         
         val model = cardSharedPreferencesDatasource.get().getOrThrow()
-        assertEquals(model.vehicleInvolvedList[0].driver.detail, "DET DRIVER")
-        assertEquals(model.vehicleInvolvedList[0].driver.document, "123")
-        assertEquals(model.vehicleInvolvedList[0].vehicle.plate, "ABC-1234")
+        assertEquals(model.vehicleExternalList[0].driver.detail, "DET DRIVER")
+        assertEquals(model.vehicleExternalList[0].driver.document, "123")
+        assertEquals(model.vehicleExternalList[0].vehicle.plate, "ABC-1234")
         
         assertNull(vehicleSharedPreferencesDatasource.get().getOrNull()?.plate)
         assertNull(involvedSharedPreferencesDatasource.get().getOrNull()?.document)
@@ -238,51 +238,51 @@ class ISetDetailTest {
     @Test
     fun check_edit_detail_vehicle() = runTest {
         cardSharedPreferencesDatasource.save(CardSharedPreferencesModel(
-            vehicleInvolvedList = listOf(VehicleInvolvedSharedPreferencesModel(id = 1, vehicle = VehicleSharedPreferencesModel(detail = "OLD")))
+            vehicleExternalList = listOf(VehicleExternalSharedPreferencesModel(id = 1, vehicle = VehicleSharedPreferencesModel(detail = "OLD")))
         ))
         val result = usecase("NEW", Option.EDIT, FlowNote.VEHICLE, 1, 0)
         assertTrue(result.isSuccess)
-        assertEquals(cardSharedPreferencesDatasource.get().getOrThrow().vehicleInvolvedList[0].vehicle.detail, "NEW")
+        assertEquals(cardSharedPreferencesDatasource.get().getOrThrow().vehicleExternalList[0].vehicle.detail, "NEW")
     }
 
     @Test
     fun check_edit_detail_driver() = runTest {
         cardSharedPreferencesDatasource.save(CardSharedPreferencesModel(
-            vehicleInvolvedList = listOf(VehicleInvolvedSharedPreferencesModel(id = 1, driver = InvolvedSharedPreferencesModel(detail = "OLD")))
+            vehicleExternalList = listOf(VehicleExternalSharedPreferencesModel(id = 1, driver = PeopleExternalSharedPreferencesModel(detail = "OLD")))
         ))
         val result = usecase("NEW", Option.EDIT, FlowNote.DRIVER, 1, 0)
         assertTrue(result.isSuccess)
-        assertEquals(cardSharedPreferencesDatasource.get().getOrThrow().vehicleInvolvedList[0].driver.detail, "NEW")
+        assertEquals(cardSharedPreferencesDatasource.get().getOrThrow().vehicleExternalList[0].driver.detail, "NEW")
     }
 
     @Test
     fun check_edit_detail_passenger_involved() = runTest {
         cardSharedPreferencesDatasource.save(CardSharedPreferencesModel(
-            vehicleInvolvedList = listOf(VehicleInvolvedSharedPreferencesModel(id = 1, passengerInvolvedList = listOf(InvolvedSharedPreferencesModel(id = 10, detail = "OLD"))))
+            vehicleExternalList = listOf(VehicleExternalSharedPreferencesModel(id = 1, passengerInvolvedList = listOf(PeopleExternalSharedPreferencesModel(id = 10, detail = "OLD"))))
         ))
-        val result = usecase("NEW", Option.EDIT, FlowNote.PASSENGER_INVOLVED, 1, 10)
+        val result = usecase("NEW", Option.EDIT, FlowNote.PASSENGER_EXTERNAL, 1, 10)
         assertTrue(result.isSuccess)
-        assertEquals(cardSharedPreferencesDatasource.get().getOrThrow().vehicleInvolvedList[0].passengerInvolvedList[0].detail, "NEW")
+        assertEquals(cardSharedPreferencesDatasource.get().getOrThrow().vehicleExternalList[0].passengerInvolvedList[0].detail, "NEW")
     }
 
     @Test
     fun check_edit_detail_involved() = runTest {
         cardSharedPreferencesDatasource.save(CardSharedPreferencesModel(
-            involvedList = listOf(InvolvedSharedPreferencesModel(id = 1, detail = "OLD"))
+            involvedExternalList = listOf(PeopleExternalSharedPreferencesModel(id = 1, detail = "OLD"))
         ))
-        val result = usecase("NEW", Option.EDIT, FlowNote.INVOLVED, 1, 0)
+        val result = usecase("NEW", Option.EDIT, FlowNote.INVOLVED_EXTERNAL, 1, 0)
         assertTrue(result.isSuccess)
-        assertEquals(cardSharedPreferencesDatasource.get().getOrThrow().involvedList[0].detail, "NEW")
+        assertEquals(cardSharedPreferencesDatasource.get().getOrThrow().involvedExternalList[0].detail, "NEW")
     }
 
     @Test
     fun check_edit_detail_witness() = runTest {
         cardSharedPreferencesDatasource.save(CardSharedPreferencesModel(
-            witnessList = listOf(InvolvedSharedPreferencesModel(id = 1, detail = "OLD"))
+            witnessExternalList = listOf(PeopleExternalSharedPreferencesModel(id = 1, detail = "OLD"))
         ))
-        val result = usecase("NEW", Option.EDIT, FlowNote.WITNESS, 1, 0)
+        val result = usecase("NEW", Option.EDIT, FlowNote.WITNESS_EXTERNAL, 1, 0)
         assertTrue(result.isSuccess)
-        assertEquals(cardSharedPreferencesDatasource.get().getOrThrow().witnessList[0].detail, "NEW")
+        assertEquals(cardSharedPreferencesDatasource.get().getOrThrow().witnessExternalList[0].detail, "NEW")
     }
 
     // endregion

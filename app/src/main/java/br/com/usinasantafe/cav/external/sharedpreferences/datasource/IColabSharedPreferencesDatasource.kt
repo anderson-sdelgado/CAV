@@ -101,4 +101,35 @@ class IColabSharedPreferencesDatasource @Inject constructor(
             readModel { detail }
         }
 
+    override suspend fun getResultBreathalyzer(): Result<Boolean?> =
+        result(getClassAndMethod()) {
+            readModel { flagResultBreathalyzer }
+        }
+
+    override suspend fun getRealizedBreathalyzer(): Result<Boolean?> =
+        result(getClassAndMethod()) {
+            readModel { flagRealizedBreathalyzer }
+        }
+
+    override suspend fun getCountBreathalyzer(): Result<Double?> =
+        result(getClassAndMethod()) {
+            readModel { countBreathalyzer }
+        }
+
+    override suspend fun setDataInitialBreathalyzer(flagRealized: Boolean?, flagResult: Boolean?): EmptyResult =
+        result(getClassAndMethod()) {
+            updateModel {
+                this.flagResultBreathalyzer = flagResult
+                this.flagRealizedBreathalyzer = flagRealized
+                this.countBreathalyzer = if(flagRealized == true) this.countBreathalyzer else null
+            }
+        }
+
+    override suspend fun setCountBreathalyzer(count: Double?): EmptyResult =
+        result(getClassAndMethod()) {
+            updateModel {
+                this.countBreathalyzer = count
+            }
+        }
+
 }

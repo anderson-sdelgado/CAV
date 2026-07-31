@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val MAX_PHOTOS = 4
+const val MAX_PHOTOS = 6
 
 data class PhotoState(
     val photos: List<String> = emptyList(),

@@ -146,17 +146,17 @@ class IUpdateCardSharedPreferencesDatasourceTest {
     @Test
     fun `updateDetailDriver - Check update data correct`() =
         runTest {
-            val list = listOf(VehicleInvolvedSharedPreferencesModel(id = 1, driver = InvolvedSharedPreferencesModel(detail = "old")))
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            val list = listOf(VehicleExternalSharedPreferencesModel(id = 1, driver = PeopleExternalSharedPreferencesModel(detail = "old")))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
-            assertEquals(modelBefore.vehicleInvolvedList[0].driver.detail, "old")
+            assertEquals(modelBefore.vehicleExternalList[0].driver.detail, "old")
 
             val result = datasource.updateDetailDriver("new", 1)
             assertEquals(result.isSuccess, true)
             
             val modelAfter = cardDatasource.get().getOrThrow()
-            assertEquals(modelAfter.vehicleInvolvedList[0].driver.detail, "new")
+            assertEquals(modelAfter.vehicleExternalList[0].driver.detail, "new")
         }
 
     @Test
@@ -183,70 +183,70 @@ class IUpdateCardSharedPreferencesDatasourceTest {
     @Test
     fun `updateDetailVehicle - Check update data correct`() =
         runTest {
-            val list = listOf(VehicleInvolvedSharedPreferencesModel(id = 1, vehicle = VehicleSharedPreferencesModel(detail = "old")))
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            val list = listOf(VehicleExternalSharedPreferencesModel(id = 1, vehicle = VehicleSharedPreferencesModel(detail = "old")))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
-            assertEquals(modelBefore.vehicleInvolvedList[0].vehicle.detail, "old")
+            assertEquals(modelBefore.vehicleExternalList[0].vehicle.detail, "old")
 
             val result = datasource.updateDetailVehicle("new", 1)
             assertEquals(result.isSuccess, true)
             
             val modelAfter = cardDatasource.get().getOrThrow()
-            assertEquals(modelAfter.vehicleInvolvedList[0].vehicle.detail, "new")
+            assertEquals(modelAfter.vehicleExternalList[0].vehicle.detail, "new")
         }
 
     @Test
     fun `updateDetailPassengerInvolved - Check update data correct`() =
         runTest {
             val list = listOf(
-                VehicleInvolvedSharedPreferencesModel(
-                    id = 1, 
-                    passengerInvolvedList = listOf(InvolvedSharedPreferencesModel(id = 10, detail = "old"))
+                VehicleExternalSharedPreferencesModel(
+                    id = 1,
+                    passengerInvolvedList = listOf(PeopleExternalSharedPreferencesModel(id = 10, detail = "old"))
                 )
             )
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
-            assertEquals(modelBefore.vehicleInvolvedList[0].passengerInvolvedList[0].detail, "old")
+            assertEquals(modelBefore.vehicleExternalList[0].passengerInvolvedList[0].detail, "old")
 
-            val result = datasource.updateDetailPassengerInvolved("new", 1, 10)
+            val result = datasource.updateDetailPassengerExternal("new", 1, 10)
             assertEquals(result.isSuccess, true)
             
             val modelAfter = cardDatasource.get().getOrThrow()
-            assertEquals(modelAfter.vehicleInvolvedList[0].passengerInvolvedList[0].detail, "new")
+            assertEquals(modelAfter.vehicleExternalList[0].passengerInvolvedList[0].detail, "new")
         }
 
     @Test
     fun `updateDetailInvolved - Check update data correct`() =
         runTest {
-            val list = listOf(InvolvedSharedPreferencesModel(id = 1, detail = "old"))
-            cardDatasource.save(CardSharedPreferencesModel(involvedList = list))
+            val list = listOf(PeopleExternalSharedPreferencesModel(id = 1, detail = "old"))
+            cardDatasource.save(CardSharedPreferencesModel(involvedExternalList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
-            assertEquals(modelBefore.involvedList[0].detail, "old")
+            assertEquals(modelBefore.involvedExternalList[0].detail, "old")
 
-            val result = datasource.updateDetailInvolved("new", 1)
+            val result = datasource.updateDetailInvolvedExternal("new", 1)
             assertEquals(result.isSuccess, true)
             
             val modelAfter = cardDatasource.get().getOrThrow()
-            assertEquals(modelAfter.involvedList[0].detail, "new")
+            assertEquals(modelAfter.involvedExternalList[0].detail, "new")
         }
 
     @Test
     fun `updateDetailWitness - Check update data correct`() =
         runTest {
-            val list = listOf(InvolvedSharedPreferencesModel(id = 1, detail = "old"))
-            cardDatasource.save(CardSharedPreferencesModel(witnessList = list))
+            val list = listOf(PeopleExternalSharedPreferencesModel(id = 1, detail = "old"))
+            cardDatasource.save(CardSharedPreferencesModel(witnessExternalList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
-            assertEquals(modelBefore.witnessList[0].detail, "old")
+            assertEquals(modelBefore.witnessExternalList[0].detail, "old")
 
-            val result = datasource.updateDetailWitness("new", 1)
+            val result = datasource.updateDetailWitnessExternal("new", 1)
             assertEquals(result.isSuccess, true)
             
             val modelAfter = cardDatasource.get().getOrThrow()
-            assertEquals(modelAfter.witnessList[0].detail, "new")
+            assertEquals(modelAfter.witnessExternalList[0].detail, "new")
         }
 
     @Test
@@ -326,346 +326,346 @@ class IUpdateCardSharedPreferencesDatasourceTest {
     @Test
     fun `updateStateDriver - Check update data correct`() =
         runTest {
-            val list = listOf(VehicleInvolvedSharedPreferencesModel(id = 1, driver = InvolvedSharedPreferencesModel(state = State.UNHARMED)))
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            val list = listOf(VehicleExternalSharedPreferencesModel(id = 1, driver = PeopleExternalSharedPreferencesModel(state = State.UNHARMED)))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
-            assertEquals(modelBefore.vehicleInvolvedList[0].driver.state, State.UNHARMED)
+            assertEquals(modelBefore.vehicleExternalList[0].driver.state, State.UNHARMED)
 
             val result = datasource.updateStateDriver(State.DEAD, 1)
             assertEquals(result.isSuccess, true)
             
             val modelAfter = cardDatasource.get().getOrThrow()
-            assertEquals(modelAfter.vehicleInvolvedList[0].driver.state, State.DEAD)
+            assertEquals(modelAfter.vehicleExternalList[0].driver.state, State.DEAD)
         }
 
     @Test
     fun `updateStatePassengerInvolved - Check update data correct`() =
         runTest {
             val list = listOf(
-                VehicleInvolvedSharedPreferencesModel(
-                    id = 1, 
-                    passengerInvolvedList = listOf(InvolvedSharedPreferencesModel(id = 10, state = State.UNHARMED))
+                VehicleExternalSharedPreferencesModel(
+                    id = 1,
+                    passengerInvolvedList = listOf(PeopleExternalSharedPreferencesModel(id = 10, state = State.UNHARMED))
                 )
             )
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
-            assertEquals(modelBefore.vehicleInvolvedList[0].passengerInvolvedList[0].state, State.UNHARMED)
+            assertEquals(modelBefore.vehicleExternalList[0].passengerInvolvedList[0].state, State.UNHARMED)
 
-            val result = datasource.updateStatePassengerInvolved(State.DEAD, 1, 10)
+            val result = datasource.updateStatePassengerExternal(State.DEAD, 1, 10)
             assertEquals(result.isSuccess, true)
             
             val modelAfter = cardDatasource.get().getOrThrow()
-            assertEquals(modelAfter.vehicleInvolvedList[0].passengerInvolvedList[0].state, State.DEAD)
+            assertEquals(modelAfter.vehicleExternalList[0].passengerInvolvedList[0].state, State.DEAD)
         }
 
     @Test
     fun `updateStateInvolved - Check update data correct`() =
         runTest {
-            val list = listOf(InvolvedSharedPreferencesModel(id = 1, state = State.UNHARMED))
-            cardDatasource.save(CardSharedPreferencesModel(involvedList = list))
+            val list = listOf(PeopleExternalSharedPreferencesModel(id = 1, state = State.UNHARMED))
+            cardDatasource.save(CardSharedPreferencesModel(involvedExternalList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
-            assertEquals(modelBefore.involvedList[0].state, State.UNHARMED)
+            assertEquals(modelBefore.involvedExternalList[0].state, State.UNHARMED)
 
-            val result = datasource.updateStateInvolved(State.DEAD, 1)
+            val result = datasource.updateStateInvolvedExternal(State.DEAD, 1)
             assertEquals(result.isSuccess, true)
             
             val modelAfter = cardDatasource.get().getOrThrow()
-            assertEquals(modelAfter.involvedList[0].state, State.DEAD)
+            assertEquals(modelAfter.involvedExternalList[0].state, State.DEAD)
         }
 
     @Test
     fun `updateStateWitness - Check update data correct`() =
         runTest {
-            val list = listOf(InvolvedSharedPreferencesModel(id = 1, state = State.UNHARMED))
-            cardDatasource.save(CardSharedPreferencesModel(witnessList = list))
+            val list = listOf(PeopleExternalSharedPreferencesModel(id = 1, state = State.UNHARMED))
+            cardDatasource.save(CardSharedPreferencesModel(witnessExternalList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
-            assertEquals(modelBefore.witnessList[0].state, State.UNHARMED)
+            assertEquals(modelBefore.witnessExternalList[0].state, State.UNHARMED)
 
-            val result = datasource.updateStateWitness(State.DEAD, 1)
+            val result = datasource.updateStateWitnessExternal(State.DEAD, 1)
             assertEquals(result.isSuccess, true)
             
             val modelAfter = cardDatasource.get().getOrThrow()
-            assertEquals(modelAfter.witnessList[0].state, State.DEAD)
+            assertEquals(modelAfter.witnessExternalList[0].state, State.DEAD)
         }
 
     @Test
     fun `updateAddressPassengerInvolved - Check update data correct`() =
         runTest {
             val list = listOf(
-                VehicleInvolvedSharedPreferencesModel(
-                    id = 1, 
-                    passengerInvolvedList = listOf(InvolvedSharedPreferencesModel(id = 10, address = "old"))
+                VehicleExternalSharedPreferencesModel(
+                    id = 1,
+                    passengerInvolvedList = listOf(PeopleExternalSharedPreferencesModel(id = 10, address = "old"))
                 )
             )
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
-            assertEquals(modelBefore.vehicleInvolvedList[0].passengerInvolvedList[0].address, "old")
+            assertEquals(modelBefore.vehicleExternalList[0].passengerInvolvedList[0].address, "old")
 
             val result = datasource.updateAddressPassengerInvolved("new", 1, 10)
             assertEquals(result.isSuccess, true)
             
             val modelAfter = cardDatasource.get().getOrThrow()
-            assertEquals(modelAfter.vehicleInvolvedList[0].passengerInvolvedList[0].address, "new")
+            assertEquals(modelAfter.vehicleExternalList[0].passengerInvolvedList[0].address, "new")
         }
 
     @Test
     fun `updateAddressInvolved - Check update data correct`() =
         runTest {
-            val list = listOf(InvolvedSharedPreferencesModel(id = 1, address = "old"))
-            cardDatasource.save(CardSharedPreferencesModel(involvedList = list))
+            val list = listOf(PeopleExternalSharedPreferencesModel(id = 1, address = "old"))
+            cardDatasource.save(CardSharedPreferencesModel(involvedExternalList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
-            assertEquals(modelBefore.involvedList[0].address, "old")
+            assertEquals(modelBefore.involvedExternalList[0].address, "old")
 
             val result = datasource.updateAddressInvolved("new", 1)
             assertEquals(result.isSuccess, true)
             
             val modelAfter = cardDatasource.get().getOrThrow()
-            assertEquals(modelAfter.involvedList[0].address, "new")
+            assertEquals(modelAfter.involvedExternalList[0].address, "new")
         }
 
     @Test
     fun `updateAddressDriver - Check update data correct`() =
         runTest {
-            val list = listOf(VehicleInvolvedSharedPreferencesModel(id = 1, driver = InvolvedSharedPreferencesModel(address = "old")))
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            val list = listOf(VehicleExternalSharedPreferencesModel(id = 1, driver = PeopleExternalSharedPreferencesModel(address = "old")))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
-            assertEquals(modelBefore.vehicleInvolvedList[0].driver.address, "old")
+            assertEquals(modelBefore.vehicleExternalList[0].driver.address, "old")
 
             val result = datasource.updateAddressDriver("new", 1)
             assertEquals(result.isSuccess, true)
             
             val modelAfter = cardDatasource.get().getOrThrow()
-            assertEquals(modelAfter.vehicleInvolvedList[0].driver.address, "new")
+            assertEquals(modelAfter.vehicleExternalList[0].driver.address, "new")
         }
 
     @Test
     fun `updateBrand - Check update data correct`() =
         runTest {
-            val list = listOf(VehicleInvolvedSharedPreferencesModel(id = 1, vehicle = VehicleSharedPreferencesModel(brand = "old")))
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            val list = listOf(VehicleExternalSharedPreferencesModel(id = 1, vehicle = VehicleSharedPreferencesModel(brand = "old")))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
-            assertEquals(modelBefore.vehicleInvolvedList[0].vehicle.brand, "old")
+            assertEquals(modelBefore.vehicleExternalList[0].vehicle.brand, "old")
 
             val result = datasource.updateBrand("new", 1)
             assertEquals(result.isSuccess, true)
             
             val modelAfter = cardDatasource.get().getOrThrow()
-            assertEquals(modelAfter.vehicleInvolvedList[0].vehicle.brand, "new")
+            assertEquals(modelAfter.vehicleExternalList[0].vehicle.brand, "new")
         }
 
     @Test
     fun `updatePlate - Check update data correct`() =
         runTest {
-            val list = listOf(VehicleInvolvedSharedPreferencesModel(id = 1, vehicle = VehicleSharedPreferencesModel(plate = "old")))
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            val list = listOf(VehicleExternalSharedPreferencesModel(id = 1, vehicle = VehicleSharedPreferencesModel(plate = "old")))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
-            assertEquals(modelBefore.vehicleInvolvedList[0].vehicle.plate, "old")
+            assertEquals(modelBefore.vehicleExternalList[0].vehicle.plate, "old")
 
             val result = datasource.updatePlate("new", 1)
             assertEquals(result.isSuccess, true)
             
             val modelAfter = cardDatasource.get().getOrThrow()
-            assertEquals(modelAfter.vehicleInvolvedList[0].vehicle.plate, "new")
+            assertEquals(modelAfter.vehicleExternalList[0].vehicle.plate, "new")
         }
 
     @Test
     fun `updateDocumentDriver - Check update data correct`() =
         runTest {
-            val list = listOf(VehicleInvolvedSharedPreferencesModel(id = 1, driver = InvolvedSharedPreferencesModel(document = "old")))
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            val list = listOf(VehicleExternalSharedPreferencesModel(id = 1, driver = PeopleExternalSharedPreferencesModel(document = "old")))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
-            assertEquals(modelBefore.vehicleInvolvedList[0].driver.document, "old")
+            assertEquals(modelBefore.vehicleExternalList[0].driver.document, "old")
 
             val result = datasource.updateDocumentDriver("new", 1)
             assertEquals(result.isSuccess, true)
             
             val modelAfter = cardDatasource.get().getOrThrow()
-            assertEquals(modelAfter.vehicleInvolvedList[0].driver.document, "new")
+            assertEquals(modelAfter.vehicleExternalList[0].driver.document, "new")
         }
 
     @Test
     fun `updateDocumentPassengerInvolved - Check update data correct`() =
         runTest {
             val list = listOf(
-                VehicleInvolvedSharedPreferencesModel(
-                    id = 1, 
-                    passengerInvolvedList = listOf(InvolvedSharedPreferencesModel(id = 10, document = "old"))
+                VehicleExternalSharedPreferencesModel(
+                    id = 1,
+                    passengerInvolvedList = listOf(PeopleExternalSharedPreferencesModel(id = 10, document = "old"))
                 )
             )
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
-            assertEquals(modelBefore.vehicleInvolvedList[0].passengerInvolvedList[0].document, "old")
+            assertEquals(modelBefore.vehicleExternalList[0].passengerInvolvedList[0].document, "old")
 
             val result = datasource.updateDocumentPassengerInvolved("new", 1, 10)
             assertEquals(result.isSuccess, true)
             
             val modelAfter = cardDatasource.get().getOrThrow()
-            assertEquals(modelAfter.vehicleInvolvedList[0].passengerInvolvedList[0].document, "new")
+            assertEquals(modelAfter.vehicleExternalList[0].passengerInvolvedList[0].document, "new")
         }
 
     @Test
     fun `updateDocumentInvolved - Check update data correct`() =
         runTest {
-            val list = listOf(InvolvedSharedPreferencesModel(id = 1, document = "old"))
-            cardDatasource.save(CardSharedPreferencesModel(involvedList = list))
+            val list = listOf(PeopleExternalSharedPreferencesModel(id = 1, document = "old"))
+            cardDatasource.save(CardSharedPreferencesModel(involvedExternalList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
-            assertEquals(modelBefore.involvedList[0].document, "old")
+            assertEquals(modelBefore.involvedExternalList[0].document, "old")
 
             val result = datasource.updateDocumentInvolved("new", 1)
             assertEquals(result.isSuccess, true)
             
             val modelAfter = cardDatasource.get().getOrThrow()
-            assertEquals(modelAfter.involvedList[0].document, "new")
+            assertEquals(modelAfter.involvedExternalList[0].document, "new")
         }
 
     @Test
     fun `updateNameDriver - Check update data correct`() =
         runTest {
-            val list = listOf(VehicleInvolvedSharedPreferencesModel(id = 1, driver = InvolvedSharedPreferencesModel(name = "old")))
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            val list = listOf(VehicleExternalSharedPreferencesModel(id = 1, driver = PeopleExternalSharedPreferencesModel(name = "old")))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
-            assertEquals(modelBefore.vehicleInvolvedList[0].driver.name, "old")
+            assertEquals(modelBefore.vehicleExternalList[0].driver.name, "old")
 
             val result = datasource.updateNameDriver("new", 1)
             assertEquals(result.isSuccess, true)
             
             val modelAfter = cardDatasource.get().getOrThrow()
-            assertEquals(modelAfter.vehicleInvolvedList[0].driver.name, "new")
+            assertEquals(modelAfter.vehicleExternalList[0].driver.name, "new")
         }
 
     @Test
     fun `updateNamePassengerInvolved - Check update data correct`() =
         runTest {
             val list = listOf(
-                VehicleInvolvedSharedPreferencesModel(
-                    id = 1, 
-                    passengerInvolvedList = listOf(InvolvedSharedPreferencesModel(id = 10, name = "old"))
+                VehicleExternalSharedPreferencesModel(
+                    id = 1,
+                    passengerInvolvedList = listOf(PeopleExternalSharedPreferencesModel(id = 10, name = "old"))
                 )
             )
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
-            assertEquals(modelBefore.vehicleInvolvedList[0].passengerInvolvedList[0].name, "old")
+            assertEquals(modelBefore.vehicleExternalList[0].passengerInvolvedList[0].name, "old")
 
             val result = datasource.updateNamePassengerInvolved("new", 1, 10)
             assertEquals(result.isSuccess, true)
             
             val modelAfter = cardDatasource.get().getOrThrow()
-            assertEquals(modelAfter.vehicleInvolvedList[0].passengerInvolvedList[0].name, "new")
+            assertEquals(modelAfter.vehicleExternalList[0].passengerInvolvedList[0].name, "new")
         }
 
     @Test
     fun `updateNameInvolved - Check update data correct`() =
         runTest {
-            val list = listOf(InvolvedSharedPreferencesModel(id = 1, name = "old"))
-            cardDatasource.save(CardSharedPreferencesModel(involvedList = list))
+            val list = listOf(PeopleExternalSharedPreferencesModel(id = 1, name = "old"))
+            cardDatasource.save(CardSharedPreferencesModel(involvedExternalList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
-            assertEquals(modelBefore.involvedList[0].name, "old")
+            assertEquals(modelBefore.involvedExternalList[0].name, "old")
 
             val result = datasource.updateNameInvolved("new", 1)
             assertEquals(result.isSuccess, true)
             
             val modelAfter = cardDatasource.get().getOrThrow()
-            assertEquals(modelAfter.involvedList[0].name, "new")
+            assertEquals(modelAfter.involvedExternalList[0].name, "new")
         }
 
     @Test
     fun `updateNameWitness - Check update data correct`() =
         runTest {
-            val list = listOf(InvolvedSharedPreferencesModel(id = 1, name = "old"))
-            cardDatasource.save(CardSharedPreferencesModel(witnessList = list))
+            val list = listOf(PeopleExternalSharedPreferencesModel(id = 1, name = "old"))
+            cardDatasource.save(CardSharedPreferencesModel(witnessExternalList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
-            assertEquals(modelBefore.witnessList[0].name, "old")
+            assertEquals(modelBefore.witnessExternalList[0].name, "old")
 
             val result = datasource.updateNameWitness("new", 1)
             assertEquals(result.isSuccess, true)
             
             val modelAfter = cardDatasource.get().getOrThrow()
-            assertEquals(modelAfter.witnessList[0].name, "new")
+            assertEquals(modelAfter.witnessExternalList[0].name, "new")
         }
 
     @Test
     fun `updatePhoneDriver - Check update data correct`() =
         runTest {
-            val list = listOf(VehicleInvolvedSharedPreferencesModel(id = 1, driver = InvolvedSharedPreferencesModel(phone = "old")))
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            val list = listOf(VehicleExternalSharedPreferencesModel(id = 1, driver = PeopleExternalSharedPreferencesModel(phone = "old")))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
-            assertEquals(modelBefore.vehicleInvolvedList[0].driver.phone, "old")
+            assertEquals(modelBefore.vehicleExternalList[0].driver.phone, "old")
 
             val result = datasource.updatePhoneDriver("new", 1)
             assertEquals(result.isSuccess, true)
             
             val modelAfter = cardDatasource.get().getOrThrow()
-            assertEquals(modelAfter.vehicleInvolvedList[0].driver.phone, "new")
+            assertEquals(modelAfter.vehicleExternalList[0].driver.phone, "new")
         }
 
     @Test
     fun `updatePhoneInvolved - Check update data correct`() =
         runTest {
-            val list = listOf(InvolvedSharedPreferencesModel(id = 1, phone = "old"))
-            cardDatasource.save(CardSharedPreferencesModel(involvedList = list))
+            val list = listOf(PeopleExternalSharedPreferencesModel(id = 1, phone = "old"))
+            cardDatasource.save(CardSharedPreferencesModel(involvedExternalList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
-            assertEquals(modelBefore.involvedList[0].phone, "old")
+            assertEquals(modelBefore.involvedExternalList[0].phone, "old")
 
             val result = datasource.updatePhoneInvolved("new", 1)
             assertEquals(result.isSuccess, true)
             
             val modelAfter = cardDatasource.get().getOrThrow()
-            assertEquals(modelAfter.involvedList[0].phone, "new")
+            assertEquals(modelAfter.involvedExternalList[0].phone, "new")
         }
 
     @Test
     fun `updatePhoneWitness - Check update data correct`() =
         runTest {
-            val list = listOf(InvolvedSharedPreferencesModel(id = 1, phone = "old"))
-            cardDatasource.save(CardSharedPreferencesModel(witnessList = list))
+            val list = listOf(PeopleExternalSharedPreferencesModel(id = 1, phone = "old"))
+            cardDatasource.save(CardSharedPreferencesModel(witnessExternalList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
-            assertEquals(modelBefore.witnessList[0].phone, "old")
+            assertEquals(modelBefore.witnessExternalList[0].phone, "old")
 
             val result = datasource.updatePhoneWitness("new", 1)
             assertEquals(result.isSuccess, true)
             
             val modelAfter = cardDatasource.get().getOrThrow()
-            assertEquals(modelAfter.witnessList[0].phone, "new")
+            assertEquals(modelAfter.witnessExternalList[0].phone, "new")
         }
 
     @Test
     fun `updatePhonePassengerInvolved - Check update data correct`() =
         runTest {
             val list = listOf(
-                VehicleInvolvedSharedPreferencesModel(
-                    id = 1, 
-                    passengerInvolvedList = listOf(InvolvedSharedPreferencesModel(id = 10, phone = "old"))
+                VehicleExternalSharedPreferencesModel(
+                    id = 1,
+                    passengerInvolvedList = listOf(PeopleExternalSharedPreferencesModel(id = 10, phone = "old"))
                 )
             )
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = list))
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = list))
 
             val modelBefore = cardDatasource.get().getOrThrow()
-            assertEquals(modelBefore.vehicleInvolvedList[0].passengerInvolvedList[0].phone, "old")
+            assertEquals(modelBefore.vehicleExternalList[0].passengerInvolvedList[0].phone, "old")
 
             val result = datasource.updatePhonePassengerInvolved("new", 1, 10)
             assertEquals(result.isSuccess, true)
             
             val modelAfter = cardDatasource.get().getOrThrow()
-            assertEquals(modelAfter.vehicleInvolvedList[0].passengerInvolvedList[0].phone, "new")
+            assertEquals(modelAfter.vehicleExternalList[0].passengerInvolvedList[0].phone, "new")
         }
 
 }

@@ -2,8 +2,8 @@ package br.com.usinasantafe.cav.external.sharedpreferences.datasource.card
 
 import br.com.usinasantafe.cav.domain.entities.variable.ColabCard
 import br.com.usinasantafe.cav.domain.entities.variable.EquipCard
-import br.com.usinasantafe.cav.domain.entities.variable.Involved
-import br.com.usinasantafe.cav.domain.entities.variable.VehicleInvolved
+import br.com.usinasantafe.cav.domain.entities.variable.PeopleExternal
+import br.com.usinasantafe.cav.domain.entities.variable.VehicleExternal
 import br.com.usinasantafe.cav.domain.entities.variable.VehicleOwn
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.RecoverDataCardSharedPreferencesDatasource
@@ -73,38 +73,52 @@ class IRecoverDataCardSharedPreferencesDatasource @Inject constructor(
     override suspend fun getDetailVehicle(idMain: Int): Result<String?> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                vehicleInvolvedList.find { it.id == idMain }?.vehicle?.detail
+                vehicleExternalList.find { it.id == idMain }?.vehicle?.detail
             }
         }
 
     override suspend fun getDetailDriver(idMain: Int): Result<String?> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                vehicleInvolvedList.find { it.id == idMain }?.driver?.detail
+                vehicleExternalList.find { it.id == idMain }?.driver?.detail
             }
         }
 
-    override suspend fun getDetailPassengerInvolved(
+    override suspend fun getDetailPassengerExternal(
         idMain: Int,
         idSecondary: Int
     ): Result<String?> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                vehicleInvolvedList.find { it.id == idMain }?.passengerInvolvedList?.find { it.id == idSecondary }?.detail
+                vehicleExternalList.find { it.id == idMain }?.passengerInvolvedList?.find { it.id == idSecondary }?.detail
             }
         }
 
-    override suspend fun getDetailInvolved(idMain: Int): Result<String?> =
+    override suspend fun getDetailInvolvedExternal(idMain: Int): Result<String?> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                involvedList.find { it.id == idMain }?.detail
+                involvedExternalList.find { it.id == idMain }?.detail
             }
         }
 
-    override suspend fun getDetailWitness(idMain: Int): Result<String?> =
+    override suspend fun getDetailWitnessExternal(idMain: Int): Result<String?> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                witnessList.find { it.id == idMain }?.detail
+                witnessExternalList.find { it.id == idMain }?.detail
+            }
+        }
+
+    override suspend fun getDetailInvolvedColab(idMain: Int): Result<String?> =
+        result(getClassAndMethod()) {
+            datasource.get().readModel {
+                involvedColabList.find { it.id == idMain }?.detail
+            }
+        }
+
+    override suspend fun getDetailWitnessColab(idMain: Int): Result<String?> =
+        result(getClassAndMethod()) {
+            datasource.get().readModel {
+                witnessColabList.find { it.id == idMain }?.detail
             }
         }
 
@@ -122,6 +136,20 @@ class IRecoverDataCardSharedPreferencesDatasource @Inject constructor(
         result(getClassAndMethod()) {
             datasource.get().readModel {
                 vehicleOwnList.find { it.id == idMain }?.passengerColabList?.find { it.id == idSecondary }?.reg.required("reg")
+            }
+        }
+
+    override suspend fun getRegColabInvolved(idMain: Int): Result<Long> =
+        result(getClassAndMethod()) {
+            datasource.get().readModel {
+                involvedColabList.find { it.id == idMain }?.reg.required("reg")
+            }
+        }
+
+    override suspend fun getRegColabWitness(idMain: Int): Result<Long> =
+        result(getClassAndMethod()) {
+            datasource.get().readModel {
+                witnessColabList.find { it.id == idMain }?.reg.required("reg")
             }
         }
 
@@ -148,93 +176,100 @@ class IRecoverDataCardSharedPreferencesDatasource @Inject constructor(
     ): Result<State> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                vehicleInvolvedList.find { it.id == idMain }?.passengerInvolvedList?.find { it.id == idSecondary }?.state.required("state")
+                vehicleExternalList.find { it.id == idMain }?.passengerInvolvedList?.find { it.id == idSecondary }?.state.required("state")
             }
         }
 
-    override suspend fun getStateInvolved(idMain: Int): Result<State> =
+    override suspend fun getStateInvolvedExternal(idMain: Int): Result<State> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                involvedList.find { it.id == idMain }?.state.required("state")
+                involvedExternalList.find { it.id == idMain }?.state.required("state")
+            }
+        }
+
+    override suspend fun getStateInvolvedColab(idMain: Int): Result<State> =
+        result(getClassAndMethod()) {
+            datasource.get().readModel {
+                involvedColabList.find { it.id == idMain }?.state.required("state")
             }
         }
 
     override suspend fun getStateDriver(idMain: Int): Result<State> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                vehicleInvolvedList.find { it.id == idMain }?.driver?.state.required("state")
+                vehicleExternalList.find { it.id == idMain }?.driver?.state.required("state")
             }
         }
 
-    override suspend fun getAddressPassengerInvolved(
+    override suspend fun getAddressPassengerExternal(
         idMain: Int,
         idSecondary: Int
     ): Result<String?> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                vehicleInvolvedList.find { it.id == idMain }?.passengerInvolvedList?.find { it.id == idSecondary }?.address
+                vehicleExternalList.find { it.id == idMain }?.passengerInvolvedList?.find { it.id == idSecondary }?.address
             }
         }
 
     override suspend fun getAddressDriver(idMain: Int): Result<String?> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                vehicleInvolvedList.find { it.id == idMain }?.driver?.address
+                vehicleExternalList.find { it.id == idMain }?.driver?.address
             }
         }
 
     override suspend fun getAddressInvolved(idMain: Int): Result<String?> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                involvedList.find { it.id == idMain }?.address
+                involvedExternalList.find { it.id == idMain }?.address
             }
         }
 
     override suspend fun getBrand(idMain: Int): Result<String?> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                vehicleInvolvedList.find { it.id == idMain }?.vehicle?.brand
+                vehicleExternalList.find { it.id == idMain }?.vehicle?.brand
             }
         }
 
     override suspend fun getPlate(idMain: Int): Result<String?> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                vehicleInvolvedList.find { it.id == idMain }?.vehicle?.plate
+                vehicleExternalList.find { it.id == idMain }?.vehicle?.plate
             }
         }
 
     override suspend fun getDocumentDriver(idMain: Int): Result<String?> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                vehicleInvolvedList.find { it.id == idMain }?.driver?.document
+                vehicleExternalList.find { it.id == idMain }?.driver?.document
             }
         }
 
-    override suspend fun getDocumentPassengerInvolved(
+    override suspend fun getDocumentPassengerExternal(
         idMain: Int,
         idSecondary: Int
     ): Result<String?> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                vehicleInvolvedList.find { it.id == idMain }?.passengerInvolvedList?.find { it.id == idSecondary }?.document
+                vehicleExternalList.find { it.id == idMain }?.passengerInvolvedList?.find { it.id == idSecondary }?.document
             }
         }
 
     override suspend fun getNameDriver(idMain: Int): Result<String?> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                vehicleInvolvedList.find { it.id == idMain }?.driver?.name
+                vehicleExternalList.find { it.id == idMain }?.driver?.name
             }
         }
 
-    override suspend fun getNamePassengerInvolved(
+    override suspend fun getNamePassengerExternal(
         idMain: Int,
         idSecondary: Int
     ): Result<String?> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                vehicleInvolvedList.find { it.id == idMain }?.passengerInvolvedList?.find { it.id == idSecondary }?.name
+                vehicleExternalList.find { it.id == idMain }?.passengerInvolvedList?.find { it.id == idSecondary }?.name
             }
         }
 
@@ -252,66 +287,80 @@ class IRecoverDataCardSharedPreferencesDatasource @Inject constructor(
             }
         }
 
-    override suspend fun listPassengerInvolved(idMain: Int): Result<List<Involved>> =
+    override suspend fun listPassengerExternal(idMain: Int): Result<List<PeopleExternal>> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                vehicleInvolvedList.find { it.id == idMain }?.passengerInvolvedList?.map { it.sharedPreferencesModelToEntity() } ?: emptyList()
+                vehicleExternalList.find { it.id == idMain }?.passengerInvolvedList?.map { it.sharedPreferencesModelToEntity() } ?: emptyList()
             }
         }
 
-    override suspend fun listInvolved(): Result<List<Involved>> =
+    override suspend fun listInvolvedExternal(): Result<List<PeopleExternal>> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                involvedList.map { it.sharedPreferencesModelToEntity() }
+                involvedExternalList.map { it.sharedPreferencesModelToEntity() }
             }
         }
 
-    override suspend fun listWitness(): Result<List<Involved>> =
+    override suspend fun listWitnessExternal(): Result<List<PeopleExternal>> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                witnessList.map { it.sharedPreferencesModelToEntity() }
+                witnessExternalList.map { it.sharedPreferencesModelToEntity() }
+            }
+        }
+
+    override suspend fun listInvolvedColab(): Result<List<ColabCard>> =
+        result(getClassAndMethod()) {
+            datasource.get().readModel {
+                involvedColabList.map { it.sharedPreferencesModelToEntity() }
+            }
+        }
+
+    override suspend fun listWitnessColab(): Result<List<ColabCard>> =
+        result(getClassAndMethod()) {
+            datasource.get().readModel {
+                witnessColabList.map { it.sharedPreferencesModelToEntity() }
             }
         }
 
     override suspend fun getDocumentInvolved(idMain: Int): Result<String?> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                involvedList.find { it.id == idMain }?.document
+                involvedExternalList.find { it.id == idMain }?.document
             }
         }
 
     override suspend fun getNameInvolved(idMain: Int): Result<String?> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                involvedList.find { it.id == idMain }?.name
+                involvedExternalList.find { it.id == idMain }?.name
             }
         }
 
     override suspend fun getNameWitness(idMain: Int): Result<String?> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                witnessList.find { it.id == idMain }?.name
+                witnessExternalList.find { it.id == idMain }?.name
             }
         }
 
     override suspend fun getPhoneDriver(idMain: Int): Result<String?> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                vehicleInvolvedList.find { it.id == idMain }?.driver?.phone
+                vehicleExternalList.find { it.id == idMain }?.driver?.phone
             }
         }
 
     override suspend fun getPhoneInvolved(idMain: Int): Result<String?> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                involvedList.find { it.id == idMain }?.phone
+                involvedExternalList.find { it.id == idMain }?.phone
             }
         }
 
     override suspend fun getPhoneWitness(idMain: Int): Result<String?> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                witnessList.find { it.id == idMain }?.phone
+                witnessExternalList.find { it.id == idMain }?.phone
             }
         }
 
@@ -321,7 +370,7 @@ class IRecoverDataCardSharedPreferencesDatasource @Inject constructor(
     ): Result<String?> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                vehicleInvolvedList.find { it.id == idMain }?.passengerInvolvedList?.find { it.id == idSecondary }?.phone
+                vehicleExternalList.find { it.id == idMain }?.passengerInvolvedList?.find { it.id == idSecondary }?.phone
             }
         }
 
@@ -332,10 +381,31 @@ class IRecoverDataCardSharedPreferencesDatasource @Inject constructor(
             }
         }
 
-    override suspend fun listVehicleInvolved(): Result<List<VehicleInvolved>> =
+    override suspend fun listVehicleExternal(): Result<List<VehicleExternal>> =
         result(getClassAndMethod()) {
             datasource.get().readModel {
-                vehicleInvolvedList.map { it.sharedPreferencesModelToEntity() }
+                vehicleExternalList.map { it.sharedPreferencesModelToEntity() }
+            }
+        }
+
+    override suspend fun getResultBreathalyzer(idMain: Int): Result<Boolean?> =
+        result(getClassAndMethod()) {
+            datasource.get().readModel {
+                vehicleOwnList.find { it.id == idMain }?.colab?.flagResultBreathalyzer
+            }
+        }
+
+    override suspend fun getRealizedBreathalyzer(idMain: Int): Result<Boolean?> =
+        result(getClassAndMethod()) {
+            datasource.get().readModel {
+                vehicleOwnList.find { it.id == idMain }?.colab?.flagRealizedBreathalyzer
+            }
+        }
+
+    override suspend fun getCountBreathalyzer(idMain: Int): Result<Double?> =
+        result(getClassAndMethod()) {
+            datasource.get().readModel {
+                vehicleOwnList.find { it.id == idMain }?.colab?.countBreathalyzer
             }
         }
 }

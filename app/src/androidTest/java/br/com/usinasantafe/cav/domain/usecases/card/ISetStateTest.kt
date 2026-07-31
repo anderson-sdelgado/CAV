@@ -4,7 +4,7 @@ import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardShared
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.ColabSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.InvolvedSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.PeopleExternalSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.State
@@ -53,7 +53,7 @@ class ISetStateTest {
     @Test
     fun check_set_state_insert_involved() = runTest {
         involvedSharedPreferencesDatasource.clean()
-        val result = usecase(State.INJURED, Option.INSERT, FlowNote.INVOLVED, 0, 0)
+        val result = usecase(State.INJURED, Option.INSERT, FlowNote.INVOLVED_EXTERNAL, 0, 0)
         assertEquals(result.isSuccess, true)
         
         val resultGet = involvedSharedPreferencesDatasource.get()
@@ -63,16 +63,16 @@ class ISetStateTest {
     @Test
     fun check_update_state_witness() = runTest {
         val data = CardSharedPreferencesModel(
-            witnessList = listOf(
-                InvolvedSharedPreferencesModel(id = 1, state = State.UNHARMED)
+            witnessExternalList = listOf(
+                PeopleExternalSharedPreferencesModel(id = 1, state = State.UNHARMED)
             )
         )
         cardSharedPreferencesDatasource.save(data)
         
-        val result = usecase(State.DEAD, Option.EDIT, FlowNote.WITNESS, 1, 0)
+        val result = usecase(State.DEAD, Option.EDIT, FlowNote.WITNESS_EXTERNAL, 1, 0)
         assertEquals(result.isSuccess, true)
         
         val modelAfter = cardSharedPreferencesDatasource.get().getOrThrow()
-        assertEquals(modelAfter.witnessList[0].state, State.DEAD)
+        assertEquals(modelAfter.witnessExternalList[0].state, State.DEAD)
     }
 }

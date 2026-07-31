@@ -263,4 +263,19 @@ class IColabRoomDatasourceTest {
                 "ANDERSON DA SILVA DELGADO"
             )
         }
+
+    @Test
+    fun `listColabByRegList - Check return correct list`() =
+        runTest {
+            colabDao.insertAll(
+                listOf(
+                    ColabRoomModel(reg = 1L, name = "N1"),
+                    ColabRoomModel(reg = 2L, name = "N2")
+                )
+            )
+            val result = datasource.listColabByRegList(listOf(1L))
+            assertEquals(result.isSuccess, true)
+            assertEquals(1, result.getOrNull()!!.size)
+            assertEquals("N1", result.getOrNull()!![0].name)
+        }
 }

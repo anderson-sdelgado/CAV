@@ -3,7 +3,7 @@ package br.com.usinasantafe.cav.presenter.view.card.colab.data
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.usinasantafe.cav.domain.usecases.card.DeleteInvolved
+import br.com.usinasantafe.cav.domain.usecases.card.DeleteInvolvedExternal
 import br.com.usinasantafe.cav.domain.usecases.card.GetDescColab
 import br.com.usinasantafe.cav.domain.usecases.card.GetDetail
 import br.com.usinasantafe.cav.domain.usecases.card.GetState
@@ -47,7 +47,7 @@ class ColabDataViewModel @Inject constructor(
     private val getDescColab: GetDescColab,
     private val getState: GetState,
     private val getDetail: GetDetail,
-    private val deleteInvolved: DeleteInvolved
+    private val deleteInvolvedExternal: DeleteInvolvedExternal
 ) : ViewModel() {
 
     private val flowNote: Int = savedStateHandle[FLOW_NOTE_ARG]!!
@@ -99,7 +99,7 @@ class ColabDataViewModel @Inject constructor(
 
     fun delete() = viewModelScope.launch {
         runCatching {
-            deleteInvolved(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            deleteInvolvedExternal(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
         }
             .onSuccessStateAccess(::updateState)
             .onFailureState(getClassAndMethod(), ::updateState)

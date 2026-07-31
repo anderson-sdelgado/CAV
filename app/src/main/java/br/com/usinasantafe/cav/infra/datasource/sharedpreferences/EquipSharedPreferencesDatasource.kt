@@ -10,4 +10,5 @@ interface EquipSharedPreferencesDatasource {
     suspend fun setDetail(text: String): EmptyResult
     suspend fun getIdEquip(): Result<Int?>
     suspend fun getDetail(): Result<String?>
+
 }

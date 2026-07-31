@@ -31,9 +31,9 @@ class IGetName @Inject constructor(
                 when {
                     option == Option.INSERT -> getName()
                     flowNote == FlowNote.DRIVER -> getNameDriver(idMain)
-                    flowNote == FlowNote.INVOLVED -> getNameInvolved(idMain)
-                    flowNote == FlowNote.WITNESS -> getNameWitness(idMain)
-                    else -> getNamePassengerInvolved(idMain, idSecondary)
+                    flowNote == FlowNote.INVOLVED_EXTERNAL -> getNameInvolved(idMain)
+                    flowNote == FlowNote.WITNESS_EXTERNAL -> getNameWitness(idMain)
+                    else -> getNamePassengerExternal(idMain, idSecondary)
                 }.getOrThrow() ?: ""
             }
         }

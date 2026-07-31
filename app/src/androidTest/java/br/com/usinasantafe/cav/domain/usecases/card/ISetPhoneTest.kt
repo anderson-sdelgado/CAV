@@ -2,8 +2,8 @@ package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.PeopleExternalSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleExternalSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -35,10 +35,10 @@ class ISetPhoneTest {
     @Test
     fun check_update_phone_driver() = runTest {
         val data = CardSharedPreferencesModel(
-            vehicleInvolvedList = listOf(
-                VehicleInvolvedSharedPreferencesModel(
+            vehicleExternalList = listOf(
+                VehicleExternalSharedPreferencesModel(
                     id = 1,
-                    driver = InvolvedSharedPreferencesModel(phone = "OLD")
+                    driver = PeopleExternalSharedPreferencesModel(phone = "OLD")
                 )
             )
         )
@@ -48,22 +48,22 @@ class ISetPhoneTest {
         assertEquals(result.isSuccess, true)
         
         val modelAfter = cardSharedPreferencesDatasource.get().getOrThrow()
-        assertEquals(modelAfter.vehicleInvolvedList[0].driver.phone, "NEW")
+        assertEquals(modelAfter.vehicleExternalList[0].driver.phone, "NEW")
     }
 
     @Test
     fun check_update_phone_involved() = runTest {
         val data = CardSharedPreferencesModel(
-            involvedList = listOf(
-                InvolvedSharedPreferencesModel(id = 1, phone = "OLD")
+            involvedExternalList = listOf(
+                PeopleExternalSharedPreferencesModel(id = 1, phone = "OLD")
             )
         )
         cardSharedPreferencesDatasource.save(data)
         
-        val result = usecase("NEW", Option.INSERT, FlowNote.INVOLVED, 1, 0)
+        val result = usecase("NEW", Option.INSERT, FlowNote.INVOLVED_EXTERNAL, 1, 0)
         assertEquals(result.isSuccess, true)
         
         val modelAfter = cardSharedPreferencesDatasource.get().getOrThrow()
-        assertEquals(modelAfter.involvedList[0].phone, "NEW")
+        assertEquals(modelAfter.involvedExternalList[0].phone, "NEW")
     }
 }

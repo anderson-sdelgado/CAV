@@ -45,9 +45,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
-import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.presenter.theme.AlertDialogCheckDesign
 import br.com.usinasantafe.cav.presenter.theme.MsgErrors
+import br.com.usinasantafe.cav.utils.UiStatusState
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -71,10 +71,7 @@ fun LocalScreen(
                 set = viewModel::set,
                 onLocalChanged = viewModel::onLocalChanged,
                 onCloseDialog = viewModel::onCloseDialog,
-                flagAccess = uiState.flagAccess,
-                flagDialog = uiState.flagDialog,
-                failure = uiState.failure,
-                errors = uiState.errors,
+                status = uiState.status,
                 flagDialogCheck = uiState.flagDialogCheck,
                 onDialogCheck = viewModel::onDialogCheck,
                 onNavMenu = onNavMenu,
@@ -93,10 +90,7 @@ fun LocalScreenContent(
     set: () -> Unit,
     onLocalChanged: (String, Double, Double) -> Unit,
     onCloseDialog: () -> Unit,
-    flagAccess: Boolean,
-    flagDialog: Boolean,
-    failure: String,
-    errors: Errors,
+    status: UiStatusState,
     flagDialogCheck: Boolean,
     onDialogCheck: (Boolean) -> Unit,
     onNavMenu: () -> Unit,
@@ -177,7 +171,7 @@ fun LocalScreenContent(
             Button(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 155.dp)
+                    .padding(bottom = 105.dp)
                     .fillMaxWidth(0.8f),
                 onClick = {
                     if (deviceLatLng != null) {
@@ -198,20 +192,10 @@ fun LocalScreenContent(
             },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 105.dp)
+                .padding(bottom = 55.dp)
                 .fillMaxWidth(0.8f),
         ) {
             Text(stringResource(id = R.string.text_local_now))
-        }
-
-        Button(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 55.dp)
-                .fillMaxWidth(0.8f),
-            onClick = onNavTypeLocal
-        ) {
-            Text(stringResource(id = R.string.text_type_local))
         }
 
         Button(
@@ -236,15 +220,15 @@ fun LocalScreenContent(
             )
         }
 
-        if(flagDialog) {
-            MsgErrors(errors, onCloseDialog, failure)
+        if(status.flagDialog) {
+            MsgErrors(status.errors, onCloseDialog, status.failure)
         }
 
     }
 
-    LaunchedEffect(flagAccess) {
-        if(flagAccess) {
-            onNavMenu()
+    LaunchedEffect(status.flagAccess) {
+        if(status.flagAccess) {
+            onNavTypeLocal()
         }
     }
 
@@ -295,8 +279,8 @@ fun searchLocation(context: Context, query: String, onLocationFound: (LatLng) ->
     if (Build.VERSION_CODES.TIRAMISU <= Build.VERSION.SDK_INT) {
         geocoder.getFromLocationName(query, 1) { addresses ->
             if (addresses.isNotEmpty()) {
-                val addr = addresses[0]
-                onLocationFound(LatLng(addr.latitude, addr.longitude))
+                val adder = addresses[0]
+                onLocationFound(LatLng(adder.latitude, adder.longitude))
             }
         }
     } else {
@@ -304,8 +288,8 @@ fun searchLocation(context: Context, query: String, onLocationFound: (LatLng) ->
             @Suppress("DEPRECATION")
             val addresses = geocoder.getFromLocationName(query, 1)
             if (!addresses.isNullOrEmpty()) {
-                val addr = addresses[0]
-                onLocationFound(LatLng(addr.latitude, addr.longitude))
+                val adder = addresses[0]
+                onLocationFound(LatLng(adder.latitude, adder.longitude))
             }
         } catch (e: Exception) { e.printStackTrace() }
     }
@@ -330,10 +314,7 @@ fun LocalScreenPagePreview() {
                 set = {},
                 onLocalChanged = { _, _, _ -> },
                 onCloseDialog = {},
-                flagAccess = false,
-                flagDialog = false,
-                failure = "",
-                errors = Errors.FIELD_EMPTY,
+                status = UiStatusState(),
                 flagDialogCheck = false,
                 onDialogCheck = {},
                 onNavMenu = {},

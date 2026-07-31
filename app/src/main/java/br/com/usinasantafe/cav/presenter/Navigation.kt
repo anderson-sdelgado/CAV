@@ -36,8 +36,11 @@ import br.com.usinasantafe.cav.presenter.Screens.STATE_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.SUPPORT_TEAMS_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.TYPE_ACCIDENT_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.BRAND_SCREEN
+import br.com.usinasantafe.cav.presenter.Screens.CHECK_BREATHALYZER_SCREEN
+import br.com.usinasantafe.cav.presenter.Screens.COUNT_BREATHALYZER_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.DOCUMENT_SCREEN
-import br.com.usinasantafe.cav.presenter.Screens.INVOLVED_WITNESS_SCREEN
+import br.com.usinasantafe.cav.presenter.Screens.INVOLVED_WITNESS_COLAB_SCREEN
+import br.com.usinasantafe.cav.presenter.Screens.INVOLVED_WITNESS_EXTERNAL_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.NAME_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.OBS_SCREEN
 import br.com.usinasantafe.cav.presenter.Screens.PHONE_SCREEN
@@ -78,9 +81,12 @@ object Screens {
     const val NAME_SCREEN = "nameScreen"
     const val PHONE_SCREEN = "phoneScreen"
     const val ADDRESS_SCREEN = "addressScreen"
-    const val INVOLVED_WITNESS_SCREEN = "involvedScreen"
+    const val INVOLVED_WITNESS_EXTERNAL_SCREEN = "involvedWitnessExternalScreen"
+    const val INVOLVED_WITNESS_COLAB_SCREEN = "involvedWitnessColabScreen"
     const val OBS_SCREEN = "obsScreen"
     const val PHOTO_SCREEN = "photoScreen"
+    const val CHECK_BREATHALYZER_SCREEN = "checkBreathalyzerScreen"
+    const val COUNT_BREATHALYZER_SCREEN = "countBreathalyzerScreen"
 }
 
 object Args {
@@ -125,9 +131,12 @@ object Routes {
     const val NAME_ROUTE = "$NAME_SCREEN/{$OPTION_ARG}/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
     const val PHONE_ROUTE = "$PHONE_SCREEN/{$OPTION_ARG}/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
     const val ADDRESS_ROUTE = "$ADDRESS_SCREEN/{$FLOW_NOTE_ARG}/{$ID_MAIN_ARG}/{$ID_SECONDARY_ARG}"
-    const val INVOLVED_WITNESS_ROUTE = INVOLVED_WITNESS_SCREEN
+    const val INVOLVED_WITNESS_EXTERNAL_ROUTE = INVOLVED_WITNESS_EXTERNAL_SCREEN
+    const val INVOLVED_WITNESS_COLAB_ROUTE = INVOLVED_WITNESS_COLAB_SCREEN
     const val OBS_ROUTE = OBS_SCREEN
     const val PHOTO_ROUTE = PHOTO_SCREEN
+    const val CHECK_BREATHALYZER_ROUTE = "$CHECK_BREATHALYZER_SCREEN/{$OPTION_ARG}/{$ID_MAIN_ARG}"
+    const val COUNT_BREATHALYZER_ROUTE = "$COUNT_BREATHALYZER_SCREEN/{$OPTION_ARG}/{$ID_MAIN_ARG}"
 }
 
 class NavigationActions(private val navController: NavHostController) {
@@ -341,6 +350,20 @@ class NavigationActions(private val navController: NavHostController) {
         navController.navigate("$ADDRESS_SCREEN/$flowNote/$idMain/$idSecondary")
     }
 
+    fun navigateToCheckBreathalyzer(
+        option: Int,
+        idMain: Int,
+    ){
+        navController.navigate("$CHECK_BREATHALYZER_SCREEN/$option/$idMain")
+    }
+
+    fun navigateToCountBreathalyzer(
+        option: Int,
+        idMain: Int,
+    ){
+        navController.navigate("$COUNT_BREATHALYZER_SCREEN/$option/$idMain")
+    }
+
     //////////////////////////////////////////////////////////////////////
 
     ///////////////////////// Menu Card //////////////////////////////////
@@ -357,8 +380,12 @@ class NavigationActions(private val navController: NavHostController) {
         navController.navigate(VEHICLE_FULL_SCREEN)
     }
 
-    fun navigateToInvolvedWitness() {
-        navController.navigate(INVOLVED_WITNESS_SCREEN)
+    fun navigateToInvolvedWitnessExternal() {
+        navController.navigate(INVOLVED_WITNESS_EXTERNAL_SCREEN)
+    }
+
+    fun navigateToInvolvedWitnessColab() {
+        navController.navigate(INVOLVED_WITNESS_COLAB_SCREEN)
     }
 
     fun navigateToObs() {

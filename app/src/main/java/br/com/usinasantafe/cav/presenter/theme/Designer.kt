@@ -428,6 +428,7 @@ fun CheckboxDefault(
     id: Int,
     text: String,
     font: Int = 22,
+    paddingStart: Int = 10,
     checked: Boolean,
     enabled: Boolean = true,
     onChecked: (Boolean) -> Unit
@@ -439,7 +440,12 @@ fun CheckboxDefault(
                 if (enabled) Modifier.clickable { onChecked(!checked) }
                 else Modifier
             )
-            .padding(10.dp)
+            .padding(
+                start = paddingStart.dp,
+                top = 10.dp,
+                end = 10.dp,
+                bottom = 10.dp,
+            )
             .testTag("item_check_box_$id")
     ) {
         Checkbox(

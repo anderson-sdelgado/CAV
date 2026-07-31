@@ -31,8 +31,8 @@ class IGetPhone @Inject constructor(
                 when {
                     option == Option.INSERT -> getPhone()
                     flowNote == FlowNote.DRIVER -> getPhoneDriver(idMain)
-                    flowNote == FlowNote.INVOLVED -> getPhoneInvolved(idMain)
-                    flowNote == FlowNote.WITNESS -> getPhoneWitness(idMain)
+                    flowNote == FlowNote.INVOLVED_EXTERNAL -> getPhoneInvolved(idMain)
+                    flowNote == FlowNote.WITNESS_EXTERNAL -> getPhoneWitness(idMain)
                     else -> getPhonePassengerInvolved(idMain, idSecondary)
                 }.getOrThrow() ?: ""
             }

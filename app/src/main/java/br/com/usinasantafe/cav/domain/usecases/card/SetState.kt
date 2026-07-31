@@ -34,16 +34,20 @@ class ISetState @Inject constructor(
                 when (option) {
                     Option.INSERT -> when(flowNote) {
                         FlowNote.COLAB,
-                        FlowNote.PASSENGER_COLAB -> setStateColab(state)
+                        FlowNote.PASSENGER_COLAB,
+                        FlowNote.INVOLVED_COLAB,
+                        FlowNote.WITNESS_COLAB -> setStateColab(state)
                         else -> setStateInvolved(state)
                     }
                     Option.EDIT -> when(flowNote) {
                         FlowNote.COLAB -> updateStateColab(state, idMain)
                         FlowNote.PASSENGER_COLAB -> updateStatePassengerColab(state, idMain, idSecondary)
+                        FlowNote.INVOLVED_COLAB -> updateStateInvolvedColab(state, idMain)
+                        FlowNote.WITNESS_COLAB -> updateStateWitnessColab(state, idMain)
                         FlowNote.DRIVER -> updateStateDriver(state, idMain)
-                        FlowNote.PASSENGER_INVOLVED -> updateStatePassengerInvolved(state, idMain, idSecondary)
-                        FlowNote.INVOLVED -> updateStateInvolved(state, idMain)
-                        else -> updateStateWitness(state, idMain)
+                        FlowNote.PASSENGER_EXTERNAL -> updateStatePassengerExternal(state, idMain, idSecondary)
+                        FlowNote.INVOLVED_EXTERNAL -> updateStateInvolvedExternal(state, idMain)
+                        else -> updateStateWitnessExternal(state, idMain)
                     }
                 }.getOrThrow()
             }

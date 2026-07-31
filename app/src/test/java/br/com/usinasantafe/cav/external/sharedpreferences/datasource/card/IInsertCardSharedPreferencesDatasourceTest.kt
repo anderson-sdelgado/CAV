@@ -8,8 +8,8 @@ import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPref
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabCardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipCardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.PeopleExternalSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleExternalSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleOwnSharedPreferencesModel
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -116,59 +116,59 @@ class IInsertCardSharedPreferencesDatasourceTest {
     @Test
     fun `addVehicleInvolved - Check insert data correct and return id`() =
         runTest {
-            val entity = VehicleInvolvedSharedPreferencesModel()
-            val result = datasource.addVehicleInvolved(entity)
+            val entity = VehicleExternalSharedPreferencesModel()
+            val result = datasource.addVehicleExternal(entity)
             
             assertEquals(result.isSuccess, true)
             assertEquals(result.getOrNull(), 1)
             
             val model = cardDatasource.get().getOrThrow()
-            assertEquals(model.vehicleInvolvedList.size, 1)
-            assertEquals(model.vehicleInvolvedList[0].id, 1)
+            assertEquals(model.vehicleExternalList.size, 1)
+            assertEquals(model.vehicleExternalList[0].id, 1)
         }
 
     @Test
     fun `addInvolved - Check insert data correct and return id`() =
         runTest {
-            val entity = InvolvedSharedPreferencesModel()
-            val result = datasource.addInvolved(entity)
+            val entity = PeopleExternalSharedPreferencesModel()
+            val result = datasource.addInvolvedExternal(entity)
             
             assertEquals(result.isSuccess, true)
             assertEquals(result.getOrNull(), 1)
             
             val model = cardDatasource.get().getOrThrow()
-            assertEquals(model.involvedList.size, 1)
-            assertEquals(model.involvedList[0].id, 1)
+            assertEquals(model.involvedExternalList.size, 1)
+            assertEquals(model.involvedExternalList[0].id, 1)
         }
 
     @Test
     fun `addWitness - Check insert data correct and return id`() =
         runTest {
-            val entity = InvolvedSharedPreferencesModel()
-            val result = datasource.addWitness(entity)
+            val entity = PeopleExternalSharedPreferencesModel()
+            val result = datasource.addWitnessExternal(entity)
             
             assertEquals(result.isSuccess, true)
             assertEquals(result.getOrNull(), 1)
             
             val model = cardDatasource.get().getOrThrow()
-            assertEquals(model.witnessList.size, 1)
-            assertEquals(model.witnessList[0].id, 1)
+            assertEquals(model.witnessExternalList.size, 1)
+            assertEquals(model.witnessExternalList[0].id, 1)
         }
 
     @Test
     fun `addPassengerInvolved - Check insert data correct and return id`() =
         runTest {
-            val vehicleInvolved = VehicleInvolvedSharedPreferencesModel(id = 1)
-            cardDatasource.save(CardSharedPreferencesModel(vehicleInvolvedList = listOf(vehicleInvolved)))
+            val vehicleInvolved = VehicleExternalSharedPreferencesModel(id = 1)
+            cardDatasource.save(CardSharedPreferencesModel(vehicleExternalList = listOf(vehicleInvolved)))
             
-            val entity = InvolvedSharedPreferencesModel()
-            val result = datasource.addPassengerInvolved(entity, 1)
+            val entity = PeopleExternalSharedPreferencesModel()
+            val result = datasource.addPassengerExternal(entity, 1)
             
             assertEquals(result.isSuccess, true)
             assertEquals(result.getOrNull(), 1)
             
             val model = cardDatasource.get().getOrThrow()
-            assertEquals(model.vehicleInvolvedList[0].passengerInvolvedList.size, 1)
-            assertEquals(model.vehicleInvolvedList[0].passengerInvolvedList[0].id, 1)
+            assertEquals(model.vehicleExternalList[0].passengerInvolvedList.size, 1)
+            assertEquals(model.vehicleExternalList[0].passengerInvolvedList[0].id, 1)
         }
 }

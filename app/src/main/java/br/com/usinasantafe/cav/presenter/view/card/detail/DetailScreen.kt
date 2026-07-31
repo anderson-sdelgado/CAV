@@ -50,11 +50,13 @@ fun DetailScreen(
     onNavDataVehicle: () -> Unit,
     onNavDataInvolvedEdit: () -> Unit,
     onNavDataVehicleOwnInsert: (Int) -> Unit,
-    onNavDataVehicleInvolvedInsert: (Int) -> Unit,
-    onNavDataInvolvedInsert: (Int) -> Unit,
+    onNavDataVehicleExternalInsert: (Int) -> Unit,
+    onNavDataInvolvedWitnessExternalInsert: (Int) -> Unit,
+    onNavDataInvolvedWitnessColabInsert: (Int) -> Unit,
     onNavDataEquipSec: (Int) -> Unit,
     onNavDataPassengerColab: (Int) -> Unit,
     onNavDataPassengerInvolved: (Int) -> Unit,
+    onNavCheckBreathalyzer: () -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -84,11 +86,13 @@ fun DetailScreen(
                 onNavDataVehicle = onNavDataVehicle,
                 onNavDataInvolved = onNavDataInvolvedEdit,
                 onNavDataVehicleOwnInsert = onNavDataVehicleOwnInsert,
-                onNavDataVehicleInvolvedInsert = onNavDataVehicleInvolvedInsert,
-                onNavDataInvolvedInsert = onNavDataInvolvedInsert,
+                onNavDataVehicleExternalInsert = onNavDataVehicleExternalInsert,
+                onNavDataInvolvedWitnessExternalInsert = onNavDataInvolvedWitnessExternalInsert,
+                onNavDataInvolvedWitnessColabInsert = onNavDataInvolvedWitnessColabInsert,
                 onNavDataEquipSec = onNavDataEquipSec,
                 onNavDataPassengerColab = onNavDataPassengerColab,
                 onNavDataPassengerInvolved = onNavDataPassengerInvolved,
+                onNavCheckBreathalyzer = onNavCheckBreathalyzer,
                 modifier = Modifier.padding(innerPadding)
             )
 
@@ -117,11 +121,13 @@ fun DetailContent(
     onNavDataVehicle: () -> Unit,
     onNavDataInvolved: () -> Unit,
     onNavDataVehicleOwnInsert: (Int) -> Unit,
-    onNavDataVehicleInvolvedInsert: (Int) -> Unit,
-    onNavDataInvolvedInsert: (Int) -> Unit,
+    onNavDataVehicleExternalInsert: (Int) -> Unit,
+    onNavDataInvolvedWitnessExternalInsert: (Int) -> Unit,
+    onNavDataInvolvedWitnessColabInsert: (Int) -> Unit,
     onNavDataEquipSec: (Int) -> Unit,
     onNavDataPassengerColab: (Int) -> Unit,
     onNavDataPassengerInvolved: (Int) -> Unit,
+    onNavCheckBreathalyzer: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -161,12 +167,14 @@ fun DetailContent(
                                 FlowNote.EQUIP,
                                 FlowNote.EQUIP_SEC -> onNavEquip()
                                 FlowNote.VEHICLE -> onNavBrand()
-                                FlowNote.COLAB,
+                                FlowNote.COLAB -> onNavCheckBreathalyzer()
                                 FlowNote.PASSENGER_COLAB,
                                 FlowNote.DRIVER,
-                                FlowNote.PASSENGER_INVOLVED,
-                                FlowNote.INVOLVED -> onNavState()
-                                FlowNote.WITNESS -> onNavPhone()
+                                FlowNote.PASSENGER_EXTERNAL,
+                                FlowNote.INVOLVED_COLAB,
+                                FlowNote.INVOLVED_EXTERNAL -> onNavState()
+                                FlowNote.WITNESS_EXTERNAL -> onNavPhone()
+                                FlowNote.WITNESS_COLAB -> onNavColab()
                             }
                         }
                         Option.EDIT -> {
@@ -175,11 +183,13 @@ fun DetailContent(
                                 FlowNote.EQUIP_SEC -> onNavDataEquip()
                                 FlowNote.VEHICLE -> onNavDataVehicle()
                                 FlowNote.COLAB,
+                                FlowNote.INVOLVED_COLAB,
+                                FlowNote.WITNESS_COLAB,
                                 FlowNote.PASSENGER_COLAB -> onNavDataColab()
                                 FlowNote.DRIVER,
-                                FlowNote.PASSENGER_INVOLVED,
-                                FlowNote.INVOLVED,
-                                FlowNote.WITNESS -> onNavDataInvolved()
+                                FlowNote.PASSENGER_EXTERNAL,
+                                FlowNote.INVOLVED_EXTERNAL,
+                                FlowNote.WITNESS_EXTERNAL -> onNavDataInvolved()
                             }
                         }
                     }
@@ -216,13 +226,15 @@ fun DetailContent(
                     when(flowNote) {
                         FlowNote.EQUIP -> onNavColab()
                         FlowNote.EQUIP_SEC -> onNavDataEquipSec(id)
-                        FlowNote.VEHICLE -> onNavDocument()
                         FlowNote.COLAB -> onNavDataVehicleOwnInsert(id)
-                        FlowNote.INVOLVED,
-                        FlowNote.WITNESS -> onNavDataInvolvedInsert(id)
-                        FlowNote.DRIVER -> onNavDataVehicleInvolvedInsert(id)
                         FlowNote.PASSENGER_COLAB -> onNavDataPassengerColab(id)
-                        FlowNote.PASSENGER_INVOLVED -> onNavDataPassengerInvolved(id)
+                        FlowNote.INVOLVED_COLAB,
+                        FlowNote.WITNESS_COLAB -> onNavDataInvolvedWitnessColabInsert(id)
+                        FlowNote.VEHICLE -> onNavDocument()
+                        FlowNote.DRIVER -> onNavDataVehicleExternalInsert(id)
+                        FlowNote.PASSENGER_EXTERNAL -> onNavDataPassengerInvolved(id)
+                        FlowNote.INVOLVED_EXTERNAL,
+                        FlowNote.WITNESS_EXTERNAL -> onNavDataInvolvedWitnessExternalInsert(id)
                     }
                 }
                 Option.EDIT -> {
@@ -230,12 +242,14 @@ fun DetailContent(
                         FlowNote.EQUIP,
                         FlowNote.EQUIP_SEC -> onNavDataEquip()
                         FlowNote.COLAB,
+                        FlowNote.INVOLVED_COLAB,
+                        FlowNote.WITNESS_COLAB,
                         FlowNote.PASSENGER_COLAB -> onNavDataColab()
                         FlowNote.VEHICLE -> onNavDataVehicle()
                         FlowNote.DRIVER,
-                        FlowNote.PASSENGER_INVOLVED,
-                        FlowNote.INVOLVED,
-                        FlowNote.WITNESS -> onNavDataInvolved()
+                        FlowNote.PASSENGER_EXTERNAL,
+                        FlowNote.INVOLVED_EXTERNAL,
+                        FlowNote.WITNESS_EXTERNAL -> onNavDataInvolved()
                     }
                 }
             }
@@ -269,11 +283,13 @@ fun DetailPagePreview() {
                 onNavDataVehicle = {},
                 onNavDataInvolved = {},
                 onNavDataVehicleOwnInsert = {},
-                onNavDataVehicleInvolvedInsert = {},
-                onNavDataInvolvedInsert = {},
+                onNavDataVehicleExternalInsert = {},
+                onNavDataInvolvedWitnessExternalInsert = {},
+                onNavDataInvolvedWitnessColabInsert = {},
                 onNavDataEquipSec = {},
                 onNavDataPassengerColab = {},
                 onNavDataPassengerInvolved = {},
+                onNavCheckBreathalyzer = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

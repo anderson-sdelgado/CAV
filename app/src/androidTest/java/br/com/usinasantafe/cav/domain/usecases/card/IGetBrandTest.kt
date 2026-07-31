@@ -3,7 +3,7 @@ package br.com.usinasantafe.cav.domain.usecases.card
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.VehicleSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleExternalSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.Option
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -50,8 +50,8 @@ class IGetBrandTest {
     @Test
     fun check_get_brand_edit() = runTest {
         val data = CardSharedPreferencesModel(
-            vehicleInvolvedList = listOf(
-                VehicleInvolvedSharedPreferencesModel(
+            vehicleExternalList = listOf(
+                VehicleExternalSharedPreferencesModel(
                     id = 1,
                     vehicle = VehicleSharedPreferencesModel(brand = "FIAT")
                 )

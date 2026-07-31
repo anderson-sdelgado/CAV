@@ -33,8 +33,8 @@ class ISetPhone @Inject constructor(
                 when {
                     option == Option.INSERT -> setPhone(phone)
                     flowNote == FlowNote.DRIVER -> updatePhoneDriver(phone, idMain)
-                    flowNote == FlowNote.INVOLVED -> updatePhoneInvolved(phone, idMain)
-                    flowNote == FlowNote.WITNESS -> updatePhoneWitness(phone, idMain)
+                    flowNote == FlowNote.INVOLVED_EXTERNAL -> updatePhoneInvolved(phone, idMain)
+                    flowNote == FlowNote.WITNESS_EXTERNAL -> updatePhoneWitness(phone, idMain)
                     else -> updatePhonePassengerInvolved(phone, idMain, idSecondary)
                 }.getOrThrow()
             }

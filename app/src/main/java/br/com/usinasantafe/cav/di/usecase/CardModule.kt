@@ -137,7 +137,7 @@ interface CardModule {
 
     @Binds
     @Singleton
-    fun bindDeletePassenger(usecase: IDeleteInvolved): DeleteInvolved
+    fun bindDeletePassenger(usecase: IDeleteInvolvedExternal): DeleteInvolvedExternal
 
     @Binds
     @Singleton
@@ -225,15 +225,15 @@ interface CardModule {
 
     @Binds
     @Singleton
-    fun bindDeleteVehicle(usecase: IDeleteVehicleInvolved): DeleteVehicleInvolved
+    fun bindDeleteVehicle(usecase: IDeleteVehicleExternal): DeleteVehicleInvolved
 
     @Binds
     @Singleton
-    fun bindListInvolved(usecase: IListInvolved): ListInvolved
+    fun bindListInvolved(usecase: IListInvolvedExternal): ListInvolvedExternal
 
     @Binds
     @Singleton
-    fun bindListWitness(usecase: IListWitness): ListWitness
+    fun bindListWitness(usecase: IListWitnessExternal): ListWitnessExternal
 
     @Binds
     @Singleton
@@ -298,5 +298,33 @@ interface CardModule {
     @Binds
     @Singleton
     fun bindSendCard(usecase: ISendCard): SendCard
+
+    @Binds
+    @Singleton
+    fun bindListInvolvedColab(usecase: IListInvolvedColab): ListInvolvedColab
+
+    @Binds
+    @Singleton
+    fun bindListWitnessColab(usecase: IListWitnessColab): IListWitnessColab
+
+    @Binds
+    @Singleton
+    fun bindGetRealizedBreathalyzer(usecase: IGetRealizedBreathalyzer): GetRealizedBreathalyzer
+
+    @Binds
+    @Singleton
+    fun bindGetResultBreathalyzer(usecase: IGetResultBreathalyzer): GetResultBreathalyzer
+
+    @Binds
+    @Singleton
+    fun bindGetCountBreathalyzer(usecase: IGetCountBreathalyzer): GetCountBreathalyzer
+
+    @Binds
+    @Singleton
+    fun bindSetDataInitialBreathalyzer(usecase: ISetDataInitialBreathalyzer): SetDataInitialBreathalyzer
+
+    @Binds
+    @Singleton
+    fun bindSetCountBreathalyzer(usecase: ISetCountBreathalyzer): SetCountBreathalyzer
 
 }

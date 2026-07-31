@@ -2,15 +2,15 @@ package br.com.usinasantafe.cav.infra.datasource.sharedpreferences
 
 import br.com.usinasantafe.cav.domain.entities.variable.ColabCard
 import br.com.usinasantafe.cav.domain.entities.variable.EquipCard
-import br.com.usinasantafe.cav.domain.entities.variable.Involved
-import br.com.usinasantafe.cav.domain.entities.variable.VehicleInvolved
+import br.com.usinasantafe.cav.domain.entities.variable.PeopleExternal
+import br.com.usinasantafe.cav.domain.entities.variable.VehicleExternal
 import br.com.usinasantafe.cav.domain.entities.variable.VehicleOwn
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabCardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipCardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.PeopleExternalSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.LocalSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleExternalSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleOwnSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.State
 import br.com.usinasantafe.cav.utils.EmptyResult
@@ -59,10 +59,12 @@ interface InsertCardSharedPreferencesDatasource {
     suspend fun addVehicleOwn(entity: VehicleOwnSharedPreferencesModel): Result<Int>
     suspend fun addEquipSec(equipCardSharedPreferencesModel: EquipCardSharedPreferencesModel, idMain: Int): Result<Int>
     suspend fun addPassengerColab(colabCardSharedPreferencesModel: ColabCardSharedPreferencesModel, idMain: Int): Result<Int>
-    suspend fun addVehicleInvolved(entity: VehicleInvolvedSharedPreferencesModel): Result<Int>
-    suspend fun addInvolved(entity: InvolvedSharedPreferencesModel): Result<Int>
-    suspend fun addWitness(entity: InvolvedSharedPreferencesModel): Result<Int>
-    suspend fun addPassengerInvolved(entity: InvolvedSharedPreferencesModel, idMain: Int): Result<Int>
+    suspend fun addVehicleExternal(entity: VehicleExternalSharedPreferencesModel): Result<Int>
+    suspend fun addInvolvedExternal(entity: PeopleExternalSharedPreferencesModel): Result<Int>
+    suspend fun addWitnessExternal(entity: PeopleExternalSharedPreferencesModel): Result<Int>
+    suspend fun addPassengerExternal(entity: PeopleExternalSharedPreferencesModel, idMain: Int): Result<Int>
+    suspend fun addInvolvedColab(entity: ColabCardSharedPreferencesModel): Result<Int>
+    suspend fun addWitnessColab(entity: ColabCardSharedPreferencesModel): Result<Int>
 }
 
 interface RecoverDataCardSharedPreferencesDatasource {
@@ -74,30 +76,37 @@ interface RecoverDataCardSharedPreferencesDatasource {
     suspend fun getDetailPassengerColab(idMain: Int, idSecondary: Int): Result<String?>
     suspend fun getDetailVehicle(idMain: Int): Result<String?>
     suspend fun getDetailDriver(idMain: Int): Result<String?>
-    suspend fun getDetailPassengerInvolved(idMain: Int, idSecondary: Int): Result<String?>
-    suspend fun getDetailInvolved(idMain: Int): Result<String?>
-    suspend fun getDetailWitness(idMain: Int): Result<String?>
+    suspend fun getDetailPassengerExternal(idMain: Int, idSecondary: Int): Result<String?>
+    suspend fun getDetailInvolvedExternal(idMain: Int): Result<String?>
+    suspend fun getDetailWitnessExternal(idMain: Int): Result<String?>
+    suspend fun getDetailInvolvedColab(idMain: Int): Result<String?>
+    suspend fun getDetailWitnessColab(idMain: Int): Result<String?>
     suspend fun getRegColab(idMain: Int): Result<Long>
     suspend fun getRegPassengerColab(idMain: Int, idSecondary: Int): Result<Long>
+    suspend fun getRegColabInvolved(idMain: Int): Result<Long>
+    suspend fun getRegColabWitness(idMain: Int): Result<Long>
     suspend fun getStateColab(idMain: Int): Result<State>
     suspend fun getStatePassengerColab(idMain: Int, idSecondary: Int): Result<State>
     suspend fun getStatePassengerInvolved(idMain: Int, idSecondary: Int): Result<State>
-    suspend fun getStateInvolved(idMain: Int): Result<State>
+    suspend fun getStateInvolvedExternal(idMain: Int): Result<State>
+    suspend fun getStateInvolvedColab(idMain: Int): Result<State>
     suspend fun getStateDriver(idMain: Int): Result<State>
-    suspend fun getAddressPassengerInvolved(idMain: Int, idSecondary: Int): Result<String?>
+    suspend fun getAddressPassengerExternal(idMain: Int, idSecondary: Int): Result<String?>
     suspend fun getAddressDriver(idMain: Int): Result<String?>
     suspend fun getAddressInvolved(idMain: Int): Result<String?>
     suspend fun getBrand(idMain: Int): Result<String?>
     suspend fun getPlate(idMain: Int): Result<String?>
     suspend fun getDocumentDriver(idMain: Int): Result<String?>
-    suspend fun getDocumentPassengerInvolved(idMain: Int, idSecondary: Int): Result<String?>
+    suspend fun getDocumentPassengerExternal(idMain: Int, idSecondary: Int): Result<String?>
     suspend fun getNameDriver(idMain: Int): Result<String?>
-    suspend fun getNamePassengerInvolved(idMain: Int, idSecondary: Int): Result<String?>
+    suspend fun getNamePassengerExternal(idMain: Int, idSecondary: Int): Result<String?>
     suspend fun listEquipSecondary(idMain: Int): Result<List<EquipCard>>
     suspend fun listPassengerColab(idMain: Int): Result<List<ColabCard>>
-    suspend fun listPassengerInvolved(idMain: Int): Result<List<Involved>>
-    suspend fun listInvolved(): Result<List<Involved>>
-    suspend fun listWitness(): Result<List<Involved>>
+    suspend fun listPassengerExternal(idMain: Int): Result<List<PeopleExternal>>
+    suspend fun listInvolvedExternal(): Result<List<PeopleExternal>>
+    suspend fun listWitnessExternal(): Result<List<PeopleExternal>>
+    suspend fun listInvolvedColab(): Result<List<ColabCard>>
+    suspend fun listWitnessColab(): Result<List<ColabCard>>
     suspend fun getDocumentInvolved(idMain: Int): Result<String?>
     suspend fun getNameInvolved(idMain: Int): Result<String?>
     suspend fun getNameWitness(idMain: Int): Result<String?>
@@ -106,7 +115,10 @@ interface RecoverDataCardSharedPreferencesDatasource {
     suspend fun getPhoneWitness(idMain: Int): Result<String?>
     suspend fun getPhonePassengerInvolved(idMain: Int, idSecondary: Int): Result<String?>
     suspend fun listVehicleOwn(): Result<List<VehicleOwn>>
-    suspend fun listVehicleInvolved(): Result<List<VehicleInvolved>>
+    suspend fun listVehicleExternal(): Result<List<VehicleExternal>>
+    suspend fun getResultBreathalyzer(idMain: Int): Result<Boolean?>
+    suspend fun getRealizedBreathalyzer(idMain: Int): Result<Boolean?>
+    suspend fun getCountBreathalyzer(idMain: Int): Result<Double?>
 }
 
 interface UpdateCardSharedPreferencesDatasource {
@@ -118,17 +130,23 @@ interface UpdateCardSharedPreferencesDatasource {
     suspend fun updateDetailDriver(text: String, idMain: Int): EmptyResult
     suspend fun updateDetailPassengerColab(text: String, idMain: Int, idSecondary: Int): EmptyResult
     suspend fun updateDetailVehicle(text: String, idMain: Int): EmptyResult
-    suspend fun updateDetailPassengerInvolved(text: String, idMain: Int, idSecondary: Int): EmptyResult
-    suspend fun updateDetailInvolved(text: String, idMain: Int): EmptyResult
-    suspend fun updateDetailWitness(text: String, idMain: Int): EmptyResult
+    suspend fun updateDetailPassengerExternal(text: String, idMain: Int, idSecondary: Int): EmptyResult
+    suspend fun updateDetailInvolvedExternal(text: String, idMain: Int): EmptyResult
+    suspend fun updateDetailWitnessExternal(text: String, idMain: Int): EmptyResult
+    suspend fun updateDetailInvolvedColab(text: String, idMain: Int): EmptyResult
+    suspend fun updateDetailWitnessColab(text: String, idMain: Int): EmptyResult
     suspend fun updateRegColab(regColab: Long, idMain: Int): EmptyResult
     suspend fun updateRegPassengerColab(regColab: Long, idMain: Int, idSecondary: Int): EmptyResult
+    suspend fun updateRegColabInvolved(regColab: Long, idMain: Int): EmptyResult
+    suspend fun updateRegColabWitness(regColab: Long, idMain: Int): EmptyResult
     suspend fun updateStateColab(state: State, idMain: Int): EmptyResult
     suspend fun updateStatePassengerColab(state: State, idMain: Int, idSecondary: Int): EmptyResult
     suspend fun updateStateDriver(state: State, idMain: Int): EmptyResult
-    suspend fun updateStatePassengerInvolved(state: State, idMain: Int, idSecondary: Int): EmptyResult
-    suspend fun updateStateInvolved(state: State, idMain: Int): EmptyResult
-    suspend fun updateStateWitness(state: State, idMain: Int): EmptyResult
+    suspend fun updateStatePassengerExternal(state: State, idMain: Int, idSecondary: Int): EmptyResult
+    suspend fun updateStateInvolvedExternal(state: State, idMain: Int): EmptyResult
+    suspend fun updateStateWitnessExternal(state: State, idMain: Int): EmptyResult
+    suspend fun updateStateInvolvedColab(state: State, idMain: Int): EmptyResult
+    suspend fun updateStateWitnessColab(state: State, idMain: Int): EmptyResult
     suspend fun updateAddressPassengerInvolved(text: String, idMain: Int, idSecondary: Int): EmptyResult
     suspend fun updateAddressInvolved(text: String, idMain: Int): EmptyResult
     suspend fun updateAddressDriver(text: String, idMain: Int): EmptyResult
@@ -145,14 +163,25 @@ interface UpdateCardSharedPreferencesDatasource {
     suspend fun updatePhoneInvolved(text: String, idMain: Int): EmptyResult
     suspend fun updatePhoneWitness(text: String, idMain: Int): EmptyResult
     suspend fun updatePhonePassengerInvolved(text: String, idMain: Int, idSecondary: Int): EmptyResult
+    suspend fun updateDataInitialBreathalyzer(
+        flagRealized: Boolean?,
+        flagResult: Boolean?,
+        idMain: Int
+    ): EmptyResult
+    suspend fun updateCountBreathalyzer(
+        count: Double?,
+        idMain: Int
+    ): EmptyResult
 }
 
 interface DeleteCardSharedPreferencesDatasource {
     suspend fun deleteVehicleOwn(idMain: Int): EmptyResult
     suspend fun deleteEquipSecondary(idMain: Int, idSecondary: Int): EmptyResult
-    suspend fun deleteVehicleInvolved(idMain: Int): EmptyResult
-    suspend fun deleteInvolved(idMain: Int): EmptyResult
-    suspend fun deleteWitness(idMain: Int): EmptyResult
+    suspend fun deleteVehicleExternal(idMain: Int): EmptyResult
+    suspend fun deleteInvolvedExternal(idMain: Int): EmptyResult
+    suspend fun deleteWitnessExternal(idMain: Int): EmptyResult
+    suspend fun deleteInvolvedColab(idMain: Int): EmptyResult
+    suspend fun deleteWitnessColab(idMain: Int): EmptyResult
     suspend fun deletePassengerColab(idMain: Int, idSecondary: Int): EmptyResult
     suspend fun deletePassengerInvolved(idMain: Int, idSecondary: Int): EmptyResult
     suspend fun deletePhoto(url: String): EmptyResult

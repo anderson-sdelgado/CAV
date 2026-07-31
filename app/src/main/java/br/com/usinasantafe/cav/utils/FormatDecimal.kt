@@ -12,9 +12,16 @@ fun stringToDouble(value: String): Double {
     return number.toDouble()
 }
 
-fun doubleToString(value: Double): String {
+fun doubleToString(value: Double, decimalPlaces: Int = 1): String {
     val locale = Locale.Builder().setLanguage("pt").setRegion("BR").build()
     val symbols = DecimalFormatSymbols(locale)
-    val format = DecimalFormat("#,##0.0", symbols)
+    val pattern = buildString {
+        append("#,##0")
+        if (decimalPlaces > 0) {
+            append(".")
+            repeat(decimalPlaces) { append("0") }
+        }
+    }
+    val format = DecimalFormat(pattern, symbols)
     return format.format(value)
 }

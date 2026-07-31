@@ -24,19 +24,29 @@ class IDeleteCardRepository @Inject constructor(
             cardSharedPreferencesDatasource.deleteEquipSecondary(idMain, idSecondary).getOrThrow()
         }
 
-    override suspend fun deleteVehicleInvolved(id: Int): EmptyResult =
+    override suspend fun deleteVehicleExternal(id: Int): EmptyResult =
         call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.deleteVehicleInvolved(id).getOrThrow()
+            cardSharedPreferencesDatasource.deleteVehicleExternal(id).getOrThrow()
         }
 
-    override suspend fun deleteInvolved(id: Int): EmptyResult =
+    override suspend fun deleteInvolvedExternal(id: Int): EmptyResult =
         call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.deleteInvolved(id).getOrThrow()
+            cardSharedPreferencesDatasource.deleteInvolvedExternal(id).getOrThrow()
         }
 
-    override suspend fun deleteWitness(id: Int): EmptyResult =
+    override suspend fun deleteWitnessExternal(id: Int): EmptyResult =
         call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.deleteWitness(id).getOrThrow()
+            cardSharedPreferencesDatasource.deleteWitnessExternal(id).getOrThrow()
+        }
+
+    override suspend fun deleteInvolvedColab(id: Int): EmptyResult =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.deleteInvolvedColab(id).getOrThrow()
+        }
+
+    override suspend fun deleteWitnessColab(id: Int): EmptyResult =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.deleteWitnessColab(id).getOrThrow()
         }
 
     override suspend fun deletePassengerColab(
@@ -47,7 +57,7 @@ class IDeleteCardRepository @Inject constructor(
             cardSharedPreferencesDatasource.deletePassengerColab(idMain, idSecondary).getOrThrow()
         }
 
-    override suspend fun deletePassengerInvolved(
+    override suspend fun deletePassengerExternal(
         idMain: Int,
         idSecondary: Int
     ): EmptyResult =

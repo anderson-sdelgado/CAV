@@ -31,8 +31,8 @@ class IGetDocument @Inject constructor(
                 when {
                     option == Option.INSERT -> getDocument()
                     flowNote == FlowNote.DRIVER -> getDocumentDriver(idMain)
-                    flowNote == FlowNote.INVOLVED -> getDocumentInvolved(idMain)
-                    else -> getDocumentPassengerInvolved(idMain, idSecondary)
+                    flowNote == FlowNote.INVOLVED_EXTERNAL -> getDocumentInvolved(idMain)
+                    else -> getDocumentPassengerExternal(idMain, idSecondary)
                 }.getOrThrow() ?: ""
             }
         }

@@ -2,8 +2,8 @@ package br.com.usinasantafe.cav.infra.repositories.variable.card
 
 import br.com.usinasantafe.cav.domain.entities.variable.ColabCard
 import br.com.usinasantafe.cav.domain.entities.variable.EquipCard
-import br.com.usinasantafe.cav.domain.entities.variable.Involved
-import br.com.usinasantafe.cav.domain.entities.variable.VehicleInvolved
+import br.com.usinasantafe.cav.domain.entities.variable.PeopleExternal
+import br.com.usinasantafe.cav.domain.entities.variable.VehicleExternal
 import br.com.usinasantafe.cav.domain.entities.variable.VehicleOwn
 import br.com.usinasantafe.cav.domain.repositories.variable.RecoverDataCardRepository
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPreferencesDatasource
@@ -64,19 +64,29 @@ class IRecoverDataCardRepository @Inject constructor(
             cardSharedPreferencesDatasource.getDetailDriver(idMain).getOrThrow()
         }
 
-    override suspend fun getDetailPassengerInvolved(idMain: Int, idSecondary: Int): Result<String?> =
+    override suspend fun getDetailPassengerExternal(idMain: Int, idSecondary: Int): Result<String?> =
         call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.getDetailPassengerInvolved(idMain, idSecondary).getOrThrow()
+            cardSharedPreferencesDatasource.getDetailPassengerExternal(idMain, idSecondary).getOrThrow()
         }
 
-    override suspend fun getDetailInvolved(idMain: Int): Result<String?> =
+    override suspend fun getDetailInvolvedExternal(idMain: Int): Result<String?> =
         call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.getDetailInvolved(idMain).getOrThrow()
+            cardSharedPreferencesDatasource.getDetailInvolvedExternal(idMain).getOrThrow()
         }
 
-    override suspend fun getDetailWitness(idMain: Int): Result<String?> =
+    override suspend fun getDetailWitnessExternal(idMain: Int): Result<String?> =
         call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.getDetailWitness(idMain).getOrThrow()
+            cardSharedPreferencesDatasource.getDetailWitnessExternal(idMain).getOrThrow()
+        }
+
+    override suspend fun getDetailInvolvedColab(idMain: Int): Result<String?> =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.getDetailInvolvedColab(idMain).getOrThrow()
+        }
+
+    override suspend fun getDetailWitnessColab(idMain: Int): Result<String?> =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.getDetailWitnessColab(idMain).getOrThrow()
         }
 
     override suspend fun getRegColab(id: Int): Result<Long> =
@@ -87,6 +97,16 @@ class IRecoverDataCardRepository @Inject constructor(
     override suspend fun getRegPassengerColab(idMain: Int, idSecondary: Int): Result<Long> =
         call(getClassAndMethod()) {
             cardSharedPreferencesDatasource.getRegPassengerColab(idMain, idSecondary).getOrThrow()
+        }
+
+    override suspend fun getRegColabInvolved(id: Int): Result<Long> =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.getRegColabInvolved(id).getOrThrow()
+        }
+
+    override suspend fun getRegColabWitness(id: Int): Result<Long> =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.getRegColabWitness(id).getOrThrow()
         }
 
     override suspend fun getStateColab(id: Int): Result<State> =
@@ -102,7 +122,7 @@ class IRecoverDataCardRepository @Inject constructor(
             cardSharedPreferencesDatasource.getStatePassengerColab(idMain, idSecondary).getOrThrow()
         }
 
-    override suspend fun getStatePassengerInvolved(
+    override suspend fun getStatePassengerExternal(
         idMain: Int,
         idSecondary: Int
     ): Result<State> =
@@ -110,12 +130,17 @@ class IRecoverDataCardRepository @Inject constructor(
             cardSharedPreferencesDatasource.getStatePassengerInvolved(idMain, idSecondary).getOrThrow()
         }
 
-    override suspend fun getStateInvolved(id: Int): Result<State> =
+    override suspend fun getStateInvolvedExternal(id: Int): Result<State> =
         call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.getStateInvolved(id).getOrThrow()
+            cardSharedPreferencesDatasource.getStateInvolvedExternal(id).getOrThrow()
         }
 
-    override suspend fun getStateDriver(id: Int): Result<State> =
+    override suspend fun getStateInvolvedColab(id: Int): Result<State> =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.getStateInvolvedColab(id).getOrThrow()
+        }
+
+    override suspend fun getStateDriverExternal(id: Int): Result<State> =
         call(getClassAndMethod()) {
             cardSharedPreferencesDatasource.getStateDriver(id).getOrThrow()
         }
@@ -125,7 +150,7 @@ class IRecoverDataCardRepository @Inject constructor(
         idSecondary: Int
     ): Result<String?> =
         call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.getAddressPassengerInvolved(idMain, idSecondary).getOrThrow()
+            cardSharedPreferencesDatasource.getAddressPassengerExternal(idMain, idSecondary).getOrThrow()
         }
 
     override suspend fun getAddressDriver(idMain: Int): Result<String?> =
@@ -133,7 +158,7 @@ class IRecoverDataCardRepository @Inject constructor(
             cardSharedPreferencesDatasource.getAddressDriver(idMain).getOrThrow()
         }
 
-    override suspend fun getAddressInvolved(idMain: Int): Result<String?> =
+    override suspend fun getAddressExternal(idMain: Int): Result<String?> =
         call(getClassAndMethod()) {
             cardSharedPreferencesDatasource.getAddressInvolved(idMain).getOrThrow()
         }
@@ -153,12 +178,12 @@ class IRecoverDataCardRepository @Inject constructor(
             cardSharedPreferencesDatasource.getDocumentDriver(idMain).getOrThrow()
         }
 
-    override suspend fun getDocumentPassengerInvolved(
+    override suspend fun getDocumentPassengerExternal(
         idMain: Int,
         idSecondary: Int
     ): Result<String?> =
         call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.getDocumentPassengerInvolved(idMain, idSecondary).getOrThrow()
+            cardSharedPreferencesDatasource.getDocumentPassengerExternal(idMain, idSecondary).getOrThrow()
         }
 
     override suspend fun getNameDriver(idMain: Int): Result<String?> =
@@ -166,12 +191,12 @@ class IRecoverDataCardRepository @Inject constructor(
             cardSharedPreferencesDatasource.getNameDriver(idMain).getOrThrow()
         }
 
-    override suspend fun getNamePassengerInvolved(
+    override suspend fun getNamePassengerExternal(
         idMain: Int,
         idSecondary: Int
     ): Result<String?> =
         call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.getNamePassengerInvolved(idMain, idSecondary).getOrThrow()
+            cardSharedPreferencesDatasource.getNamePassengerExternal(idMain, idSecondary).getOrThrow()
         }
 
     override suspend fun listEquipSecondary(idMain: Int): Result<List<EquipCard>> =
@@ -184,19 +209,29 @@ class IRecoverDataCardRepository @Inject constructor(
             cardSharedPreferencesDatasource.listPassengerColab(idMain).getOrThrow()
         }
 
-    override suspend fun listPassengerInvolved(idMain: Int): Result<List<Involved>> =
+    override suspend fun listPassengerExternal(idMain: Int): Result<List<PeopleExternal>> =
         call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.listPassengerInvolved(idMain).getOrThrow()
+            cardSharedPreferencesDatasource.listPassengerExternal(idMain).getOrThrow()
         }
 
-    override suspend fun listInvolved(): Result<List<Involved>> =
+    override suspend fun listInvolvedExternal(): Result<List<PeopleExternal>> =
         call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.listInvolved().getOrThrow()
+            cardSharedPreferencesDatasource.listInvolvedExternal().getOrThrow()
         }
 
-    override suspend fun listWitness(): Result<List<Involved>> =
+    override suspend fun listWitnessExternal(): Result<List<PeopleExternal>> =
         call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.listWitness().getOrThrow()
+            cardSharedPreferencesDatasource.listWitnessExternal().getOrThrow()
+        }
+
+    override suspend fun listInvolvedColab(): Result<List<ColabCard>> =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.listInvolvedColab().getOrThrow()
+        }
+
+    override suspend fun listWitnessColab(): Result<List<ColabCard>> =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.listWitnessColab().getOrThrow()
         }
 
     override suspend fun getDocumentInvolved(idMain: Int): Result<String?> =
@@ -229,12 +264,24 @@ class IRecoverDataCardRepository @Inject constructor(
             cardSharedPreferencesDatasource.getPhoneWitness(idMain).getOrThrow()
         }
 
-    override suspend fun getPhonePassengerInvolved(
-        idMain: Int,
-        idSecondary: Int
-    ): Result<String?> =
+    override suspend fun getPhonePassengerInvolved(idMain: Int, idSecondary: Int): Result<String?> =
         call(getClassAndMethod()) {
             cardSharedPreferencesDatasource.getPhonePassengerInvolved(idMain, idSecondary).getOrThrow()
+        }
+
+    override suspend fun getResultBreathalyzer(idMain: Int): Result<Boolean?> =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.getResultBreathalyzer(idMain).getOrThrow()
+        }
+
+    override suspend fun getRealizedBreathalyzer(idMain: Int): Result<Boolean?> =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.getRealizedBreathalyzer(idMain).getOrThrow()
+        }
+
+    override suspend fun getCountBreathalyzer(idMain: Int): Result<Double?> =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.getCountBreathalyzer(idMain).getOrThrow()
         }
 
     override suspend fun listVehicleOwn(): Result<List<VehicleOwn>> =
@@ -242,9 +289,9 @@ class IRecoverDataCardRepository @Inject constructor(
             cardSharedPreferencesDatasource.listVehicleOwn().getOrThrow()
         }
 
-    override suspend fun listVehicleInvolved(): Result<List<VehicleInvolved>> =
+    override suspend fun listVehicleInvolved(): Result<List<VehicleExternal>> =
         call(getClassAndMethod()) {
-            cardSharedPreferencesDatasource.listVehicleInvolved().getOrThrow()
+            cardSharedPreferencesDatasource.listVehicleExternal().getOrThrow()
         }
 
     override suspend fun getRegColab(): Result<Long?> =
@@ -267,7 +314,7 @@ class IRecoverDataCardRepository @Inject constructor(
             involvedSharedPreferencesDatasource.getPhone().getOrThrow()
         }
 
-    override suspend fun getStateInvolved(): Result<State?> =
+    override suspend fun getStateInvolvedExternal(): Result<State?> =
         call(getClassAndMethod()) {
             involvedSharedPreferencesDatasource.getState().getOrThrow()
         }
@@ -277,7 +324,7 @@ class IRecoverDataCardRepository @Inject constructor(
             equipSharedPreferencesDatasource.getDetail().getOrThrow()
         }
 
-    override suspend fun getDetailInvolved(): Result<String?> =
+    override suspend fun getDetailInvolvedExternal(): Result<String?> =
         call(getClassAndMethod()) {
             involvedSharedPreferencesDatasource.getDetail().getOrThrow()
         }
@@ -310,6 +357,21 @@ class IRecoverDataCardRepository @Inject constructor(
     override suspend fun getName(): Result<String?> =
         call(getClassAndMethod()) {
             involvedSharedPreferencesDatasource.getName().getOrThrow()
+        }
+
+    override suspend fun getResultBreathalyzer(): Result<Boolean?> =
+        call(getClassAndMethod()) {
+            colabSharedPreferencesDatasource.getResultBreathalyzer().getOrThrow()
+        }
+
+    override suspend fun getRealizedBreathalyzer(): Result<Boolean?> =
+        call(getClassAndMethod()) {
+            colabSharedPreferencesDatasource.getRealizedBreathalyzer().getOrThrow()
+        }
+
+    override suspend fun getCountBreathalyzer(): Result<Double?> =
+        call(getClassAndMethod()) {
+            colabSharedPreferencesDatasource.getCountBreathalyzer().getOrThrow()
         }
 
 }

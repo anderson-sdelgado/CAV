@@ -21,7 +21,7 @@ class IListVehicleInvolved @Inject constructor(
                 VehicleScreenModel(
                     id = entity.id!!,
                     vehicle = "${entity.vehicle.plate} - ${entity.vehicle.brand}",
-                    driver = "${entity.driver.document ?: '-'} - ${entity.driver.name ?: '-'}"
+                    driver = "${entity.driver.phone} - ${entity.driver.name}"
                 )
             }
         }

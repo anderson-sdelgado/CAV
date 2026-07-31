@@ -3,8 +3,8 @@ package br.com.usinasantafe.cav.domain.usecases.card
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.InvolvedSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.PeopleExternalSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleExternalSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -49,37 +49,37 @@ class ISetNameTest {
     @Test
     fun check_update_name_involved() = runTest {
         val data = CardSharedPreferencesModel(
-            involvedList = listOf(
-                InvolvedSharedPreferencesModel(id = 1, name = "OLD NAME")
+            involvedExternalList = listOf(
+                PeopleExternalSharedPreferencesModel(id = 1, name = "OLD NAME")
             )
         )
         cardSharedPreferencesDatasource.save(data)
         
-        val result = usecase("NEW NAME", Option.EDIT, FlowNote.INVOLVED, 1, 0)
+        val result = usecase("NEW NAME", Option.EDIT, FlowNote.INVOLVED_EXTERNAL, 1, 0)
         assertEquals(result.isSuccess, true)
         
         val modelAfter = cardSharedPreferencesDatasource.get().getOrThrow()
-        assertEquals(modelAfter.involvedList[0].name, "NEW NAME")
+        assertEquals(modelAfter.involvedExternalList[0].name, "NEW NAME")
     }
 
     @Test
     fun check_update_name_passenger_involved() = runTest {
         val data = CardSharedPreferencesModel(
-            vehicleInvolvedList = listOf(
-                VehicleInvolvedSharedPreferencesModel(
+            vehicleExternalList = listOf(
+                VehicleExternalSharedPreferencesModel(
                     id = 1,
                     passengerInvolvedList = listOf(
-                        InvolvedSharedPreferencesModel(id = 10, name = "OLD PASSENGER")
+                        PeopleExternalSharedPreferencesModel(id = 10, name = "OLD PASSENGER")
                     )
                 )
             )
         )
         cardSharedPreferencesDatasource.save(data)
         
-        val result = usecase("NEW PASSENGER", Option.EDIT, FlowNote.PASSENGER_INVOLVED, 1, 10)
+        val result = usecase("NEW PASSENGER", Option.EDIT, FlowNote.PASSENGER_EXTERNAL, 1, 10)
         assertEquals(result.isSuccess, true)
         
         val modelAfter = cardSharedPreferencesDatasource.get().getOrThrow()
-        assertEquals(modelAfter.vehicleInvolvedList[0].passengerInvolvedList[0].name, "NEW PASSENGER")
+        assertEquals(modelAfter.vehicleExternalList[0].passengerInvolvedList[0].name, "NEW PASSENGER")
     }
 }

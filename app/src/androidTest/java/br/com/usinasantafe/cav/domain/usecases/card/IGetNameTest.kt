@@ -2,8 +2,8 @@ package br.com.usinasantafe.cav.domain.usecases.card
 
 import br.com.usinasantafe.cav.external.sharedpreferences.datasource.ICardSharedPreferencesDatasource
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.PeopleExternalSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleExternalSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -46,12 +46,12 @@ class IGetNameTest {
     @Test
     fun check_get_name_involved() = runTest {
         val data = CardSharedPreferencesModel(
-            involvedList = listOf(
-                InvolvedSharedPreferencesModel(id = 1, name = "TEST INVOLVED")
+            involvedExternalList = listOf(
+                PeopleExternalSharedPreferencesModel(id = 1, name = "TEST INVOLVED")
             )
         )
         cardSharedPreferencesDatasource.save(data)
-        val result = usecase(Option.EDIT, FlowNote.INVOLVED, 1, 0)
+        val result = usecase(Option.EDIT, FlowNote.INVOLVED_EXTERNAL, 1, 0)
         assertEquals(result.isSuccess, true)
         assertEquals(result.getOrNull(), "TEST INVOLVED")
     }
@@ -59,17 +59,17 @@ class IGetNameTest {
     @Test
     fun check_get_name_passenger_involved() = runTest {
         val data = CardSharedPreferencesModel(
-            vehicleInvolvedList = listOf(
-                VehicleInvolvedSharedPreferencesModel(
+            vehicleExternalList = listOf(
+                VehicleExternalSharedPreferencesModel(
                     id = 1,
                     passengerInvolvedList = listOf(
-                        InvolvedSharedPreferencesModel(id = 10, name = "PASSENGER TEST")
+                        PeopleExternalSharedPreferencesModel(id = 10, name = "PASSENGER TEST")
                     )
                 )
             )
         )
         cardSharedPreferencesDatasource.save(data)
-        val result = usecase(Option.EDIT, FlowNote.PASSENGER_INVOLVED, 1, 10)
+        val result = usecase(Option.EDIT, FlowNote.PASSENGER_EXTERNAL, 1, 10)
         assertEquals(result.isSuccess, true)
         assertEquals(result.getOrNull(), "PASSENGER TEST")
     }

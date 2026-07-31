@@ -35,30 +35,48 @@ class IDeleteCardSharedPreferencesDatasource @Inject constructor(
             }
         }
 
-    override suspend fun deleteVehicleInvolved(idMain: Int): EmptyResult =
+    override suspend fun deleteVehicleExternal(idMain: Int): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                val list = vehicleInvolvedList.toMutableList()
+                val list = vehicleExternalList.toMutableList()
                 list.removeIf { it.id == idMain }
-                this.vehicleInvolvedList = list
+                this.vehicleExternalList = list
             }
         }
 
-    override suspend fun deleteInvolved(idMain: Int): EmptyResult =
+    override suspend fun deleteInvolvedExternal(idMain: Int): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                val list = involvedList.toMutableList()
+                val list = involvedExternalList.toMutableList()
                 list.removeIf { it.id == idMain }
-                this.involvedList = list
+                this.involvedExternalList = list
             }
         }
 
-    override suspend fun deleteWitness(idMain: Int): EmptyResult =
+    override suspend fun deleteWitnessExternal(idMain: Int): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                val list = witnessList.toMutableList()
+                val list = witnessExternalList.toMutableList()
                 list.removeIf { it.id == idMain }
-                this.witnessList = list
+                this.witnessExternalList = list
+            }
+        }
+
+    override suspend fun deleteInvolvedColab(idMain: Int): EmptyResult =
+        result(getClassAndMethod()) {
+            datasource.get().updateModel {
+                val list = involvedColabList.toMutableList()
+                list.removeIf { it.id == idMain }
+                this.involvedColabList = list
+            }
+        }
+
+    override suspend fun deleteWitnessColab(idMain: Int): EmptyResult =
+        result(getClassAndMethod()) {
+            datasource.get().updateModel {
+                val list = witnessColabList.toMutableList()
+                list.removeIf { it.id == idMain }
+                this.witnessColabList = list
             }
         }
 
@@ -82,7 +100,7 @@ class IDeleteCardSharedPreferencesDatasource @Inject constructor(
     ): EmptyResult =
         result(getClassAndMethod()) {
             datasource.get().updateModel {
-                vehicleInvolvedList.find { it.id == idMain }?.let { vehicleInvolved ->
+                vehicleExternalList.find { it.id == idMain }?.let { vehicleInvolved ->
                     val list = vehicleInvolved.passengerInvolvedList.toMutableList()
                     list.removeIf { it.id == idSecondary }
                     vehicleInvolved.passengerInvolvedList = list

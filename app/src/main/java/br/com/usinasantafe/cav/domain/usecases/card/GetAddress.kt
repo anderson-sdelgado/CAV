@@ -27,8 +27,8 @@ class IGetAddress @Inject constructor(
             with(cardRepository) {
                 when(flowNote){
                     FlowNote.DRIVER -> getAddressDriver(idMain)
-                    FlowNote.PASSENGER_INVOLVED -> getAddressPassengerInvolved(idMain, idSecondary)
-                    else -> getAddressInvolved(idMain)
+                    FlowNote.PASSENGER_EXTERNAL -> getAddressPassengerInvolved(idMain, idSecondary)
+                    else -> getAddressExternal(idMain)
                 }.getOrThrow() ?: ""
             }
         }

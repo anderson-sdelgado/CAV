@@ -326,7 +326,7 @@ class IUpdateCardRepositoryTest {
     fun `updateDetailPassengerInvolved - Check return failure if have error in CardSharedPreferencesDatasource updateDetailPassengerInvolved`() =
         runTest {
             whenever(
-                cardSharedPreferencesDatasource.updateDetailPassengerInvolved("test", 1, 1)
+                cardSharedPreferencesDatasource.updateDetailPassengerExternal("test", 1, 1)
             ).thenReturn(
                 resultFailure(
                     "ICardSharedPreferencesDatasource.updateDetailPassengerInvolved",
@@ -334,7 +334,7 @@ class IUpdateCardRepositoryTest {
                     Exception()
                 )
             )
-            val result = repository.updateDetailPassengerInvolved("test", 1, 1)
+            val result = repository.updateDetailPassengerExternal("test", 1, 1)
             assertEquals(
                 result.isFailure,
                 true
@@ -352,8 +352,8 @@ class IUpdateCardRepositoryTest {
     @Test
     fun `updateDetailPassengerInvolved - Check return correct if function execute successfully`() =
         runTest {
-            val result = repository.updateDetailPassengerInvolved("test", 1, 1)
-            verify(cardSharedPreferencesDatasource, atLeastOnce()).updateDetailPassengerInvolved("test", 1, 1)
+            val result = repository.updateDetailPassengerExternal("test", 1, 1)
+            verify(cardSharedPreferencesDatasource, atLeastOnce()).updateDetailPassengerExternal("test", 1, 1)
             assertEquals(
                 result.isSuccess,
                 true
@@ -364,7 +364,7 @@ class IUpdateCardRepositoryTest {
     fun `updateDetailInvolved - Check return failure if have error in CardSharedPreferencesDatasource updateDetailInvolved`() =
         runTest {
             whenever(
-                cardSharedPreferencesDatasource.updateDetailInvolved("test", 1)
+                cardSharedPreferencesDatasource.updateDetailInvolvedExternal("test", 1)
             ).thenReturn(
                 resultFailure(
                     "ICardSharedPreferencesDatasource.updateDetailInvolved",
@@ -372,7 +372,7 @@ class IUpdateCardRepositoryTest {
                     Exception()
                 )
             )
-            val result = repository.updateDetailInvolved("test", 1)
+            val result = repository.updateDetailInvolvedExternal("test", 1)
             assertEquals(
                 result.isFailure,
                 true
@@ -390,8 +390,8 @@ class IUpdateCardRepositoryTest {
     @Test
     fun `updateDetailInvolved - Check return correct if function execute successfully`() =
         runTest {
-            val result = repository.updateDetailInvolved("test", 1)
-            verify(cardSharedPreferencesDatasource, atLeastOnce()).updateDetailInvolved("test", 1)
+            val result = repository.updateDetailInvolvedExternal("test", 1)
+            verify(cardSharedPreferencesDatasource, atLeastOnce()).updateDetailInvolvedExternal("test", 1)
             assertEquals(
                 result.isSuccess,
                 true
@@ -402,7 +402,7 @@ class IUpdateCardRepositoryTest {
     fun `updateDetailWitness - Check return failure if have error in CardSharedPreferencesDatasource updateDetailWitness`() =
         runTest {
             whenever(
-                cardSharedPreferencesDatasource.updateDetailWitness("test", 1)
+                cardSharedPreferencesDatasource.updateDetailWitnessExternal("test", 1)
             ).thenReturn(
                 resultFailure(
                     "ICardSharedPreferencesDatasource.updateDetailWitness",
@@ -410,7 +410,7 @@ class IUpdateCardRepositoryTest {
                     Exception()
                 )
             )
-            val result = repository.updateDetailWitness("test", 1)
+            val result = repository.updateDetailWitnessExternal("test", 1)
             assertEquals(
                 result.isFailure,
                 true
@@ -428,8 +428,8 @@ class IUpdateCardRepositoryTest {
     @Test
     fun `updateDetailWitness - Check return correct if function execute successfully`() =
         runTest {
-            val result = repository.updateDetailWitness("test", 1)
-            verify(cardSharedPreferencesDatasource, atLeastOnce()).updateDetailWitness("test", 1)
+            val result = repository.updateDetailWitnessExternal("test", 1)
+            verify(cardSharedPreferencesDatasource, atLeastOnce()).updateDetailWitnessExternal("test", 1)
             assertEquals(
                 result.isSuccess,
                 true
@@ -630,7 +630,7 @@ class IUpdateCardRepositoryTest {
     fun `updateStatePassengerInvolved - Check return failure if have error in CardSharedPreferencesDatasource updateStatePassengerInvolved`() =
         runTest {
             whenever(
-                cardSharedPreferencesDatasource.updateStatePassengerInvolved(State.UNHARMED, 1, 1)
+                cardSharedPreferencesDatasource.updateStatePassengerExternal(State.UNHARMED, 1, 1)
             ).thenReturn(
                 resultFailure(
                     "ICardSharedPreferencesDatasource.updateStatePassengerInvolved",
@@ -638,7 +638,7 @@ class IUpdateCardRepositoryTest {
                     Exception()
                 )
             )
-            val result = repository.updateStatePassengerInvolved(State.UNHARMED, 1, 1)
+            val result = repository.updateStatePassengerExternal(State.UNHARMED, 1, 1)
             assertEquals(
                 result.isFailure,
                 true
@@ -656,8 +656,8 @@ class IUpdateCardRepositoryTest {
     @Test
     fun `updateStatePassengerInvolved - Check return correct if function execute successfully`() =
         runTest {
-            val result = repository.updateStatePassengerInvolved(State.UNHARMED, 1, 1)
-            verify(cardSharedPreferencesDatasource, atLeastOnce()).updateStatePassengerInvolved(State.UNHARMED, 1, 1)
+            val result = repository.updateStatePassengerExternal(State.UNHARMED, 1, 1)
+            verify(cardSharedPreferencesDatasource, atLeastOnce()).updateStatePassengerExternal(State.UNHARMED, 1, 1)
             assertEquals(
                 result.isSuccess,
                 true
@@ -668,7 +668,7 @@ class IUpdateCardRepositoryTest {
     fun `updateStateInvolved - Check return failure if have error in CardSharedPreferencesDatasource updateStateInvolved`() =
         runTest {
             whenever(
-                cardSharedPreferencesDatasource.updateStateInvolved(State.UNHARMED, 1)
+                cardSharedPreferencesDatasource.updateStateInvolvedExternal(State.UNHARMED, 1)
             ).thenReturn(
                 resultFailure(
                     "ICardSharedPreferencesDatasource.updateStateInvolved",
@@ -676,7 +676,7 @@ class IUpdateCardRepositoryTest {
                     Exception()
                 )
             )
-            val result = repository.updateStateInvolved(State.UNHARMED, 1)
+            val result = repository.updateStateInvolvedExternal(State.UNHARMED, 1)
             assertEquals(
                 result.isFailure,
                 true
@@ -694,8 +694,8 @@ class IUpdateCardRepositoryTest {
     @Test
     fun `updateStateInvolved - Check return correct if function execute successfully`() =
         runTest {
-            val result = repository.updateStateInvolved(State.UNHARMED, 1)
-            verify(cardSharedPreferencesDatasource, atLeastOnce()).updateStateInvolved(State.UNHARMED, 1)
+            val result = repository.updateStateInvolvedExternal(State.UNHARMED, 1)
+            verify(cardSharedPreferencesDatasource, atLeastOnce()).updateStateInvolvedExternal(State.UNHARMED, 1)
             assertEquals(
                 result.isSuccess,
                 true
@@ -706,7 +706,7 @@ class IUpdateCardRepositoryTest {
     fun `updateStateWitness - Check return failure if have error in CardSharedPreferencesDatasource updateStateWitness`() =
         runTest {
             whenever(
-                cardSharedPreferencesDatasource.updateStateWitness(State.UNHARMED, 1)
+                cardSharedPreferencesDatasource.updateStateWitnessExternal(State.UNHARMED, 1)
             ).thenReturn(
                 resultFailure(
                     "ICardSharedPreferencesDatasource.updateStateWitness",
@@ -714,7 +714,7 @@ class IUpdateCardRepositoryTest {
                     Exception()
                 )
             )
-            val result = repository.updateStateWitness(State.UNHARMED, 1)
+            val result = repository.updateStateWitnessExternal(State.UNHARMED, 1)
             assertEquals(
                 result.isFailure,
                 true
@@ -732,8 +732,8 @@ class IUpdateCardRepositoryTest {
     @Test
     fun `updateStateWitness - Check return correct if function execute successfully`() =
         runTest {
-            val result = repository.updateStateWitness(State.UNHARMED, 1)
-            verify(cardSharedPreferencesDatasource, atLeastOnce()).updateStateWitness(State.UNHARMED, 1)
+            val result = repository.updateStateWitnessExternal(State.UNHARMED, 1)
+            verify(cardSharedPreferencesDatasource, atLeastOnce()).updateStateWitnessExternal(State.UNHARMED, 1)
             assertEquals(
                 result.isSuccess,
                 true

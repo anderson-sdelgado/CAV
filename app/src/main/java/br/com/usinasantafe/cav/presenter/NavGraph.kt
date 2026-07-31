@@ -19,8 +19,10 @@ import br.com.usinasantafe.cav.presenter.Routes.ATTENDANT_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.BRAND_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.VEHICLE_FULL_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.CAR_ROUTE
+import br.com.usinasantafe.cav.presenter.Routes.CHECK_BREATHALYZER_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.COLAB_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.CONFIG_ROUTE
+import br.com.usinasantafe.cav.presenter.Routes.COUNT_BREATHALYZER_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.DATA_COLAB_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.DATA_EQUIP_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.DATA_INITIAL_ROUTE
@@ -34,7 +36,8 @@ import br.com.usinasantafe.cav.presenter.Routes.EQUIP_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.EQUIP_SEC_LIST_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.INITIAL_MENU_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.INPUT_LOCAL_ROUTE
-import br.com.usinasantafe.cav.presenter.Routes.INVOLVED_WITNESS_ROUTE
+import br.com.usinasantafe.cav.presenter.Routes.INVOLVED_WITNESS_COLAB_ROUTE
+import br.com.usinasantafe.cav.presenter.Routes.INVOLVED_WITNESS_EXTERNAL_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.ITEM_DATA_LOCAL_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.LOCAL_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.LOCAL_SUPPORT_ROUTE
@@ -52,6 +55,8 @@ import br.com.usinasantafe.cav.presenter.Routes.STATE_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.SUPPORT_TEAMS_ROUTE
 import br.com.usinasantafe.cav.presenter.Routes.TYPE_ACCIDENT_ROUTE
 import br.com.usinasantafe.cav.presenter.view.card.attendant.AttendantScreen
+import br.com.usinasantafe.cav.presenter.view.card.breathalyzer.check.CheckBreathalyzerScreen
+import br.com.usinasantafe.cav.presenter.view.card.breathalyzer.count.CountBreathalyzerScreen
 import br.com.usinasantafe.cav.presenter.view.card.car.CarScreen
 import br.com.usinasantafe.cav.presenter.view.card.dataLocal.ItemDataLocalScreen
 import br.com.usinasantafe.cav.presenter.view.card.dataLocal.OptionDataLocalScreen
@@ -70,12 +75,13 @@ import br.com.usinasantafe.cav.presenter.view.card.detail.DetailScreen
 import br.com.usinasantafe.cav.presenter.view.card.equip.data.EquipDataScreen
 import br.com.usinasantafe.cav.presenter.view.card.equip.equip.EquipScreen
 import br.com.usinasantafe.cav.presenter.view.card.equipSecList.EquipSecListScreen
-import br.com.usinasantafe.cav.presenter.view.card.involved.address.AddressScreen
-import br.com.usinasantafe.cav.presenter.view.card.involved.data.InvolvedDataScreen
-import br.com.usinasantafe.cav.presenter.view.card.involved.document.DocumentScreen
-import br.com.usinasantafe.cav.presenter.view.card.involved.name.NameScreen
-import br.com.usinasantafe.cav.presenter.view.card.involved.phone.PhoneScreen
-import br.com.usinasantafe.cav.presenter.view.card.menu.InvolvedWitnessScreen
+import br.com.usinasantafe.cav.presenter.view.card.external.address.AddressScreen
+import br.com.usinasantafe.cav.presenter.view.card.external.data.InvolvedDataScreen
+import br.com.usinasantafe.cav.presenter.view.card.external.document.DocumentScreen
+import br.com.usinasantafe.cav.presenter.view.card.external.name.NameScreen
+import br.com.usinasantafe.cav.presenter.view.card.external.phone.PhoneScreen
+import br.com.usinasantafe.cav.presenter.view.card.menu.InvolvedWitnessColabScreen
+import br.com.usinasantafe.cav.presenter.view.card.menu.InvolvedWitnessExternalScreen
 import br.com.usinasantafe.cav.presenter.view.card.obs.ObsScreen
 import br.com.usinasantafe.cav.presenter.view.card.passengerList.PassengerListScreen
 import br.com.usinasantafe.cav.presenter.view.card.photo.PhotoScreen
@@ -83,7 +89,7 @@ import br.com.usinasantafe.cav.presenter.view.card.state.StateScreen
 import br.com.usinasantafe.cav.presenter.view.card.vehicle.brand.BrandScreen
 import br.com.usinasantafe.cav.presenter.view.card.vehicle.data.VehicleDataScreen
 import br.com.usinasantafe.cav.presenter.view.card.vehicle.plate.PlateScreen
-import br.com.usinasantafe.cav.presenter.view.card.vehicleFull.VehicleInvolvedDataScreen
+import br.com.usinasantafe.cav.presenter.view.card.vehicleFull.VehicleExternalDataScreen
 import br.com.usinasantafe.cav.presenter.view.configuration.config.ConfigScreen
 import br.com.usinasantafe.cav.presenter.view.configuration.initial.InitialMenuScreen
 import br.com.usinasantafe.cav.presenter.view.configuration.password.PasswordScreen
@@ -414,6 +420,9 @@ fun NavigationGraph(
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 },
+                onNavMenu = {
+                    navActions.navigateToInvolvedWitnessColab()
+                }
             )
         }
 
@@ -546,16 +555,31 @@ fun NavigationGraph(
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
                 },
-                onNavDataInvolvedInsert = {
+                onNavDataInvolvedWitnessExternalInsert = {
                     val ordinal = entry.arguments?.getInt(FLOW_NOTE_ARG)!!
                     val flowNote = FlowNote.entries[ordinal]
                     var idMain = it
                     var idSecondary = 0
-                    if(flowNote == FlowNote.PASSENGER_INVOLVED) {
+                    if(flowNote == FlowNote.PASSENGER_EXTERNAL) {
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
                         idSecondary = it
                     }
                     navActions.navigateToDataInvolved(
+                        flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
+                        idMain = idMain,
+                        idSecondary = idSecondary
+                    )
+                },
+                onNavDataInvolvedWitnessColabInsert = {
+                    val ordinal = entry.arguments?.getInt(FLOW_NOTE_ARG)!!
+                    val flowNote = FlowNote.entries[ordinal]
+                    var idMain = it
+                    var idSecondary = 0
+                    if(flowNote == FlowNote.PASSENGER_COLAB) {
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
+                        idSecondary = it
+                    }
+                    navActions.navigateToDataColab(
                         flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = idMain,
                         idSecondary = idSecondary
@@ -566,7 +590,7 @@ fun NavigationGraph(
                         idMain = it
                     )
                 },
-                onNavDataVehicleInvolvedInsert = {
+                onNavDataVehicleExternalInsert = {
                     navActions.navigateToDataVehicleInvolved(
                         idMain = it
                     )
@@ -590,6 +614,12 @@ fun NavigationGraph(
                         flowNote = entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = it
+                    )
+                },
+                onNavCheckBreathalyzer = {
+                    navActions.navigateToCheckBreathalyzer(
+                        option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
                     )
                 }
             )
@@ -723,6 +753,70 @@ fun NavigationGraph(
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
+                },
+                onNavCheckBreathalyzer = {
+                    navActions.navigateToCheckBreathalyzer(
+                        option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
+                    )
+                }
+            )
+        }
+
+        composable(
+            CHECK_BREATHALYZER_ROUTE,
+            arguments = listOf(
+                navArgument(OPTION_ARG) { type = NavType.IntType },
+                navArgument(ID_MAIN_ARG) { type = NavType.IntType }
+            )
+        ){ entry ->
+            CheckBreathalyzerScreen(
+                onNavState = {
+                    navActions.navigateToState(
+                        option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        flowNote = FlowNote.COLAB.ordinal,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = 0
+                    )
+                },
+                onNavDetail = {
+                    navActions.navigateToDetail(
+                        option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        flowNote = FlowNote.COLAB.ordinal,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = 0
+                    )
+                },
+                onNavCountBreathalyzer = {
+                    navActions.navigateToCountBreathalyzer(
+                        option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
+                    )
+                }
+            )
+        }
+
+        composable(
+            COUNT_BREATHALYZER_ROUTE,
+            arguments = listOf(
+                navArgument(OPTION_ARG) { type = NavType.IntType },
+                navArgument(ID_MAIN_ARG) { type = NavType.IntType }
+            )
+        ) { entry ->
+            CountBreathalyzerScreen(
+                onNavCheckBreathalyzer = {
+                    navActions.navigateToCheckBreathalyzer(
+                        option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
+                    )
+                },
+                onNavDetail = {
+                    navActions.navigateToDetail(
+                        option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        flowNote = FlowNote.COLAB.ordinal,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = 0
+                    )
                 }
             )
         }
@@ -822,7 +916,7 @@ fun NavigationGraph(
                     )
                 },
                 onNavMenu = {
-                    navActions.navigateToInvolvedWitness()
+                    navActions.navigateToInvolvedWitnessExternal()
                 }
             )
         }
@@ -861,7 +955,7 @@ fun NavigationGraph(
                     )
                 },
                 onNavMenu = {
-                    navActions.navigateToInvolvedWitness()
+                    navActions.navigateToInvolvedWitnessExternal()
                 }
             )
         }
@@ -872,7 +966,7 @@ fun NavigationGraph(
                 navArgument(ID_MAIN_ARG) { type = NavType.IntType },
             )
         ) { entry ->
-            VehicleInvolvedDataScreen(
+            VehicleExternalDataScreen(
                 onNavDataVehicle = {
                     navActions.navigateToDataVehicle(
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
@@ -887,7 +981,7 @@ fun NavigationGraph(
                 },
                 onNavPassengerList = {
                     navActions.navigateToPassengerList(
-                        flowNote = FlowNote.PASSENGER_INVOLVED.ordinal,
+                        flowNote = FlowNote.PASSENGER_EXTERNAL.ordinal,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                     )
                 },
@@ -994,7 +1088,7 @@ fun NavigationGraph(
                     )
                 },
                 onNavMenu = {
-                    navActions.navigateToInvolvedWitness()
+                    navActions.navigateToInvolvedWitnessExternal()
                 },
                 onNavPassengerList = {
                     navActions.navigateToPassengerList(
@@ -1125,7 +1219,7 @@ fun NavigationGraph(
                     navActions.navigateToLocalSupport()
                 },
                 onNavInvolvedWitness = {
-                    navActions.navigateToInvolvedWitness()
+                    navActions.navigateToInvolvedWitnessExternal()
                 },
                 onNavEquip = {
                     navActions.navigateToEquip(
@@ -1154,12 +1248,38 @@ fun NavigationGraph(
             )
         }
 
-        composable(INVOLVED_WITNESS_ROUTE) {
-            InvolvedWitnessScreen(
+        composable(INVOLVED_WITNESS_COLAB_ROUTE) {
+            InvolvedWitnessColabScreen(
+                onNavColab = {
+                    navActions.navigateToDocument(
+                        option = Option.INSERT.ordinal,
+                        flowNote = it.ordinal,
+                        idMain = 0,
+                        idSecondary = 0
+                    )
+                },
+                onNavDataColab = { flowNote, id ->
+                    navActions.navigateToDataColab(
+                        flowNote = flowNote.ordinal,
+                        idMain = id,
+                        idSecondary = 0
+                    )
+                },
+                onNavInvolvedWitnessExternal = {
+                    navActions.navigateToInvolvedWitnessExternal()
+                },
+                onNavVehicleFull = {
+                    navActions.navigateToVehicleFull()
+                }
+            )
+        }
+
+        composable(INVOLVED_WITNESS_EXTERNAL_ROUTE) {
+            InvolvedWitnessExternalScreen(
                 onNavDocument = {
                     navActions.navigateToDocument(
                         option = Option.INSERT.ordinal,
-                        flowNote = FlowNote.INVOLVED.ordinal,
+                        flowNote = FlowNote.INVOLVED_EXTERNAL.ordinal,
                         idMain = 0,
                         idSecondary = 0
                     )
@@ -1167,13 +1287,10 @@ fun NavigationGraph(
                 onNavName = {
                     navActions.navigateToName(
                         option = Option.INSERT.ordinal,
-                        flowNote = FlowNote.WITNESS.ordinal,
+                        flowNote = FlowNote.WITNESS_EXTERNAL.ordinal,
                         idMain = 0,
                         idSecondary = 0
                     )
-                },
-                onNavVehicleFull = {
-                    navActions.navigateToVehicleFull()
                 },
                 onNavDataInvolved = { flowNote, id ->
                     navActions.navigateToDataInvolved(
@@ -1181,6 +1298,9 @@ fun NavigationGraph(
                         idMain = id,
                         idSecondary = 0
                     )
+                },
+                onNavInvolvedWitnessColab = {
+                    navActions.navigateToInvolvedWitnessColab()
                 },
                 onNavObs = {
                     navActions.navigateToObs()
@@ -1191,7 +1311,7 @@ fun NavigationGraph(
         composable(OBS_ROUTE) {
             ObsScreen(
                 onNavMenu = {
-                    navActions.navigateToInvolvedWitness()
+                    navActions.navigateToInvolvedWitnessExternal()
                 },
                 onNavPhoto = {
                     navActions.navigateToPhoto()

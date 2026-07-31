@@ -8,8 +8,8 @@ import br.com.usinasantafe.cav.infra.datasource.sharedpreferences.CardSharedPref
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.CardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.ColabCardSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.EquipCardSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.InvolvedSharedPreferencesModel
-import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleInvolvedSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.PeopleExternalSharedPreferencesModel
+import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleExternalSharedPreferencesModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.VehicleOwnSharedPreferencesModel
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -192,38 +192,38 @@ class IDeleteCardSharedPreferencesDatasourceTest {
     fun `deleteVehicleInvolved - Check delete data correct in sharedPreferences internal`() =
         runTest {
             val list = listOf(
-                VehicleInvolvedSharedPreferencesModel(
+                VehicleExternalSharedPreferencesModel(
                     id = 1
                 ),
-                VehicleInvolvedSharedPreferencesModel(
+                VehicleExternalSharedPreferencesModel(
                     id = 2
                 ),
-                VehicleInvolvedSharedPreferencesModel(
+                VehicleExternalSharedPreferencesModel(
                     id = 3
                 )
             )
             val data = CardSharedPreferencesModel(
-                vehicleInvolvedList = list
+                vehicleExternalList = list
             )
             cardDatasource.save(data)
             val modelBefore = cardDatasource.get().getOrThrow()
             assertEquals(
-                modelBefore.vehicleInvolvedList,
+                modelBefore.vehicleExternalList,
                 list
             )
-            val result =  datasource.deleteVehicleInvolved(2)
+            val result =  datasource.deleteVehicleExternal(2)
             assertEquals(
                 result.isSuccess,
                 true
             )
             val modelAfter = cardDatasource.get().getOrThrow()
             assertEquals(
-                modelAfter.vehicleInvolvedList,
+                modelAfter.vehicleExternalList,
                 listOf(
-                    VehicleInvolvedSharedPreferencesModel(
+                    VehicleExternalSharedPreferencesModel(
                         id = 1
                     ),
-                    VehicleInvolvedSharedPreferencesModel(
+                    VehicleExternalSharedPreferencesModel(
                         id = 3
                     )
                 )
@@ -234,38 +234,38 @@ class IDeleteCardSharedPreferencesDatasourceTest {
     fun `deleteInvolved - Check delete data correct in sharedPreferences internal`() =
         runTest {
             val list = listOf(
-                InvolvedSharedPreferencesModel(
+                PeopleExternalSharedPreferencesModel(
                     id = 1
                 ),
-                InvolvedSharedPreferencesModel(
+                PeopleExternalSharedPreferencesModel(
                     id = 2
                 ),
-                InvolvedSharedPreferencesModel(
+                PeopleExternalSharedPreferencesModel(
                     id = 3
                 )
             )
             val data = CardSharedPreferencesModel(
-                involvedList = list
+                involvedExternalList = list
             )
             cardDatasource.save(data)
             val modelBefore = cardDatasource.get().getOrThrow()
             assertEquals(
-                modelBefore.involvedList,
+                modelBefore.involvedExternalList,
                 list
             )
-            val result =  datasource.deleteInvolved(2)
+            val result =  datasource.deleteInvolvedExternal(2)
             assertEquals(
                 result.isSuccess,
                 true
             )
             val modelAfter = cardDatasource.get().getOrThrow()
             assertEquals(
-                modelAfter.involvedList,
+                modelAfter.involvedExternalList,
                 listOf(
-                    InvolvedSharedPreferencesModel(
+                    PeopleExternalSharedPreferencesModel(
                         id = 1
                     ),
-                    InvolvedSharedPreferencesModel(
+                    PeopleExternalSharedPreferencesModel(
                         id = 3
                     )
                 )
@@ -276,38 +276,38 @@ class IDeleteCardSharedPreferencesDatasourceTest {
     fun `deleteWitness - Check delete data correct in sharedPreferences internal`() =
         runTest {
             val list = listOf(
-                InvolvedSharedPreferencesModel(
+                PeopleExternalSharedPreferencesModel(
                     id = 1
                 ),
-                InvolvedSharedPreferencesModel(
+                PeopleExternalSharedPreferencesModel(
                     id = 2
                 ),
-                InvolvedSharedPreferencesModel(
+                PeopleExternalSharedPreferencesModel(
                     id = 3
                 )
             )
             val data = CardSharedPreferencesModel(
-                involvedList = list
+                involvedExternalList = list
             )
             cardDatasource.save(data)
             val modelBefore = cardDatasource.get().getOrThrow()
             assertEquals(
-                modelBefore.involvedList,
+                modelBefore.involvedExternalList,
                 list
             )
-            val result =  datasource.deleteInvolved(2)
+            val result =  datasource.deleteInvolvedExternal(2)
             assertEquals(
                 result.isSuccess,
                 true
             )
             val modelAfter = cardDatasource.get().getOrThrow()
             assertEquals(
-                modelAfter.involvedList,
+                modelAfter.involvedExternalList,
                 listOf(
-                    InvolvedSharedPreferencesModel(
+                    PeopleExternalSharedPreferencesModel(
                         id = 1
                     ),
-                    InvolvedSharedPreferencesModel(
+                    PeopleExternalSharedPreferencesModel(
                         id = 3
                     )
                 )
@@ -399,42 +399,42 @@ class IDeleteCardSharedPreferencesDatasourceTest {
     fun `deletePassengerInvolved - Check delete data correct in sharedPreferences internal`() =
         runTest {
             val listBefore = listOf(
-                VehicleInvolvedSharedPreferencesModel(
+                VehicleExternalSharedPreferencesModel(
                     id = 1,
                     passengerInvolvedList = listOf(
-                        InvolvedSharedPreferencesModel(
+                        PeopleExternalSharedPreferencesModel(
                             id = 1
                         ),
-                        InvolvedSharedPreferencesModel(
+                        PeopleExternalSharedPreferencesModel(
                             id = 2
                         ),
-                        InvolvedSharedPreferencesModel(
+                        PeopleExternalSharedPreferencesModel(
                             id = 3
                         )
                     )
                 ),
-                VehicleInvolvedSharedPreferencesModel(
+                VehicleExternalSharedPreferencesModel(
                     id = 2,
                     passengerInvolvedList = listOf(
-                        InvolvedSharedPreferencesModel(
+                        PeopleExternalSharedPreferencesModel(
                             id = 1
                         ),
-                        InvolvedSharedPreferencesModel(
+                        PeopleExternalSharedPreferencesModel(
                             id = 2
                         ),
                     )
                 ),
-                VehicleInvolvedSharedPreferencesModel(
+                VehicleExternalSharedPreferencesModel(
                     id = 3
                 )
             )
             val data = CardSharedPreferencesModel(
-                vehicleInvolvedList = listBefore
+                vehicleExternalList = listBefore
             )
             cardDatasource.save(data)
             val modelBefore = cardDatasource.get().getOrThrow()
             assertEquals(
-                modelBefore.vehicleInvolvedList,
+                modelBefore.vehicleExternalList,
                 listBefore
             )
             val result =  datasource.deletePassengerInvolved(2, 1)
@@ -444,34 +444,34 @@ class IDeleteCardSharedPreferencesDatasourceTest {
             )
             val modelAfter = cardDatasource.get().getOrThrow()
             val listAfter = listOf(
-                VehicleInvolvedSharedPreferencesModel(
+                VehicleExternalSharedPreferencesModel(
                     id = 1,
                     passengerInvolvedList = listOf(
-                        InvolvedSharedPreferencesModel(
+                        PeopleExternalSharedPreferencesModel(
                             id = 1
                         ),
-                        InvolvedSharedPreferencesModel(
+                        PeopleExternalSharedPreferencesModel(
                             id = 2
                         ),
-                        InvolvedSharedPreferencesModel(
+                        PeopleExternalSharedPreferencesModel(
                             id = 3
                         )
                     )
                 ),
-                VehicleInvolvedSharedPreferencesModel(
+                VehicleExternalSharedPreferencesModel(
                     id = 2,
                     passengerInvolvedList = listOf(
-                        InvolvedSharedPreferencesModel(
+                        PeopleExternalSharedPreferencesModel(
                             id = 2
                         )
                     )
                 ),
-                VehicleInvolvedSharedPreferencesModel(
+                VehicleExternalSharedPreferencesModel(
                     id = 3
                 )
             )
             assertEquals(
-                modelAfter.vehicleInvolvedList,
+                modelAfter.vehicleExternalList,
                 listAfter
             )
         }

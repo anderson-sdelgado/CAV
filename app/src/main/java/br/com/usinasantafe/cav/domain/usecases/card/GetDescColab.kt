@@ -28,6 +28,8 @@ class IGetDescColab @Inject constructor(
         call(getClassAndMethod()) {
             val reg = when (flowNote) {
                 FlowNote.COLAB -> cardRepository.getRegColab(idMain)
+                FlowNote.INVOLVED_COLAB -> cardRepository.getRegColabInvolved(idMain)
+                FlowNote.WITNESS_COLAB -> cardRepository.getRegColabWitness(idMain)
                 else -> cardRepository.getRegPassengerColab(idMain, idSecondary)
             }.getOrThrow()
             val name = colabRepository.getNameByReg(reg).getOrThrow()

@@ -34,7 +34,8 @@ fun ColabScreen(
     onNavPassengerList:  () -> Unit,
     onNavState: () -> Unit,
     onNavDataColab: () -> Unit,
-    onNavDetail: () -> Unit
+    onNavDetail: () -> Unit,
+    onNavMenu: () -> Unit
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -55,6 +56,7 @@ fun ColabScreen(
                 onNavState = onNavState,
                 onNavDataColab = onNavDataColab,
                 onNavDetail = onNavDetail,
+                onNavMenu = onNavMenu,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -73,6 +75,7 @@ fun ColabContent(
     onNavState:  () -> Unit,
     onNavDataColab: () -> Unit,
     onNavDetail: () -> Unit,
+    onNavMenu: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -95,6 +98,8 @@ fun ColabContent(
             when(option) {
                 Option.INSERT -> {
                     when(flowNote){
+                        FlowNote.INVOLVED_COLAB,
+                        FlowNote.WITNESS_COLAB -> onNavMenu()
                         FlowNote.PASSENGER_COLAB -> onNavPassengerList()
                         else -> onNavDetail()
                     }
@@ -116,7 +121,12 @@ fun ColabContent(
     LaunchedEffect(status.flagAccess) {
         if(status.flagAccess) {
             when(option){
-                Option.INSERT -> onNavState()
+                Option.INSERT -> {
+                    when(flowNote){
+                        FlowNote.WITNESS_COLAB -> onNavDetail()
+                        else -> onNavState()
+                    }
+                }
                 Option.EDIT -> onNavDataColab()
             }
         }
@@ -149,6 +159,7 @@ fun ColabPagePreview() {
                 onNavState = {},
                 onNavDataColab = {},
                 onNavDetail = {},
+                onNavMenu = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
