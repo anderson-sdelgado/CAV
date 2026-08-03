@@ -1,3 +1,4 @@
-- [x] Corrigir lógica na `CheckBreathalyzerViewModel.kt` para suportar toggle
-- [x] Refatorar `CheckBreathalyzerScreen.kt` para garantir desmarcação correta
-- [x] Validar comportamento de reset de estado
+- [x] Corrigir cálculo do divisor em `addTextFieldComma` (`Buttons.kt`)
+- [x] Corrigir cálculo do divisor em `clearTextFieldComma` (`Buttons.kt`)
+- [x] Atualizar chamada de limpeza na `CountBreathalyzerViewModel.kt`
+- [x] Verificar digitação e limpeza no app

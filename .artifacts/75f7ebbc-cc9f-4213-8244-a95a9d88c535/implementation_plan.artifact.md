@@ -1,20 +1,24 @@
-# Implementation Plan - Refinamento da Seleção do Bafômetro (Comportamento de Toggle)
+# Plano de Correção: Digitação Decimal com Múltiplas Casas
 
-Este plano visa ajustar a lógica de seleção na tela de Bafômetro para permitir que o usuário desmarque uma opção já selecionada, voltando o estado para nulo (comportamento de toggle).
+Este plano visa corrigir as funções de manipulação de texto para suportar corretamente o número de casas decimais informado, resolvendo o problema onde a digitação em campos de 2 casas (como o bafômetro) resultava em valores multiplicados por 10.
 
-## Proposed Changes
+## Mudanças Propostas
 
-### [presenter] - ViewModel
+### [theme] - Ajuste na lógica do Teclado
 
-#### [MODIFY] [CheckBreathalyzerViewModel.kt](file:///C:/Users/anderson/Documents/Kotlin/CAV/app/src/main/java/br/com/usinasantafe/cav/presenter/view/card/breathalyzer/check/CheckBreathalyzerViewModel.kt)
-- Alterar `onChangeFlagRealized` para verificar se o valor clicado já é o atual. Se for igual, define como `null`.
-- Garantir que ao desmarcar o bafômetro (`flagRealized` se tornando `null`), o resultado (`flagResult`) também seja limpo.
-- Alterar `onChangeFlagResult` para implementar a mesma lógica de toggle (desmarcar se clicar na opção já selecionada).
+#### [MODIFY] [Buttons.kt](file:///C:/Users/anderson/Documents/Kotlin/CAV/app/src/main/java/br/com/usinasantafe/cav/presenter/theme/Buttons.kt)
+- Adicionar import `kotlin.math.pow`.
+- Atualizar `addTextFieldComma` para calcular o divisor dinamicamente: `10.0.pow(decimalPlaces)`.
+- Atualizar `clearTextFieldComma` para calcular o divisor dinamicamente: `10.0.pow(decimalPlaces)`.
+- Isso garante que, se `decimalPlaces = 2`, o valor seja dividido por `100.0`, transformando "1" em "0,01" e "12" em "0,12".
 
-## Verification Plan
+### [presenter] - Ajuste na ViewModel
 
-### Manual Verification
-- Abrir a tela de Bafômetro.
-- Marcar "NÃO" e clicar novamente em "NÃO": a opção deve ser desmarcada e ficar nada selecionado.
-- Marcar "SIM", marcar "POSITIVO", e depois clicar em "SIM" novamente: tanto o bafômetro quanto o resultado devem ser limpos.
-- O mesmo comportamento deve ocorrer para "POSITIVO" e "NEGATIVO".
+#### [MODIFY] [CountBreathalyzerViewModel.kt](file:///C:/Users/anderson/Documents/Kotlin/CAV/app/src/main/java/br/com/usinasantafe/cav/presenter/view/card/breathalyzer/count/CountBreathalyzerViewModel.kt)
+- Atualizar a chamada de `clearTextFieldComma` para passar `COUNT_DECIMAL` (2), garantindo que ao apagar um número a formatação permaneça correta com 2 casas.
+
+## Verificação
+
+1. **Cenário 1 (Início)**: Texto é "0,00". Digita "1". Novo texto deve ser "0,01".
+2. **Cenário 2 (Continuação)**: Texto é "0,01". Digita "2". Novo texto deve ser "0,12".
+3. **Cenário 3 (Apagar)**: Texto é "0,12". Clica em "APAGAR". Novo texto deve ser "0,01".

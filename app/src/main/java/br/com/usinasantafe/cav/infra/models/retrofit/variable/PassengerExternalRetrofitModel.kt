@@ -3,7 +3,7 @@ package br.com.usinasantafe.cav.infra.models.retrofit.variable
 import br.com.usinasantafe.cav.infra.models.room.variable.PassengerExternalRoomModel
 import br.com.usinasantafe.cav.utils.required
 
-data class PassengerInvolvedRetrofitModel(
+data class PassengerExternalRetrofitModel(
     val id: Int,
     val document: String?,
     val name: String,
@@ -13,9 +13,9 @@ data class PassengerInvolvedRetrofitModel(
     val detail: String?
 )
 
-fun PassengerExternalRoomModel.roomModelToRetrofitModel(): PassengerInvolvedRetrofitModel {
+fun PassengerExternalRoomModel.roomModelToRetrofitModel(): PassengerExternalRetrofitModel {
     return with(this) {
-        PassengerInvolvedRetrofitModel(
+        PassengerExternalRetrofitModel(
             id = ::id.required(),
             document = document,
             name = name,

@@ -22,11 +22,11 @@ data class CardRetrofitModelOutput(
     val idTypeAccidentList: List<Int>,
     val idDataLocalList: List<Int>,
     val idSupportTeamsList: List<Int>,
-    val vehicleInvolvedList: List<VehicleInvolvedRetrofitModel>,
+    val vehicleExternalList: List<VehicleExternalRetrofitModel>,
     val vehicleOwnList: List<VehicleOwnRetrofitModel>,
     val involvedExternalList: List<InvolvedExternalRetrofitModel>,
     val witnessExternalList: List<WitnessExternalRetrofitModel>,
-    val involvedColabList: List<ColabRetrofitModel>,
+    val involvedColabList: List<InvolvedColabRetrofitModel>,
     val witnessColabList: List<WitnessColabRetrofitModel>,
     val urlPhotoList: List<String>,
     val obs: String?,
@@ -38,11 +38,11 @@ data class CardRetrofitModelInput(
 )
 
 fun CardRoomModel.roomModelToRetrofitModel(
-    vehicleInvolvedList: List<VehicleInvolvedRetrofitModel>,
+    vehicleInvolvedList: List<VehicleExternalRetrofitModel>,
     vehicleOwnList: List<VehicleOwnRetrofitModel>,
     involvedExternalList: List<InvolvedExternalRetrofitModel>,
     witnessExternalList: List<WitnessExternalRetrofitModel>,
-    involvedColabList: List<ColabRetrofitModel>,
+    involvedColabList: List<InvolvedColabRetrofitModel>,
     witnessColabList: List<WitnessColabRetrofitModel>
 ): CardRetrofitModelOutput {
     return with(this) {
@@ -57,7 +57,7 @@ fun CardRoomModel.roomModelToRetrofitModel(
             idTypeAccidentList = idTypeAccidentList,
             idDataLocalList = idDataLocalList,
             idSupportTeamsList = idSupportTeamsList,
-            vehicleInvolvedList = vehicleInvolvedList,
+            vehicleExternalList = vehicleInvolvedList,
             vehicleOwnList = vehicleOwnList,
             involvedExternalList = involvedExternalList,
             witnessExternalList = witnessExternalList,

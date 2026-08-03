@@ -83,8 +83,8 @@ class CountBreathalyzerViewModel @Inject constructor(
 
     fun onTextField(text: String, typeButton: TypeButton) {
         when (typeButton) {
-            TypeButton.NUMERIC -> updateState { copy(text = addTextFieldComma(this.text, text, 2)) }
-            TypeButton.CLEAN -> updateState { copy(text = clearTextFieldComma(this.text)) }
+            TypeButton.NUMERIC -> updateState { copy(text = addTextFieldComma(this.text, text, COUNT_DECIMAL)) }
+            TypeButton.CLEAN -> updateState { copy(text = clearTextFieldComma(this.text, COUNT_DECIMAL)) }
             TypeButton.OK -> set()
             TypeButton.UPDATE -> Unit
         }

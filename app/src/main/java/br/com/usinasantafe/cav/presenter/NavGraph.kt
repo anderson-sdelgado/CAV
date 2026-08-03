@@ -470,6 +470,12 @@ fun NavigationGraph(
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                     )
                 },
+                onNavCheckBreathalyzer = {
+                    navActions.navigateToCheckBreathalyzer(
+                        option = Option.EDIT.ordinal,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
+                    )
+                }
             )
         }
 
@@ -792,6 +798,13 @@ fun NavigationGraph(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
                     )
+                },
+                onNavDataColab = {
+                    navActions.navigateToDataColab(
+                        flowNote = FlowNote.COLAB.ordinal,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = 0
+                    )
                 }
             )
         }
@@ -813,6 +826,13 @@ fun NavigationGraph(
                 onNavDetail = {
                     navActions.navigateToDetail(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
+                        flowNote = FlowNote.COLAB.ordinal,
+                        idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
+                        idSecondary = 0
+                    )
+                },
+                onNavDataColab = {
+                    navActions.navigateToDataColab(
                         flowNote = FlowNote.COLAB.ordinal,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = 0

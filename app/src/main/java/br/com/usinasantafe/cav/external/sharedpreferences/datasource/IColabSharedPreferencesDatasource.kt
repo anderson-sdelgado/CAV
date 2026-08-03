@@ -121,7 +121,7 @@ class IColabSharedPreferencesDatasource @Inject constructor(
             updateModel {
                 this.flagResultBreathalyzer = flagResult
                 this.flagRealizedBreathalyzer = flagRealized
-                this.countBreathalyzer = if(flagRealized == true) this.countBreathalyzer else null
+                if((flagRealized != true) || (flagResult != true)) this.countBreathalyzer = null
             }
         }
 

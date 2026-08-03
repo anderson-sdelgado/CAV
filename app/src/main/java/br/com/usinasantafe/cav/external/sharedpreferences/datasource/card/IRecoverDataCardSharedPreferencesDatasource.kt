@@ -408,4 +408,12 @@ class IRecoverDataCardSharedPreferencesDatasource @Inject constructor(
                 vehicleOwnList.find { it.id == idMain }?.colab?.countBreathalyzer
             }
         }
+
+    override suspend fun getBreathalyzer(idMain: Int): Result<Triple<Boolean?, Boolean?, Double?>> =
+        result(getClassAndMethod()) {
+            datasource.get().readModel {
+                val colab = vehicleOwnList.find { it.id == idMain }?.colab
+                Triple(colab?.flagResultBreathalyzer, colab?.flagRealizedBreathalyzer, colab?.countBreathalyzer)
+            }
+        }
 }

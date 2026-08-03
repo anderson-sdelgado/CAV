@@ -41,6 +41,11 @@ fun CheckBreathalyzerScreen(
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+            LaunchedEffect(Unit) {
+                viewModel.recoverData()
+            }
+
             CheckBreathalyzerContent(
                 option = uiState.option,
                 flagRealized = uiState.flagRealized,
@@ -94,17 +99,18 @@ fun CheckBreathalyzerContent(
                 CheckboxDefault(
                     id = 1,
                     text = stringResource(
-                        id = R.string.text_pattern_no
+                        id = R.string.text_realized_no
                     ),
                     checked = flagRealized == false,
-                    onChecked = { onChangeFlagRealized(false) }
+                    onChecked = { onChangeFlagRealized(false) },
+
                 )
             }
             item {
                 CheckboxDefault(
                     id = 2,
                     text = stringResource(
-                        id = R.string.text_pattern_yes
+                        id = R.string.text_realized_yes
                     ),
                     checked = flagRealized == true,
                     onChecked = { onChangeFlagRealized(true) }

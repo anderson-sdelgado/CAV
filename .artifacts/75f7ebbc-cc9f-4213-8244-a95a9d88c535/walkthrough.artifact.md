@@ -1,18 +1,23 @@
-# Walkthrough - Refinamento da Seleção do Bafômetro (Toggle)
+# Walkthrough - Correção de Digitação Decimal (Bafômetro)
 
-Refatorei a lógica de seleção na tela de Bafômetro para suportar o comportamento de "desmarcar" (toggle), garantindo que o estado retorne a `null` quando o usuário clica em uma opção já selecionada.
+Corrigi as funções utilitárias de teclado numérico para suportar dinamicamente o número de casas decimais, resolvendo o problema de deslocamento da vírgula durante a digitação de valores para o bafômetro.
 
 ## Alterações Realizadas
 
+### [theme] - Lógica de Teclado
+
+- **[Buttons.kt](file:///C:/Users/anderson/Documents/Kotlin/CAV/app/src/main/java/br/com/usinasantafe/cav/presenter/theme/Buttons.kt)**:
+    - Refatorei `addTextFieldComma` e `clearTextFieldComma` para utilizar `10.0.pow(decimalPlaces)` no cálculo do divisor.
+    - Isso garante que, se o campo for configurado para 2 casas decimais, o valor digitado seja dividido por 100,0, transformando o primeiro dígito "1" corretamente em "0,01" em vez de "0,10".
+
 ### [presenter] - ViewModel
 
-#### [CheckBreathalyzerViewModel.kt](file:///C:/Users/anderson/Documents/Kotlin/CAV/app/src/main/java/br/com/usinasantafe/cav/presenter/view/card/breathalyzer/check/CheckBreathalyzerViewModel.kt)
-- **Lógica de Toggle**: As funções `onChangeFlagRealized` e `onChangeFlagResult` agora comparam o novo valor com o atual. Se forem iguais, o estado é definido como `null`.
-- **Limpeza em Cadeia**: Ao desmarcar a realização do bafômetro (`flagRealized` se tornando `null`), o resultado (`flagResult`) também é automaticamente resetado para `null`.
+- **[CountBreathalyzerViewModel.kt](file:///C:/Users/anderson/Documents/Kotlin/CAV/app/src/main/java/br/com/usinasantafe/cav/presenter/view/card/breathalyzer/count/CountBreathalyzerViewModel.kt)**:
+    - Atualizei a chamada de `clearTextFieldComma` para passar a constante `COUNT_DECIMAL` (2).
+    - Isso corrige o comportamento de "apagar", garantindo que a vírgula permaneça na posição correta (2 casas) enquanto o usuário remove dígitos.
 
 ## Verificação
 
-As alterações foram validadas logicamente para garantir que:
-1. Se "NÃO" estiver marcado e for clicado novamente, ele desmarca e fica tudo limpo.
-2. Se "SIM" estiver marcado com um resultado (ex: "POSITIVO") e o usuário clicar em "SIM" de novo, tanto a realização quanto o resultado são limpos.
-3. O grupo de resultado ("NEGATIVO/POSITIVO") agora permite desmarcar a opção selecionada, deixando o grupo sem nenhuma marcação, conforme solicitado.
+As alterações garantem que o comportamento de digitação estilo "caixa eletrônico" funcione para qualquer número de casas decimais informado:
+1. Com 2 casas: Digitou "1" -> "0,01". Digitou "2" -> "0,12". Digitou "5" -> "1,25".
+2. Apagar: "1,25" -> "APAGAR" -> "0,12".

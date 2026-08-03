@@ -3,7 +3,7 @@ package br.com.usinasantafe.cav.infra.models.retrofit.variable
 import br.com.usinasantafe.cav.infra.models.room.variable.VehicleExternalRoomModel
 import br.com.usinasantafe.cav.utils.required
 
-data class VehicleInvolvedRetrofitModel(
+data class VehicleExternalRetrofitModel(
     val id: Int,
     val document: String?,
     val name: String,
@@ -14,12 +14,12 @@ data class VehicleInvolvedRetrofitModel(
     val plate: String,
     val brand: String,
     val detailVehicle: String?,
-    val passengerInvolvedList: List<PassengerInvolvedRetrofitModel>
+    val passengerExternalList: List<PassengerExternalRetrofitModel>
 )
 
-fun VehicleExternalRoomModel.roomModelToRetrofitModel(): VehicleInvolvedRetrofitModel {
+fun VehicleExternalRoomModel.roomModelToRetrofitModel(): VehicleExternalRetrofitModel {
     return with(this) {
-        VehicleInvolvedRetrofitModel(
+        VehicleExternalRetrofitModel(
             id = ::id.required(),
             document = document,
             name = name,
@@ -30,7 +30,7 @@ fun VehicleExternalRoomModel.roomModelToRetrofitModel(): VehicleInvolvedRetrofit
             plate = plate,
             brand = brand,
             detailVehicle = detailVehicle,
-            passengerInvolvedList = emptyList()
+            passengerExternalList = emptyList()
         )
     }
 }

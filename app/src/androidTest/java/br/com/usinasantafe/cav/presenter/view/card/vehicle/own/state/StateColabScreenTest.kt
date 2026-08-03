@@ -41,7 +41,8 @@ class StateColabScreenTest {
                 onNavColab = {},
                 onNavPhone = {},
                 onNavDataColab = {},
-                onNavDataInvolved = {}
+                onNavDataInvolved = {},
+                onNavCheckBreathalyzer = {}
             )
         }
     }

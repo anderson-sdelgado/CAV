@@ -305,7 +305,7 @@ interface CardModule {
 
     @Binds
     @Singleton
-    fun bindListWitnessColab(usecase: IListWitnessColab): IListWitnessColab
+    fun bindListWitnessColab(usecase: IListWitnessColab): ListWitnessColab
 
     @Binds
     @Singleton
@@ -326,5 +326,9 @@ interface CardModule {
     @Binds
     @Singleton
     fun bindSetCountBreathalyzer(usecase: ISetCountBreathalyzer): SetCountBreathalyzer
+
+    @Binds
+    @Singleton
+    fun bindGetDescBreathalyzer(usecase: IGetDescBreathalyzer): GetDescBreathalyzer
 
 }

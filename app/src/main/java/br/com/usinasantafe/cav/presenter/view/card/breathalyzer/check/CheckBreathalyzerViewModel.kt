@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import br.com.usinasantafe.cav.domain.usecases.card.GetRealizedBreathalyzer
 import br.com.usinasantafe.cav.domain.usecases.card.GetResultBreathalyzer
 import br.com.usinasantafe.cav.domain.usecases.card.SetDataInitialBreathalyzer
+import br.com.usinasantafe.cav.lib.Errors
 import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.presenter.Args.ID_MAIN_ARG
 import br.com.usinasantafe.cav.presenter.Args.OPTION_ARG
@@ -14,6 +15,7 @@ import br.com.usinasantafe.cav.utils.UiStatusState
 import br.com.usinasantafe.cav.utils.getClassAndMethod
 import br.com.usinasantafe.cav.utils.onFailureState
 import br.com.usinasantafe.cav.utils.onSuccessStateAccess
+import br.com.usinasantafe.cav.utils.withFailure
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -102,6 +104,14 @@ class CheckBreathalyzerViewModel @Inject constructor(
 
     fun set() = viewModelScope.launch {
         runCatching {
+            if(state.flagRealized == null) {
+                updateState { withFailure(getClassAndMethod(), Errors.CHECK_REALIZED_BREATHALYZER_INVALID) }
+                return@launch
+            }
+            if((state.flagRealized == true) && (state.flagResult == null)){
+                updateState { withFailure(getClassAndMethod(), Errors.CHECK_RESULT_BREATHALYZER_INVALID) }
+                return@launch
+            }
             setDataInitialBreathalyzer(state.flagRealized, state.flagResult, state.option, state.idMain).getOrThrow()
         }
             .onSuccessStateAccess(::updateState)

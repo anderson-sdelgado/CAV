@@ -68,6 +68,16 @@ fun errors(errors: Errors, failure: String, value: String = ""): String {
                 value
             )
         }
+        Errors.CHECK_REALIZED_BREATHALYZER_INVALID -> {
+            stringResource(
+                id = R.string.text_msg_realized_breathalyzer_invalid
+            )
+        }
+        Errors.CHECK_RESULT_BREATHALYZER_INVALID -> {
+            stringResource(
+                id = R.string.text_msg_result_breathalyzer_invalid
+            )
+        }
         else -> stringResource(
             id = R.string.text_failure,
             failure

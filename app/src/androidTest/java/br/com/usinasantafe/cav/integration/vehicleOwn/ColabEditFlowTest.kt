@@ -31,6 +31,7 @@ import br.com.usinasantafe.cav.infra.models.room.stable.TypeAccidentRoomModel
 import br.com.usinasantafe.cav.infra.models.sharedpreferences.ConfigSharedPreferencesModel
 import br.com.usinasantafe.cav.lib.StatusSend
 import br.com.usinasantafe.cav.presenter.MainActivity
+import br.com.usinasantafe.cav.presenter.view.card.colab.data.TAG_BREATHALYZER_DATA_COLAB_EDIT_BUTTON
 import br.com.usinasantafe.cav.presenter.view.card.colab.data.TAG_COLAB_DATA_COLAB_EDIT_BUTTON
 import br.com.usinasantafe.cav.presenter.view.card.colab.data.TAG_DETAIL_DATA_COLAB_EDIT_BUTTON
 import br.com.usinasantafe.cav.presenter.view.card.colab.data.TAG_STATE_DATA_COLAB_EDIT_BUTTON
@@ -236,12 +237,44 @@ class ColabEditFlowTest {
 
             composeTestRule.waitUntilTimeout(3_000)
 
+            composeTestRule.onNodeWithText("REALIZADO")
+                .performClick()
+
+            Log.d("TestDebug", "Position 12")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("POSITIVO")
+                .performClick()
+
+            Log.d("TestDebug", "Position 13")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("SALVAR")
+                .performClick()
+
+            Log.d("TestDebug", "Position 14")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithTag("button_1")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_6")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_OK")
+                .performClick()
+
+            Log.d("TestDebug", "Position 15")
+
             composeTestRule.onNodeWithTag(TAG_DETAIL_TEXT_FIELD)
                 .performTextInput("MACHUCOU O BRAÇO")
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 12")
+            Log.d("TestDebug", "Position 16")
 
             //////////////////////////////////////////////////////////////////////////////////////
 
@@ -250,28 +283,28 @@ class ColabEditFlowTest {
             composeTestRule.onNodeWithTag(TAG_DRIVER_OWN_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 60")
+            Log.d("TestDebug", "Position 16")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 61")
+            Log.d("TestDebug", "Position 17")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_DRIVER_OWN_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 62")
+            Log.d("TestDebug", "Position 18")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_COLAB_DATA_COLAB_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 63")
+            Log.d("TestDebug", "Position 19")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -279,14 +312,14 @@ class ColabEditFlowTest {
                 activity.onBackPressedDispatcher.onBackPressed()
             }
 
-            Log.d("TestDebug", "Position 64")
+            Log.d("TestDebug", "Position 20")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_COLAB_DATA_COLAB_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 65")
+            Log.d("TestDebug", "Position 21")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -317,28 +350,28 @@ class ColabEditFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 66")
+            Log.d("TestDebug", "Position 22")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_STATE_DATA_COLAB_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 67")
+            Log.d("TestDebug", "Position 24")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 68")
+            Log.d("TestDebug", "Position 25")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_STATE_DATA_COLAB_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 69")
+            Log.d("TestDebug", "Position 26")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -347,28 +380,28 @@ class ColabEditFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 70")
+            Log.d("TestDebug", "Position 27")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_DETAIL_DATA_COLAB_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 71")
+            Log.d("TestDebug", "Position 28")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 72")
+            Log.d("TestDebug", "Position 29")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_DETAIL_DATA_COLAB_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 73")
+            Log.d("TestDebug", "Position 30")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -377,14 +410,141 @@ class ColabEditFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 74")
+            Log.d("TestDebug", "Position 31")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithTag(TAG_BREATHALYZER_DATA_COLAB_EDIT_BUTTON )
+                .performClick()
+
+            Log.d("TestDebug", "Position 32")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 75")
+            Log.d("TestDebug", "Position 33")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithTag(TAG_BREATHALYZER_DATA_COLAB_EDIT_BUTTON )
+                .performClick()
+
+            Log.d("TestDebug", "Position 34")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("SALVAR")
+                .performClick()
+
+            Log.d("TestDebug", "Position 35")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            scenario.onActivity { activity ->
+                activity.onBackPressedDispatcher.onBackPressed()
+            }
+
+            Log.d("TestDebug", "Position 36")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("RETORNAR")
+                .performClick()
+
+            Log.d("TestDebug", "Position 37")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithTag(TAG_BREATHALYZER_DATA_COLAB_EDIT_BUTTON )
+                .performClick()
+
+            Log.d("TestDebug", "Position 38")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("NÃO REALIZADO")
+                .performClick()
+
+            Log.d("TestDebug", "Position 39")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("SALVAR")
+                .performClick()
+
+            Log.d("TestDebug", "Position 40")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithTag(TAG_BREATHALYZER_DATA_COLAB_EDIT_BUTTON )
+                .performClick()
+
+            Log.d("TestDebug", "Position 41")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("REALIZADO")
+                .performClick()
+
+            Log.d("TestDebug", "Position 42")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("POSITIVO")
+                .performClick()
+
+            Log.d("TestDebug", "Position 43")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("SALVAR")
+                .performClick()
+
+            Log.d("TestDebug", "Position 44")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithTag("button_1")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_6")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_OK")
+                .performClick()
+
+            Log.d("TestDebug", "Position 45")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+
+            composeTestRule.onNodeWithTag(TAG_BREATHALYZER_DATA_COLAB_EDIT_BUTTON )
+                .performClick()
+
+            Log.d("TestDebug", "Position 46")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("NEGATIVO")
+                .performClick()
+
+            Log.d("TestDebug", "Position 48")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("SALVAR")
+                .performClick()
+
+            Log.d("TestDebug", "Position 49")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("RETORNAR")
+                .performClick()
+
+            Log.d("TestDebug", "Position 32")
 
             composeTestRule.waitUntilTimeout(20_000)
 

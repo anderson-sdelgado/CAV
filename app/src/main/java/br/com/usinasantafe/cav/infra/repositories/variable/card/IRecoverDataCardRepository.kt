@@ -284,6 +284,11 @@ class IRecoverDataCardRepository @Inject constructor(
             cardSharedPreferencesDatasource.getCountBreathalyzer(idMain).getOrThrow()
         }
 
+    override suspend fun getBreathalyzer(idMain: Int): Result<Triple<Boolean?, Boolean?, Double?>> =
+        call(getClassAndMethod()) {
+            cardSharedPreferencesDatasource.getBreathalyzer(idMain).getOrThrow()
+        }
+
     override suspend fun listVehicleOwn(): Result<List<VehicleOwn>> =
         call(getClassAndMethod()) {
             cardSharedPreferencesDatasource.listVehicleOwn().getOrThrow()

@@ -444,7 +444,7 @@ class IUpdateCardSharedPreferencesDatasource @Inject constructor(
                 vehicleOwnList.find { it.id == idMain }?.colab?.apply {
                     flagRealizedBreathalyzer = flagRealized
                     flagResultBreathalyzer = flagResult
-                    if(flagRealized != true) countBreathalyzer = null
+                    if((flagRealized != true) || (flagResult != true)) countBreathalyzer = null
                 }
             }
         }

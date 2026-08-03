@@ -125,6 +125,7 @@ interface RecoverDataCardRepository {
     suspend fun getResultBreathalyzer(idMain: Int): Result<Boolean?>
     suspend fun getRealizedBreathalyzer(idMain: Int): Result<Boolean?>
     suspend fun getCountBreathalyzer(idMain: Int): Result<Double?>
+    suspend fun getBreathalyzer(idMain: Int): Result<Triple<Boolean?, Boolean?, Double?>>
     suspend fun listVehicleOwn(): Result<List<VehicleOwn>>
     suspend fun listVehicleInvolved(): Result<List<VehicleExternal>>
     suspend fun getRegColab(): Result<Long?>

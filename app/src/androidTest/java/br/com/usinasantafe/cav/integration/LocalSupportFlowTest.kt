@@ -186,182 +186,182 @@ class LocalSupportFlowTest {
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithTag(TAG_DATA_LOCAL_EDIT_BUTTON)
+            composeTestRule.onNodeWithText("OK")
                 .performClick()
 
             Log.d("TestDebug", "Position 10")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithText("RETORNAR")
+            composeTestRule.onNodeWithTag(TAG_DATA_LOCAL_EDIT_BUTTON)
                 .performClick()
 
             Log.d("TestDebug", "Position 11")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithTag(TAG_DATA_LOCAL_EDIT_BUTTON)
+            composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
             Log.d("TestDebug", "Position 12")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithTag("item_list_3")
+            composeTestRule.onNodeWithTag(TAG_DATA_LOCAL_EDIT_BUTTON)
                 .performClick()
 
             Log.d("TestDebug", "Position 13")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithText("RETORNAR")
+            composeTestRule.onNodeWithTag("item_list_3")
                 .performClick()
 
             Log.d("TestDebug", "Position 14")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithTag("item_list_3")
+            composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
             Log.d("TestDebug", "Position 15")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithText("SALVAR")
+            composeTestRule.onNodeWithTag("item_list_3")
                 .performClick()
 
             Log.d("TestDebug", "Position 16")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithText("RETORNAR")
+            composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
             Log.d("TestDebug", "Position 17")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithTag(TAG_DATA_LOCAL_EDIT_BUTTON)
+            composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
             Log.d("TestDebug", "Position 18")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithTag("item_list_3")
+            composeTestRule.onNodeWithTag(TAG_DATA_LOCAL_EDIT_BUTTON)
                 .performClick()
 
             Log.d("TestDebug", "Position 19")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithText("SIM")
+            composeTestRule.onNodeWithTag("item_list_3")
                 .performClick()
 
             Log.d("TestDebug", "Position 20")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithText("SALVAR")
+            composeTestRule.onNodeWithText("SIM")
                 .performClick()
 
             Log.d("TestDebug", "Position 21")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithTag("item_list_7")
+            composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
             Log.d("TestDebug", "Position 22")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithText("BARREIRA")
+            composeTestRule.onNodeWithTag("item_list_7")
                 .performClick()
 
             Log.d("TestDebug", "Position 23")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithText("SALVAR")
+            composeTestRule.onNodeWithText("BARREIRA")
                 .performClick()
 
             Log.d("TestDebug", "Position 24")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithText("RETORNAR")
+            composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
             Log.d("TestDebug", "Position 25")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithTag(TAG_SUPPORT_TEAMS_EDIT_BUTTON)
+            composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
             Log.d("TestDebug", "Position 26")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithText("RETORNAR")
+            composeTestRule.onNodeWithTag(TAG_SUPPORT_TEAMS_EDIT_BUTTON)
                 .performClick()
 
             Log.d("TestDebug", "Position 27")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithTag(TAG_SUPPORT_TEAMS_EDIT_BUTTON)
+            composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
             Log.d("TestDebug", "Position 28")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithText("SALVAR")
+            composeTestRule.onNodeWithTag(TAG_SUPPORT_TEAMS_EDIT_BUTTON)
                 .performClick()
 
             Log.d("TestDebug", "Position 29")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithTag(TAG_SUPPORT_TEAMS_EDIT_BUTTON)
+            composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
             Log.d("TestDebug", "Position 30")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithText("GUINCHOS")
+            composeTestRule.onNodeWithTag(TAG_SUPPORT_TEAMS_EDIT_BUTTON)
                 .performClick()
 
             Log.d("TestDebug", "Position 31")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithText("BOMBEIROS")
+            composeTestRule.onNodeWithText("GUINCHOS")
                 .performClick()
 
             Log.d("TestDebug", "Position 32")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithText("SALVAR")
+            composeTestRule.onNodeWithText("BOMBEIROS")
                 .performClick()
 
             Log.d("TestDebug", "Position 33")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithText("RETORNAR")
+            composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
             Log.d("TestDebug", "Position 34")
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithText("AVANÇAR")
+            composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
             Log.d("TestDebug", "Position 35")
@@ -375,7 +375,7 @@ class LocalSupportFlowTest {
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithText("RETORNAR")
+            composeTestRule.onNodeWithText("AVANÇAR")
                 .performClick()
 
             Log.d("TestDebug", "Position 37")
@@ -389,7 +389,7 @@ class LocalSupportFlowTest {
 
             composeTestRule.waitUntilTimeout(3_000)
 
-            composeTestRule.onNodeWithText("AVANÇAR")
+            composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
             Log.d("TestDebug", "Position 39")
@@ -400,6 +400,13 @@ class LocalSupportFlowTest {
                 .performClick()
 
             Log.d("TestDebug", "Position 40")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("AVANÇAR")
+                .performClick()
+
+            Log.d("TestDebug", "Position 41")
 
             composeTestRule.waitUntilTimeout(20_000)
 

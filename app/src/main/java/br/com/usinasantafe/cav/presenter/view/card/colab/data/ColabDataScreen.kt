@@ -19,7 +19,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.usinasantafe.cav.R
 import br.com.usinasantafe.cav.lib.FlowNote
-import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.State
 import br.com.usinasantafe.cav.presenter.theme.AlertDialogCheckDesign
 import br.com.usinasantafe.cav.presenter.theme.ButtonMaxWidth
@@ -33,6 +32,7 @@ import br.com.usinasantafe.cav.utils.UiStatusState
 const val TAG_COLAB_DATA_COLAB_EDIT_BUTTON = "tag_colab_data_colab_edit_button"
 const val TAG_STATE_DATA_COLAB_EDIT_BUTTON = "tag_state_data_colab_edit_button"
 const val TAG_DETAIL_DATA_COLAB_EDIT_BUTTON = "tag_detail_data_colab_edit_button"
+const val TAG_BREATHALYZER_DATA_COLAB_EDIT_BUTTON = "tag_breathalyzer_data_colab_edit_button"
 
 @Composable
 fun ColabDataScreen(
@@ -40,6 +40,7 @@ fun ColabDataScreen(
     onNavColab: () -> Unit,
     onNavState: () -> Unit,
     onNavDetail: () -> Unit,
+    onNavCheckBreathalyzer: () -> Unit,
     onNavDataVehicleOwn: () -> Unit,
     onNavPassengerList: () -> Unit
 ) {
@@ -56,6 +57,7 @@ fun ColabDataScreen(
                 colab = uiState.colab,
                 state = uiState.state,
                 detail = uiState.detail,
+                breathalyzer = uiState.breathalyzer,
                 flagDialogCheck = uiState.flagDialogCheck,
                 onDialogCheck = viewModel::onDialogCheck,
                 delete = viewModel::delete,
@@ -64,6 +66,7 @@ fun ColabDataScreen(
                 onNavColab = onNavColab,
                 onNavState = onNavState,
                 onNavDetail = onNavDetail,
+                onNavCheckBreathalyzer = onNavCheckBreathalyzer,
                 onNavDataVehicleOwn = onNavDataVehicleOwn,
                 onNavPassengerList = onNavPassengerList,
                 modifier = Modifier.padding(innerPadding)
@@ -78,6 +81,7 @@ fun ColabDataContent(
     colab: String,
     state: State,
     detail: String,
+    breathalyzer: String,
     flagDialogCheck: Boolean,
     onDialogCheck: (Boolean) -> Unit,
     delete: () -> Unit,
@@ -86,6 +90,7 @@ fun ColabDataContent(
     onNavColab: () -> Unit,
     onNavState: () -> Unit,
     onNavDetail: () -> Unit,
+    onNavCheckBreathalyzer: () -> Unit,
     onNavDataVehicleOwn: () -> Unit,
     onNavPassengerList: () -> Unit,
     modifier: Modifier = Modifier
@@ -131,6 +136,16 @@ fun ColabDataContent(
                     tag = TAG_STATE_DATA_COLAB_EDIT_BUTTON,
                     onClickEdit = onNavState
                 )
+            }
+            if(flowNote == FlowNote.COLAB) {
+                item {
+                    ItemDefaultEditListScreenModel(
+                        id = R.string.text_breathalyzer,
+                        desc = breathalyzer,
+                        tag = TAG_BREATHALYZER_DATA_COLAB_EDIT_BUTTON,
+                        onClickEdit = onNavCheckBreathalyzer
+                    )
+                }
             }
             item {
                 ItemDefaultEditListScreenModel(
@@ -194,6 +209,7 @@ fun ColabDataPagePreview() {
                 colab = "19759 - ANDERSON DA SILVA DELGADO",
                 state = State.INJURED,
                 detail = "PERNA MACHUCADA",
+                breathalyzer = "",
                 flagDialogCheck = false,
                 onDialogCheck = {},
                 delete = {},
@@ -204,6 +220,7 @@ fun ColabDataPagePreview() {
                 onNavDetail = {},
                 onNavDataVehicleOwn = {},
                 onNavPassengerList = {},
+                onNavCheckBreathalyzer = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -216,10 +233,11 @@ fun ColabDataPagePreviewWithCheck() {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             ColabDataContent(
-                flowNote = FlowNote.EQUIP,
+                flowNote = FlowNote.COLAB,
                 colab = "19759 - ANDERSON DA SILVA DELGADO",
                 state = State.INJURED,
                 detail = "PERNA MACHUCADA",
+                breathalyzer = "BAFÔMETRO: NÃO REALIZADO",
                 flagDialogCheck = true,
                 onDialogCheck = {},
                 delete = {},
@@ -230,6 +248,7 @@ fun ColabDataPagePreviewWithCheck() {
                 onNavDetail = {},
                 onNavDataVehicleOwn = {},
                 onNavPassengerList = {},
+                onNavCheckBreathalyzer = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

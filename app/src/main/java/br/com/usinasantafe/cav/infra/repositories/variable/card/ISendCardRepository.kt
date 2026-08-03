@@ -125,11 +125,11 @@ class ISendCardRepository @Inject constructor(
 
             val vehicleInvolvedRetrofitList = vehicleInvolvedRoomModelList.map { roomModel ->
                 roomModel.roomModelToRetrofitModel().copy(
-                    passengerInvolvedList = passengerInvolvedGrouped[roomModel.id]?.map { it.roomModelToRetrofitModel() } ?: emptyList()
+                    passengerExternalList = passengerInvolvedGrouped[roomModel.id]?.map { it.roomModelToRetrofitModel() } ?: emptyList()
                 )
             }
-            val involvedRetrofitList = involvedExternalRoomModelList.map { it.roomModelToRetrofitModel() }
-            val witnessRetrofitList = witnessExternalRoomModelList.map { it.roomModelToRetrofitModel() }
+            val involvedExternalRetrofitList = involvedExternalRoomModelList.map { it.roomModelToRetrofitModel() }
+            val witnessExternalRetrofitList = witnessExternalRoomModelList.map { it.roomModelToRetrofitModel() }
 
             val involvedColabRetrofitList = involvedColabRoomModelList.map { it.roomModelToRetrofitModel() }
             val witnessColabRetrofitList = witnessColabRoomModelLis.map { it.roomModelToRetrofitModel() }
@@ -137,8 +137,8 @@ class ISendCardRepository @Inject constructor(
             val modelRetrofit = cardRoomModel.roomModelToRetrofitModel(
                 vehicleOwnList = vehicleOwnRetrofitList,
                 vehicleInvolvedList = vehicleInvolvedRetrofitList,
-                involvedExternalList = involvedRetrofitList,
-                witnessExternalList = witnessRetrofitList,
+                involvedExternalList = involvedExternalRetrofitList,
+                witnessExternalList = witnessExternalRetrofitList,
                 involvedColabList = involvedColabRetrofitList,
                 witnessColabList = witnessColabRetrofitList
             )

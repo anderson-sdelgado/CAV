@@ -12,6 +12,7 @@ import br.com.usinasantafe.cav.lib.TypeButton
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.Locale
+import kotlin.math.pow
 
 fun addTextField(text: String, char: String): String {
     return text + char
@@ -33,8 +34,8 @@ fun clearTextField(text: String): String {
 
 fun addTextFieldComma(text: String, digit: String, decimalPlaces: Int = 1): String {
     val cleanText = text.filter { it.isDigit() } + digit
-    val valueInTenths = cleanText.toLongOrNull() ?: 0L
-    val value = valueInTenths / 10.0
+    val valueInt = cleanText.toLongOrNull() ?: 0L
+    val value = valueInt / 10.0.pow(decimalPlaces)
     val pattern = buildString {
         append("#,##0")
         if (decimalPlaces > 0) {
@@ -50,8 +51,8 @@ fun addTextFieldComma(text: String, digit: String, decimalPlaces: Int = 1): Stri
 fun clearTextFieldComma(text: String, decimalPlaces: Int = 1): String {
     val cleanText = text.filter { it.isDigit() }
     val reducedText = if (cleanText.length > 1) cleanText.dropLast(1) else ""
-    val valueInTenths = reducedText.toLongOrNull() ?: 0L
-    val value = valueInTenths / 10.0
+    val valueInt = reducedText.toLongOrNull() ?: 0L
+    val value = valueInt / 10.0.pow(decimalPlaces)
     val pattern = buildString {
         append("#,##0")
         if (decimalPlaces > 0) {

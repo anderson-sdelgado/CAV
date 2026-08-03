@@ -87,14 +87,18 @@ fun CountBreathalyzerContent(
             flagUpdate = false
         )
         BackHandler {
-            when(option) {
-                Option.INSERT -> onNavCheckBreathalyzer()
-                Option.EDIT -> onNavDataColab()
-            }
+            onNavCheckBreathalyzer()
         }
 
         if(status.flagDialog) {
-            MsgErrors(status.errors, onCloseDialog, status.failure)
+            MsgErrors(
+                status.errors,
+                onCloseDialog,
+                status.failure,
+                stringResource(
+                    id = R.string.text_breathalyzer
+                )
+            )
         }
 
     }

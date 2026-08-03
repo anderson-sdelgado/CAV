@@ -7,6 +7,7 @@ import br.com.usinasantafe.cav.domain.usecases.card.DeleteInvolvedExternal
 import br.com.usinasantafe.cav.domain.usecases.card.GetDescColab
 import br.com.usinasantafe.cav.domain.usecases.card.GetDetail
 import br.com.usinasantafe.cav.domain.usecases.card.GetState
+import br.com.usinasantafe.cav.domain.usecases.card.IGetDescBreathalyzer
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.State
@@ -31,6 +32,7 @@ data class ColabDataState(
     val idSecondary: Int = 0,
     val colab: String = "",
     val state: State = State.UNHARMED,
+    val breathalyzer: String = "",
     val detail: String = "",
     val flagDialogCheck: Boolean = false,
     override val status: UiStatusState = UiStatusState()
@@ -47,6 +49,7 @@ class ColabDataViewModel @Inject constructor(
     private val getDescColab: GetDescColab,
     private val getState: GetState,
     private val getDetail: GetDetail,
+    private val getDescBreathalyzer: IGetDescBreathalyzer,
     private val deleteInvolvedExternal: DeleteInvolvedExternal
 ) : ViewModel() {
 
@@ -78,18 +81,28 @@ class ColabDataViewModel @Inject constructor(
     }
 
     fun recoverData() = viewModelScope.launch {
+
+        data class RecoverColab (
+            val descColab: String,
+            val state: State,
+            val breathalyzer: String,
+            val detail: String,
+        )
+
         runCatching {
             val descColab = getDescColab(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
             val stateRet = getState(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
             val detail = getDetail(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
-            Triple(descColab, stateRet, detail)
+            val breathalyzer = if(state.flowNote == FlowNote.COLAB) getDescBreathalyzer(state.idMain).getOrThrow() else ""
+            RecoverColab(descColab, stateRet, breathalyzer, detail)
         }
-            .onSuccess { (colab, stateRet, detail) ->
+            .onSuccess { recovered ->
                 updateState {
                     copy(
-                        colab = colab,
-                        state = stateRet,
-                        detail = detail,
+                        colab = recovered.descColab,
+                        state = recovered.state,
+                        detail = recovered.detail,
+                        breathalyzer = recovered.breathalyzer,
                         status = status.copy(flagFailure = false)
                     )
                 }
