@@ -110,7 +110,7 @@ class DeleteFlowTest {
 
             initialRegister()
 
-            Log.d("TestDebug", "Position 1")
+            Log.d("TestDebug", "Position 01 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -119,7 +119,7 @@ class DeleteFlowTest {
             composeTestRule.onNodeWithText("APONTAMENTO")
                 .performClick()
 
-            Log.d("TestDebug", "Position 2")
+            Log.d("TestDebug", "Position 02 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -136,7 +136,7 @@ class DeleteFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 3")
+            Log.d("TestDebug", "Position 03 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -149,28 +149,28 @@ class DeleteFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 4")
+            Log.d("TestDebug", "Position 04 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("AVANÇAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 5")
+            Log.d("TestDebug", "Position 05 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("AVANÇAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 7")
+            Log.d("TestDebug", "Position 06 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("AVANÇAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 8")
+            Log.d("TestDebug", "Position 07 - Base")
 
             /////////////////////////////////////////////////////////////////////////
 
@@ -179,7 +179,7 @@ class DeleteFlowTest {
             composeTestRule.onNodeWithTag(TAG_WITNESS_EXTERNAL_FULL_INSERT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 9")
+            Log.d("TestDebug", "Position 01 - Initial")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -189,7 +189,7 @@ class DeleteFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 10")
+            Log.d("TestDebug", "Position 02 - Initial")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -218,7 +218,7 @@ class DeleteFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 11")
+            Log.d("TestDebug", "Position 03 - Initial")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -228,14 +228,14 @@ class DeleteFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 12")
+            Log.d("TestDebug", "Position 04 - Initial")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 13")
+            Log.d("TestDebug", "Position 05 - Initial")
 
             /////////////////////////////////////////////////////////////////////////
 
@@ -244,7 +244,7 @@ class DeleteFlowTest {
             composeTestRule.onNodeWithTag(TAG_WITNESS_EXTERNAL_FULL_INSERT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 14")
+            Log.d("TestDebug", "Position 01")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -253,7 +253,7 @@ class DeleteFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 15")
+            Log.d("TestDebug", "Position 02")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -282,42 +282,42 @@ class DeleteFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 16")
+            Log.d("TestDebug", "Position 03")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 17")
+            Log.d("TestDebug", "Position 04")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 18")
+            Log.d("TestDebug", "Position 05")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag("${TAG_WITNESS_EXTERNAL_FULL_EDIT_BUTTON}1")
                 .performClick()
 
-            Log.d("TestDebug", "Position 19")
+            Log.d("TestDebug", "Position 06")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("EXCLUIR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 20")
+            Log.d("TestDebug", "Position 07")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("SIM")
                 .performClick()
 
-            Log.d("TestDebug", "Position 21")
+            Log.d("TestDebug", "Position 08")
 
             composeTestRule.waitUntilTimeout(20_000)
 

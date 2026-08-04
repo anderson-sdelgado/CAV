@@ -8,9 +8,6 @@ data class PassengerColabRetrofitModel(
     val id: Int,
     val reg: Long,
     val state: Int,
-    val flagRealizedBreathalyzer: Int,
-    val flagResultBreathalyzer: Int?,
-    val countBreathalyzer: Double?,
     val detail: String?,
 )
 
@@ -20,9 +17,6 @@ fun PassengerColabRoomModel.roomModelToRetrofitModel(): PassengerColabRetrofitMo
             id = ::id.required(),
             reg = reg,
             state = state.id,
-            flagRealizedBreathalyzer = if (flagRealizedBreathalyzer) 1 else 0,
-            flagResultBreathalyzer = flagResultBreathalyzer?.let { if (it) 1 else 0 },
-            countBreathalyzer = countBreathalyzer,
             detail = detail
         )
     }

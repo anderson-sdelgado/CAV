@@ -115,7 +115,7 @@ class EquipSecEditFlowTest {
 
             val scenario = ActivityScenario.launch(MainActivity::class.java)
 
-            Log.d("TestDebug", "Position 1")
+            Log.d("TestDebug", "Position 01 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -124,7 +124,7 @@ class EquipSecEditFlowTest {
             composeTestRule.onNodeWithText("APONTAMENTO")
                 .performClick()
 
-            Log.d("TestDebug", "Position 2")
+            Log.d("TestDebug", "Position 02 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -141,7 +141,7 @@ class EquipSecEditFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 3")
+            Log.d("TestDebug", "Position 03 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -154,28 +154,30 @@ class EquipSecEditFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 4")
+            Log.d("TestDebug", "Position 04 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("AVANÇAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 5")
+            Log.d("TestDebug", "Position 05 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("AVANÇAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 6")
+            Log.d("TestDebug", "Position 06 - Base")
+
+            //////////////////////////////////////////////////////////////////////////////////////
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_VEHICLE_OWN_FULL_INSERT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 7")
+            Log.d("TestDebug", "Position 01 - Initial")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -190,7 +192,7 @@ class EquipSecEditFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 8")
+            Log.d("TestDebug", "Position 02 - Initial")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -199,7 +201,7 @@ class EquipSecEditFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 9")
+            Log.d("TestDebug", "Position 03 - Initial")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -218,7 +220,7 @@ class EquipSecEditFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 10")
+            Log.d("TestDebug", "Position 04 - Initial")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -227,16 +229,47 @@ class EquipSecEditFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 11")
+
+            Log.d("TestDebug", "Position 05 - Initial")
 
             composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("REALIZADO")
+                .performClick()
+
+            Log.d("TestDebug", "Position 06 - Initial")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("POSITIVO")
+                .performClick()
+
+            Log.d("TestDebug", "Position 07 - Initial")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("SALVAR")
+                .performClick()
+
+            Log.d("TestDebug", "Position 08 - Initial")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithTag("button_1")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_6")
+                .performClick()
+            composeTestRule.onNodeWithTag("button_OK")
+                .performClick()
+
+            Log.d("TestDebug", "Position 09 - Initial")
 
             composeTestRule.onNodeWithTag(TAG_DETAIL_TEXT_FIELD)
                 .performTextInput("MACHUCOU O BRAÇO")
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 12")
+            Log.d("TestDebug", "Position 10 - Initial")
 
             //////////////////////////////////////////////////////////////////////////////////////
 
@@ -245,14 +278,14 @@ class EquipSecEditFlowTest {
             composeTestRule.onNodeWithTag(TAG_VEHICLE_SEC_OWN_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 13")
+            Log.d("TestDebug", "Position 01 - Secondary")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("INSERIR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 14")
+            Log.d("TestDebug", "Position 02 - Secondary")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -267,7 +300,7 @@ class EquipSecEditFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 15")
+            Log.d("TestDebug", "Position 03 - Secondary")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -276,7 +309,14 @@ class EquipSecEditFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 16")
+            Log.d("TestDebug", "Position 04 - Secondary")
+
+            composeTestRule.waitUntilTimeout(3_000)
+
+            composeTestRule.onNodeWithText("RETORNAR")
+                .performClick()
+
+            Log.d("TestDebug", "Position 05 - Secondary")
 
             //////////////////////////////////////////////////////////////////////////////////////
 
@@ -285,28 +325,28 @@ class EquipSecEditFlowTest {
             composeTestRule.onNodeWithTag("tag_item_edit_1")
                 .performClick()
 
-            Log.d("TestDebug", "Position 17")
+            Log.d("TestDebug", "Position 01")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 18")
+            Log.d("TestDebug", "Position 02")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag("tag_item_edit_1")
                 .performClick()
 
-            Log.d("TestDebug", "Position 19")
+            Log.d("TestDebug", "Position 03")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_EQUIP_DATA_EQUIP_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 20")
+            Log.d("TestDebug", "Position 04")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -314,14 +354,14 @@ class EquipSecEditFlowTest {
                 activity.onBackPressedDispatcher.onBackPressed()
             }
 
-            Log.d("TestDebug", "Position 21")
+            Log.d("TestDebug", "Position 05")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_EQUIP_DATA_EQUIP_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 22")
+            Log.d("TestDebug", "Position 06")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -342,28 +382,28 @@ class EquipSecEditFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 23")
+            Log.d("TestDebug", "Position 07")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_DETAIL_DATA_EQUIP_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 24")
+            Log.d("TestDebug", "Position 08")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 25")
+            Log.d("TestDebug", "Position 09")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_DETAIL_DATA_EQUIP_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 26")
+            Log.d("TestDebug", "Position 10")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -372,674 +412,14 @@ class EquipSecEditFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 27")
+            Log.d("TestDebug", "Position 11")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 28")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("RETORNAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 59")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_DRIVER_OWN_EDIT_BUTTON)
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 60")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("RETORNAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 61")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_DRIVER_OWN_EDIT_BUTTON)
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 62")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_COLAB_DATA_COLAB_EDIT_BUTTON)
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 63")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            scenario.onActivity { activity ->
-//                activity.onBackPressedDispatcher.onBackPressed()
-//            }
-//
-//            Log.d("TestDebug", "Position 64")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_COLAB_DATA_COLAB_EDIT_BUTTON)
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 65")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag("button_CLEAN")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_CLEAN")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_CLEAN")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_CLEAN")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_CLEAN")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_CLEAN")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_1")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_1")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_1")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_0")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_0")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_0")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_OK")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 66")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_STATE_DATA_COLAB_EDIT_BUTTON)
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 67")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("RETORNAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 68")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_STATE_DATA_COLAB_EDIT_BUTTON)
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 69")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("ILESO")
-//                .performClick()
-//            composeTestRule.onNodeWithText("SALVAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 70")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_DETAIL_DATA_COLAB_EDIT_BUTTON)
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 71")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("RETORNAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 72")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_DETAIL_DATA_COLAB_EDIT_BUTTON)
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 73")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_DETAIL_TEXT_FIELD)
-//                .performTextInput("TESTE EDITAR ")
-//            composeTestRule.onNodeWithText("SALVAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 74")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("RETORNAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 75")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_PASSENGERS_OWN_EDIT_BUTTON)
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 76")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("RETORNAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 77")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_PASSENGERS_OWN_EDIT_BUTTON)
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 78")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("INSERIR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 79")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            scenario.onActivity { activity ->
-//                activity.onBackPressedDispatcher.onBackPressed()
-//            }
-//
-//            Log.d("TestDebug", "Position 80")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("INSERIR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 81")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag("button_1")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_2")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_3")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_4")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_5")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_6")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_OK")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 82")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("RETORNAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 83")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag("button_OK")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 84")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("MORTO")
-//                .performClick()
-//            composeTestRule.onNodeWithText("SALVAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 85")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("RETORNAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 84")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("SALVAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 86")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_DETAIL_TEXT_FIELD)
-//                .performTextInput("TESTE INSERIR PASSANGEIRO")
-//            composeTestRule.onNodeWithText("SALVAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 87")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag("tag_item_edit_1")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 88")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("RETORNAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 89")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag("tag_item_edit_1")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 90")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_COLAB_DATA_COLAB_EDIT_BUTTON)
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 91")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            scenario.onActivity { activity ->
-//                activity.onBackPressedDispatcher.onBackPressed()
-//            }
-//
-//            Log.d("TestDebug", "Position 91")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_COLAB_DATA_COLAB_EDIT_BUTTON)
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 92")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag("button_CLEAN")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_CLEAN")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_CLEAN")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_CLEAN")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_CLEAN")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_CLEAN")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_1")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_1")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_1")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_0")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_0")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_0")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_OK")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 94")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_STATE_DATA_COLAB_EDIT_BUTTON)
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 95")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("RETORNAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 96")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_STATE_DATA_COLAB_EDIT_BUTTON)
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 97")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("ILESO")
-//                .performClick()
-//            composeTestRule.onNodeWithText("SALVAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 98")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_DETAIL_DATA_COLAB_EDIT_BUTTON)
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 99")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("RETORNAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 100")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_DETAIL_DATA_COLAB_EDIT_BUTTON)
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 102")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_DETAIL_TEXT_FIELD)
-//                .performTextInput("TESTE EDITAR ")
-//            composeTestRule.onNodeWithText("SALVAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 103")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("RETORNAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 104")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("INSERIR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 105")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag("button_1")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_9")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_7")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_5")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_9")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_OK")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 106")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("ILESO")
-//                .performClick()
-//            composeTestRule.onNodeWithText("SALVAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 107")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_DETAIL_TEXT_FIELD)
-//                .performTextInput("TESTE EDITAR ")
-//            composeTestRule.onNodeWithText("SALVAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 108")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("RETORNAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 109")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_PASSENGERS_OWN_EDIT_BUTTON)
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 110")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag("tag_item_edit_1")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 111")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("EXCLUIR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 112")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("SIM")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 113")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("RETORNAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 114")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_VEHICLE_SEC_OWN_EDIT_BUTTON)
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 115")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("INSERIR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 116")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag("button_2")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_0")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_0")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_OK")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 117")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_DETAIL_TEXT_FIELD)
-//                .performTextInput("TESTE EXCLUSÃO")
-//            composeTestRule.onNodeWithText("SALVAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 118")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("RETORNAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 119")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_VEHICLE_SEC_OWN_EDIT_BUTTON)
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 120")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag("tag_item_edit_1")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 121")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("EXCLUIR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 122")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("SIM")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 123")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("RETORNAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 124")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("RETORNAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 124")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_VEHICLE_OWN_FULL_INSERT_BUTTON)
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 125")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag("button_2")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_2")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_0")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_0")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_OK")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 126")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_DETAIL_TEXT_FIELD)
-//                .performTextInput("TESTE DE EXCLUSÃO")
-//            composeTestRule.onNodeWithText("SALVAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 127")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag("button_1")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_8")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_0")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_1")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_7")
-//                .performClick()
-//            composeTestRule.onNodeWithTag("button_OK")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 128")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_INJURED_RADIO_BUTTON)
-//                .performClick()
-//            composeTestRule.onNodeWithText("SALVAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 129")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag(TAG_DETAIL_TEXT_FIELD)
-//                .performTextInput("TESTE DE EXCLUSÃO")
-//            composeTestRule.onNodeWithText("SALVAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 130")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("RETORNAR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 131")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithTag("${TAG_VEHICLE_OWN_FULL_EDIT_BUTTON}1")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 132")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("EXCLUIR")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 133")
-//
-//            composeTestRule.waitUntilTimeout(3_000)
-//
-//            composeTestRule.onNodeWithText("SIM")
-//                .performClick()
-//
-//            Log.d("TestDebug", "Position 134")
+            Log.d("TestDebug", "Position 12")
 
             composeTestRule.waitUntilTimeout(20_000)
 

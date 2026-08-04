@@ -42,7 +42,8 @@ fun ColabDataScreen(
     onNavDetail: () -> Unit,
     onNavCheckBreathalyzer: () -> Unit,
     onNavDataVehicleOwn: () -> Unit,
-    onNavPassengerList: () -> Unit
+    onNavPassengerList: () -> Unit,
+    onNavMenu: () -> Unit,
 ) {
     CAVTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -69,6 +70,7 @@ fun ColabDataScreen(
                 onNavCheckBreathalyzer = onNavCheckBreathalyzer,
                 onNavDataVehicleOwn = onNavDataVehicleOwn,
                 onNavPassengerList = onNavPassengerList,
+                onNavMenu = onNavMenu,
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -93,6 +95,7 @@ fun ColabDataContent(
     onNavCheckBreathalyzer: () -> Unit,
     onNavDataVehicleOwn: () -> Unit,
     onNavPassengerList: () -> Unit,
+    onNavMenu: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -103,6 +106,8 @@ fun ColabDataContent(
             text = stringResource(
                 id = when(flowNote) {
                     FlowNote.COLAB -> R.string.text_data_colab
+                    FlowNote.INVOLVED_COLAB -> R.string.text_data_involved
+                    FlowNote.WITNESS_COLAB -> R.string.text_data_witness
                     else -> R.string.text_data_passenger
                 }
             )
@@ -119,23 +124,27 @@ fun ColabDataContent(
                     onClickEdit = onNavColab
                 )
             }
-            item {
-                ItemDefaultEditListScreenModel(
-                    id = R.string.text_state,
-                    desc = when(state) {
-                        State.UNHARMED -> stringResource(
-                            id = R.string.text_item_unharmed
-                        )
-                        State.INJURED -> stringResource(
-                            id = R.string.text_item_injured
-                        )
-                        State.DEAD -> stringResource(
-                            id = R.string.text_item_dead
-                        )
-                    },
-                    tag = TAG_STATE_DATA_COLAB_EDIT_BUTTON,
-                    onClickEdit = onNavState
-                )
+            if(flowNote != FlowNote.WITNESS_COLAB) {
+                item {
+                    ItemDefaultEditListScreenModel(
+                        id = R.string.text_state,
+                        desc = when (state) {
+                            State.UNHARMED -> stringResource(
+                                id = R.string.text_item_unharmed
+                            )
+
+                            State.INJURED -> stringResource(
+                                id = R.string.text_item_injured
+                            )
+
+                            State.DEAD -> stringResource(
+                                id = R.string.text_item_dead
+                            )
+                        },
+                        tag = TAG_STATE_DATA_COLAB_EDIT_BUTTON,
+                        onClickEdit = onNavState
+                    )
+                }
             }
             if(flowNote == FlowNote.COLAB) {
                 item {
@@ -168,7 +177,8 @@ fun ColabDataContent(
         ButtonMaxWidth(R.string.text_pattern_return) {
             when(flowNote) {
                 FlowNote.COLAB -> onNavDataVehicleOwn()
-                else -> onNavPassengerList()
+                FlowNote.PASSENGER_COLAB -> onNavPassengerList()
+                else -> onNavMenu()
             }
         }
         BackHandler {}
@@ -192,7 +202,8 @@ fun ColabDataContent(
             if(status.flagAccess) {
                 when(flowNote) {
                     FlowNote.COLAB -> onNavDataVehicleOwn()
-                    else -> onNavPassengerList()
+                    FlowNote.PASSENGER_COLAB -> onNavPassengerList()
+                    else -> onNavMenu()
                 }
             }
         }
@@ -221,6 +232,7 @@ fun ColabDataPagePreview() {
                 onNavDataVehicleOwn = {},
                 onNavPassengerList = {},
                 onNavCheckBreathalyzer = {},
+                onNavMenu = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -249,6 +261,7 @@ fun ColabDataPagePreviewWithCheck() {
                 onNavDataVehicleOwn = {},
                 onNavPassengerList = {},
                 onNavCheckBreathalyzer = {},
+                onNavMenu = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }

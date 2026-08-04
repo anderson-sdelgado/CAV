@@ -4,10 +4,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.usinasantafe.cav.domain.usecases.card.DeleteInvolvedExternal
+import br.com.usinasantafe.cav.domain.usecases.card.GetDescBreathalyzer
 import br.com.usinasantafe.cav.domain.usecases.card.GetDescColab
 import br.com.usinasantafe.cav.domain.usecases.card.GetDetail
 import br.com.usinasantafe.cav.domain.usecases.card.GetState
-import br.com.usinasantafe.cav.domain.usecases.card.IGetDescBreathalyzer
 import br.com.usinasantafe.cav.lib.FlowNote
 import br.com.usinasantafe.cav.lib.Option
 import br.com.usinasantafe.cav.lib.State
@@ -49,7 +49,7 @@ class ColabDataViewModel @Inject constructor(
     private val getDescColab: GetDescColab,
     private val getState: GetState,
     private val getDetail: GetDetail,
-    private val getDescBreathalyzer: IGetDescBreathalyzer,
+    private val getDescBreathalyzer: GetDescBreathalyzer,
     private val deleteInvolvedExternal: DeleteInvolvedExternal
 ) : ViewModel() {
 
@@ -91,7 +91,7 @@ class ColabDataViewModel @Inject constructor(
 
         runCatching {
             val descColab = getDescColab(state.flowNote, state.idMain, state.idSecondary).getOrThrow()
-            val stateRet = getState(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
+            val stateRet = if(state.flowNote != FlowNote.WITNESS_COLAB) getState(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow() else State.UNHARMED
             val detail = getDetail(Option.EDIT, state.flowNote, state.idMain, state.idSecondary).getOrThrow()
             val breathalyzer = if(state.flowNote == FlowNote.COLAB) getDescBreathalyzer(state.idMain).getOrThrow() else ""
             RecoverColab(descColab, stateRet, breathalyzer, detail)

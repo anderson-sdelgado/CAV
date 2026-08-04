@@ -652,4 +652,56 @@ class IRecoverDataCardSharedPreferencesDatasourceTest {
             assertEquals(vehList[0].vehicle.plate, "P1")
         }
 
+    @Test
+    fun `getResultBreathalyzer - Check return correct value`() =
+        runTest {
+            val list = listOf(
+                VehicleOwnSharedPreferencesModel(id = 1, colab = ColabCardSharedPreferencesModel(flagResultBreathalyzer = true))
+            )
+            cardDatasource.save(CardSharedPreferencesModel(vehicleOwnList = list))
+            
+            val result = datasource.getResultBreathalyzer(1)
+            assertEquals(result.getOrNull(), true)
+        }
+
+    @Test
+    fun `getRealizedBreathalyzer - Check return correct value`() =
+        runTest {
+            val list = listOf(
+                VehicleOwnSharedPreferencesModel(id = 1, colab = ColabCardSharedPreferencesModel(flagRealizedBreathalyzer = false))
+            )
+            cardDatasource.save(CardSharedPreferencesModel(vehicleOwnList = list))
+            
+            val result = datasource.getRealizedBreathalyzer(1)
+            assertEquals(result.getOrNull(), false)
+        }
+
+    @Test
+    fun `getCountBreathalyzer - Check return correct value`() =
+        runTest {
+            val list = listOf(
+                VehicleOwnSharedPreferencesModel(id = 1, colab = ColabCardSharedPreferencesModel(countBreathalyzer = 0.5))
+            )
+            cardDatasource.save(CardSharedPreferencesModel(vehicleOwnList = list))
+            
+            val result = datasource.getCountBreathalyzer(1)
+            assertEquals(result.getOrNull(), 0.5)
+        }
+
+    @Test
+    fun `getBreathalyzer - Check return correct Triple`() =
+        runTest {
+            val list = listOf(
+                VehicleOwnSharedPreferencesModel(id = 1, colab = ColabCardSharedPreferencesModel(
+                    flagResultBreathalyzer = true,
+                    flagRealizedBreathalyzer = true,
+                    countBreathalyzer = 0.15
+                ))
+            )
+            cardDatasource.save(CardSharedPreferencesModel(vehicleOwnList = list))
+            
+            val result = datasource.getBreathalyzer(1)
+            assertEquals(result.getOrNull(), Triple(true, true, 0.15))
+        }
+
 }

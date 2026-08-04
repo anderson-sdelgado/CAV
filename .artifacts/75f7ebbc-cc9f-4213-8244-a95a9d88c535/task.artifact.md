@@ -1,4 +1,0 @@
-- [x] Corrigir cálculo do divisor em `addTextFieldComma` (`Buttons.kt`)
-- [x] Corrigir cálculo do divisor em `clearTextFieldComma` (`Buttons.kt`)
-- [x] Atualizar chamada de limpeza na `CountBreathalyzerViewModel.kt`
-- [x] Verificar digitação e limpeza no app

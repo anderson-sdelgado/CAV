@@ -127,6 +127,25 @@ class IColabSharedPreferencesDatasourceTest {
         }
 
     @Test
+    fun `setDataInitialBreathalyzer - Check alter data correct in sharedPreferences internal`() =
+        runTest {
+            val result = datasource.setDataInitialBreathalyzer(true, false)
+            assertEquals(true, result.isSuccess)
+            val model = datasource.get().getOrThrow()
+            assertEquals(true, model.flagRealizedBreathalyzer)
+            assertEquals(false, model.flagResultBreathalyzer)
+        }
+
+    @Test
+    fun `setCountBreathalyzer - Check alter data correct in sharedPreferences internal`() =
+        runTest {
+            val result = datasource.setCountBreathalyzer(0.12)
+            assertEquals(true, result.isSuccess)
+            val model = datasource.get().getOrThrow()
+            assertEquals(0.12, model.countBreathalyzer)
+        }
+
+    @Test
     fun `getRegColab - Check return correct if field is null`() =
         runTest {
             val result = datasource.getRegColab()

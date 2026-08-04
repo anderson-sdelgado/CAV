@@ -32,7 +32,9 @@ class IGetState @Inject constructor(
                 Option.INSERT -> {
                     when(flowNote) {
                         FlowNote.COLAB,
-                        FlowNote.PASSENGER_COLAB -> cardRepository.getStateColab()
+                        FlowNote.PASSENGER_COLAB,
+                        FlowNote.INVOLVED_COLAB,
+                        FlowNote.WITNESS_COLAB -> cardRepository.getStateColab()
                         else -> cardRepository.getStateInvolvedExternal()
                     }
                 }
@@ -40,6 +42,7 @@ class IGetState @Inject constructor(
                     when(flowNote) {
                         FlowNote.COLAB -> cardRepository.getStateColab(idMain)
                         FlowNote.PASSENGER_COLAB -> cardRepository.getStatePassengerColab(idMain, idSecondary)
+                        FlowNote.INVOLVED_COLAB -> cardRepository.getStateInvolvedColab(idMain)
                         FlowNote.DRIVER -> cardRepository.getStateDriverExternal(idMain)
                         FlowNote.PASSENGER_EXTERNAL -> cardRepository.getStatePassengerExternal(idMain, idSecondary)
                         else -> cardRepository.getStateInvolvedExternal(idMain)

@@ -144,7 +144,7 @@ class IInsertCardRepository @Inject constructor(
             involvedSharedPreferencesDatasource.setDocument(text).getOrThrow()
         }
 
-    override suspend fun setStateInvolved(state: State): EmptyResult =
+    override suspend fun setStateExternal(state: State): EmptyResult =
         call(getClassAndMethod()) {
             involvedSharedPreferencesDatasource.setState(state).getOrThrow()
         }

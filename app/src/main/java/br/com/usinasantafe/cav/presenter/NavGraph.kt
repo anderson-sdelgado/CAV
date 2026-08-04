@@ -390,6 +390,8 @@ fun NavigationGraph(
                 navArgument(ID_SECONDARY_ARG) { type = NavType.IntType }
             )
         ) { entry ->
+            val ordinal = entry.arguments?.getInt(FLOW_NOTE_ARG)!!
+            val flowNote = FlowNote.entries[ordinal]
             ColabScreen(
                 onNavPassengerList = {
                     navActions.navigateToPassengerList(
@@ -408,7 +410,7 @@ fun NavigationGraph(
                 onNavDetail = {
                     navActions.navigateToDetail(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        flowNote = FlowNote.EQUIP.ordinal,
+                        flowNote = if(flowNote == FlowNote.COLAB) FlowNote.EQUIP.ordinal else entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
@@ -475,6 +477,9 @@ fun NavigationGraph(
                         option = Option.EDIT.ordinal,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!
                     )
+                },
+                onNavMenu = {
+                    navActions.navigateToInvolvedWitnessColab()
                 }
             )
         }
@@ -488,6 +493,8 @@ fun NavigationGraph(
                 navArgument(ID_SECONDARY_ARG) { type = NavType.IntType }
             )
         ) { entry ->
+            val ordinal = entry.arguments?.getInt(FLOW_NOTE_ARG)!!
+            val flowNote = FlowNote.entries[ordinal]
             DetailScreen(
                 onNavEquip = {
                     navActions.navigateToEquip(
@@ -516,7 +523,7 @@ fun NavigationGraph(
                 onNavColab = {
                     navActions.navigateToColab(
                         option = entry.arguments?.getInt(OPTION_ARG)!!,
-                        flowNote = FlowNote.COLAB.ordinal,
+                        flowNote = if(flowNote == FlowNote.EQUIP) FlowNote.COLAB.ordinal else entry.arguments?.getInt(FLOW_NOTE_ARG)!!,
                         idMain = entry.arguments?.getInt(ID_MAIN_ARG)!!,
                         idSecondary = entry.arguments?.getInt(ID_SECONDARY_ARG)!!
                     )
@@ -1239,7 +1246,7 @@ fun NavigationGraph(
                     navActions.navigateToLocalSupport()
                 },
                 onNavInvolvedWitness = {
-                    navActions.navigateToInvolvedWitnessExternal()
+                    navActions.navigateToInvolvedWitnessColab()
                 },
                 onNavEquip = {
                     navActions.navigateToEquip(
@@ -1271,7 +1278,7 @@ fun NavigationGraph(
         composable(INVOLVED_WITNESS_COLAB_ROUTE) {
             InvolvedWitnessColabScreen(
                 onNavColab = {
-                    navActions.navigateToDocument(
+                    navActions.navigateToColab(
                         option = Option.INSERT.ordinal,
                         flowNote = it.ordinal,
                         idMain = 0,

@@ -241,7 +241,7 @@ fun PeopleExternalItem(
     ) {
 
         Column(modifier = Modifier.weight(1f)) {
-            Text(text = stringResource(id = R.string.text_item_involved), fontWeight = FontWeight.Bold)
+            Text(text = stringResource(id = R.string.text_item_external), fontWeight = FontWeight.Bold)
             Text(model.desc)
         }
 

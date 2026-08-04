@@ -37,7 +37,7 @@ class ISetState @Inject constructor(
                         FlowNote.PASSENGER_COLAB,
                         FlowNote.INVOLVED_COLAB,
                         FlowNote.WITNESS_COLAB -> setStateColab(state)
-                        else -> setStateInvolved(state)
+                        else -> setStateExternal(state)
                     }
                     Option.EDIT -> when(flowNote) {
                         FlowNote.COLAB -> updateStateColab(state, idMain)

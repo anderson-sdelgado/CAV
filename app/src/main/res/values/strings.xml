@@ -86,6 +86,8 @@
     <string name="text_item_data_local">ITEM</string>
     <string name="text_edit_driver">MATRICULA MOTORISTA</string>
     <string name="text_edit_passenger">MATRICULA PASSAGEIRO</string>
+    <string name="text_edit_involved">MATRICULA ENVOLVIDO</string>
+    <string name="text_edit_witness">MATRICULA TESTEMUNHA</string>
     <string name="text_edit_equip">NRO EQUIPAMENTO</string>
     <string name="text_detail">DETALHE</string>
     <string name="text_equip_sec">EQUIP. SECUNDÁRIO(S)</string>
@@ -116,7 +118,8 @@
     <string name="text_data_passenger">DADOS DO PASSAGEIRO</string>
     <string name="text_data_involved">DADOS DO ENVOLVIDO</string>
     <string name="text_data_witness">DADOS DA TESTEMUNHA</string>
-    <string name="text_item_involved">TELEFONE - NOME</string>
+    <string name="text_item_external">TELEFONE - NOME</string>
+    <string name="text_item_colab">MATRICULA - NOME</string>
     <string name="text_obs">DESCRIÇÃO SUMÁRIA DO ACIDENTE</string>
     <string name="text_take_photo">TIRAR FOTOS</string>
     <string name="text_title_photo">FOTO(S)</string>

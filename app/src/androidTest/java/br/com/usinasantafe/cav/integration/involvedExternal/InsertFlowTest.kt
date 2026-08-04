@@ -114,7 +114,7 @@ class InsertFlowTest {
 
             val scenario = ActivityScenario.launch(MainActivity::class.java)
 
-            Log.d("TestDebug", "Position 1")
+            Log.d("TestDebug", "Position 01 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -123,7 +123,7 @@ class InsertFlowTest {
             composeTestRule.onNodeWithText("APONTAMENTO")
                 .performClick()
 
-            Log.d("TestDebug", "Position 2")
+            Log.d("TestDebug", "Position 02 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -140,7 +140,7 @@ class InsertFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 3")
+            Log.d("TestDebug", "Position 03 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -153,42 +153,42 @@ class InsertFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 4")
+            Log.d("TestDebug", "Position 04 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("AVANÇAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 5")
+            Log.d("TestDebug", "Position 05 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("AVANÇAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 7")
+            Log.d("TestDebug", "Position 06 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("AVANÇAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 8")
+            Log.d("TestDebug", "Position 07 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 9")
+            Log.d("TestDebug", "Position 08 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("AVANÇAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 10")
+            Log.d("TestDebug", "Position 09 - Base")
 
             /////////////////////////////////////////////////////////////////////////
 
@@ -197,7 +197,7 @@ class InsertFlowTest {
             composeTestRule.onNodeWithTag(TAG_INVOLVED_EXTERNAL_FULL_INSERT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 11")
+            Log.d("TestDebug", "Position 01")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -205,14 +205,14 @@ class InsertFlowTest {
                 activity.onBackPressedDispatcher.onBackPressed()
             }
 
-            Log.d("TestDebug", "Position 12")
+            Log.d("TestDebug", "Position 02")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_INVOLVED_EXTERNAL_FULL_INSERT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 13")
+            Log.d("TestDebug", "Position 03")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -241,14 +241,14 @@ class InsertFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 14")
+            Log.d("TestDebug", "Position 04")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_BUTTON_OK_ALERT_DIALOG_SIMPLE)
                 .performClick()
 
-            Log.d("TestDebug", "Position 15")
+            Log.d("TestDebug", "Position 05")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -259,35 +259,35 @@ class InsertFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 16")
+            Log.d("TestDebug", "Position 06")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 17")
+            Log.d("TestDebug", "Position 07")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 18")
+            Log.d("TestDebug", "Position 08")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 19")
+            Log.d("TestDebug", "Position 09")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_BUTTON_OK_ALERT_DIALOG_SIMPLE)
                 .performClick()
 
-            Log.d("TestDebug", "Position 20")
+            Log.d("TestDebug", "Position 10")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -297,7 +297,7 @@ class InsertFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 21")
+            Log.d("TestDebug", "Position 11")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -305,28 +305,28 @@ class InsertFlowTest {
                 activity.onBackPressedDispatcher.onBackPressed()
             }
 
-            Log.d("TestDebug", "Position 22")
+            Log.d("TestDebug", "Position 12")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 23")
+            Log.d("TestDebug", "Position 13")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 24")
+            Log.d("TestDebug", "Position 14")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_BUTTON_OK_ALERT_DIALOG_SIMPLE)
                 .performClick()
 
-            Log.d("TestDebug", "Position 25")
+            Log.d("TestDebug", "Position 15")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -343,14 +343,14 @@ class InsertFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 26")
+            Log.d("TestDebug", "Position 16")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_BUTTON_OK_ALERT_DIALOG_SIMPLE)
                 .performClick()
 
-            Log.d("TestDebug", "Position 27")
+            Log.d("TestDebug", "Position 17")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -369,21 +369,21 @@ class InsertFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 28")
+            Log.d("TestDebug", "Position 18")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 29")
+            Log.d("TestDebug", "Position 19")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 30")
+            Log.d("TestDebug", "Position 20")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -392,21 +392,21 @@ class InsertFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 31")
+            Log.d("TestDebug", "Position 21")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 32")
+            Log.d("TestDebug", "Position 22")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 33")
+            Log.d("TestDebug", "Position 23")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -416,14 +416,14 @@ class InsertFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 34")
+            Log.d("TestDebug", "Position 24")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 35")
+            Log.d("TestDebug", "Position 25")
 
             composeTestRule.waitUntilTimeout(20_000)
 

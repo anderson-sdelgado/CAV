@@ -1,5 +1,6 @@
 package br.com.usinasantafe.cav.presenter.view.splash
 
+import android.os.Build
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.usinasantafe.cav.domain.usecases.common.StartFlow

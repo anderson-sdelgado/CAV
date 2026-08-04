@@ -68,7 +68,7 @@ interface InsertCardRepository {
     suspend fun setBrand(text: String): EmptyResult
     suspend fun setPlate(text: String): EmptyResult
     suspend fun setDocument(text: String): EmptyResult
-    suspend fun setStateInvolved(state: State): EmptyResult
+    suspend fun setStateExternal(state: State): EmptyResult
     suspend fun setName(text: String): EmptyResult
     suspend fun setPhone(text: String): EmptyResult
     suspend fun setDataInitialBreathalyzer(flagRealized: Boolean?, flagResult: Boolean?): EmptyResult

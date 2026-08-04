@@ -32,7 +32,7 @@ class ICardRoomDatasource @Inject constructor(
 
    override suspend fun getSend(): Result<CardRoomModel> =
       result(getClassAndMethod()) {
-          cardDao.oldest()
+          cardDao.oldest(StatusSend.SEND)
       }
 
    override suspend fun listDelete(): Result<List<CardRoomModel>> =

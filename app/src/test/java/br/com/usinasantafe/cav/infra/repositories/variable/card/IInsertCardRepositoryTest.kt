@@ -1641,7 +1641,7 @@ class IInsertCardRepositoryTest {
                     Exception()
                 )
             )
-            val result = repository.setStateInvolved(State.UNHARMED)
+            val result = repository.setStateExternal(State.UNHARMED)
             assertEquals(
                 result.isFailure,
                 true
@@ -1659,7 +1659,7 @@ class IInsertCardRepositoryTest {
     @Test
     fun `setStateInvolved - Check return correct if function execute successfully`() =
         runTest {
-            val result = repository.setStateInvolved(State.UNHARMED)
+            val result = repository.setStateExternal(State.UNHARMED)
             verify(involvedSharedPreferencesDatasource, atLeastOnce()).setState(State.UNHARMED)
             assertEquals(
                 result.isSuccess,
@@ -1703,6 +1703,23 @@ class IInsertCardRepositoryTest {
                 result.isSuccess,
                 true
             )
+        }
+
+    @Test
+    fun `setDataInitialBreathalyzer - Check return failure if have error in ColabSharedPreferencesDatasource`() =
+        runTest {
+            whenever(colabSharedPreferencesDatasource.setDataInitialBreathalyzer(true, false)).thenReturn(resultFailure("ColabSharedPreferencesDatasource.setDataInitialBreathalyzer", Exception()))
+            val result = repository.setDataInitialBreathalyzer(true, false)
+            assertEquals(true, result.isFailure)
+            assertEquals("IInsertCardRepository.setDataInitialBreathalyzer -> ColabSharedPreferencesDatasource.setDataInitialBreathalyzer", result.exceptionOrNull()!!.message)
+        }
+
+    @Test
+    fun `setDataInitialBreathalyzer - Check return correct if function execute successfully`() =
+        runTest {
+            whenever(colabSharedPreferencesDatasource.setDataInitialBreathalyzer(true, false)).thenReturn(Result.success(Unit))
+            val result = repository.setDataInitialBreathalyzer(true, false)
+            assertEquals(true, result.isSuccess)
         }
 
 }

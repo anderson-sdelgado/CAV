@@ -125,7 +125,7 @@ class PassengerEditFlowTest {
 
             val scenario = ActivityScenario.launch(MainActivity::class.java)
 
-            Log.d("TestDebug", "Position 1")
+            Log.d("TestDebug", "Position 01 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -134,7 +134,7 @@ class PassengerEditFlowTest {
             composeTestRule.onNodeWithText("APONTAMENTO")
                 .performClick()
 
-            Log.d("TestDebug", "Position 2")
+            Log.d("TestDebug", "Position 02 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -151,7 +151,7 @@ class PassengerEditFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 3")
+            Log.d("TestDebug", "Position 03 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -164,30 +164,30 @@ class PassengerEditFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 4")
+            Log.d("TestDebug", "Position 04 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("AVANÇAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 5")
+            Log.d("TestDebug", "Position 05 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("AVANÇAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 6")
+            Log.d("TestDebug", "Position 06 - Base")
 
-            /////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_VEHICLE_INVOLVED_FULL_INSERT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 7")
+            Log.d("TestDebug", "Position 01 - Initial")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -196,16 +196,14 @@ class PassengerEditFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 8")
-
-            composeTestRule.waitUntilTimeout(3_000)
+            Log.d("TestDebug", "Position 02 - Initial")
 
             composeTestRule.onNodeWithTag(TAG_BRAND_INVOLVED_TEXT_FIELD)
                 .performTextInput("GOL")
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 9")
+            Log.d("TestDebug", "Position 03 - Initial")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -214,7 +212,7 @@ class PassengerEditFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 10")
+            Log.d("TestDebug", "Position 04 - Initial")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -243,16 +241,14 @@ class PassengerEditFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 11")
-
-            composeTestRule.waitUntilTimeout(3_000)
+            Log.d("TestDebug", "Position 05 - Initial")
 
             composeTestRule.onNodeWithTag(TAG_NAME_INVOLVED_TEXT_FIELD)
                 .performTextInput("JOÃO PEDRO HENRIQUE")
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 12")
+            Log.d("TestDebug", "Position 06 - Initial")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -281,7 +277,7 @@ class PassengerEditFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 13")
+            Log.d("TestDebug", "Position 07 - Initial")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -290,7 +286,7 @@ class PassengerEditFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 14")
+            Log.d("TestDebug", "Position 08 - Initial")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -299,23 +295,23 @@ class PassengerEditFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 15")
+            Log.d("TestDebug", "Position 09 - Initial")
 
-            /////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_PASSENGERS_INVOLVED_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 16")
+            Log.d("TestDebug", "Position 01 - Secondary")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("INSERIR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 17")
+            Log.d("TestDebug", "Position 02 - Secondary")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -344,7 +340,7 @@ class PassengerEditFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 18")
+            Log.d("TestDebug", "Position 03 - Secondary")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -353,7 +349,7 @@ class PassengerEditFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 19")
+            Log.d("TestDebug", "Position 04 - Secondary")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -382,7 +378,7 @@ class PassengerEditFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 20")
+            Log.d("TestDebug", "Position 05 - Secondary")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -391,7 +387,7 @@ class PassengerEditFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 21")
+            Log.d("TestDebug", "Position 06 - Secondary")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -400,7 +396,7 @@ class PassengerEditFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 22")
+            Log.d("TestDebug", "Position 07 - Secondary")
 
             ///////////////////////////////////////////////////////////////////////////////////////
 
@@ -409,35 +405,35 @@ class PassengerEditFlowTest {
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 23")
+            Log.d("TestDebug", "Position 01")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 24")
+            Log.d("TestDebug", "Position 02")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_PASSENGERS_INVOLVED_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 25")
+            Log.d("TestDebug", "Position 03")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag("tag_item_edit_1")
                 .performClick()
 
-            Log.d("TestDebug", "Position 26")
+            Log.d("TestDebug", "Position 04")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_DOCUMENT_DATA_INVOLVED_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 27")
+            Log.d("TestDebug", "Position 05")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -445,14 +441,14 @@ class PassengerEditFlowTest {
                 activity.onBackPressedDispatcher.onBackPressed()
             }
 
-            Log.d("TestDebug", "Position 28")
+            Log.d("TestDebug", "Position 06")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_DOCUMENT_DATA_INVOLVED_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 29")
+            Log.d("TestDebug", "Position 07")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -504,28 +500,28 @@ class PassengerEditFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 30")
+            Log.d("TestDebug", "Position 08")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_NAME_DATA_INVOLVED_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 31")
+            Log.d("TestDebug", "Position 09")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 32")
+            Log.d("TestDebug", "Position 10")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_NAME_DATA_INVOLVED_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 33")
+            Log.d("TestDebug", "Position 11")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -536,28 +532,28 @@ class PassengerEditFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 33")
+            Log.d("TestDebug", "Position 12")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_STATE_DATA_INVOLVED_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 34")
+            Log.d("TestDebug", "Position 13")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 35")
+            Log.d("TestDebug", "Position 14")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_STATE_DATA_INVOLVED_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 36")
+            Log.d("TestDebug", "Position 15")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -566,14 +562,14 @@ class PassengerEditFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 37")
+            Log.d("TestDebug", "Position 16")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_PHONE_DATA_INVOLVED_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 38")
+            Log.d("TestDebug", "Position 17")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -581,14 +577,14 @@ class PassengerEditFlowTest {
                 activity.onBackPressedDispatcher.onBackPressed()
             }
 
-            Log.d("TestDebug", "Position 39")
+            Log.d("TestDebug", "Position 18")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_PHONE_DATA_INVOLVED_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 40")
+            Log.d("TestDebug", "Position 19")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -640,28 +636,28 @@ class PassengerEditFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 41")
+            Log.d("TestDebug", "Position 20")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_ADDRESS_DATA_INVOLVED_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 42")
+            Log.d("TestDebug", "Position 21")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 43")
+            Log.d("TestDebug", "Position 22")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_ADDRESS_DATA_INVOLVED_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 44")
+            Log.d("TestDebug", "Position 23")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -670,28 +666,28 @@ class PassengerEditFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 45")
+            Log.d("TestDebug", "Position 24")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_DETAIL_DATA_INVOLVED_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 46")
+            Log.d("TestDebug", "Position 25")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 47")
+            Log.d("TestDebug", "Position 26")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_DETAIL_DATA_INVOLVED_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 48")
+            Log.d("TestDebug", "Position 27")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -702,35 +698,35 @@ class PassengerEditFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 49")
+            Log.d("TestDebug", "Position 28")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 50")
+            Log.d("TestDebug", "Position 29")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("RETORNAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 51")
+            Log.d("TestDebug", "Position 30")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_PASSENGERS_INVOLVED_EDIT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 52")
+            Log.d("TestDebug", "Position 31")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag("tag_item_edit_1")
                 .performClick()
 
-            Log.d("TestDebug", "Position 53")
+            Log.d("TestDebug", "Position 32")
 
             composeTestRule.waitUntilTimeout(20_000)
 

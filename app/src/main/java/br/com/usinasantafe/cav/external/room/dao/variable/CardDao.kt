@@ -28,10 +28,11 @@ interface CardDao {
 
     @Query("""
         SELECT * FROM $TB_CARD
+        WHERE statusSend = :statusSend
         ORDER BY dateHour ASC
         LIMIT 1
     """)
-    fun oldest(): CardRoomModel
+    fun oldest(statusSend: StatusSend): CardRoomModel
 
     @Query("SELECT * FROM $TB_CARD WHERE statusSend = :statusSend AND dateHour < :dateHour")
     fun listDelete(statusSend: StatusSend, dateHour: Date): List<CardRoomModel>

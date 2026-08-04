@@ -108,8 +108,8 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
-    androidTestImplementation(libs.androidx.espresso.intents)
 
+    androidTestImplementation(libs.androidx.espresso.intents)
     implementation(libs.androidx.navigation.compose)
     androidTestImplementation(libs.androidx.navigation.testing)
     implementation(libs.androidx.tracing)

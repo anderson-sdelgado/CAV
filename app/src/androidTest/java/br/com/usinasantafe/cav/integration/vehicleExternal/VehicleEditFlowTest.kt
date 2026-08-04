@@ -9,6 +9,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
+import androidx.test.core.app.ActivityScenario
 import androidx.test.rule.GrantPermissionRule
 import br.com.usinasantafe.cav.external.room.dao.stable.ColabDao
 import br.com.usinasantafe.cav.external.room.dao.stable.DataLocalDao
@@ -118,7 +119,9 @@ class VehicleEditFlowTest {
 
             initialRegister()
 
-            Log.d("TestDebug", "Position 1")
+            val scenario = ActivityScenario.launch(MainActivity::class.java)
+
+            Log.d("TestDebug", "Position 01 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -127,7 +130,7 @@ class VehicleEditFlowTest {
             composeTestRule.onNodeWithText("APONTAMENTO")
                 .performClick()
 
-            Log.d("TestDebug", "Position 2")
+            Log.d("TestDebug", "Position 02 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -144,7 +147,7 @@ class VehicleEditFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 3")
+            Log.d("TestDebug", "Position 03 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -157,30 +160,30 @@ class VehicleEditFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 4")
+            Log.d("TestDebug", "Position 04 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("AVANÇAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 5")
+            Log.d("TestDebug", "Position 05 - Base")
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithText("AVANÇAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 6")
+            Log.d("TestDebug", "Position 06 - Base")
 
-            /////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////
 
             composeTestRule.waitUntilTimeout(3_000)
 
             composeTestRule.onNodeWithTag(TAG_VEHICLE_INVOLVED_FULL_INSERT_BUTTON)
                 .performClick()
 
-            Log.d("TestDebug", "Position 7")
+            Log.d("TestDebug", "Position 01 - Initial")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -189,16 +192,14 @@ class VehicleEditFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 8")
-
-            composeTestRule.waitUntilTimeout(3_000)
+            Log.d("TestDebug", "Position 02 - Initial")
 
             composeTestRule.onNodeWithTag(TAG_BRAND_INVOLVED_TEXT_FIELD)
                 .performTextInput("GOL")
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 9")
+            Log.d("TestDebug", "Position 03 - Initial")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -207,7 +208,7 @@ class VehicleEditFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 10")
+            Log.d("TestDebug", "Position 04 - Initial")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -236,16 +237,14 @@ class VehicleEditFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 11")
-
-            composeTestRule.waitUntilTimeout(3_000)
+            Log.d("TestDebug", "Position 05 - Initial")
 
             composeTestRule.onNodeWithTag(TAG_NAME_INVOLVED_TEXT_FIELD)
                 .performTextInput("JOÃO PEDRO HENRIQUE")
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 12")
+            Log.d("TestDebug", "Position 06 - Initial")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -274,7 +273,7 @@ class VehicleEditFlowTest {
             composeTestRule.onNodeWithTag("button_OK")
                 .performClick()
 
-            Log.d("TestDebug", "Position 13")
+            Log.d("TestDebug", "Position 07 - Initial")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -283,7 +282,7 @@ class VehicleEditFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 14")
+            Log.d("TestDebug", "Position 08 - Initial")
 
             composeTestRule.waitUntilTimeout(3_000)
 
@@ -292,9 +291,9 @@ class VehicleEditFlowTest {
             composeTestRule.onNodeWithText("SALVAR")
                 .performClick()
 
-            Log.d("TestDebug", "Position 15")
+            Log.d("TestDebug", "Position 09 - Initial")
 
-            /////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////
 
             composeTestRule.waitUntilTimeout(3_000)
 
